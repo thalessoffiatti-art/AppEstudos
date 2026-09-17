@@ -307,6 +307,20 @@ select:focus,input:focus,button:focus-visible,summary:focus-visible,a:focus-visi
 .carimbo.ok{color:var(--verde)} .carimbo.nok{color:var(--carmim)}
 @keyframes carimbar{from{transform:rotate(-9deg) scale(2.2); opacity:0} to{transform:rotate(-9deg) scale(1); opacity:.85}}
 
+/* Histórico da questão: faixa no alto da ficha e lista no gabarito. */
+.hist-q{flex:1 0 100%; display:flex; align-items:flex-start; gap:8px; margin-top:1px; padding-top:9px; border-top:1px dashed var(--linha);
+  font-family:var(--mono); font-size:11px; line-height:1.45; letter-spacing:.03em; color:var(--tinta-2)}
+.hist-q b{color:var(--tinta); font-weight:600}
+.hist-marca{width:9px; height:9px; flex:0 0 9px; margin-top:3px; background:var(--linha-forte)}
+.hist-marca.ok{background:var(--verde)} .hist-marca.nok{background:var(--carmim)}
+.ficha.tem-hist .carimbo{top:98px}
+.hist-lista{margin-top:16px; padding-top:14px; border-top:1px solid var(--papel-2)}
+.hist-lista h6{font-family:var(--mono); font-size:10.5px; font-weight:500; letter-spacing:.16em; text-transform:uppercase; color:var(--tinta-3); margin:0 0 8px}
+.hist-lista ol{list-style:none; margin:0; padding:0; font-family:var(--mono); font-size:12px; color:var(--tinta-2)}
+.hist-lista li{padding:2px 0}
+.hist-lista .ok{color:var(--verde); font-weight:600} .hist-lista .nok{color:var(--carmim); font-weight:600}
+.hist-lista .mais{margin:6px 0 0; font-family:var(--mono); font-size:11.5px; color:var(--tinta-3)}
+
 .gabarito{border-top:1px solid var(--papel-2); padding:18px; background:#FBFBF9}
 .gabarito h5{font-family:var(--mono); font-size:10.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--tinta-3); margin:0 0 14px}
 .exp{display:flex; gap:12px; padding:11px 0; border-top:1px solid var(--papel-2); font-size:14.6px}
@@ -418,6 +432,38 @@ select:focus,input:focus,button:focus-visible,summary:focus-visible,a:focus-visi
 .zerar-caixa{border:1px solid var(--linha-forte); background:#F6F7F4; padding:16px 18px; margin-top:16px}
 .zerar-caixa p{margin:0 0 12px; font-size:14.3px; color:var(--tinta-2)}
 .zerar-caixa .confirma{color:var(--carmim); font-weight:600}
+
+/* Janela de confirmação do "Zerar progresso". */
+dialog:not([open]){display:none}
+html:has(dialog.modal[open]){overflow:hidden}
+.modal{padding:0; margin:auto; border:1px solid var(--linha-forte); border-radius:var(--raio); background:var(--superficie); color:var(--tinta);
+  width:min(560px, calc(100vw - 32px)); max-width:none; max-height:calc(100vh - 32px); overflow:hidden;
+  box-shadow:0 22px 60px -24px rgba(23,36,46,.7)}
+.modal::backdrop{background:rgba(23,36,46,.58)}
+.modal-corpo{display:flex; flex-direction:column; max-height:calc(100vh - 34px); margin:0}
+.modal-texto{padding:22px 24px 10px; overflow-y:auto; -webkit-overflow-scrolling:touch}
+.modal .rotulo{margin:0 0 6px}
+.modal h3{font-family:var(--disp); font-size:25px; line-height:1.2; margin:0 0 8px}
+.modal h4{font-family:var(--mono); font-size:10.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:var(--tinta-3); margin:18px 0 6px}
+.modal p, .modal li{font-size:14.5px; color:var(--tinta-2)}
+.modal p{margin:0 0 8px}
+.modal ul{margin:0; padding-left:20px}
+.modal li{margin:3px 0}
+.modal li b{color:var(--tinta)}
+.modal .modal-alerta{color:var(--carmim); font-weight:600}
+.modal .modal-dica{border-left:3px solid var(--grifo); background:var(--grifo-suave); padding:10px 12px; margin:18px 0 8px}
+.modal-acoes{display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap; padding:14px 24px 18px; border-top:1px solid var(--papel-2); background:#FAFAF8}
+.btn.perigo{background:var(--carmim); border-color:var(--carmim)}
+@supports (height:100dvh){
+  .modal{max-height:calc(100dvh - 32px)}
+  .modal-corpo{max-height:calc(100dvh - 34px)}
+}
+@media (max-width:560px){
+  .modal-texto{padding:18px 16px 8px}
+  .modal-acoes{padding:12px 16px 14px}
+  .modal-acoes .btn{flex:1 1 0}
+}
+@media print{ .modal{display:none !important} }
 
 /* ---------- Placar do banco: rodada, semana e geral ----------
    A rodada é o que está marcado na tela agora. Semana e geral somam todas as
@@ -635,10 +681,11 @@ select:focus,input:focus,button:focus-visible,summary:focus-visible,a:focus-visi
   #pg-operacional .op-dur{margin-left:0; flex-basis:100%}
   #pg-operacional table{display:block; max-width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch}
 }
-/* Páginas 02 e 04 no celular: tabela sem .tabela-rolagem rola por dentro; selo do tópico quebra linha. */
+/* Páginas 02, 04 e 07 no celular: tabela sem .tabela-rolagem rola por dentro; selo do tópico quebra linha. */
 @media (max-width:640px){
   #pg-incidencia .tabela:not(.tabela-rolagem > .tabela),
-  #pg-material .tabela:not(.tabela-rolagem > .tabela){display:block; max-width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch}
+  #pg-material .tabela:not(.tabela-rolagem > .tabela),
+  #pg-metodo .tabela:not(.tabela-rolagem > .tabela){display:block; max-width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch}
   #pg-material .topico > summary .selo{white-space:normal; flex:0 1 auto; text-align:center}
 }
 @media print{
@@ -737,6 +784,7 @@ body{
   .faixa{padding:0 20px}
   .cabecalho{padding-top:28px}
   .carimbo{top:auto; bottom:8px; right:10px; font-size:12px; padding:4px 10px}
+  .ficha.tem-hist .carimbo{top:auto}
   .regua{padding:18px 16px 12px}
   .semana > summary{padding:13px 14px; gap:9px}
   .sem-cont{margin-left:0; width:100%; justify-content:flex-start; padding-left:23px}
@@ -5182,7 +5230,7 @@ body{
   <header class="cabecalho">
     <p class="olho">05 — Banco de questões</p>
     <h2>Resolva, erre, e leia por que cada alternativa caiu.</h2>
-    <p class="sub">Filtre por matéria, por assunto ou pelo ano da prova de referência — ou dispare o simuladão com todas as questões embaralhadas. Depois de responder, todas as cinco alternativas são comentadas, com o fundamento e o link direto para o ponto do material.</p>
+    <p class="sub">Filtre por matéria, por assunto ou pelo ano da prova de referência — ou dispare o simuladão com todas as questões embaralhadas. Depois de responder, todas as cinco alternativas são comentadas, com o fundamento e o link direto para o ponto do material. Questão que você já respondeu alguma vez mostra, no alto da ficha, quantas vezes foi respondida e como foi a última vez; no simuladão, essa faixa só aparece depois da resposta.</p>
   </header>
 
   <div class="painel">
@@ -5239,7 +5287,7 @@ body{
       </tbody>
     </table>
     </div>
-    <p class="placar-nota"><b>Zerar respostas</b>, trocar de filtro ou sortear um simuladão devolve as questões ao estado de não respondidas, para que possam ser refeitas. O placar da semana e o geral continuam valendo: cada nova resposta soma a eles, e são eles que alimentam o painel <b>Meu desempenho</b> do cronograma.</p>
+    <p class="placar-nota"><b>Zerar respostas</b>, trocar de filtro ou sortear um simuladão devolve as questões ao estado de não respondidas, para que possam ser refeitas. O placar da semana e o geral continuam valendo: cada nova resposta soma a eles, e são eles que alimentam o painel <b>Meu desempenho</b> do cronograma. O histórico de cada questão também continua: a faixa <b>Já respondida</b> soma a nova resposta.</p>
   </div>
 
   <div id="chipTopico" class="chip-topico" hidden></div>
@@ -5326,13 +5374,11 @@ body{
   </div>
 
   <h3 style="font-size:20px;margin:34px 0 12px">Progresso gravado neste navegador</h3>
-  <p>As respostas do banco de questões — as marcações da rodada em curso e o placar de acertos e erros de cada semana —, os blocos marcados no cronograma e o histórico dos simuladões ficam gravados no armazenamento local <b>deste navegador</b>, sob o prefixo <code>trt4:</code>. Nada é enviado para servidor algum — não há requisição de rede em nenhuma funcionalidade desta aplicação. Trocar de navegador, de dispositivo ou limpar os dados do site apaga o progresso.</p>
+  <p>As respostas do banco de questões — as marcações da rodada em curso, o histórico de cada questão (quantas vezes foi respondida e as dez últimas respostas, com data e resultado) e o placar de acertos e erros de cada semana —, os blocos marcados no cronograma e o histórico dos simuladões ficam gravados no armazenamento local <b>deste navegador</b>, sob o prefixo <code>trt4:</code>. Nada é enviado para servidor algum — não há requisição de rede em nenhuma funcionalidade desta aplicação. Trocar de navegador, de dispositivo ou limpar os dados do site apaga o progresso.</p>
   <div class="zerar-caixa">
-    <p><b>Zerar progresso.</b> Apaga as marcações das questões, o placar semanal e geral, as marcações do cronograma e o histórico de simulados. O material de estudo, as questões e as tabelas não são afetados. Só as chaves <code>trt4:</code> são removidas; qualquer outro dado deste navegador fica intacto. Para apenas refazer questões sem perder o placar, use <b>Zerar respostas</b>, no banco de questões.</p>
+    <p><b>Zerar progresso.</b> Apaga as marcações das questões, o histórico de respostas de cada questão, o placar semanal e geral, as marcações do cronograma e o histórico de simulados. O material de estudo, as questões e as tabelas não são afetados. Só as chaves <code>trt4:</code> são removidas; qualquer outro dado deste navegador fica intacto. Antes de apagar, uma janela explica o que será removido e pede confirmação. Para apenas refazer questões sem perder o placar e o histórico, use <b>Zerar respostas</b>, no banco de questões.</p>
     <p id="zerarResumo" class="mono" style="font-size:12.5px;color:var(--tinta-3)">—</p>
-    <button class="btn sec" id="btnZerar">Zerar progresso</button>
-    <button class="btn" id="btnZerarConfirma" style="display:none;background:var(--carmim);border-color:var(--carmim)">Confirmar — apagar tudo</button>
-    <button class="btn sec" id="btnZerarCancela" style="display:none">Cancelar</button>
+    <button class="btn sec" id="btnZerar" aria-haspopup="dialog">Zerar progresso</button>
   </div>
 
   <h3 style="font-size:20px;margin:34px 0 12px">Auditoria legislativa — segunda rodada, setembro de 2026</h3>
@@ -5398,6 +5444,32 @@ body{
 
 </main>
 </div>
+<dialog id="dlgZerar" class="modal" aria-labelledby="dlgZerarTitulo" aria-describedby="dlgZerarAviso">
+  <form method="dialog" class="modal-corpo">
+    <div class="modal-texto">
+      <p class="rotulo">07 — Metodologia e fontes · progresso gravado</p>
+      <h3 id="dlgZerarTitulo">Zerar progresso?</h3>
+      <p id="dlgZerarAviso">Esta ação apaga o seu progresso gravado neste navegador. Leia o que acontece antes de decidir.</p>
+      <h4>O que este botão faz</h4>
+      <p>Apaga, deste navegador, tudo o que o aplicativo gravou sobre o seu estudo:</p>
+      <ul id="dlgZerarLista"></ul>
+      <h4>O que acontece se você confirmar</h4>
+      <ul>
+        <li>As questões voltam a aparecer como nunca respondidas, sem a faixa “Já respondida”.</li>
+        <li>O placar da semana, o placar geral e o painel <b>Meu desempenho</b> voltam a zero.</li>
+        <li>O cronograma volta sem nenhum bloco marcado, e o histórico de simulados fica vazio.</li>
+        <li class="modal-alerta">Não há como desfazer. Não existe cópia desses dados em outro lugar.</li>
+      </ul>
+      <h4>O que não muda</h4>
+      <p>O material de estudo, as questões, a jurisprudência e as tabelas continuam iguais. Dados de outros sites neste navegador não são tocados.</p>
+      <p class="modal-dica">Se você só quer refazer questões, clique em <b>Cancelar</b> e use <b>Zerar respostas</b>, no banco de questões. Ele mantém o placar e o histórico de cada questão.</p>
+    </div>
+    <div class="modal-acoes">
+      <button type="submit" class="btn sec" value="cancelar" id="btnZerarCancela" autofocus>Cancelar</button>
+      <button type="submit" class="btn perigo" value="confirmar" id="btnZerarConfirma">Confirmar</button>
+    </div>
+  </form>
+</dialog>
 <script>
 /* =========================================================
    04.1 IN 39 INTERATIVA
@@ -13819,7 +13891,7 @@ function jurLinksDaQuestao(q){
    for bloqueado (modo privativo, file:// restrito), a camada cai para um
    objeto em memória e o app segue funcionando, com aviso discreto no rodapé. */
 const NS = 'trt4:';
-const CHAVES = { respostas:'respostas', cronograma:'cronograma', historico:'historicoSimulados', placar:'placarSemanal' };
+const CHAVES = { respostas:'respostas', cronograma:'cronograma', historico:'historicoSimulados', placar:'placarSemanal', tentativas:'historicoQuestoes' };
 let persistenciaAtiva = false;
 
 function avisarPersistencia(){
@@ -14077,6 +14149,114 @@ const estado = { respostas:{}, ordem:null, simulado:null, topico:null, jur:null 
 })();
 function salvarRespostas(){ LS.set(CHAVES.respostas, estado.respostas); }
 
+/* ---------- Histórico de cada questão ----------
+   estado.respostas guarda só a rodada em curso e some quando a rodada
+   recomeça. Este registro é permanente: quantas vezes cada questão foi
+   respondida, quantas vezes certo e as últimas respostas (data, alternativa
+   marcada e resultado na hora). Só "Zerar progresso" o apaga. */
+const HIST_MAX = 10;
+const histQ = Object.create(null);
+function salvarHistQ(){ LS.set(CHAVES.tentativas, histQ); }
+
+(function carregarHistorico(){
+  const porId = Object.create(null);
+  QUESTOES.forEach(q => { porId[q.id] = q; });
+  const gravado = LS.get(CHAVES.tentativas, null);
+  if(gravado && typeof gravado === 'object' && !Array.isArray(gravado)){
+    Object.keys(gravado).forEach(function(id){
+      const r = gravado[id];
+      if(!porId[id] || !r || typeof r !== 'object') return;
+      const h = (Array.isArray(r.h) ? r.h : []).filter(e => Array.isArray(e) &&
+        (e[0] === null || (typeof e[0] === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(e[0]))) &&
+        Number.isInteger(e[1]) && e[1] >= 0 && e[1] <= 4 && (e[2] === 0 || e[2] === 1)
+      ).slice(-HIST_MAX).map(e => [e[0], e[1], e[2]]);
+      const acH = h.filter(e => e[2] === 1).length;
+      let n = Number.isInteger(r.n) && r.n > 0 ? r.n : 0;
+      if(n < h.length) n = h.length;
+      if(!n) return;
+      let ac = Number.isInteger(r.ac) && r.ac > 0 ? r.ac : 0;
+      ac = Math.min(Math.max(ac, acH), n - (h.length - acH));
+      histQ[id] = { n: n, ac: ac, h: h };
+    });
+    return;
+  }
+  /* Primeira abertura com o histórico: cada marcação da rodada em curso vira
+     uma resposta sem data, porque não se sabe quando foi dada. Rodadas já
+     zeradas não deixaram registro por questão. */
+  Object.keys(estado.respostas).forEach(function(id){
+    const q = porId[id];
+    if(!q) return;
+    const m = estado.respostas[id], ok = m === q.ok ? 1 : 0;
+    histQ[id] = { n: 1, ac: ok, h: [[null, m, ok]] };
+  });
+  salvarHistQ();
+})();
+
+function registrarNoHistorico(q, marcada){
+  const ok = marcada === q.ok ? 1 : 0;
+  const r = histQ[q.id] || (histQ[q.id] = { n: 0, ac: 0, h: [] });
+  r.n++;
+  r.ac += ok;
+  r.h.push([hojeISO(), marcada, ok]);
+  if(r.h.length > HIST_MAX) r.h.splice(0, r.h.length - HIST_MAX);
+  salvarHistQ();
+}
+
+/* estado.ordem só é preenchido pelo simuladão. Com a lista sorteada na tela,
+   a faixa de uma questão só aparece depois que ela é respondida. */
+function emSimulado(){ return estado.ordem !== null; }
+
+function dataDoHistorico(iso, completa){
+  const x = iso.split('-');
+  return (completa || x[0] !== String(new Date().getFullYear())) ? x[2] + '/' + x[1] + '/' + x[0] : x[2] + '/' + x[1];
+}
+
+/* Faixa do alto da ficha. Não mostra a letra marcada: a questão pode estar
+   sendo refeita, e a letra entregaria a resposta. */
+function faixaHistoricoHTML(q){
+  const r = histQ[q.id];
+  if(!r || !r.n) return '';
+  if(emSimulado() && estado.respostas[q.id] === undefined) return '';
+  const ult = r.h[r.h.length - 1];
+  const res = ult ? (ult[2] ? 'acertou' : 'errou') : '';
+  const quando = !ult ? '' : ult[0] ? ' em ' + dataDoHistorico(ult[0]) : ' (data não registrada)';
+  let txt = 'Já respondida <b>' + (r.n === 1 ? '1 vez' : r.n + ' vezes') + '</b>';
+  if(r.n > 1){
+    const er = r.n - r.ac;
+    txt += ' · ' + r.ac + (r.ac === 1 ? ' acerto' : ' acertos') + ' e ' + er + (er === 1 ? ' erro' : ' erros');
+    if(res) txt += ' · última: ' + res + quando;
+  } else if(res){
+    txt += ' · ' + res + quando;
+  }
+  return '<div class="hist-q"><span class="hist-marca' + (res === 'acertou' ? ' ok' : res === 'errou' ? ' nok' : '') +
+    '" aria-hidden="true"></span><span>' + txt + '</span></div>';
+}
+
+/* Lista do gabarito: a questão já foi respondida, então as letras aparecem. */
+function listaHistoricoHTML(q){
+  const r = histQ[q.id];
+  if(!r || !r.h.length) return '';
+  const itens = r.h.slice().reverse().map(e =>
+    '<li>' + (e[0] ? dataDoHistorico(e[0], true) : 'data não registrada') + ' · marcou ' + LETRAS[e[1]] + ' · ' +
+    (e[2] ? '<span class="ok">acertou</span>' : '<span class="nok">errou</span>') + '</li>').join('');
+  const resto = r.n - r.h.length;
+  return '<div class="hist-lista"><h6>Suas respostas a esta questão · ' + (r.n === 1 ? '1 vez' : r.n + ' vezes') + '</h6>' +
+    '<ol>' + itens + '</ol>' +
+    (resto > 0 ? '<p class="mais">e mais ' + resto + (resto === 1 ? ' resposta anterior' : ' respostas anteriores') + '</p>' : '') +
+    '</div>';
+}
+
+/* Troca a faixa de uma ficha já desenhada (logo depois de uma resposta). */
+function atualizarFaixaHistorico(q){
+  const ficha = $(`[data-q="${q.id}"]`);
+  if(!ficha) return;
+  const velha = $('.hist-q', ficha);
+  if(velha) velha.remove();
+  const html = faixaHistoricoHTML(q);
+  ficha.classList.toggle('tem-hist', !!html);
+  if(html) $('.ficha-cab', ficha).insertAdjacentHTML('beforeend', html);
+}
+
 /* ---------- Placar semanal e geral ----------
    A marcação de uma questão (estado.respostas) é só visual: some quando a
    pessoa zera as respostas, troca de filtro ou sorteia um simuladão, para que
@@ -14229,12 +14409,14 @@ function fichaHTML(q, idx, tot){
   const alts = q.alt.map((t,i)=>
     `<li class="alt" data-i="${i}" tabindex="0" role="button" aria-label="Alternativa ${LETRAS[i]}">
        <span class="letra">${LETRAS[i]}</span><span class="txt">${esc(t)}</span></li>`).join('');
-  return `<article class="ficha" data-q="${q.id}">
+  const faixa = faixaHistoricoHTML(q);
+  return `<article class="ficha${faixa ? ' tem-hist' : ''}" data-q="${q.id}">
     <div class="ficha-cab">
       <span class="tag mat">${q.mat}</span>
       <span class="tag">${q.ass}</span>
       <span class="tag ano">Prova ${q.ano}</span>
       <span class="ficha-idx">${String(idx).padStart(2,'0')} / ${String(tot).padStart(2,'0')} · ${q.id}</span>
+      ${faixa}
     </div>
     <div class="enunciado">
       ${q.apoio ? `<div class="texto-apoio">${esc(q.apoio)}</div>` : ''}
@@ -14250,7 +14432,9 @@ function responder(q, i){
   estado.respostas[q.id] = i;
   salvarRespostas();
   registrarTentativa(q, i === q.ok);
+  registrarNoHistorico(q, i);
   pintarFicha(q, i, true);
+  atualizarFaixaHistorico(q);
   atualizarPlacar();
   conferirFimDeSimulado();
   if(typeof renderDesempenho === 'function') renderDesempenho();
@@ -14300,6 +14484,7 @@ function pintarFicha(q, marcada, animar){
         <span class="letra-exp">${LETRAS[i]}</span>
         <span><span class="veredito">${v?'Correta':'Incorreta'}</span>${escRico(t).replace(/^(Correta|Errada)\.\s*/,'')}</span></div>`;
     }).join('') +
+    listaHistoricoHTML(q) +
     `<div class="rodape-gab">
        <a class="link-material" href="#" data-ir="${q.anc}">Ver este ponto no material →</a>
        <span class="fundamento">Fundamento: ${esc(q.fund)}</span>
@@ -14798,43 +14983,93 @@ function renderHistorico(){
     '<tbody>' + linhas + '</tbody></table></div>';
 }
 
-/* ---------- Zerar progresso (confirmação em duas etapas) ---------- */
-function atualizarResumoZerar(){
-  const nResp = Object.keys(estado.respostas).length;
-  const nCrono = Object.keys(cronoEstado.feitos).filter(k => cronoEstado.feitos[k]).length;
+/* ---------- Zerar progresso (confirmação em janela modal) ----------
+   O botão abre uma janela que explica o que será apagado, com as contagens
+   do momento. Só o botão Confirmar apaga; Cancelar, Esc e clique fora da
+   janela não mexem em nada. plural() é o utilitário do banco de questões. */
+function contarProgresso(){
   const h = LS.get(CHAVES.historico, []);
-  const nHist = Array.isArray(h) ? h.length : 0;
-  const nPlacar = estatPlacar('geral').resp;
-  $('#zerarResumo').textContent = 'Gravado agora: ' + nResp + ' questão(ões) marcada(s) na rodada · ' + nPlacar +
-    ' resposta(s) no placar semanal e geral · ' + nCrono +
-    ' bloco(s) do cronograma · ' + nHist + ' simulado(s) no histórico' +
+  return {
+    rodada: Object.keys(estado.respostas).length,
+    questoes: Object.keys(histQ).length,
+    placar: estatPlacar('geral').resp,
+    crono: Object.keys(cronoEstado.feitos).filter(k => cronoEstado.feitos[k]).length,
+    simulados: Array.isArray(h) ? h.length : 0
+  };
+}
+
+function atualizarResumoZerar(){
+  const c = contarProgresso();
+  $('#zerarResumo').textContent = 'Gravado agora: ' + c.rodada + ' questão(ões) marcada(s) na rodada · ' + c.questoes +
+    ' questão(ões) com histórico de respostas · ' + c.placar + ' resposta(s) no placar semanal e geral · ' + c.crono +
+    ' bloco(s) do cronograma · ' + c.simulados + ' simulado(s) no histórico' +
     (persistenciaAtiva ? '' : ' — apenas em memória, sem gravação neste navegador');
 }
-$('#btnZerar').addEventListener('click', function(){
-  $('#btnZerar').style.display = 'none';
-  $('#btnZerarConfirma').style.display = '';
-  $('#btnZerarCancela').style.display = '';
-  $('#zerarResumo').innerHTML = '<span class="confirma">Confirma? Isto apaga tudo o que está listado acima e não pode ser desfeito.</span>';
-});
-$('#btnZerarCancela').addEventListener('click', function(){
-  $('#btnZerar').style.display = '';
-  $('#btnZerarConfirma').style.display = 'none';
-  $('#btnZerarCancela').style.display = 'none';
-  atualizarResumoZerar();
-});
-$('#btnZerarConfirma').addEventListener('click', function(){
+
+function zerarProgresso(){
   LS.limparTudo();
   estado.respostas = {}; estado.ordem = null; estado.simulado = null;
+  Object.keys(histQ).forEach(id => { delete histQ[id]; });
   placar.semanas = Object.create(null);
   cronoEstado.feitos = Object.create(null);
-  $('#btnZerar').style.display = '';
-  $('#btnZerarConfirma').style.display = 'none';
-  $('#btnZerarCancela').style.display = 'none';
   renderQuestoes(); renderCronograma(); renderDesempenho(); renderHistorico();
   atualizarResumoZerar();
   $('#zerarResumo').innerHTML = '<span class="confirma">Progresso zerado.</span> ' +
-    'As chaves <b>trt4:</b> foram removidas deste navegador.';
-});
+    'As chaves <b>trt4:</b> foram removidas deste navegador. ' + esc($('#zerarResumo').textContent);
+}
+
+const dlgZerar = document.getElementById('dlgZerar');
+
+function preencherModalZerar(){
+  const c = contarProgresso();
+  $('#dlgZerarLista').innerHTML = [
+    'as marcações da rodada em curso, no banco de questões: <b>' + plural(c.rodada, 'questão', 'questões') + '</b>;',
+    'o histórico de respostas de cada questão (a faixa “Já respondida”): <b>' + plural(c.questoes, 'questão', 'questões') + '</b>;',
+    'o placar da semana e o geral: <b>' + plural(c.placar, 'resposta', 'respostas') + '</b>;',
+    'os blocos marcados no cronograma: <b>' + plural(c.crono, 'bloco', 'blocos') + '</b>;',
+    'o histórico dos simuladões concluídos: <b>' + plural(c.simulados, 'simulado', 'simulados') + '</b>.'
+  ].map(t => '<li>' + t + '</li>').join('') +
+    (persistenciaAtiva ? '' : '<li>Este navegador não está gravando: esses dados existem só nesta aba.</li>');
+}
+
+function abrirModalZerar(){
+  preencherModalZerar();
+  if(dlgZerar && typeof dlgZerar.showModal === 'function'){
+    dlgZerar.returnValue = '';
+    dlgZerar.showModal();
+    return;
+  }
+  /* Navegador sem janela modal nativa: a mesma explicação, resumida. */
+  const c = contarProgresso();
+  const ok = window.confirm('Zerar progresso?\n\n' +
+    'Apaga deste navegador: ' + plural(c.rodada, 'questão marcada', 'questões marcadas') + ' na rodada, o histórico de ' +
+    plural(c.questoes, 'questão', 'questões') + ', ' + plural(c.placar, 'resposta', 'respostas') + ' do placar, ' +
+    plural(c.crono, 'bloco', 'blocos') + ' do cronograma e ' + plural(c.simulados, 'simulado', 'simulados') + '.\n\n' +
+    'Não há como desfazer. Para só refazer questões, cancele e use "Zerar respostas".');
+  if(ok) zerarProgresso();
+}
+
+$('#btnZerar').addEventListener('click', abrirModalZerar);
+if(dlgZerar){
+  dlgZerar.addEventListener('close', function(){
+    const confirmou = dlgZerar.returnValue === 'confirmar';
+    dlgZerar.returnValue = '';
+    if(confirmou) zerarProgresso(); else atualizarResumoZerar();
+    const botao = $('#btnZerar');
+    if(botao) botao.focus({ preventScroll: true });
+  });
+  /* Esc fecha como Cancelar em qualquer navegador, sem depender do
+     comportamento nativo da janela. */
+  dlgZerar.addEventListener('keydown', function(ev){
+    if(ev.key !== 'Escape' && ev.key !== 'Esc') return;
+    ev.preventDefault();
+    if(dlgZerar.open) dlgZerar.close('cancelar');
+  });
+  /* Clique no fundo escurecido, fora da caixa, equivale a Cancelar. */
+  dlgZerar.addEventListener('click', function(ev){
+    if(ev.target === dlgZerar) dlgZerar.close('cancelar');
+  });
+}
 
 /* =========================================================
    02 RAIO-X DAS PROVAS · 04.2 JURISPRUDÊNCIA · 03.1 MANUAL OPERACIONAL
