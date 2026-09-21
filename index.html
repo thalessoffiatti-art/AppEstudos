@@ -417,6 +417,25 @@ select:focus,input:focus,button:focus-visible,summary:focus-visible,a:focus-visi
 .d-barra em{position:absolute; top:-3px; bottom:-3px; width:2px; background:var(--tinta); opacity:.7}
 .d-vazio{color:var(--tinta-3); font-family:var(--mono)}
 .d-base{display:inline-block; margin-left:8px; color:var(--tinta-3); font-family:var(--mono); font-size:11px}
+.sim-registro{border:1px solid var(--linha); background:var(--superficie); padding:16px 18px; margin:0 0 18px}
+.sim-registro h4{font-size:15px; margin:0 0 6px}
+.sim-registro > p{font-size:13.8px; color:var(--tinta-2); margin:0 0 12px; max-width:70ch}
+.sim-campos{display:flex; flex-wrap:wrap; gap:10px 14px; align-items:flex-end}
+.sim-campo{display:flex; flex-direction:column; gap:5px}
+.sim-campo label{font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--tinta-3)}
+.sim-campo.sim-largo{flex:1 1 100%}
+.sim-campo input{font-family:var(--corpo); font-size:14.5px; padding:8px 10px; border:1px solid var(--linha-forte); background:#fff; color:var(--tinta); border-radius:var(--raio); width:96px}
+.sim-campo input[type=date]{width:auto; min-width:150px}
+.sim-sep{font-family:var(--mono); font-size:12px; color:var(--tinta-3); padding-bottom:10px}
+.sim-msg{min-height:1.3em; margin:10px 0 0; font-size:13.5px; color:var(--tinta-2)}
+.sim-msg.erro{color:var(--carmim)}
+.sim-msg.ok{color:var(--verde)}
+.h-origem{display:block; color:var(--tinta-3); font-family:var(--mono); font-size:10.5px; letter-spacing:.02em}
+.btn-rem-sim{background:none; border:0; padding:0 0 0 6px; color:var(--carmim); font:inherit; text-decoration:underline; cursor:pointer}
+.cr-s7{border-top:1px solid var(--linha); padding-top:10px; margin-top:12px; font-size:13.8px}
+#pg-operacional .op-simreal{border-left:3px solid var(--petroleo); background:var(--superficie); padding:12px 16px; margin:18px 0 6px; font-size:14.5px}
+#pg-operacional .op-simreal h4{font-family:var(--mono); font-size:10.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--petroleo); margin:0 0 6px}
+#pg-operacional .op-simreal p{margin:0 0 6px}
 .link-qc{font-family:var(--mono); font-size:11.5px; color:var(--grifo); text-decoration:none; border-bottom:1px solid var(--grifo-suave); margin-left:14px}
 .link-qc:hover{border-bottom-color:var(--grifo)}
 #pg-operacional .op-qc{display:inline-block; margin-top:6px; font-family:var(--mono); font-size:11.5px; color:var(--grifo); text-decoration:none; border-bottom:1px solid var(--grifo-suave)}
@@ -1081,7 +1100,23 @@ body{
   <p style="font-size:13.2px;color:var(--tinta-3);margin-top:10px">A coluna <b>Na prova</b> reproduz a composição de 2022 — quantas das 60 questões cada disciplina valeu. A coluna <b>Peso na nota</b> é o que de fato conta: cada questão de <b>Conhecimentos Específicos vale 2</b> e cada uma de <b>Gerais vale 1</b>, porque a nota das objetivas é a soma das notas padronizadas multiplicadas por esses pesos (Edital 01/2022, item 9.4). A tabela está ordenada por esse peso, da disciplina mais valiosa para a menos. O traço vertical na barra marca a meta da fase corrente; a barra fica verde quando a meta foi atingida. Na semana 1, que é fase de diagnóstico, não há meta: a barra sai sem traço e a coluna diz <b>linha de base</b>.</p>
 
   <h3 style="font-size:20px;margin:44px 0 6px">Histórico dos simulados</h3>
-  <p style="color:var(--tinta-2);margin-top:0;max-width:70ch">Cada simuladão de 60 questões concluído no banco entra automaticamente nesta lista. Cada linha é medida contra a meta da fase em que o simulado foi feito, não contra a meta de hoje — por isso o diagnóstico da semana 1 aparece como linha de base.</p>
+  <p style="color:var(--tinta-2);margin-top:0;max-width:70ch">Cada simuladão concluído no banco entra automaticamente nesta lista. Desde a semana 5, o simulado de sábado é uma prova real da FCC resolvida no QConcursos — esse você registra no formulário abaixo. Cada linha é medida contra a meta da fase em que o simulado foi feito, não contra a meta de hoje — por isso o diagnóstico da semana 1 aparece como linha de base.</p>
+  <div class="sim-registro">
+    <h4>Registrar simulado feito fora do aplicativo</h4>
+    <p>Escolha a prova: o total de questões válidas, o do bloco crítico e a data do sábado se preenchem sozinhos. Informe os acertos só nas questões válidas — as de disciplinas fora do seu edital ficam de fora, como diz o cartão da semana no manual 03.1.</p>
+    <div class="sim-campos">
+      <div class="sim-campo sim-largo"><label for="simProva">Prova</label><select id="simProva"></select></div>
+      <div class="sim-campo"><label for="simData">Data</label><input type="date" id="simData"></div>
+      <div class="sim-campo"><label for="simAc">Acertos</label><input type="number" id="simAc" min="0" inputmode="numeric"></div>
+      <span class="sim-sep">de</span>
+      <div class="sim-campo"><label for="simTot">Válidas</label><input type="number" id="simTot" min="1" inputmode="numeric"></div>
+      <div class="sim-campo"><label for="simCritAc">Bloco crítico</label><input type="number" id="simCritAc" min="0" inputmode="numeric"></div>
+      <span class="sim-sep">de</span>
+      <div class="sim-campo"><label for="simCritTot">No bloco</label><input type="number" id="simCritTot" min="0" inputmode="numeric"></div>
+    </div>
+    <div style="margin-top:14px"><button type="button" class="btn" id="btnRegistrarSim">Registrar simulado</button></div>
+    <p class="sim-msg" id="simMsg" role="status" aria-live="polite"></p>
+  </div>
   <div id="dpHistorico"></div>
 
   <h3 style="font-size:20px;margin:48px 0 12px">Metas de acompanhamento</h3>
@@ -1100,7 +1135,7 @@ body{
   </div>
   <div class="pegadinha" style="margin-top:16px">
     <b>Regra de corte da semana 7</b>
-    Se na semana 7 o bloco crítico estiver abaixo de 55%, corte o bloco de Raciocínio Lógico das terças e o de questões de Português das segundas — nunca a teoria de Português do sábado — e realoque a hora para Processo do Trabalho. São os dois blocos de conteúdo que você já domina; perder meia hora de lógica para ganhar quatro questões de processo é troca favorável.
+    Se no simulado da semana 7 o bloco crítico ficar abaixo de 55%, corte o bloco de Raciocínio Lógico das terças e o de questões de Português das segundas — nunca a teoria de Português do sábado — e realoque a hora para Processo do Trabalho. São os dois blocos de conteúdo que você já domina; perder meia hora de lógica para ganhar quatro questões de processo é troca favorável.
   </div>
 
   <h3 style="font-size:20px;margin:48px 0 6px">Diagnóstico e realocação</h3>
@@ -1373,6 +1408,20 @@ body{
   <div class="op-hoje" id="opHoje" aria-live="polite"></div>
 
   <div class="op-aviso op-nota op-mudanca">
+    <b class="op-rot">Atualização de 21/09/2026 — vale a partir de segunda-feira, 28/09 (semana 5)</b>
+    O simulado de sábado passa a ser uma prova real da FCC. O motivo é medida: o Simuladão sorteia do banco do aplicativo, e as mesmas questões voltam. Contando só a repetição entre simulados, o da semana 7 já teria 55% de questões vistas e o da semana 10, 69% — as metas da fase e a regra de corte estariam medindo memória, não desempenho.
+    O que muda:
+    <ul>
+      <li>Das semanas 5 a 13, o simulado das <b>15h00 às 17h00</b> de sábado é uma prova de Analista Judiciário, Área Judiciária, aplicada pela FCC em outro TRT e resolvida no QConcursos. O cartão de cada semana, na seção 6, diz qual é a prova, quais questões pular e quantas são do bloco crítico.</li>
+      <li>Você <b>pula as questões de disciplinas que não estão no seu edital</b> — Direito Civil aparece em quase todas. O tempo continua o mesmo: duas horas.</li>
+      <li>Depois da correção, você <b>registra o resultado</b> no painel “Histórico dos simulados”, na página 03: acertos nas questões válidas e acertos no bloco crítico.</li>
+      <li>A <b>regra de corte da semana 7</b> passa a usar o bloco crítico registrado da prova daquela semana.</li>
+    </ul>
+    O que não muda: os horários, os outros blocos e o procedimento P13, que só troca a fonte das questões. A semana 4, que começa hoje, segue com o Simuladão do aplicativo.
+    De onde vêm as provas: a FCC aplicou pelo menos 16 provas deste cargo em TRTs de 2022 a 2025. Ficaram as nove com mais questões do seu edital e mais questões do bloco crítico. Outras seis ficam de reserva — 2023 · TRT-21 (RN), 2025 · TRT-15 (SP), 2022 · TRT-23 (MT), 2024 · TRT-7 (CE), 2025 · TRT-6 (PE), 2025 · TRT-1 (RJ) — para o simulado extra do feriado de 02/11 e para o módulo de sustentação, se a prova cair em dezembro. A prova do TRT4 de 2022 ficou de fora porque você já a fez.
+  </div>
+
+  <div class="op-aviso op-nota op-mudanca">
     <b class="op-rot">Atualização de 17/09/2026 — vale a partir de segunda-feira, 21/09 (semana 4)</b>
     A conferência do plano contra o Anexo II do Edital nº 01/2022 mostrou que quatro pontos do programa não tinham bloco nenhum na grade: Raciocínio Lógico, a teoria de Direito do Trabalho, a maior parte de Língua Portuguesa e uma dezena de itens soltos de Processo do Trabalho e Constitucional. Como Português, Direito do Trabalho e Raciocínio Lógico somam 27 das 60 questões, a grade ganhou <b>2h20 semanais</b> — de 21h para 23h25 de estudo efetivo — e três blocos novos.
     O que muda:
@@ -1583,7 +1632,7 @@ body{
       <summary><span class="op-nome">Sábado</span><span class="op-janela">15h00 – 20h00</span><span class="op-foco">Simulado, correção e Português</span></summary>
       <div class="op-trilho">
         <div class="op-tr"><div class="op-hora">14h50–15h00</div><div class="op-oque"><b>Preparação</b>Banheiro, água na mesa, celular em outro cômodo, folha de respostas em branco, timer de 2h. Nada de revisar antes do simulado — ele mede o que ficou, não o que você acabou de ler.<span class="op-proc">P1</span></div></div>
-        <div class="op-tr"><div class="op-hora">15h00–17h00</div><div class="op-oque"><b>Simulado — 60 questões, sem consulta</b>Use o botão “Simuladão” no banco de questões. Duas horas cronometradas, sem parar. Desde a semana 4, o simulado começa às 15h00.<span class="op-proc">P13</span></div></div>
+        <div class="op-tr"><div class="op-hora">15h00–17h00</div><div class="op-oque"><b>Simulado — 60 questões, sem consulta</b>Até a semana 4, botão “Simuladão” no banco de questões; desde a semana 5, a prova real indicada no cartão da semana, no QConcursos, só com as questões válidas. Duas horas cronometradas, sem parar. Desde a semana 4, o simulado começa às 15h00.<span class="op-proc">P13</span></div></div>
         <div class="op-tr op-pausa"><div class="op-hora">17h00–17h30</div><div class="op-oque"><b>Pausa longa</b>Trinta minutos, fora da mesa. Não olhe o resultado ainda.</div></div>
         <div class="op-tr"><div class="op-hora">17h30–18h45</div><div class="op-oque"><b>Correção comentada de todos os erros</b>Inclui as que você acertou por eliminação.<span class="op-proc">P14</span></div></div>
         <div class="op-tr op-pausa"><div class="op-hora">18h45–18h55</div><div class="op-oque"><b>Micropausa de pé</b>Dez minutos longe da mesa. Sem tela.</div></div>
@@ -1771,11 +1820,12 @@ body{
     <div class="op-p">
       <h3><span class="op-cod">P13</span> Simulado <span class="op-dur">sábado, 120 minutos</span></h3>
       <ol>
-        <li>(2 min) Botão <b>Simuladão</b> no banco de questões. Ele sorteia 60 questões na proporção da prova de 2022.</li>
+        <li>(2 min) Até a semana 4: botão <b>Simuladão</b> no banco de questões, que sorteia 60 questões na proporção da prova de 2022. Desde a semana 5: abra no QConcursos a prova real indicada no cartão da semana (seção 6) e anote no papel as disciplinas que você vai pular — cada questão mostra a disciplina no alto.</li>
         <li>(0 min) Ligue o timer de 118 minutos. A partir daqui não há pausa, não há consulta e não há conferir gabarito no meio.</li>
         <li>Ritmo: cerca de dois minutos por questão. Se uma passar de três minutos, marque a melhor alternativa, ponha um círculo ao lado do número na sua folha e siga.</li>
         <li>Ao terminar a primeira passada, volte apenas às circuladas, com o tempo que sobrar.</li>
         <li>(2 min) Antes de ver o resultado, escreva no caderno quantas você acha que acertou. Comparar a estimativa com o resultado real mede sua calibragem — e calibragem ruim é o que faz perder questão por insegurança.</li>
+        <li>Desde a semana 5, ao fim da correção comentada: registre no painel “Histórico dos simulados”, na página 03, os acertos nas questões válidas e os acertos no bloco crítico. A data já vem com o sábado da semana.</li>
       </ol>
       <div class="op-parada">
         <b>Não revise antes</b>
@@ -2298,6 +2348,13 @@ body{
     </tbody>
   </table>
 
+  <div class="op-simreal">
+    <h4>Sábado, 15h00–17h00 · Simulado com prova real</h4>
+    <p><a href="https://www.qconcursos.com/questoes-de-concursos/provas/fcc-2022-trt-14-regiao-ro-e-ac-analista-judiciario-area-judiciaria" target="_blank" rel="noopener">FCC 2022 · TRT-14 (RO/AC) — Analista Judiciário, Área Judiciária ↗</a> · aplicada em 10/12/2022</p>
+    <p><b>Valem 50 das 60 questões.</b> Pule as 10 de disciplinas fora do seu edital: 6 de Direito Civil, 1 de Direito Penal, 1 de Legislação dos Tribunais do Trabalho e 2 de Legislação dos TRFs, STJ, STF e CNJ.</p>
+    <p><b>Bloco crítico: 12 questões</b> — 7 de Processo do Trabalho e 5 de Processo Civil. Conte os acertos dele à parte.</p>
+    <p class="op-como">Procedimento P13. Depois da correção, registre o resultado no painel da página 03.</p>
+  </div>
   <div class="op-revisoes">
     <div class="op-rev op-rev-seg">
       <h4>Segunda, 15h30–16h00 · R7 — sete dias</h4>
@@ -2395,6 +2452,13 @@ body{
     </tbody>
   </table>
 
+  <div class="op-simreal">
+    <h4>Sábado, 15h00–17h00 · Simulado com prova real</h4>
+    <p><a href="https://www.qconcursos.com/questoes-de-concursos/provas/fcc-2023-trt-18-regiao-go-analista-judiciario-area-judiciaria" target="_blank" rel="noopener">FCC 2023 · TRT-18 (GO) — Analista Judiciário, Área Judiciária ↗</a> · aplicada em 11/02/2023</p>
+    <p><b>Valem 53 das 60 questões.</b> Pule as 7 de disciplinas fora do seu edital: 4 de Direito Civil e 3 de Legislação dos Tribunais do Trabalho.</p>
+    <p><b>Bloco crítico: 10 questões</b> — 6 de Processo do Trabalho e 4 de Processo Civil. Conte os acertos dele à parte.</p>
+    <p class="op-como">Procedimento P13. Depois da correção, registre o resultado no painel da página 03.</p>
+  </div>
   <div class="op-revisoes">
     <div class="op-rev op-rev-seg">
       <h4>Segunda, 15h30–16h00 · R7 — sete dias</h4>
@@ -2492,6 +2556,14 @@ body{
     </tbody>
   </table>
 
+  <div class="op-simreal">
+    <h4>Sábado, 15h00–17h00 · Simulado com prova real</h4>
+    <p><a href="https://www.qconcursos.com/questoes-de-concursos/provas/fcc-2022-trt-22-regiao-pi-analista-judiciario-area-judiciaria" target="_blank" rel="noopener">FCC 2022 · TRT-22 (PI) — Analista Judiciário, Área Judiciária ↗</a> · aplicada em 18/09/2022</p>
+    <p><b>Valem 53 das 60 questões.</b> Pule as 7 de disciplinas fora do seu edital: 5 de Direito Civil e 2 de Legislação dos Tribunais do Trabalho.</p>
+    <p><b>Bloco crítico: 15 questões</b> — 10 de Processo do Trabalho e 5 de Processo Civil. Conte os acertos dele à parte.</p>
+    <p>É a prova da <b>regra de corte</b>: o bloco crítico dela decide se a grade muda a partir da semana 8. Registre o bloco crítico sem falta.</p>
+    <p class="op-como">Procedimento P13. Depois da correção, registre o resultado no painel da página 03.</p>
+  </div>
   <div class="op-revisoes">
     <div class="op-rev op-rev-seg">
       <h4>Segunda, 15h30–16h00 · R7 — sete dias</h4>
@@ -2589,6 +2661,14 @@ body{
     </tbody>
   </table>
 
+  <div class="op-simreal">
+    <h4>Sábado, 15h00–17h00 · Simulado com prova real</h4>
+    <p><a href="https://www.qconcursos.com/questoes-de-concursos/provas/fcc-2023-trt-12-regiao-sc-analista-judiciario-area-judiciaria" target="_blank" rel="noopener">FCC 2023 · TRT-12 (SC) — Analista Judiciário, Área Judiciária ↗</a> · aplicada em 21/10/2023</p>
+    <p><b>Valem 49 das 60 questões.</b> Pule as 11 de disciplinas fora do seu edital: 6 de Direito Civil, 1 de Direito Penal, 1 de Direito Empresarial (Comercial), 2 de Legislação dos Tribunais do Trabalho e 1 de Legislação dos TRFs, STJ, STF e CNJ.</p>
+    <p><b>Bloco crítico: 13 questões</b> — 7 de Processo do Trabalho e 6 de Processo Civil. Conte os acertos dele à parte.</p>
+    <p>A questão de Legislação Federal sobre a Lei 8.987 (concessões) <b>vale</b>: é ponto de Direito Administrativo do seu edital.</p>
+    <p class="op-como">Procedimento P13. Depois da correção, registre o resultado no painel da página 03.</p>
+  </div>
   <div class="op-revisoes">
     <div class="op-rev op-rev-seg">
       <h4>Segunda, 15h30–16h00 · R7 — sete dias</h4>
@@ -2680,6 +2760,13 @@ body{
     </tbody>
   </table>
 
+  <div class="op-simreal">
+    <h4>Sábado, 15h00–17h00 · Simulado com prova real</h4>
+    <p><a href="https://www.qconcursos.com/questoes-de-concursos/provas/fcc-2022-trt-5-regiao-ba-analista-judiciario-area-judiciaria" target="_blank" rel="noopener">FCC 2022 · TRT-5 (BA) — Analista Judiciário, Área Judiciária ↗</a> · aplicada em 03/12/2022</p>
+    <p><b>Valem 52 das 60 questões.</b> Pule as 8 de disciplinas fora do seu edital: 6 de Direito Civil e 2 de Legislação dos Tribunais do Trabalho.</p>
+    <p><b>Bloco crítico: 15 questões</b> — 10 de Processo do Trabalho, 4 de Processo Civil e 1 de Estatuto da Pessoa com Deficiência. Conte os acertos dele à parte.</p>
+    <p class="op-como">Procedimento P13. Depois da correção, registre o resultado no painel da página 03.</p>
+  </div>
   <div class="op-revisoes">
     <div class="op-rev op-rev-seg">
       <h4>Segunda, 15h30–16h00 · R7 — sete dias</h4>
@@ -2778,6 +2865,14 @@ body{
     </tbody>
   </table>
 
+  <div class="op-simreal">
+    <h4>Sábado, 15h00–17h00 · Simulado com prova real</h4>
+    <p><a href="https://www.qconcursos.com/questoes-de-concursos/provas/fcc-2024-trt-20-regiao-se-analista-judiciario-area-judiciaria" target="_blank" rel="noopener">FCC 2024 · TRT-20 (SE) — Analista Judiciário, Área Judiciária ↗</a> · aplicada em 14/12/2024</p>
+    <p><b>Valem 52 das 60 questões.</b> Pule as 8 de disciplinas fora do seu edital: 5 de Direito Civil e 3 de Noções de Informática.</p>
+    <p><b>Bloco crítico: 15 questões</b> — 10 de Processo do Trabalho e 5 de Processo Civil. Conte os acertos dele à parte.</p>
+    <p>Semana de pico de preparo.</p>
+    <p class="op-como">Procedimento P13. Depois da correção, registre o resultado no painel da página 03.</p>
+  </div>
   <div class="op-revisoes">
     <div class="op-rev op-rev-seg">
       <h4>Segunda, 15h30–16h00 · R7 — sete dias</h4>
@@ -2869,6 +2964,14 @@ body{
     </tbody>
   </table>
 
+  <div class="op-simreal">
+    <h4>Sábado, 15h00–17h00 · Simulado com prova real</h4>
+    <p><a href="https://www.qconcursos.com/questoes-de-concursos/provas/fcc-2022-trt-17-regiao-es-analista-judiciario-area-judiciaria" target="_blank" rel="noopener">FCC 2022 · TRT-17 (ES) — Analista Judiciário, Área Judiciária ↗</a> · aplicada em 10/12/2022</p>
+    <p><b>Valem 62 das 70 questões.</b> Pule as 8 de disciplinas fora do seu edital: 5 de Direito Civil e 3 de Legislação dos Tribunais do Trabalho.</p>
+    <p><b>Bloco crítico: 13 questões</b> — 8 de Processo do Trabalho e 5 de Processo Civil. Conte os acertos dele à parte.</p>
+    <p>Esta prova tem 70 questões. O tempo continua o mesmo, então o ritmo é um pouco mais rápido.</p>
+    <p class="op-como">Procedimento P13. Depois da correção, registre o resultado no painel da página 03.</p>
+  </div>
   <div class="op-revisoes">
     <div class="op-rev op-rev-seg">
       <h4>Segunda, 15h30–16h00 · R7 — sete dias</h4>
@@ -2960,6 +3063,13 @@ body{
     </tbody>
   </table>
 
+  <div class="op-simreal">
+    <h4>Sábado, 15h00–17h00 · Simulado com prova real</h4>
+    <p><a href="https://www.qconcursos.com/questoes-de-concursos/provas/fcc-2022-trt-9-regiao-pr-analista-judiciario-area-judiciaria" target="_blank" rel="noopener">FCC 2022 · TRT-9 (PR) — Analista Judiciário, Área Judiciária ↗</a> · aplicada em 14/08/2022</p>
+    <p><b>Valem 55 das 60 questões.</b> Pule as 5 de disciplinas fora do seu edital: 5 de Direito Civil.</p>
+    <p><b>Bloco crítico: 15 questões</b> — 10 de Processo do Trabalho e 5 de Processo Civil. Conte os acertos dele à parte.</p>
+    <p class="op-como">Procedimento P13. Depois da correção, registre o resultado no painel da página 03.</p>
+  </div>
   <div class="op-revisoes">
     <div class="op-rev op-rev-seg">
       <h4>Segunda, 15h30–16h00 · R7 — sete dias</h4>
@@ -3058,6 +3168,14 @@ body{
     </tbody>
   </table>
 
+  <div class="op-simreal">
+    <h4>Sábado, 15h00–17h00 · Simulado com prova real</h4>
+    <p><a href="https://www.qconcursos.com/questoes-de-concursos/provas/fcc-2025-trt-2-regiao-sp-analista-judiciario-area-judiciaria" target="_blank" rel="noopener">FCC 2025 · TRT-2 (SP) — Analista Judiciário, Área Judiciária ↗</a> · aplicada em 03/08/2025</p>
+    <p><b>Valem 48 das 60 questões.</b> Pule as 12 de disciplinas fora do seu edital: 4 de Direito Civil, 2 de Direito Previdenciário, 1 de Direito Eleitoral, 2 de Noções de Informática, 1 de Segurança da Informação e 2 de Legislação dos TRFs, STJ, STF e CNJ.</p>
+    <p><b>Bloco crítico: 14 questões</b> — 6 de Processo do Trabalho, 5 de Processo Civil, 2 de Estatuto da Pessoa com Deficiência e 1 de Legislação Federal (Lei 8.009, bem de família). Conte os acertos dele à parte.</p>
+    <p>É a prova mais recente da lista e segue o modelo atual da FCC, com estudo de caso para este cargo.</p>
+    <p class="op-como">Procedimento P13. Depois da correção, registre o resultado no painel da página 03.</p>
+  </div>
   <div class="op-revisoes">
     <div class="op-rev op-rev-seg">
       <h4>Segunda, 15h30–16h00 · R7 — sete dias</h4>
@@ -4000,6 +4118,7 @@ body{
       <a href="https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm#art114" target="_blank" rel="noopener">CF — art. 114</a>
       <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2017/lei/l13467.htm" target="_blank" rel="noopener">Lei 13.467/2017</a>
       <a href="https://www.planalto.gov.br/ccivil_03/leis/l5584.htm" target="_blank" rel="noopener">Lei 5.584/1970</a>
+      <a href="https://www.planalto.gov.br/ccivil_03/leis/l6858.htm" target="_blank" rel="noopener">Lei 6.858/1980</a>
       <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13105.htm" target="_blank" rel="noopener">CPC/2015</a>
       <a href="https://www.planalto.gov.br/ccivil_03/_ato2004-2006/2006/lei/l11419.htm" target="_blank" rel="noopener">Lei 11.419/2006</a>
     </div>
@@ -4376,6 +4495,10 @@ body{
         <div class="pegadinha">
           <b>Pegadinha clássica</b>
           Agravo de petição só é conhecido se o agravante <b>delimitar justificadamente as matérias e os valores impugnados</b>, permitindo a execução imediata da parte incontroversa (art. 897, § 1º). Faltando essa delimitação, o recurso não é conhecido.
+        </div>
+        <div class="base">
+          <b>Leitura integral: Leis 6.858/1980 e 5.584/1970</b>
+          As duas fecham o programa de Processo do Trabalho no edital e são curtas: o material não as reproduz, leia direto no texto da lei. A <a href="https://www.planalto.gov.br/ccivil_03/leis/l5584.htm" target="_blank" rel="noopener">Lei 5.584/1970</a>, de normas processuais trabalhistas e assistência judiciária, já aparece em partes ao longo da grade — arts. 14 a 18, sobre a assistência judiciária prestada pelo sindicato, na semana 2; art. 2º, §§ 3º e 4º, o procedimento de alçada de até dois salários mínimos, na semana 5; art. 6º, o prazo de oito dias para recorrer, na semana 7; e arts. 2º e 3º na sexta da semana 8 (23/10), das 17h00 às 17h15, no bloco de valor da causa, distribuição e alçada. Na sexta da semana 12 (20/11), das 17h00 às 17h15, ela é lida por inteiro junto com a <a href="https://www.planalto.gov.br/ccivil_03/leis/l6858.htm" target="_blank" rel="noopener">Lei 6.858/1980</a>, que trata dos valores não recebidos em vida: o que o empregador devia ao empregado e os saldos de FGTS e PIS-PASEP são pagos em quotas iguais aos dependentes habilitados na Previdência Social e, na falta deles, aos sucessores indicados em alvará judicial, sem inventário nem arrolamento. É o procedimento P16: uma leitura e três linhas no caderno.
         </div>
       </div>
     </details>
@@ -6054,6 +6177,37 @@ body{
     </div>
   </div>
 
+  <div class="prova-bloco" style="border-color:var(--petroleo)">
+    <div class="prova-cab" style="background:#F2F7F8">
+      <h4>Simulados de sábado — provas deste cargo aplicadas pela FCC em outros TRTs</h4>
+      <span class="acao"></span>
+    </div>
+    <div class="chips" style="display:block">
+      <p style="margin:0 0 14px;font-size:14.5px">Das semanas 5 a 13, o simulado de sábado é uma destas provas, resolvida no QConcursos só nas questões do seu edital. "Válidas" são as questões que estão no programa do TRT4; o cartão de cada semana, no manual 03.1, lista as que você pula.</p>
+      <div class="tabela-rolagem"><table class="tabela">
+        <thead><tr><th>Semana</th><th>Prova</th><th style="text-align:right">Questões válidas</th><th style="text-align:right">Bloco crítico</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">05</td><td><a href="https://www.qconcursos.com/questoes-de-concursos/provas/fcc-2022-trt-14-regiao-ro-e-ac-analista-judiciario-area-judiciaria" target="_blank" rel="noopener">FCC 2022 · TRT-14 (RO/AC) ↗</a></td><td class="n">50 de 60</td><td class="n">12</td></tr>
+          <tr><td class="mono">06</td><td><a href="https://www.qconcursos.com/questoes-de-concursos/provas/fcc-2023-trt-18-regiao-go-analista-judiciario-area-judiciaria" target="_blank" rel="noopener">FCC 2023 · TRT-18 (GO) ↗</a></td><td class="n">53 de 60</td><td class="n">10</td></tr>
+          <tr><td class="mono">07</td><td><a href="https://www.qconcursos.com/questoes-de-concursos/provas/fcc-2022-trt-22-regiao-pi-analista-judiciario-area-judiciaria" target="_blank" rel="noopener">FCC 2022 · TRT-22 (PI) ↗</a></td><td class="n">53 de 60</td><td class="n">15</td></tr>
+          <tr><td class="mono">08</td><td><a href="https://www.qconcursos.com/questoes-de-concursos/provas/fcc-2023-trt-12-regiao-sc-analista-judiciario-area-judiciaria" target="_blank" rel="noopener">FCC 2023 · TRT-12 (SC) ↗</a></td><td class="n">49 de 60</td><td class="n">13</td></tr>
+          <tr><td class="mono">09</td><td><a href="https://www.qconcursos.com/questoes-de-concursos/provas/fcc-2022-trt-5-regiao-ba-analista-judiciario-area-judiciaria" target="_blank" rel="noopener">FCC 2022 · TRT-5 (BA) ↗</a></td><td class="n">52 de 60</td><td class="n">15</td></tr>
+          <tr><td class="mono">10</td><td><a href="https://www.qconcursos.com/questoes-de-concursos/provas/fcc-2024-trt-20-regiao-se-analista-judiciario-area-judiciaria" target="_blank" rel="noopener">FCC 2024 · TRT-20 (SE) ↗</a></td><td class="n">52 de 60</td><td class="n">15</td></tr>
+          <tr><td class="mono">11</td><td><a href="https://www.qconcursos.com/questoes-de-concursos/provas/fcc-2022-trt-17-regiao-es-analista-judiciario-area-judiciaria" target="_blank" rel="noopener">FCC 2022 · TRT-17 (ES) ↗</a></td><td class="n">62 de 70</td><td class="n">13</td></tr>
+          <tr><td class="mono">12</td><td><a href="https://www.qconcursos.com/questoes-de-concursos/provas/fcc-2022-trt-9-regiao-pr-analista-judiciario-area-judiciaria" target="_blank" rel="noopener">FCC 2022 · TRT-9 (PR) ↗</a></td><td class="n">55 de 60</td><td class="n">15</td></tr>
+          <tr><td class="mono">13</td><td><a href="https://www.qconcursos.com/questoes-de-concursos/provas/fcc-2025-trt-2-regiao-sp-analista-judiciario-area-judiciaria" target="_blank" rel="noopener">FCC 2025 · TRT-2 (SP) ↗</a></td><td class="n">48 de 60</td><td class="n">14</td></tr>
+        </tbody>
+      </table></div>
+      <p style="margin:16px 0 10px;font-size:14.5px">Reservas, para o simulado extra do feriado de 02/11 e para o módulo de sustentação:</p>
+      <a class="chip" href="https://www.qconcursos.com/questoes-de-concursos/provas/fcc-2023-trt-21-regiao-rn-analista-judiciario-area-judiciaria" target="_blank" rel="noopener">FCC 2023 · TRT-21 (RN) · 46 válidas de 60 →</a>
+      <a class="chip" href="https://www.qconcursos.com/questoes-de-concursos/provas/fcc-2025-trt-15-regiao-sp-analista-judiciario-area-judiciaria" target="_blank" rel="noopener">FCC 2025 · TRT-15 (SP) · 42 válidas de 60 →</a>
+      <a class="chip" href="https://www.qconcursos.com/questoes-de-concursos/provas/fcc-2022-trt-23-regiao-mt-analista-judiciario-area-judiciaria" target="_blank" rel="noopener">FCC 2022 · TRT-23 (MT) · 45 válidas de 60 →</a>
+      <a class="chip" href="https://www.qconcursos.com/questoes-de-concursos/provas/fcc-2024-trt-7-regiao-ce-analista-judiciario-area-judiciaria" target="_blank" rel="noopener">FCC 2024 · TRT-7 (CE) · 55 válidas de 80 →</a>
+      <a class="chip" href="https://www.qconcursos.com/questoes-de-concursos/provas/fcc-2025-trt-6-regiao-pe-analista-judiciario-area-judiciaria" target="_blank" rel="noopener">FCC 2025 · TRT-6 (PE) · 40 válidas de 60 →</a>
+      <a class="chip" href="https://www.qconcursos.com/questoes-de-concursos/provas/fcc-2025-trt-1-regiao-rj-analista-judiciario-area-judiciaria" target="_blank" rel="noopener">FCC 2025 · TRT-1 (RJ) · 39 válidas de 60 →</a>
+    </div>
+  </div>
+
   <h3 style="font-size:20px;margin:44px 0 6px">Fontes oficiais dos editais</h3>
   <p style="color:var(--tinta-2);margin-top:0">Para conferir o conteúdo programático na fonte primária:</p>
   <div class="chips" style="padding-left:0">
@@ -6199,6 +6353,28 @@ body{
     <div class="modal-acoes">
       <button type="submit" class="btn sec" value="cancelar" id="btnZerarCancela" autofocus>Cancelar</button>
       <button type="submit" class="btn perigo" value="confirmar" id="btnZerarConfirma">Confirmar</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="dlgRemoverSim" class="modal" aria-labelledby="dlgRemoverSimTitulo" aria-describedby="dlgRemoverSimQual">
+  <form method="dialog" class="modal-corpo">
+    <div class="modal-texto">
+      <p class="rotulo">03 — Cronograma · histórico dos simulados</p>
+      <h3 id="dlgRemoverSimTitulo">Remover este simulado?</h3>
+      <p id="dlgRemoverSimQual"></p>
+      <h4>O que acontece se você confirmar</h4>
+      <ul>
+        <li>O registro sai do histórico e do gráfico de evolução.</li>
+        <li>Se for o simulado da semana 7, a regra de corte deixa de ter o número do bloco crítico.</li>
+        <li class="modal-alerta">Não há como desfazer — mas você pode registrá-lo de novo, com os números certos.</li>
+      </ul>
+      <h4>O que não muda</h4>
+      <p>Os outros simulados, o placar e o cronograma continuam iguais. Simulados feitos no próprio aplicativo não podem ser removidos por aqui.</p>
+    </div>
+    <div class="modal-acoes">
+      <button type="submit" class="btn sec" value="cancelar" autofocus>Cancelar</button>
+      <button type="submit" class="btn perigo" value="confirmar">Remover</button>
     </div>
   </form>
 </dialog>
@@ -6843,7 +7019,7 @@ const CRONOGRAMA = [
      {id:'s5-pt', mat:'Língua Portuguesa', titulo:'Classes de palavras e termos da oração', anc:'pt-sintaxe', dia:'Segunda, 30 min'},
      {id:'s5-avulso', mat:'Direito Processual do Trabalho', titulo:'Custas, emolumentos, gratuidade da justiça e honorários periciais', anc:'dpt-custas', dia:'Sexta, 15 min'},
      {id:'s5-caso', mat:'Estudo de caso', titulo:'Caso manuscrito cronometrado e autocorreção.', anc:'dpt-atos-prazos', dia:'Sexta, 1h45'},
-     {id:'s5-sim', mat:'Simulado', titulo:'Simulado de 60 questões cronometradas e correção comentada dos erros', anc:null, dia:'Sábado'}
+     {id:'s5-sim', mat:'Simulado', titulo:'Simulado com prova real: FCC 2022 · TRT-14 (RO/AC) — 50 questões válidas, correção comentada dos erros', anc:null, dia:'Sábado'}
    ]},
   {semana:6, inicio:'2026-10-05', fim:'2026-10-10', marco:false,
    blocos:[
@@ -6859,7 +7035,7 @@ const CRONOGRAMA = [
      {id:'s6-pt', mat:'Língua Portuguesa', titulo:'Processos de coordenação e subordinação', anc:'pt-sintaxe', dia:'Segunda, 30 min'},
      {id:'s6-avulso', mat:'Direito Processual do Trabalho', titulo:'Exceções, conflitos de competência e responsabilidade por dano processual', anc:'dpt-excecoes', dia:'Sexta, 15 min'},
      {id:'s6-caso', mat:'Estudo de caso', titulo:'Caso manuscrito cronometrado e autocorreção.', anc:'dpt-dissidio', dia:'Sexta, 1h45'},
-     {id:'s6-sim', mat:'Simulado', titulo:'Simulado de 60 questões cronometradas e correção comentada dos erros', anc:null, dia:'Sábado'}
+     {id:'s6-sim', mat:'Simulado', titulo:'Simulado com prova real: FCC 2023 · TRT-18 (GO) — 53 questões válidas, correção comentada dos erros', anc:null, dia:'Sábado'}
    ]},
   {semana:7, inicio:'2026-10-12', fim:'2026-10-17', marco:false,
    blocos:[
@@ -6875,7 +7051,7 @@ const CRONOGRAMA = [
      {id:'s7-pt', mat:'Língua Portuguesa', titulo:'Emprego dos sinais de pontuação', anc:'pt-pontuacao', dia:'Segunda, 30 min'},
      {id:'s7-avulso', mat:'Direito Processual do Trabalho', titulo:'Prescrição, decadência e prescrição intercorrente', anc:'dt-principios', dia:'Sexta, 15 min'},
      {id:'s7-caso', mat:'Estudo de caso', titulo:'Caso manuscrito cronometrado e autocorreção.', anc:'dpt-execucao', dia:'Sexta, 1h45'},
-     {id:'s7-sim', mat:'Simulado', titulo:'Simulado de 60 questões cronometradas e correção comentada dos erros', anc:null, dia:'Sábado'}
+     {id:'s7-sim', mat:'Simulado', titulo:'Simulado com prova real: FCC 2022 · TRT-22 (PI) — 53 questões válidas, correção comentada dos erros', anc:null, dia:'Sábado'}
    ]},
   {semana:8, inicio:'2026-10-19', fim:'2026-10-24', marco:false,
    blocos:[
@@ -6891,7 +7067,7 @@ const CRONOGRAMA = [
      {id:'s8-pt', mat:'Língua Portuguesa', titulo:'Concordância nominal e verbal', anc:'pt-crase-conc', dia:'Segunda, 30 min'},
      {id:'s8-avulso', mat:'Direito Processual do Trabalho', titulo:'Valor da causa, distribuição e alçada', anc:'dpt-dissidio', dia:'Sexta, 15 min'},
      {id:'s8-caso', mat:'Estudo de caso', titulo:'Caso manuscrito cronometrado e autocorreção.', anc:'dpt-recursos', dia:'Sexta, 1h45'},
-     {id:'s8-sim', mat:'Simulado', titulo:'Simulado de 60 questões cronometradas e correção comentada dos erros', anc:null, dia:'Sábado'}
+     {id:'s8-sim', mat:'Simulado', titulo:'Simulado com prova real: FCC 2023 · TRT-12 (SC) — 49 questões válidas, correção comentada dos erros', anc:null, dia:'Sábado'}
    ]},
   {semana:9, inicio:'2026-10-26', fim:'2026-10-31', marco:false,
    blocos:[
@@ -6906,7 +7082,7 @@ const CRONOGRAMA = [
      {id:'s9-pt', mat:'Língua Portuguesa', titulo:'Regência nominal e verbal', anc:'pt-crase-conc', dia:'Segunda, 30 min'},
      {id:'s9-avulso', mat:'Direito Processual do Trabalho', titulo:'Representação da massa falida e da empresa em recuperação judicial', anc:'dpt-partes', dia:'Sexta, 15 min'},
      {id:'s9-caso', mat:'Estudo de caso', titulo:'Caso manuscrito cronometrado e autocorreção.', anc:'dpt-recursos', dia:'Sexta, 1h45'},
-     {id:'s9-sim', mat:'Simulado', titulo:'Simulado de 60 questões cronometradas e correção comentada dos erros', anc:null, dia:'Sábado'}
+     {id:'s9-sim', mat:'Simulado', titulo:'Simulado com prova real: FCC 2022 · TRT-5 (BA) — 52 questões válidas, correção comentada dos erros', anc:null, dia:'Sábado'}
    ]},
   {semana:10, inicio:'2026-11-02', fim:'2026-11-07', marco:true,
    blocos:[
@@ -6922,7 +7098,7 @@ const CRONOGRAMA = [
      {id:'s10-pt', mat:'Língua Portuguesa', titulo:'Tempos e modos verbais, vozes e flexão', anc:'pt-verbos', dia:'Segunda, 30 min'},
      {id:'s10-avulso', mat:'Direito Processual do Trabalho', titulo:'Política judiciária de tratamento adequado das disputas — conciliação e mediação', anc:'dpt-especiais', dia:'Sexta, 15 min'},
      {id:'s10-caso', mat:'Estudo de caso', titulo:'Caso manuscrito cronometrado e autocorreção.', anc:'dpt-recursos', dia:'Sexta, 1h45'},
-     {id:'s10-sim', mat:'Simulado', titulo:'Simulado de 60 questões cronometradas e correção comentada dos erros', anc:null, dia:'Sábado'}
+     {id:'s10-sim', mat:'Simulado', titulo:'Simulado com prova real: FCC 2024 · TRT-20 (SE) — 52 questões válidas, correção comentada dos erros', anc:null, dia:'Sábado'}
    ]},
   {semana:11, inicio:'2026-11-09', fim:'2026-11-14', marco:false,
    blocos:[
@@ -6937,7 +7113,7 @@ const CRONOGRAMA = [
      {id:'s11-pt', mat:'Língua Portuguesa', titulo:'Pronomes: emprego, colocação e formas de tratamento', anc:'pt-sintaxe', dia:'Segunda, 30 min'},
      {id:'s11-avulso', mat:'Direito Processual do Trabalho', titulo:'Ação civil pública, IDPJ e homologação de acordo extrajudicial', anc:'dpt-especiais', dia:'Sexta, 15 min'},
      {id:'s11-caso', mat:'Estudo de caso', titulo:'Dois casos na semana, priorizando Processo do Trabalho e Direito Administrativo.', anc:'dpt-execucao', dia:'Sexta, 1h45'},
-     {id:'s11-sim', mat:'Simulado', titulo:'Simulado de 60 questões cronometradas e correção comentada dos erros', anc:null, dia:'Sábado'}
+     {id:'s11-sim', mat:'Simulado', titulo:'Simulado com prova real: FCC 2022 · TRT-17 (ES) — 62 questões válidas, correção comentada dos erros', anc:null, dia:'Sábado'}
    ]},
   {semana:12, inicio:'2026-11-16', fim:'2026-11-21', marco:false,
    blocos:[
@@ -6952,7 +7128,7 @@ const CRONOGRAMA = [
      {id:'s12-pt', mat:'Língua Portuguesa', titulo:'Mecanismos de coesão e coerência textual', anc:'pt-coesao', dia:'Segunda, 30 min'},
      {id:'s12-avulso', mat:'Direito Processual do Trabalho', titulo:'Lei 6.858/1980, Lei 5.584/1970 e impenhorabilidade na execução', anc:'dpt-execucao', dia:'Sexta, 15 min'},
      {id:'s12-caso', mat:'Estudo de caso', titulo:'Dois casos na semana, priorizando Processo do Trabalho e Direito Administrativo.', anc:'dpt-especiais', dia:'Sexta, 1h45'},
-     {id:'s12-sim', mat:'Simulado', titulo:'Simulado de 60 questões cronometradas e correção comentada dos erros', anc:null, dia:'Sábado'}
+     {id:'s12-sim', mat:'Simulado', titulo:'Simulado com prova real: FCC 2022 · TRT-9 (PR) — 55 questões válidas, correção comentada dos erros', anc:null, dia:'Sábado'}
    ]},
   {semana:13, inicio:'2026-11-23', fim:'2026-11-28', marco:false,
    blocos:[
@@ -6968,7 +7144,7 @@ const CRONOGRAMA = [
      {id:'s13-pt', mat:'Língua Portuguesa', titulo:'Ortografia oficial, acentuação gráfica e equivalência de sentido', anc:'pt-ortografia', dia:'Segunda, 30 min'},
      {id:'s13-avulso', mat:'Direito Processual do Trabalho', titulo:'Súmulas vinculantes do STF em matéria trabalhista e revisão dos pontos avulsos', anc:'mat-dpt', dia:'Sexta, 15 min'},
      {id:'s13-caso', mat:'Estudo de caso', titulo:'Dois casos na semana, priorizando Processo do Trabalho e Direito Administrativo.', anc:'dpt-pje', dia:'Sexta, 1h45'},
-     {id:'s13-sim', mat:'Simulado', titulo:'Simulado de 60 questões cronometradas e correção comentada dos erros', anc:null, dia:'Sábado'}
+     {id:'s13-sim', mat:'Simulado', titulo:'Simulado com prova real: FCC 2025 · TRT-2 (SP) — 48 questões válidas, correção comentada dos erros', anc:null, dia:'Sábado'}
    ]}
 ];
 
@@ -15677,8 +15853,16 @@ function renderDesempenho(){
   const critico = estatPlacar(recorte, m => BLOCO_CRITICO.indexOf(m) >= 0);
   const metaC = fase.critico;
   const qtdProva = BLOCO_CRITICO.reduce((s,m)=> s + (COTA_SIMULADO[m] || 0), 0);
+  /* A regra de corte usa o bloco crítico do simulado da semana 7. Desde a
+     semana 5 esse simulado é feito fora do app e registrado no histórico; sem
+     o registro, vale o placar, como antes. */
+  const s7 = simuladoComCriticoDaSemana(7);
+  const pctS7 = s7 ? s7.critAc / s7.critTot * 100 : null;
+  const CORTE = 'O cronograma manda cortar o bloco de Raciocínio Lógico das terças e o de questões de Português das segundas — nunca a teoria de Português do sábado —, realocando a hora para Processo do Trabalho.';
   let diag;
-  if(critico.pct === null){
+  if(n >= 7 && pctS7 !== null && Math.round(pctS7) < 55){
+    diag = 'No simulado da semana 7, o bloco crítico ficou em ' + Math.round(pctS7) + '%, abaixo de 55%. ' + CORTE;
+  } else if(critico.pct === null){
     diag = recorte === 'geral'
       ? 'Nenhuma questão do bloco crítico respondida ainda. Comece pelo simulado diagnóstico da semana 1 — é a linha de base contra a qual todo o resto será medido.'
       : 'Nenhuma questão do bloco crítico respondida neste recorte. Escolha outra semana ou volte ao placar geral.';
@@ -15686,8 +15870,8 @@ function renderDesempenho(){
     diag = 'Esta é a fase de diagnóstico: o número acima é a sua linha de base, não uma nota. A partir da semana 4 ele passa a ser comparado com a meta.';
   } else if(Math.round(critico.pct) >= metaC){
     diag = 'Acima da meta de ' + metaC + '% para esta fase. Mantenha a carga e não realoque horas para fora do bloco.';
-  } else if(n >= 7 && Math.round(critico.pct) < 55){
-    diag = 'Abaixo de 55% na semana 7 ou depois. O cronograma manda cortar o bloco de Raciocínio Lógico das terças e o de questões de Português das segundas — nunca a teoria de Português do sábado —, realocando a hora para Processo do Trabalho.';
+  } else if(n >= 7 && pctS7 === null && Math.round(critico.pct) < 55){
+    diag = 'Abaixo de 55% na semana 7 ou depois. ' + CORTE;
   } else {
     diag = 'Abaixo da meta de ' + metaC + '% para esta fase. É aqui que está o potencial de ganho — priorize os blocos de Processo do Trabalho e Processo Civil antes de qualquer revisão de disciplina consolidada.';
   }
@@ -15703,7 +15887,19 @@ function renderDesempenho(){
       '<span>Peso na nota <b>' + BLOCO_CRITICO.reduce((t,m)=>t+pesoNaNota(m),0) + '</b> de 90</span>' +
     '</div>' +
     '<div style="margin-top:12px">' + barraMeta(critico.pct, metaC) + '</div>' +
-    '<p>' + diag + '</p>';
+    '<p>' + diag + '</p>' +
+    (n >= 7 ? (s7
+      ? '<p class="cr-s7"><b>Simulado da semana 7</b> · ' + esc(s7.rot || 'prova registrada') + ': bloco crítico ' + s7.critAc + ' de ' + s7.critTot +
+        ' (' + Math.round(pctS7) + '%). É este número que decide a regra de corte.</p>'
+      : '<p class="cr-s7">O simulado da semana 7 ainda não foi registrado com o bloco crítico. É ele que decide a regra de corte — registre-o no histórico dos simulados, logo abaixo.</p>')
+      : '');
+}
+
+/* Último simulado registrado numa semana que tenha o bloco crítico anotado. */
+function simuladoComCriticoDaSemana(n){
+  const bruto = LS.get(CHAVES.historico, []);
+  const l = (Array.isArray(bruto) ? bruto : []).filter(h => h && Number(h.critTot) > 0 && typeof h.data === 'string' && numeroDaData(h.data) === n);
+  return l.length ? l[l.length - 1] : null;
 }
 $('#dpRecorte').addEventListener('change', renderDesempenho);
 
@@ -15722,11 +15918,18 @@ function sparkline(pcts){
 
 function renderHistorico(){
   const bruto = LS.get(CHAVES.historico, []);
-  const hist = Array.isArray(bruto) ? bruto.filter(h => h && h.total) : [];
+  /* Em ordem de data; registro sem data válida ou sem total não é exibido
+     (continua gravado). Registros antigos não têm origem: são do simuladão. */
+  const hist = (Array.isArray(bruto) ? bruto : [])
+    .map((h, i) => [h, i])
+    .filter(([h]) => h && Number(h.total) > 0 && Number.isFinite(Number(h.acertos)) &&
+      typeof h.data === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(h.data))
+    .sort((a, b) => a[0].data < b[0].data ? -1 : a[0].data > b[0].data ? 1 : a[1] - b[1])
+    .map(x => x[0]);
   if(!hist.length){
-    $('#dpHistorico').innerHTML = '<div class="vazio-msg"><h4>Nenhum simulado concluído</h4>' +
-      '<p>Dispare o <b>Simuladão</b> no banco de questões e responda as 60 questões sorteadas. ' +
-      'Ao fechar a última, o resultado entra aqui automaticamente.</p></div>';
+    $('#dpHistorico').innerHTML = '<div class="vazio-msg"><h4>Nenhum simulado registrado</h4>' +
+      '<p>Até a semana 4, dispare o <b>Simuladão</b> no banco de questões: ao responder a última das 60 questões, o resultado entra aqui sozinho. ' +
+      'Desde a semana 5, o simulado de sábado é uma prova real no QConcursos — registre o resultado no formulário acima.</p></div>';
     return;
   }
   const pcts = hist.map(h => h.acertos / h.total * 100);
@@ -15743,10 +15946,17 @@ function renderHistorico(){
     const n = numeroDaData(h.data);
     const rot = n === 1 ? 'semana 1 — diagnóstico' : n === 0 ? 'antes do cronograma'
       : n === 99 || n === null ? 'fora do cronograma' : 'semana ' + n;
+    const origem = h.origem === 'externo'
+      ? esc(h.rot || 'Prova externa') + (h.id ? '<button type="button" class="btn-rem-sim" data-rem-sim="' + esc(h.id) + '">remover</button>' : '')
+      : 'simuladão do aplicativo';
+    const crit = h.critTot > 0
+      ? '<b>' + h.critAc + '</b> / ' + h.critTot + ' · ' + Math.round(h.critAc / h.critTot * 100) + '%'
+      : '<span class="d-vazio">—</span>';
     return '<tr><td class="mono">' + String(i+1).padStart(2,'0') + '</td>' +
-      '<td class="mono">' + d[2] + '/' + d[1] + '/' + d[0] + '<span class="h-sem">' + rot + '</span></td>' +
+      '<td class="mono">' + d[2] + '/' + d[1] + '/' + d[0] + '<span class="h-sem">' + rot + '</span><span class="h-origem">' + origem + '</span></td>' +
       '<td class="n"><b>' + h.acertos + '</b> / ' + h.total + '</td>' +
       '<td class="n">' + p + '%</td>' +
+      '<td class="n" style="white-space:nowrap">' + crit + '</td>' +
       '<td>' + barraMeta(p, faseDaData(h.data).global) + '</td></tr>';
   }).join('');
   $('#dpHistorico').innerHTML =
@@ -15757,7 +15967,7 @@ function renderHistorico(){
       '<p class="rotulo" style="margin-top:8px">Do primeiro simulado registrado ao último: ' +
       (delta >= 0 ? '+' : '') + delta + ' pontos percentuais · linha tracejada em 50%</p></div>' : '') +
     '<div class="tabela-rolagem"><table class="tabela"><thead><tr><th>#</th><th>Data</th>' +
-    '<th style="text-align:right">Acertos</th><th style="text-align:right">%</th><th>Contra a meta global da fase</th></tr></thead>' +
+    '<th style="text-align:right">Acertos</th><th style="text-align:right">%</th><th style="text-align:right">Bloco crítico</th><th>Contra a meta global da fase</th></tr></thead>' +
     '<tbody>' + linhas + '</tbody></table></div>';
 }
 
@@ -16213,6 +16423,140 @@ const QC_BLOCO = {
   's9-leg':'dig/tratamento-de-dados-pessoais',
   's10-leg':'dig/direitos-do-titular'
 };
+/* Simulados de sábado com provas reais da FCC, das semanas 5 a 13, e as
+   provas de reserva. "validas" são as questões que estão no programa do TRT4;
+   "critico", as do bloco crítico. Conferidos no QConcursos em 21/09/2026. */
+const SIM_REAL = [
+  {bloco:'s5-sim', semana:5, sabado:'2026-10-03', slug:'fcc-2022-trt-14-regiao-ro-e-ac-analista-judiciario-area-judiciaria', rot:'FCC 2022 · TRT-14 (RO/AC)', validas:50, critico:12},
+  {bloco:'s6-sim', semana:6, sabado:'2026-10-10', slug:'fcc-2023-trt-18-regiao-go-analista-judiciario-area-judiciaria', rot:'FCC 2023 · TRT-18 (GO)', validas:53, critico:10},
+  {bloco:'s7-sim', semana:7, sabado:'2026-10-17', slug:'fcc-2022-trt-22-regiao-pi-analista-judiciario-area-judiciaria', rot:'FCC 2022 · TRT-22 (PI)', validas:53, critico:15},
+  {bloco:'s8-sim', semana:8, sabado:'2026-10-24', slug:'fcc-2023-trt-12-regiao-sc-analista-judiciario-area-judiciaria', rot:'FCC 2023 · TRT-12 (SC)', validas:49, critico:13},
+  {bloco:'s9-sim', semana:9, sabado:'2026-10-31', slug:'fcc-2022-trt-5-regiao-ba-analista-judiciario-area-judiciaria', rot:'FCC 2022 · TRT-5 (BA)', validas:52, critico:15},
+  {bloco:'s10-sim', semana:10, sabado:'2026-11-07', slug:'fcc-2024-trt-20-regiao-se-analista-judiciario-area-judiciaria', rot:'FCC 2024 · TRT-20 (SE)', validas:52, critico:15},
+  {bloco:'s11-sim', semana:11, sabado:'2026-11-14', slug:'fcc-2022-trt-17-regiao-es-analista-judiciario-area-judiciaria', rot:'FCC 2022 · TRT-17 (ES)', validas:62, critico:13},
+  {bloco:'s12-sim', semana:12, sabado:'2026-11-21', slug:'fcc-2022-trt-9-regiao-pr-analista-judiciario-area-judiciaria', rot:'FCC 2022 · TRT-9 (PR)', validas:55, critico:15},
+  {bloco:'s13-sim', semana:13, sabado:'2026-11-28', slug:'fcc-2025-trt-2-regiao-sp-analista-judiciario-area-judiciaria', rot:'FCC 2025 · TRT-2 (SP)', validas:48, critico:14}
+];
+const SIM_RESERVA = [
+  {slug:'fcc-2023-trt-21-regiao-rn-analista-judiciario-area-judiciaria', rot:'FCC 2023 · TRT-21 (RN)', validas:46, critico:15},
+  {slug:'fcc-2025-trt-15-regiao-sp-analista-judiciario-area-judiciaria', rot:'FCC 2025 · TRT-15 (SP)', validas:42, critico:14},
+  {slug:'fcc-2022-trt-23-regiao-mt-analista-judiciario-area-judiciaria', rot:'FCC 2022 · TRT-23 (MT)', validas:45, critico:12},
+  {slug:'fcc-2024-trt-7-regiao-ce-analista-judiciario-area-judiciaria', rot:'FCC 2024 · TRT-7 (CE)', validas:55, critico:13},
+  {slug:'fcc-2025-trt-6-regiao-pe-analista-judiciario-area-judiciaria', rot:'FCC 2025 · TRT-6 (PE)', validas:40, critico:10},
+  {slug:'fcc-2025-trt-1-regiao-rj-analista-judiciario-area-judiciaria', rot:'FCC 2025 · TRT-1 (RJ)', validas:39, critico:10}
+];
+function urlProva(slug){ return 'https://www.qconcursos.com/questoes-de-concursos/provas/' + slug; }
+function simRealDoBloco(id){ return SIM_REAL.find(p => p.bloco === id) || null; }
+function provaPorSlug(slug){ return SIM_REAL.find(p => p.slug === slug) || SIM_RESERVA.find(p => p.slug === slug) || null; }
+function descreverSim(h){
+  const d = h.data.split('-');
+  return (h.rot || 'Simulado') + ', de ' + d[2] + '/' + d[1] + '/' + d[0] + ' — ' + h.acertos + ' acertos em ' + h.total + ' questões' +
+    (h.critTot ? '; bloco crítico ' + h.critAc + ' de ' + h.critTot : '');
+}
+
+/* Registro de simulado feito fora do aplicativo. Vai para o mesmo histórico
+   do simuladão (chave historicoSimulados), com campos a mais: origem, prova,
+   rótulo, bloco crítico e um id para poder remover. Registros antigos, sem
+   esses campos, continuam valendo como simuladão do aplicativo. */
+(function formSimuladoExterno(){
+  const sel = document.getElementById('simProva');
+  if(!sel) return;
+  sel.innerHTML = SIM_REAL.map(p => '<option value="s:' + p.slug + '">Semana ' + p.semana + ' · ' + esc(p.rot) + '</option>').join('') +
+    SIM_RESERVA.map(p => '<option value="s:' + p.slug + '">Reserva · ' + esc(p.rot) + '</option>').join('') +
+    '<option value="outra">Outra prova</option>';
+  const daSemana = SIM_REAL.find(p => p.semana === semanaCorrente());
+  if(daSemana) sel.value = 's:' + daSemana.slug;
+  const msg = document.getElementById('simMsg');
+  function aviso(t, tipo){ msg.textContent = t; msg.className = 'sim-msg' + (tipo ? ' ' + tipo : ''); }
+  /* Escolher a prova preenche o total de válidas, o do bloco crítico e a data
+     do sábado daquela semana — registrar no domingo não joga o simulado para
+     a semana seguinte. */
+  function preencher(){
+    const p = sel.value === 'outra' ? null : provaPorSlug(sel.value.slice(2));
+    document.getElementById('simTot').value = p ? p.validas : '';
+    document.getElementById('simCritTot').value = p ? p.critico : '';
+    document.getElementById('simData').value = p && p.sabado ? p.sabado : hojeISO();
+    document.getElementById('simAc').value = '';
+    document.getElementById('simCritAc').value = '';
+    aviso('');
+  }
+  sel.addEventListener('change', preencher);
+  preencher();
+
+  function inteiro(id){
+    const t = document.getElementById(id).value.trim();
+    return t === '' ? null : (/^\d+$/.test(t) ? Number(t) : NaN);
+  }
+  document.getElementById('btnRegistrarSim').addEventListener('click', function(){
+    const data = document.getElementById('simData').value;
+    const ac = inteiro('simAc'), tot = inteiro('simTot'), cac = inteiro('simCritAc'), ctot = inteiro('simCritTot');
+    let erro = '';
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(data)) erro = 'Informe a data do simulado.';
+    else if(tot === null || isNaN(tot) || tot < 1 || tot > 200) erro = 'Informe quantas questões valeram — um número de 1 a 200.';
+    else if(ac === null || isNaN(ac) || ac > tot) erro = 'Informe os acertos — um número de 0 até ' + tot + '.';
+    else if(ctot !== null && (isNaN(ctot) || ctot > tot)) erro = 'O bloco crítico não pode ter mais questões que o simulado inteiro.';
+    else if(ctot && (cac === null || isNaN(cac) || cac > ctot)) erro = 'Informe os acertos do bloco crítico — de 0 até ' + ctot + '.';
+    else if(!ctot && cac) erro = 'Informe quantas questões do bloco crítico havia, ou deixe os acertos dele em branco.';
+    if(erro){ aviso(erro, 'erro'); return; }
+
+    const p = sel.value === 'outra' ? null : provaPorSlug(sel.value.slice(2));
+    const bruto = LS.get(CHAVES.historico, []);
+    const lista = Array.isArray(bruto) ? bruto : [];
+    const repetido = lista.some(h => h && h.origem === 'externo' && h.data === data && h.acertos === ac && h.total === tot &&
+      (h.prova || '') === (p ? p.slug : ''));
+    if(repetido){ aviso('Este simulado já está registrado com esses números.', 'erro'); return; }
+
+    const reg = { data: data, acertos: ac, total: tot, origem: 'externo', id: 'ext-' + Date.now(), rot: p ? p.rot : 'Outra prova' };
+    if(p) reg.prova = p.slug;
+    if(ctot){ reg.critAc = cac; reg.critTot = ctot; }
+    lista.push(reg);
+    LS.set(CHAVES.historico, lista.slice(-40));
+    renderHistorico();
+    renderDesempenho();
+    if(typeof atualizarResumoZerar === 'function') atualizarResumoZerar();
+    document.getElementById('simAc').value = '';
+    document.getElementById('simCritAc').value = '';
+    aviso('Registrado: ' + descreverSim(reg) + '.', 'ok');
+  });
+
+  /* Remover um registro externo lançado por engano: sempre com confirmação. */
+  let paraRemover = null;
+  const dlg = document.getElementById('dlgRemoverSim');
+  function remover(id){
+    const bruto = LS.get(CHAVES.historico, []);
+    LS.set(CHAVES.historico, (Array.isArray(bruto) ? bruto : []).filter(h => !(h && h.id === id)));
+    renderHistorico();
+    renderDesempenho();
+    if(typeof atualizarResumoZerar === 'function') atualizarResumoZerar();
+  }
+  document.getElementById('dpHistorico').addEventListener('click', function(ev){
+    const b = ev.target.closest('[data-rem-sim]');
+    if(!b) return;
+    const bruto = LS.get(CHAVES.historico, []);
+    const reg = Array.isArray(bruto) ? bruto.find(h => h && h.id === b.dataset.remSim) : null;
+    if(!reg) return;
+    paraRemover = reg.id;
+    if(dlg && typeof dlg.showModal === 'function'){
+      document.getElementById('dlgRemoverSimQual').textContent = descreverSim(reg) + '.';
+      dlg.returnValue = '';
+      dlg.showModal();
+    } else if(window.confirm('Remover este simulado?\n\n' + descreverSim(reg) + '.\n\nNão há como desfazer.')){
+      remover(reg.id);
+    }
+  });
+  /* A remoção acontece no clique do botão Remover, e não no evento close:
+     há navegadores embutidos em que o close não chega a disparar. Cancelar,
+     Esc e clique fora só fecham a janela e esquecem o registro escolhido. */
+  if(dlg){
+    dlg.querySelector('button[value="confirmar"]').addEventListener('click', function(){
+      const id = paraRemover;
+      paraRemover = null;
+      if(id) remover(id);
+    });
+    dlg.addEventListener('close', function(){ paraRemover = null; });
+  }
+})();
+
 function urlQcDoBloco(id){
   const v = QC_BLOCO[id];
   if(!v) return '';
@@ -16224,6 +16568,8 @@ function urlQcDoBloco(id){
     (assunto ? '/' + assunto : '') + '/questoes?examining_board_ids%5B%5D=1';
 }
 function linkQcDoBloco(id){
+  const sim = simRealDoBloco(id);
+  if(sim) return '<a class="link-qc" href="' + urlProva(sim.slug) + '" target="_blank" rel="noopener">prova no QConcursos ↗</a>';
   const u = urlQcDoBloco(id);
   return u ? '<a class="link-qc" href="' + u + '" target="_blank" rel="noopener">questões FCC ↗</a>' : '';
 }

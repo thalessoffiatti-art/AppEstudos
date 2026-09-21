@@ -335,3 +335,211 @@ completos em `Leis/`** e as **súmulas do STJ completas** em
 - Divergência de gabarito na questão 25 da prova de 2006, marcada
   "conferir" em `RAIOX` (herdada de sessões anteriores).
 - Abrir o PR do branch `claude/lei-8112-adicionais` (link acima).
+
+---
+
+# Adendo 2 — 2026-09-21
+
+Continua o adendo de 20/09. Registra tudo o que foi feito depois dele, as
+decisões do usuário que **não devem ser reabertas**, os achados que ainda
+esperam ação e as armadilhas técnicas encontradas. Com isto dá para retomar
+numa janela de contexto limpa.
+
+## Estado do repositório
+
+- Branch `claude/lei-8112-adicionais`, **em dia com o remoto** em `e6f4d45`.
+  Depois de `6ddd798`, o próprio usuário commitou e enviou `70d44f0`
+  ("Verificado edital minuciosamente") e `e6f4d45` ("Adicionados links para
+  questões do Qconcursos"). **Nenhum PR aberto ainda.**
+- **Pendente, sem commit** (`index.html` e `sw.js`):
+  1. nota "Leitura integral: Leis 6.858/1980 e 5.584/1970" no fim do tópico
+     `dpt-execucao` e link da Lei 6.858 na lista de fontes de Processo do
+     Trabalho;
+  2. simulados de sábado com provas reais (ver abaixo);
+  3. `CACHE` do `sw.js` em **`autos-do-estudo-v10`** — já cobre os dois itens.
+     O `e6f4d45` saiu com v9; sem subir a versão, quem já abriu o app
+     publicado continuaria vendo a versão antiga.
+- Números atuais: **514 questões**, **154 blocos** em 13 semanas, **64
+  tópicos** no material, **185 enunciados** em `JURIS` (nenhum `conf:false`).
+- `HANDOFF-projeto.md` agora é versionado no branch; no checkout principal
+  (branch `main`) continua não versionado.
+
+## O que foi feito desde o adendo de 20/09
+
+**Barras "Contra a meta da fase" (página 03).** Cinco correções:
+`numeroDaData()`/`faseDaData()` fazem cada simulado ser medido pela meta da
+fase em que foi feito (antes, todos contra a meta de hoje); `barraMeta()`
+escreve "linha de base" quando a fase não tem meta; `opcoesDoRecorte()` usa
+a mesma base de `chavesDoPlacar()` (a semana 1 sumia do seletor); aviso
+"Falta a linha de base" quando não há simulado da semana 1; texto da regra
+de corte alinhado ao atual (RLM das terças + questões de Português das
+segundas, nunca a teoria de sábado).
+
+**Cobertura do edital.** Passe exaustivo com 453 termos do Anexo II: a
+cobertura expressa no cronograma/manual foi de 38% para **98%**. Cada linha do
+manual 03.1 ganhou uma linha "Edital:" (`span.op-edital`) com os itens do
+Anexo II que cobre. Sete blocos foram desdobrados no mesmo horário
+(`s4-dpc2`, `s5-dt2`, `s6-dt2`, `s7-da2`, `s8-da2`, `s10-da2`, `s13-dt2`),
+seis âncoras de "ver no material" foram corrigidas e, na semana 12 de
+Legislação, a Lei 12.527 (programa da Área Administrativa) deu lugar à
+Resolução CNJ 400/2021.
+
+**Caderno e peso.** Conferido no caderno real de 2022: Gerais = questões
+1–30 (Português 15, RLM 5, Legislação 10), Específicos = 31–60. Pelos itens
+9.4 e 9.5 do edital de 2022, **Específicos pesa 2 e Gerais pesa 1**; a
+discursiva entra somada, sem peso. O app dizia "Redação peso 2" — corrigido.
+Novas constantes `CADERNO`, `pesoNaNota()` e `ORDEM_PESO`; a tabela por
+disciplina tem as colunas "Caderno" e "Peso na nota". Direito Administrativo
+aparece nos dois cadernos (5 + 5), porque cinco questões de Lei 8.112, 14.133
+e 9.784 caíram no caderno de Legislação. `COTA_SIMULADO` ficou como estava,
+porque é temática e correta.
+
+**Discursiva.** Link da notícia do TRT4 de 13/08/2026 anexado à justificativa
+"Estudo de caso", na página 03.
+
+**Súmulas do STJ.** As 12 marcadas `conf:false` foram conferidas contra
+`Jurisprudência/sumulas_stj.md`: 11 idênticas; a 650 passou a reproduzir a
+grafia oficial ("caraterizadas", "art. 132").
+
+**QConcursos por bloco.** `QC_BLOCO` mapeia 118 blocos para
+disciplina/assunto, curados à mão e testados um a um. O filtro da banca FCC é
+`examining_board_ids[]=1`. Links no rodapé dos blocos (página 03) e em cada
+linha do manual (`a.op-qc`). Dez blocos de Legislação ficam sem link de
+propósito: o QConcursos não tem assunto para Lei 11.416, Regimento Interno do
+TRT4 nem Lei 7.701.
+
+**Processo Civil.** Seis tópicos novos (`dpc-normas`, `dpc-atos`,
+`dpc-procedimento`, `dpc-provas`, `dpc-precedentes`, `dpc-especiais`), além do
+`dpc-teoria`. São **82 trechos de lei copiados literalmente de
+`Leis/CPC.html`**, com fidelidade conferida por script e inserção provada por
+subtração. Foram reapontados 7 blocos, 12 questões do banco e 7 do `RAIOX`;
+"só na lei" caiu de 12 para 9.
+
+**Simulados com provas reais (pendente de commit).** Das semanas 5 a 13, o
+simulado de sábado é uma prova de Analista Judiciário – Área Judiciária
+aplicada pela FCC em outro TRT e resolvida no QConcursos, só nas questões do
+programa do TRT4:
+
+| Semana | Prova | Válidas | Bloco crítico |
+|---|---|---|---|
+| 5 | TRT-14 2022 | 50/60 | 12 |
+| 6 | TRT-18 2023 | 53/60 | 10 |
+| 7 | TRT-22 2022 — regra de corte | 53/60 | 15 |
+| 8 | TRT-12 2023 | 49/60 | 13 |
+| 9 | TRT-5 2022 | 52/60 | 15 |
+| 10 | TRT-20 2024 — pico | 52/60 | 15 |
+| 11 | TRT-17 2022 | 62/70 | 13 |
+| 12 | TRT-9 2022 | 55/60 | 15 |
+| 13 | TRT-2 2025 | 48/60 | 14 |
+
+Reservas: TRT-21 2023, TRT-15 2025, TRT-23 2022, TRT-7 2024, TRT-6 2025 e
+TRT-1 2025. O TRT4 2022 ficou de fora porque o aluno fez essa prova.
+
+No código: `SIM_REAL`, `SIM_RESERVA`, `simRealDoBloco()` e `provaPorSlug()`,
+logo antes de `urlQcDoBloco()`. Na página 03, um formulário de registro de
+simulado externo (`#simProva`, `#simData`, `#simAc`, `#simTot`, `#simCritAc`,
+`#simCritTot`, `#btnRegistrarSim`), que preenche válidas, bloco crítico e a
+data do sábado. A janela `dlgRemoverSim` remove um registro externo, sempre
+com confirmação. A regra de corte passa a usar o bloco crítico do simulado da
+semana 7 (`simuladoComCriticoDaSemana(7)`); sem esse registro, vale o placar,
+como antes. No manual, os cartões das semanas 5 a 13 ganharam o quadro
+`div.op-simreal` (prova, o que pular, composição do bloco crítico), o P13 e a
+grade de sábado foram ajustados, e há um novo aviso "Atualização de
+21/09/2026 — vale a partir de 28/09 (semana 5)". A página 06 ganhou a tabela
+completa. Os registros externos vão para a **mesma** chave
+`historicoSimulados`, com campos opcionais
+(`origem:'externo', id, rot, prova, critAc, critTot`); os registros antigos
+`{data, acertos, total}` continuam valendo como simuladão do app.
+
+## Decisões do usuário — não reabrir
+
+- A discursiva do próximo concurso é **Estudo de Caso** para AJAJ e Oficial de
+  Justiça (fonte: `https://www.trt4.jus.br/portais/trt4/modulos/noticias/51064882`,
+  de 13/08/2026). A mesma notícia traz cotas de 30% e correção da discursiva
+  até a 800ª colocação — ainda não registradas no app; foi oferecido.
+- Português e RLM: o aluno **gabaritou** em 2022, por isso ficam só como
+  revisão.
+- Regimento Interno do TRT4: fica "só na lei" (muda a cada gestão; o aluno tem
+  o PDF vigente).
+- Carga semanal fixa em **23h25** — nada de tempo novo.
+- Leis 6.858/1980 e 5.584/1970: só dizer quando estudar, sem transcrever.
+- Transpor artigos para o material é permitido **com garantia de fidelidade e
+  de não perda** (método em `memory/appestudos-transpor-lei.md`).
+- Mudança de grade vale a partir da segunda-feira seguinte; semanas já
+  estudadas não são reescritas.
+
+## Achados ainda sem ação
+
+1. **Formato atual do estudo de caso** (editais de TRT-1, TRT-2 e TRT-15 de
+   2025, baixados com autorização): 1 questão prática (2 no TRT-15), nota de
+   0 a 10, mínimo 6,00, **até 15 linhas** (30 no TRT-2), sem consulta, temas de
+   Conhecimentos Específicos. O treino de sexta do app (cinco passos, uma hora
+   por caso, sem limite de linhas) está desalinhado. **Próximo passo
+   sugerido:** pedir autorização para baixar os **cadernos de prova** de TRT-1,
+   TRT-2 e TRT-15 2025, onde devem estar os 4 casos reais. Se o ajuste sair
+   esta semana, ainda pode entrar no aviso de 28/09.
+2. **Dois modelos de prova na FCC em 2025.** Objetivas de 0 a 10, sem nota
+   padronizada, com média ponderada de pesos 1+2 (30+30, TRT-1) ou 1+3
+   (20+40, TRT-2 e TRT-15). A nota final soma objetiva e estudo de caso, que
+   assim pesa perto de metade. O app modela o TRT4 de 2022 (30+30, pesos 1 e
+   2). Revisar `CADERNO`, `PESO_*` e os textos quando sair o edital de 2026.
+3. **"Zerar progresso" não apaga no navegador embutido.** O evento `close` do
+   `<dialog>` não dispara ali; a janela nova de remover simulado já age no
+   clique do botão. Foi criada uma tarefa separada para aplicar o mesmo
+   conserto ao `dlgZerar`.
+4. Recalibrar o índice de incidência e os selos com as 16 provas recentes da
+   FCC (item 3 da revisão do professor) — ainda não pedido.
+5. Ampliar as OJs do TST: Processo do Trabalho tem só 3 da SDI-1 e 2 da
+   SDI-2; Direito do Trabalho, 4 da SDI-1 (item 4) — ainda não pedido.
+6. Abrir o PR do branch.
+7. Herdadas: divergência de gabarito da questão 25 de 2006 no `RAIOX`.
+
+## Armadilhas técnicas encontradas
+
+- **Service worker em teste:** depois do primeiro carregamento, ele serve o
+  `index.html` do cache. Antes de retestar, desregistrar o SW e apagar os
+  caches. Em publicação, subir sempre o `CACHE` do `sw.js`.
+- **Navegador embutido:** `dialog.close` não dispara evento `close` — ações de
+  janela modal devem rodar no `click` do botão.
+- **QConcursos:** `fetch` pelo Node leva 403 (Cloudflare); pelo navegador
+  embutido funciona. A página de questões de uma prova vem no HTML de
+  `/provas/<slug>/questoes?page=N` (20 por página; ao passar do fim, repete).
+  `institute_ids[]` é órgão, não banca.
+- **Planalto:** `curl` funciona nas páginas das leis (6.858 e 5.584
+  conferidas).
+- **Guarda do worktree:** edição direta de arquivo na pasta principal é
+  bloqueada. Editar a cópia do worktree e copiar com `cp`, conferindo com
+  `diff` (é assim que este HANDOFF é sincronizado).
+- **Regras de preservação do progresso** (app publicado no GitHub Pages): nunca
+  renomear nem remover `id` de bloco, `id` de questão, nome de disciplina ou
+  `CHAVES`; só acrescentar.
+
+## Ferramentas desta sessão
+
+Ficam no scratchpad da sessão
+(`C:\Users\thale\AppData\Local\Temp\claude\C--Users-thale-Documents-GitHub-AppEstudos--claude-worktrees-questoes-historico-in39-139338\987bfdd2-305d-4b53-8bfb-e15c943f2553\scratchpad\`),
+que **pode não existir numa sessão nova**. Se faltarem, recriar pelo mesmo
+método:
+
+- `checar2.js` — CRLF, sintaxe dos scripts, ids duplicados e não regressão de
+  ids e chaves contra `6ddd798`;
+- `conferir_fidelidade.js` — os 82 trechos do CPC contra `cpc_artigos.json`;
+- `frases.js` — cobertura do edital por expressão;
+- `lei.js`, `cpc_extrair.js`, `gerar_dpc.js`, `topicos_dpc.js` — pipeline de
+  transposição de lei;
+- `edital_map.js`, `qc_map.js`, `sim_real.js` — dados dos mapas aplicados;
+- `a01_completo.txt` e `edital2022.txt` — Anexo II de 2022;
+- `editais/` — os 8 editais de 2023–2025 em PDF e em texto;
+- `backup_antes_*.html` — cópias do `index.html` antes de cada lote.
+
+As memórias em `C:\Users\thale\.claude\projects\C--Users-thale-Documents-GitHub-AppEstudos\memory\`
+persistem entre sessões e resumem o essencial: `provas-fcc-trt-recentes`,
+`appestudos-transpor-lei`, `fontes-jurisprudencia-acesso` e
+`aluno-diagnostico-trt4`.
+
+## Como retomar
+
+1. Perguntar ao usuário se commita o que está pendente (nota das leis curtas e
+   simulados reais, cache v10).
+2. Seguir com o achado 1 (estudo de caso), que depende da autorização para
+   baixar três cadernos de prova.
