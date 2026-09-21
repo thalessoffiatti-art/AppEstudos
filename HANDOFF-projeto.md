@@ -768,3 +768,92 @@ criada na sessão anterior foi retirada.
 - Herdadas: 30% de cotas e correção até a 800ª no app (oferecido, não pedido);
   questão 25 de 2006 no `RAIOX`; rever `CADERNO`, `PESO_*` e o estudo de caso
   quando sair o edital do TRT4 de 2026.
+
+---
+
+# Adendo 5 — 2026-09-21 (material × manual 03.1: quadro "Lei seca")
+
+## Estado do repositório
+
+- `b09399b` e anteriores já estão no `main` (PR criado e mergeado pelo
+  usuário).
+- Alterações desta rodada **não commitadas** em `index.html` e `sw.js` (cache
+  **v12**). O usuário commita e envia.
+- Números: 514 questões, 154 blocos, 64 tópicos, **225 enunciados** em `JURIS`.
+
+## O pedido e a resposta
+
+O usuário notou que a linha da semana 4 "Provas e ônus da prova; audiência"
+(CLT 818–830 e 843–852; CPC 369–380) dizia "O material basta" e o tópico
+`dpt-atos-prazos` não trazia esses artigos. **Não foi proposital:** as marcas
+da seção 6 do manual foram dadas por tópico, sem conferir artigo por artigo.
+A auditoria (`scratchpad/auditar_manual.js`) achou **55 das 107 linhas "O
+material basta"** com artigos ausentes (884 artigos).
+
+## O que foi feito
+
+**Quadro "Lei seca"** no fim do `div.conteudo` de **43 tópicos**
+(`div.lei-seca#ls-<tópico>`, com uma caixa `div.lei` por lei): **1.082
+artigos** em texto integral do Planalto — os que faltavam nas linhas "basta" e
+as leis curtas citadas inteiras (Lei 9.868, Lei 9.882…). Quatro artigos entram
+só em parte, com "(trechos pedidos no cronograma)" na referência: CF 102, I, a;
+CF 7º, IV, VIII e XVII; CLT 884, § 1º; Lei 5.584, art. 2º, §§ 3º e 4º.
+Adaptações declaradas no próprio quadro: saem as notas de alteração e os
+dispositivos revogados ou vetados; "Art. N —" no rótulo. Resultado: **0 artigo
+ausente** nas 107 linhas "basta".
+
+Scripts (no scratchpad): `lei_extrair.js` (Planalto → JSON por artigo),
+`lei_seca_texto.js` (limpeza e divisão em dispositivos), `gerar_lei_seca.js`,
+`conferir_lei_seca.js` (cada linha é trecho contíguo do texto oficial **e**
+alinhamento palavra por palavra: todo trecho oficial ausente tem de ser nota,
+revogado ou rótulo — 0 falha em 1.082 artigos e 4.177 linhas; o teste
+negativo pegou palavra apagada e a perda simulada da CLT 158),
+`aplicar_lei_seca.js` (inserções provadas por subtração).
+
+**Outros erros achados na validação e corrigidos:**
+- Linhas do manual: IN 39, art. 6º (revogado em 2018 pela IN 41) → CLT 855-A;
+  Súmulas 268, 294 (S7) e 90, 437 (S9) do TST marcadas como canceladas em
+  2025; SVs da semana 13 trocadas para 4, 10, 22, 23, 25, 40 e 53 (6, 33 e 57
+  não eram de processo do trabalho); FGTS com os artigos (15, 18, 19-A, 20,
+  26); LEF como subsidiária (art. 889 da CLT), não leitura; duas linhas
+  deixaram de dizer "sem tópico próprio".
+- `JURIS` +5 (prioridade 3, `bloco: null`): Súmulas 457 e 327 e OJ 143 da
+  SDI-1 (vigentes); Súmulas 268 e 294 (`superada`, nota apontando o art. 11,
+  §§ 2º e 3º, da CLT).
+- FGTS no material: depósito até o **dia 20** (Lei 14.438/2022), não dia 7.
+- Legendas do manual: "O material basta" cita o quadro Lei seca; "Material +
+  leitura da lei" apontava para um "bloco de leitura seca" inexistente — agora
+  diz "no mesmo bloco, pelo P3".
+- P2: o quadro Lei seca entra no passo 3 (segunda leitura); regra de parada do
+  P2 absorve o excesso — **sem tempo novo**.
+- CSS: `.lei-seca .lei-txt{overflow-wrap:anywhere}` — leis que alteram outras
+  trazem carreiras de pontos ("......") que estouravam 375px.
+- Aviso datado "Atualização de 21/09/2026 — material de estudo — vale a partir
+  de segunda-feira, 28/09 (semana 5)". Quadros das semanas 1 a 4 vão para a
+  revisão geral da semana 13.
+
+## Verificação feita
+
+`checar2.js` (CRLF, scripts, ids, não regressão contra `6ddd798`: nenhum id de
+bloco/questão/disciplina perdido, `CHAVES` iguais); `conferir_lei_seca.js
+index.html` (0 falha, igual ao manifesto); `auditar_manual.js` (0 ausente);
+`conferir_casos.js` (52 trechos, 0 falha). Navegador: 43 quadros dentro de
+tópicos, nenhum id duplicado, 375px sem rolagem lateral nas 10 páginas com
+todos os `<details>` abertos, console limpo.
+
+## Armadilhas novas
+
+- **Planalto é windows-1252**, não latin1 (0x96 é travessão). CRLF no HTML
+  baixado; "Art." e número às vezes em linhas separadas; a CLT começa em
+  "TÍTULO I\nINTRODUÇÃO" (antes vem o decreto-lei). Texto revogado vem em
+  `<strike>` **ou** em `<span … line-through>`.
+- Notas "(Redação dada…" às vezes não fecham o parêntese: remoção gulosa
+  apagou incisos da CLT 158. Só o alinhamento palavra por palavra pegou.
+- O arquivo passou de ~2,1 MB para ~3,1 MB.
+- `btnSoltarTopico` aparece duas vezes no fonte, mas em dois ramos de template
+  JS — não é id duplicado no DOM.
+
+## Pendências
+
+- Commit, push e PR (usuário).
+- As de antes continuam.
