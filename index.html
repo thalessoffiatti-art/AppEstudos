@@ -16406,10 +16406,20 @@ function abrirModalZerar(){
 
 $('#btnZerar').addEventListener('click', abrirModalZerar);
 if(dlgZerar){
+  /* O zerar acontece no clique de Confirmar, e não no evento close: há
+     navegadores embutidos em que o close não chega a disparar (o mesmo
+     cuidado da janela de remover simulado). O close só atualiza o resumo,
+     quando não houve zerar, e devolve o foco ao botão. */
+  let zerouAgora = false;
+  const confirmaZerar = document.getElementById('btnZerarConfirma');
+  if(confirmaZerar) confirmaZerar.addEventListener('click', function(){
+    zerouAgora = true;
+    zerarProgresso();
+  });
   dlgZerar.addEventListener('close', function(){
-    const confirmou = dlgZerar.returnValue === 'confirmar';
     dlgZerar.returnValue = '';
-    if(confirmou) zerarProgresso(); else atualizarResumoZerar();
+    if(!zerouAgora) atualizarResumoZerar();
+    zerouAgora = false;
     const botao = $('#btnZerar');
     if(botao) botao.focus({ preventScroll: true });
   });

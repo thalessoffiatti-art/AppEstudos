@@ -662,3 +662,109 @@ pessoais; só usar agregados, se o usuário autorizar.
    incidência com as 16 provas, ampliar OJs do TST, abrir o PR, 30% de cotas e
    correção até a 800ª no app, questão 25 de 2006 no RAIOX, confirmar o peso
    do estudo de caso quando sair o edital do TRT4 de 2026.
+
+# Adendo 4 — 2026-09-21 (peso, incidência, OJs, PR e "Zerar progresso")
+
+## Correção do que os adendos anteriores diziam
+
+- **PRs:** o `main` já tinha recebido este ramo pelos **PRs #4 e #5** (até
+  `e6f4d45`). Os adendos 2 e 3 diziam "nenhum PR aberto", o que estava errado.
+  Os PRs são criados pelo link de comparação do GitHub
+  (`compare/main...claude/lei-8112-adicionais?quick_pull=1&title=…&body=…`):
+  o `gh` não está instalado nesta máquina, e o navegador embutido não tem
+  login no GitHub (e não se faz login por ele).
+
+## Estado do repositório
+
+- `24ac7a4` — "Estudo de caso da FCC, incidência recente e OJs do TST"
+  (commitado e enviado nesta sessão, com autorização do usuário para o PR).
+- Commit seguinte — "Zerar progresso: apagar no clique de Confirmar", com este
+  adendo.
+- PR novo: título "Estudo de caso da FCC, provas reais nos simulados,
+  incidência recente e OJs do TST". Link pronto em `scratchpad/pr_url3.txt`,
+  descrição em `scratchpad/pr_corpo3.md`. **O usuário precisa abrir o link
+  logado no GitHub e clicar em "Create pull request".**
+- Cache do `sw.js`: **v11** (o app ainda não foi publicado com ele).
+- Números: 514 questões, 154 blocos, 64 tópicos, **220 enunciados** em `JURIS`
+  (203 literais conferidos, 17 sínteses).
+
+## Decisões do usuário nesta rodada — não reabrir
+
+- **Peso:** fica como no TRT-15 — o estudo de caso vale **metade da nota
+  final** (nota objetiva de 0 a 10 + estudo de caso de 0 a 10). Qualquer
+  critério para o TRT4 é especulação até o edital. **Só o peso do estudo de
+  caso** muda; as objetivas continuam com a composição e os pesos de 2022
+  (30 + 30, pesos 1 e 2), que são a base da distribuição da carga. Não baixar a
+  lista de resultado da FCC para "confirmar" o peso.
+- Achados do Adendo 2 dados por resolvidos: formato do estudo de caso e
+  modelos de peso.
+
+## O que foi feito
+
+**Peso do estudo de caso.** Os textos que diziam "entre um quarto e metade"
+(página 03, manual seção 2) agora dizem "metade da nota final no modelo do
+TRT-15, adotado como referência".
+
+**Incidência recalibrada** (item 3 da revisão do professor).
+- Coleta pelo navegador embutido no QConcursos: 16 provas de AJAJ da FCC em
+  outros TRTs (2022–2025), 990 questões, disciplina e assuntos de cada uma
+  (`/provas/<slug>/questoes?page=N`; `fetch` do Node leva 403, e envio da
+  página para um servidor local é bloqueado — os dados saem por
+  `javascript_tool`).
+- Mapa assunto do QConcursos → tópico do material curado à mão
+  (`scratchpad/qc_incid_map.js`, 324 chaves; fora do programa: Civil,
+  Informática, regimentos de outros TRTs, juizados, CCP, OIT, partidos,
+  probabilidade, geometria). 760 das 990 questões caem no programa. Validado na
+  prova do TRT4 de 2022: 44 de 52 questões no mesmo tópico do `RAIOX`.
+- Totais em `scratchpad/qc_incidencia_agg.json`. No app: constante
+  `FCC_RECENTE` (logo depois de `ASSUNTOS`), função `montarFccRecente()` (logo
+  depois de `montarTabAssunto()`), seção `#fcc-recente` na página 02 (tabelas
+  `#tabFcc` e `#tabFccDisc`), e **segundo selo** "FCC recente N/16" em cada
+  tópico (`span.selos` > `.selo.fcc`, borda tracejada, montado no
+  carregamento). Escala: vermelho 13–16, amarelo 9–12, azul 5–8, cinza 1–4.
+  "Comparação" = diferença de 2 níveis de cor ou mais. Sem segundo selo:
+  `leg-trt4`, `adm-pad` e `dpc-teoria` (explicado na legenda).
+- Ordem de revisão nas semanas 11 (Administrativo) e 13 (revisão geral):
+  "tópicos com selo vermelho em qualquer dos dois selos primeiro".
+- Mudanças fortes: sobem Poder Judiciário (2/4 → 15/16), crase/concordância,
+  segurança do trabalho, organização do Estado, teletrabalho, 14.133,
+  princípios e prescrição, custas, atos processuais do CPC. Caem Lei 9.784
+  (4/4 → 7/16), ortografia e proposições lógicas (3/4 → 1/16).
+
+**OJs do TST** (item 4). 35 novas em `JURIS` (`scratchpad/ojs_novas.js`,
+aplicadas por `aplicar_ojs.js`, que confere texto literal, cancelamento, ids,
+âncoras e o teto de 18 por semana). 18 no plano (semanas 5 a 12, prioridade 1
+ou 2) e 17 só consulta (prioridade 3, `bloco: null`). Ficaram de fora: OJs
+377, 355 e 383 da SDI-1 (canceladas — **atenção: `tst.json` marca
+`cancelada: false` para as canceladas "por perda de eficácia" pela Res.
+225/2025; olhar o cabeçalho**), OJ 247 da SDI-1 (STF, Tema 1.022) e OJ 153 da
+SDI-2 (o app já tem a tese vinculante 75). O parágrafo da página 07 que
+contava os enunciados foi atualizado (220; STJ conferido em 20/09).
+
+**Correção de estilo encontrada no caminho:** `.macete b` e `.pegadinha b`
+transformavam **todo** negrito em rótulo em bloco; 128 dos 291 quadros tinham
+negrito no meio da frase (inclusive as notas da 04.2). Agora a regra vale só
+para `> b:first-child`.
+
+**"Zerar progresso"** (feito por último, como pedido). O zerar passou para o
+clique de `#btnZerarConfirma`; o `close` só atualiza o resumo (se não houve
+zerar) e devolve o foco, com a marca `zerouAgora` para não apagar a mensagem
+"Progresso zerado" quando o `close` chega atrasado. Testado no navegador
+embutido: Cancelar e Esc mantêm os dados; Confirmar apaga as chaves `trt4:`;
+o `close` ali chega com atraso ou não chega. A sugestão de tarefa separada
+criada na sessão anterior foi retirada.
+
+## Armadilhas novas
+
+- **Capturas de tela do painel** saem em pixels do dispositivo (fator 1,25 ou
+  2) e recortadas; não servem para julgar se algo passa da borda. Conferir
+  pela geometria (`getBoundingClientRect`) e por `scrollWidth`.
+- **Busca por texto (`find`) falha** em páginas grandes do app; usar
+  `javascript_tool`.
+
+## Pendências
+
+- Abrir o PR pelo link (usuário).
+- Herdadas: 30% de cotas e correção até a 800ª no app (oferecido, não pedido);
+  questão 25 de 2006 no `RAIOX`; rever `CADERNO`, `PESO_*` e o estudo de caso
+  quando sair o edital do TRT4 de 2026.
