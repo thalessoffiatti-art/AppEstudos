@@ -543,3 +543,122 @@ persistem entre sessões e resumem o essencial: `provas-fcc-trt-recentes`,
    simulados reais, cache v10).
 2. Seguir com o achado 1 (estudo de caso), que depende da autorização para
    baixar três cadernos de prova.
+
+# Adendo 3 — 2026-09-21 (estudo de caso)
+
+## Estado do repositório
+
+- O usuário commitou e enviou o que o Adendo 2 dava como pendente:
+  `2976607` ("Provas da FCC como simulados", com cache v10). Branch
+  `claude/lei-8112-adicionais` em dia com o remoto nesse commit.
+- **Pendente, sem commit** (`index.html` e `sw.js`): o novo treino de estudo
+  de caso, descrito abaixo, com `CACHE` do `sw.js` em
+  **`autos-do-estudo-v11`**. Diff: `index.html` +211/−44 linhas.
+- Números: 514 questões, 154 blocos (nenhum id novo), 64 tópicos, 185
+  enunciados em `JURIS` — nada disso mudou.
+
+## O que foi feito — estudo de caso no formato da FCC (vale da semana 5)
+
+**Fonte.** Com autorização do usuário, foram baixados do QConcursos os
+cadernos de prova e os gabaritos de AJAJ de TRT-1, TRT-2 e TRT-15 (2025):
+`https://arquivos.qconcursos.com/prova/arquivo_prova/<id>/<slug>-prova.pdf`
+(ids 132832, 137629 e 130569; `curl` funciona, sem Cloudflare). Estão em
+`scratchpad/provas2025/`, com o texto extraído por `pdftotext -enc UTF-8
+-layout`. A FCC **não publica espelho** (nem no gabarito, nem no site
+`concursosfcc.com.br/concursos/trt1r124` e `trt2r124`); ele só aparece na vista
+de prova. Dos 8 editais consultados (2023–2025), só TRT-15, TRT-1 e TRT-2 têm
+estudo de caso para AJAJ; TRT-6 2025, TRT-7, TRT-11, TRT-20 (só OJAF) e TRT-21
+tiveram redação.
+
+**Os quatro casos reais:** TRT-1 — jornada de 6 h estendida e intervalo de
+15 min (pedia a Súmula 437); TRT-2 — ação rescisória sem certidão de trânsito,
+revelia e cumprimento da sentença (Súmulas 299 e 398, art. 969 do CPC; 30
+linhas); TRT-15 Q1 — recurso adesivo (Súmula 283); TRT-15 Q2 — ação popular,
+legitimidade de estrangeiro e isenção de custas (CF, art. 5º, LXXIII; art. 14,
+§ 2º). Três dos quatro pediram "o entendimento sumulado do TST".
+
+**Achado importante:** o TST **cancelou a Súmula 437 em 30/06/2025** (Res.
+225/2025) para fatos desde 11/11/2017 — depois da prova do TRT-1. O caso C9
+foi adaptado para pedir a CLT em vigor (arts. 71, § 4º, e 611-A, III), e o
+espelho explica por quê. `JURIS` já marcava a 437 como superada.
+
+**No app:**
+- **Manual 03.1, seção 6:** quadro `div.op-caso` (id `op-caso-s5` …
+  `op-caso-s13`) em cada cartão das semanas 5 a 13, entre os enunciados da
+  semana e o `op-simreal`. Enunciado e espelho em `<details>` **fechados**
+  ("abra às 17h30" / "abra às 18h10"), pela regra de não dar pista antes da
+  resposta. Casos: C5 audiência (art. 844), C6 transferência (art. 469, Súm.
+  43, OJ 113), C7 preparo em recuperação judicial (art. 899, § 10, OJ 140,
+  teses 271 e 283), **C8 real** TRT-15 Q1, **C9 real adaptado** TRT-1, C10
+  garantia da execução (arts. 882 e 884, OJ 59 SDI-2), **C11a real** TRT-2 e
+  **C11b real** TRT-15 Q2, C12a gestante em contrato de experiência (ADCT 10,
+  II, "b", Súm. 244, tese 163), C12b responsabilidade do Estado (CF 37, § 6º,
+  Tema 940). Semana 13: refazer os dois de nota mais baixa.
+- Cada espelho tem "O que a resposta precisa ter", "Textos para conferir"
+  (**52 trechos literais**, conferidos contra Planalto e TST) e "Onde revisar"
+  (links `data-ir`). Atalhos "página 04.2" (`data-j-id`) para os 9 enunciados
+  que existem em `JURIS`.
+- **P11 e P12** reescritos no padrão "Até a semana 4 / Desde a semana 5". Novo:
+  40 min por caso (semanas 5–10) ou dois de 30 min (11–13), folha de 15
+  linhas; conferência com o espelho 18h10–18h30; régua nova de 5 critérios ×
+  0–2 (itens respondidos, fundamento, aplicação, limite e foco, português);
+  reescrita da resposta inteira. A régua e a lista antigas continuam visíveis
+  para a semana 4 (sexta 25/09).
+- Trilho de sexta (`op-dia-5`), linha da tabela de cada semana, títulos de
+  `s5-caso` … `s13-caso` no `CRONOGRAMA` (**`anc` agora `null`**, ids
+  intactos), nova tabela "A meta do estudo de caso" (6 → 7 → 8) na seção 2,
+  novo aviso "Atualização de 21/09/2026 — estudo de caso — vale a partir de
+  28/09 (semana 5)".
+- **Página 03:** tabela "O formato da FCC em 2025", coluna "Desde a semana 5,
+  onde fica" nos cinco passos, macete "Na folha de 15 linhas" (usa `<strong>`,
+  porque todo `<b>` dentro de `.macete` vira rótulo em bloco), quatro cartões
+  de fase e macete "De onde vêm os casos". Também corrigidos: cartão ×2 da
+  página inicial, macete "Por que Processo do Trabalho rende em dobro",
+  tabela "O que a prova cobra" (dizia "Peso 2" para o estudo de caso) e o
+  módulo de sustentação.
+
+**Verificação feita:** fidelidade dos 52 trechos (dados e arquivo gravado),
+com teste negativo; inserções provadas por subtração; aplicador reproduz o
+`index.html` byte a byte a partir de `backup_antes_casos.html`; sintaxe dos
+scripts; ids de bloco, de questão, disciplinas e `CHAVES` sem perda; teste de
+atualização na mesma origem (estado gravado na versão do HEAD, aberto na nova:
+as três chaves `trt4:` idênticas e os 13 blocos marcados preservados);
+375 px sem rolagem horizontal nas 10 páginas; console sem erros; os 9 atalhos
+para a 04.2 filtram o enunciado certo.
+
+## Peso do estudo de caso — o que se sabe
+
+Nos editais de 2025, a nota final **soma** o estudo de caso (0 a 10) à nota
+objetiva. No TRT-15 a objetiva é a média ponderada de 0 a 10, então o estudo
+de caso é **metade**. No TRT-1 e no TRT-2 o texto diz "soma das notas
+ponderadas" das objetivas mais o estudo de caso — pode ser metade ou um quarto.
+O app diz exatamente isso. Para resolver, seria preciso baixar a lista de
+resultado com as notas finais (`1_habs_obj_disc_definitivo_class.pdf` nas
+páginas da FCC) — **não baixado**: não estava na autorização e tem dados
+pessoais; só usar agregados, se o usuário autorizar.
+
+## Ferramentas novas no scratchpad
+
+- `lei_extrair.js` — extrai artigos vigentes do HTML do Planalto: descarta
+  `<strike>` **e** `<span style="text-decoration:line-through">` (o Planalto
+  usa os dois), aceita "Art. 611-A". Saídas em `leis/clt.json`, `cpc.json`,
+  `cf.json`, `l4717.json`. Planalto por `curl` (CLT e Lei 4.717 baixadas).
+  Armadilha: `limpar()` do `lei.js` corta em "Capítulo IV" no meio do texto
+  (art. 836 da CLT) — o conferidor usa `junta()`, que não corta.
+- `casos.js` (dados), `gerar_casos.js` (HTML dos quadros),
+  `aplicar_casos.js` (aplicação em duas etapas), `conferir_casos.js`
+  (fidelidade; `node conferir_casos.js index.html` confere o gravado). TST:
+  súmulas e OJs em `fontes/tst.json` só até "Histórico:" (senão casa com a
+  redação antiga); teses vinculantes em `fontes/tst_precedentes.json`
+  (215 temas).
+- A CLT em `Leis/CLT - 15.06.26.pdf` é edição comercial com "redação
+  simplificada nos números" — **não serve para citação literal**; usar o
+  Planalto.
+
+## Como retomar
+
+1. Perguntar se commita o estudo de caso (index.html + sw.js v11).
+2. Pendências que continuam: dlgZerar (tarefa separada), recalibrar
+   incidência com as 16 provas, ampliar OJs do TST, abrir o PR, 30% de cotas e
+   correção até a 800ª no app, questão 25 de 2006 no RAIOX, confirmar o peso
+   do estudo de caso quando sair o edital do TRT4 de 2026.

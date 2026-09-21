@@ -1,6 +1,6 @@
 /* Guarda o app inteiro no primeiro acesso. Depois disso ele abre sem internet.
    Para publicar uma versão nova do material, troque o número do CACHE. */
-const CACHE = 'autos-do-estudo-v10';
+const CACHE = 'autos-do-estudo-v11';
 const ARQUIVOS = ['./', './index.html', './manifest.json', './icone-180.png', './icone-512.png'];
 
 self.addEventListener('install', e => {
