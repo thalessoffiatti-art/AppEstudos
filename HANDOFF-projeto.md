@@ -857,3 +857,181 @@ todos os `<details>` abertos, console limpo.
 
 - Commit, push e PR (usuário).
 - As de antes continuam.
+
+---
+
+# Adendo 6 — 2026-09-22 (art. 117 da Lei 8.112 e segunda conferência)
+
+## Estado do repositório
+
+- `bba7809` ("Só a lei validado com os artigos") tem o trabalho de 21/09.
+- Alterações desta rodada **não commitadas** em `index.html` e `sw.js` (cache
+  **v13**). O usuário commita e envia.
+
+## O pedido
+
+O usuário notou que o art. 117 da Lei 8.112 não estava no quadro Lei seca do
+tópico `adm-8112`, embora a linha da semana 4 do manual peça os arts. 116 a 142.
+
+**Causa:** o auditor de 21/09 dava o artigo como "transcrito" quando a
+referência de uma caixa o citava — a caixa dizia "art. 117 (proibições
+selecionadas)" e trazia só o inciso VI. A conferência agora é **dispositivo por
+dispositivo** contra o texto oficial (`integral.js`, `escopos.js`,
+`auditar_manual.js`): 147 artigos estavam incompletos nas linhas "O material
+basta".
+
+## O que mais a segunda conferência achou (tudo corrigido)
+
+- **Extração do Planalto:** 10 artigos vigentes da CLT (154, 177, 178, 180,
+  181, 183, 188, 189, 190, 197) escritos "Art. . 189" e 25 do DL 200 ("Art .
+  8", "Art\n. 12") não eram reconhecidos; o texto deles grudava no artigo
+  anterior (e foi assim para o quadro de `dt-seguranca`). `reextrair.js`
+  corrige e prova que os artigos mudados só perderam a cauda.
+- **CF × ADCT:** o `cf.json` guardava artigos do ADCT com letra (92-A, 92-B,
+  116-A…) como se fossem da CF; três deles estavam no quadro de
+  `const-judiciario`. Agora `cf.json` e `adct.json` são separados.
+- **Limpeza:** rótulos vazios de revogados/vetados ("§ 3º. § 4º.", "§ 1o § 2o O
+  relator", "a); b)."), notas não reconhecidas ("(Parágrafo incluído…)",
+  "(Restaurado…)"), pontuação dupla depois de nota, caput grudado no § 1º quando
+  o Planalto tacha o fim do caput (CLT 790-B). Regra nova e a armadilha dela:
+  rótulo só é "vazio" depois de fim de frase — "no art. 529, § 3º." é remissão
+  (quase foi apagada; o conferidor agora olha o contexto).
+- **Caixas originais do material:** 90 parágrafos não eram literais
+  (`conferir_caixas.js`). Corrigidos palavra por palavra (`corrigir_caixas.js`
+  + `sobrepor.json` para 23 casos escritos à mão; `aplicar_caixas.js` prova que
+  a troca é reversível). Regras erradas ou desatualizadas entre eles: CF 37,
+  XVI, "b" (EC 138/2025: "de qualquer natureza"); CF 115 (setenta anos, EC
+  122/2022); Lei 8.112, art. 13 (a posse por nomeação é o § 4º); art. 117, VI
+  ("pessoa estranha à repartição"); CLT 790-B (ADI 5766, trecho tachado);
+  teletrabalho "ou trabalho remoto"; Lei 8.213, arts. 19 e 22 (empregador
+  doméstico); CLT 396 (adoção); LGPD, art. 5º, VIII (Agência).
+- **Resolução CNJ 400/2021:** o tópico `leg-outros` a descrevia como política de
+  segurança da informação; ela é a **política de sustentabilidade** (texto em
+  atos.cnj.jus.br/atos/detalhar/3986). Seção reescrita com caixa literal (12
+  linhas conferidas). Linhas do manual: S12 listava a Lei 12.527 (fora do
+  edital) → Resolução 400; S11 deixou de citar a resolução.
+- **ANPD:** Lei 15.352/2026 → Agência Nacional de Proteção de Dados, vinculada
+  ao MJSP. Tópico, página 02 e explicações atualizados; enunciados de prova
+  intactos. Questão CO26 (acumulação, 2015): explicação avisa a EC 138/2025.
+- **CSS:** `@media (max-width:600px){ .lei-txt .lei-alt{white-space:normal} }`
+  (notas longas estouravam 375px).
+- Aviso de 21/09 "completado em 22/09", com os números novos: **44 tópicos,
+  1.223 artigos** no quadro Lei seca.
+
+## Verificação feita
+
+`conferir_lei_seca.js index.html` (1.223 artigos, 0 falha; rótulo apagado só
+depois de fim de frase; teste negativo com a remissão do CPC 833 apagada:
+pegou); `auditar_manual.js` (0 ausente e 0 incompleto nas 107 linhas "basta");
+`conferir_caixas.js` (178 caixas, 0 divergente; teste negativo pegou troca e
+omissão); `conferir_juris_caixas.js` (14 literais conferidas, 1 síntese
+declarada); `conferir_nada_perdido.js` (os 1.079 artigos dos quadros de 21/09
+continuam completos, exceto os 3 do ADCT); `varrer_residuos.js` e
+`regressao_texto.js` (limpeza de todas as leis, 22.422 linhas); `checar2.js`
+(nenhum dado gravado perdido); `conferir_casos.js`. Navegador: 44 quadros, art.
+117 com 23 linhas, 375px nas 10 páginas, console limpo.
+
+## Pendências
+
+- Commit, push e PR (usuário).
+- Não feito: conferir se a referência de cada caixa corresponde ao que ela
+  transcreve (ex.: caixa "art. 28" da Lei 14.133 sem o § 1º). O quadro Lei seca
+  cobre o que o manual pede, mas a referência de algumas caixas é mais larga que
+  o texto delas. **Feito no Adendo 7.**
+
+---
+
+# Adendo 7 — 2026-09-22 (títulos das caixas × texto delas)
+
+## Estado do repositório
+
+- `dfc6e57` (merge do PR #7) está no `main` e publicado: tem o trabalho de
+  21/09 (`bba7809`).
+- Alterações dos adendos 6 e 7 **não commitadas** em `index.html` e `sw.js`
+  (cache **v13**, uma subida só para as duas rodadas). O usuário commita e envia.
+
+## O pedido
+
+"Confira também os títulos das caixas contra o texto delas."
+
+**Regra adotada** (a legenda do material): o título cita exatamente o que a
+caixa transcreve. Fora da Lei 11.416, tudo o que está transcrito é citado e vem
+em negrito; nas caixas da Lei 11.416, o peso normal é contexto não citado.
+Formato: itens separados por "; "; "arts. X a Y" só quando nenhum artigo vigente
+do meio fica de fora; "art. N, caput, I a XVII e §§ 4º e 6º"; "parágrafo único";
+"(trecho)" quando um dispositivo é cortado com [...]. Decisão: **corrigir o
+título para o texto**, não acrescentar texto — o que o manual pede já está no
+quadro Lei seca. Exceção: os cortes sem [...] foram completados.
+
+## O que foi feito
+
+- **108 títulos** de caixas corrigidos (ex.: "Lei 8.112/1990 — arts. 13 e 15" →
+  "art. 13, §§ 1º e 4º; art. 15, § 1º"). Mais a caixa nova da Resolução 400.
+- **8 caixas** com dispositivo citado fora do negrito: negrito completado.
+- **8 cortes sem [...]** completados com o texto oficial (ex.: CLT 75-B, § 1º,
+  "ou trabalho remoto"; CLT 452-A, "em contrato intermitente ou não").
+- **Quadros Lei seca regerados** com título exato (`gerar_lei_seca.js` +
+  `formatar_titulo.js`): 44 tópicos, **1.215 artigos** (eram 1.223: saíram
+  artigos revogados que entravam por faixa e duplicatas). Nota do quadro diz
+  que, quando o título cita incisos/parágrafos, só entram o caput e eles.
+- **Defeitos de extração achados pelo conferidor de títulos** (todos
+  corrigidos):
+  - tachado aninhado (`<strike>` dentro de `<span line-through>`): a redação
+    antiga do art. 4º, § 1º, da Lei 11.416 aparecia como vigente. `extrair2.js`
+    conta o aninhamento; todas as leis foram reextraídas (backup em
+    `scratchpad/leis_bak_22-09/`);
+  - títulos de seção grudados no fim de artigos ("SEÇÃO II-A Do Procedimento
+    Sumaríssimo" no CLT 852) e cabeçalhos de MP caducada (MP 905). Regra: caixa
+    alta sempre corta; título em caixa normal só depois de pontuação final ou
+    "de AAAA" — "Título VII" dentro do texto do art. 14 da Lei 605 fez o corte
+    errado antes da regra;
+  - parágrafo único do CLT 153 duplicado (texto restaurado depois da MP
+    caducar) — **estava no publicado**; dedupe só de caput/§ (alíneas repetidas
+    são legítimas: CLT 592, CPC 932);
+  - CF 117 (revogado) quebrava o gerador: critério de revogado unificado
+    (`dispositivos()` vazio). No publicado ele aparecia como a linha solta
+    "Art. 117 — e Parágrafo único.";
+  - "l" solto numa linha depois do CLT 182 (marcador do Planalto): regra nova
+    em `semNotas`; comparada a limpeza antes/depois nas 8.207 entradas de
+    todas as leis, só o CLT 182 mudou (`saida_limpeza.js`).
+- **Quadros publicados × agora:** dos 1.078 artigos que continuam, 83 mudaram
+  de texto — títulos de seção grudados, notas de alteração que escaparam
+  ("(Parágrafo incluído…)"), rótulos vazios ("§ 3º. § 4º.", "I -; II -;"),
+  ponto duplo, os 10 artigos da CLT grudados, os restos de texto revogado na
+  Lei 11.416 (art. 4º, § 1º antigo, e ", observada a seguinte razão:" no art.
+  12), L605 14, CLT 153, e o CF 102 com o inciso III pedido. Saíram 4 (3 do
+  ADCT e o CF 117). Os 7 artigos vigentes que entraram e saíram dos quadros
+  nesta rodada (CLT 66, 166, 189, 194; CF 111; Lei 11.416, 8 e 13) nunca foram
+  publicados e estão 100% nas caixas do próprio tópico.
+- Aviso de 21/09 ganhou três itens (títulos, cortes, sobras e erros dos
+  quadros, com a lista dos cinco erros de conteúdo) e o número novo: "44
+  tópicos … 1215 artigos".
+
+## Verificação feita
+
+`conferir_titulos.js` (237 caixas, 74 nos quadros: 0 problema, com cobertura e
+negrito exigidos em **100%** — os limiares antigos de 97% e 95% deixavam passar
+a última palavra cortada). Teste negativo `neg_titulos.js`: 15 estragos
+aplicados um a um, com prova de que o arquivo mudou — título pedindo mais e
+menos, negrito faltando (inclusive numa palavra), artigo não citado, corte de
+uma palavra, palavra trocada, negrito no contexto da Lei 11.416 (parcial e
+inteiro), art. 117 fora do título, inciso e artigo apagados no quadro: **15
+acusados**, só na caixa estragada. Demais: `conferir_lei_seca.js` (1.215, 0
+falha), `conferir_caixas.js` (178, 0), `auditar_manual.js` (0 ausente, 0
+incompleto), `conferir_juris_caixas.js` (0), `conferir_nada_perdido.js` (1.079,
+3 exceções do ADCT declaradas), `conferir_casos.js` (52, 0), `checar2.js`
+(nenhum dado gravado perdido, `CHAVES` iguais). Navegador: 375px nas 10 páginas
+com todos os `<details>` abertos, sem rolagem lateral, console limpo, títulos
+renderizados, art. 117 no quadro.
+
+## Armadilhas novas
+
+- O Planalto aninha tachados; regex não guloso para no primeiro `</span>` e
+  deixa texto revogado. Contar a profundidade.
+- Um teste negativo que troca "a primeira ocorrência" pode acertar o aviso em
+  vez da caixa: exigir âncora única e provar que o arquivo mudou.
+
+## Pendências
+
+- Commit, push e PR (usuário).
+- As de antes continuam.
