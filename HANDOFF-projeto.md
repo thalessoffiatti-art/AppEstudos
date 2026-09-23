@@ -1035,3 +1035,98 @@ renderizados, art. 117 no quadro.
 
 - Commit, push e PR (usuário).
 - As de antes continuam.
+
+---
+
+# Adendo 8 — 2026-09-23 (CPC 125, verificação independente e filtros do banco)
+
+## Estado do repositório
+
+- `51f513a` (adendos 6 e 7) está no `main` pelo PR #8 (`a56ae41`) e publicado,
+  com cache **v13**.
+- Alterações desta rodada **não commitadas** em `index.html` e `sw.js` (cache
+  **v14**). O usuário commita e envia.
+
+## O pedido 1 — "o art. 125 do CPC para no § 1º, mesmo na lei seca"
+
+- **O que o usuário viu era a versão v12** (`bba7809`). Nela o quadro Lei seca
+  de `dpc-terceiros` não trazia o art. 125, porque o auditor antigo contava a
+  caixa parcial ("art. 125 … [...]") como artigo inteiro. A v13 publicada já o
+  traz inteiro, com o § 2º (conferido no site publicado em 23/09).
+- **Por que a versão velha aparece:** o `sw.js` serve primeiro o cache. Depois
+  de uma publicação, a primeira abertura mostra a versão anterior; a nova só
+  aparece na abertura seguinte. Não foi mudado nesta rodada (ver pendências).
+- **Verificação independente** (`scratchpad/verif_independente.js`): leitor
+  próprio das linhas do manual 03.1 e texto **visível** do tópico inteiro. Cada
+  dispositivo oficial pedido tem de aparecer, na ordem da lei. Não usa o
+  auditor, o leitor de caixas nem a cobertura. Na v12 ele acusa o CPC 125 (I
+  cortado, § 2º ausente) e a Lei 8.112, art. 117.
+- **Quatro faltas reais na v13, todas escondidas por defeitos do auditor:**
+  1. "§§ 4º e 6º; arts. 39 a 41": a regra que apaga parágrafos comia "39 a 41".
+     A CF 39 a 41 não era exigida em `adm-principios` (semana 1).
+  2. "852-A a 852-I" e "55-A a 55-L": a remoção de incisos romanos apagava a
+     letra final (I, L) e a faixa ficava vazia. Faltavam a CLT 852-B a 852-I em
+     `dpt-dissidio` (S5) e a LGPD 55-A a 55-L em `leg-lgpd` (S10).
+  3. `escopos.js`: 'CF:37@const-adm' restringia o art. 37 a I–XVII, mas a S7 pede
+     "arts. 37 e 38" inteiros. Entrada retirada.
+  - Correções em `auditar_manual.js` (`(?<!-)` antes do romano; o ";" fica como
+    separador) e `escopos.js`. Agora os dois leitores extraem os mesmos artigos
+    em todas as 107 linhas "basta".
+- **Quadros regerados:** 44 tópicos, **1.237 artigos** (+22, e o CF 37 inteiro
+  em `const-adm`). Aviso de 21/09 "completada em 22/09 e 23/09", com item novo
+  das quatro linhas. O item de 22/09 passou a citar o CPC 125.
+- LGPD 55-B é revogado: no Planalto o rótulo fica dentro do tachado e só a nota
+  "(Revogado pela Lei nº 14.460, de 2022)" sobra, colada ao 55-A. A limpeza a
+  retira. A nota de redação do 55-A no Planalto diz "Lei nº 15.452, de 2026";
+  as outras seis dizem 15.352. Só aparece em nota retirada.
+
+## O pedido 2 — filtros do Banco de questões
+
+- **Meu histórico** (`#fHist`): "Errei pelo menos uma vez" (`n > ac`) e "Errei
+  na última resposta" (último item de `h` com erro), pelo `histQ`
+  (`trt4:historicoQuestoes`). A lista é congelada no começo da rodada
+  (`novaRodada` → `congelarHistorico`): responder no meio da rodada não tira a
+  questão da tela, e o placar "Nesta rodada" conta sempre as mesmas. O aviso
+  `#notaHist` diz isso quando o filtro está ligado. `zerarProgresso` congela de
+  novo, e a lista fica vazia na hora.
+- **Id da questão** (`#formId`, `#fId`, botão "Mostrar esta questão"):
+  - aceita maiúsculas ou minúsculas e vários ids (vírgula ou espaço), sem repetir;
+    "DT5" vale como "DT05";
+  - id que não existe aparece na faixa "Busca por id";
+  - limpa os outros filtros; trocar matéria, assunto, ano ou histórico sai da
+    busca;
+  - "Limpar filtros", simuladão e os atalhos do material e da jurisprudência
+    zeram os dois filtros; o texto digitado é escapado.
+- **Armazenamento:** nenhuma chave nova. `estado.hist`, `histIds`, `ids` e
+  `idsFora` não são gravados. O texto do topo da página 05 cita os filtros.
+- **Teste no navegador** (servidor local, perfil de teste):
+  - os dois modos do histórico, a lista congelada e a combinação com matéria;
+  - os ids em todos os casos acima;
+  - "Zerar progresso" com o filtro ligado;
+  - atualização: dados gravados antes ficam byte a byte iguais depois de abrir
+    a versão nova, e os 12 blocos marcados continuam marcados;
+  - 375 px sem rolagem lateral; console limpo.
+
+## Verificação feita
+
+`verif_independente.js`: 1.325 artigos e 5.956 dispositivos, 0 falta. As 22
+linhas "não lido" são texto sem artigo. Teste negativo: o § 2º do CPC 125 e o
+§ 1º do 55-D apagados do quadro foram acusados por ele e pelo auditor. Também:
+- `auditar_manual.js`: 0;
+- `conferir_lei_seca.js`: 1.237, 0 falha;
+- `conferir_titulos.js`: 237 caixas, 0 problema; o teste negativo pegou os 15
+  estragos;
+- `conferir_caixas.js`: 178, 0;
+- `conferir_nada_perdido.js`: 1.079;
+- `conferir_juris_caixas.js`: 0; `conferir_casos.js`: 52, 0;
+  `varrer_residuos.js`: nada;
+- `checar2.js`: nenhum dado gravado perdido, `CHAVES` iguais.
+
+## Pendências
+
+- Commit, push e PR (usuário).
+- Sugerido, não feito: avisar na tela quando o service worker instalar uma
+  versão nova ("Há uma versão nova do material — toque para atualizar") e
+  baixar os arquivos com `cache: 'reload'` na instalação. Hoje a primeira
+  abertura depois de publicar mostra a versão anterior.
+- As de antes continuam.
