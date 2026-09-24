@@ -644,6 +644,23 @@ html:has(dialog.modal[open]){overflow:hidden}
 #pg-operacional .op-tr.op-pausa{background:linear-gradient(90deg,var(--papel-2),transparent 70%)}
 #pg-operacional .op-tr.op-p15{background:linear-gradient(90deg,#EAF1F3,transparent 75%)}
 #pg-operacional .op-proc{display:inline-block; font-family:var(--mono); font-size:10.5px; background:var(--grifo-suave); color:#7A6410; padding:2px 7px; margin-left:6px; vertical-align:2px}
+#pg-operacional .op-proc[role="button"]{cursor:help; text-decoration:underline dotted; text-underline-offset:2px}
+#pg-operacional .op-proc[aria-expanded="true"]{background:var(--grifo); color:var(--tinta)}
+/* Balão do procedimento (seção 3): cópia do bloco da seção 4. */
+.op-dica{
+  position:fixed; z-index:50; overflow-y:auto; overscroll-behavior:contain;
+  background:var(--superficie); border:1px solid var(--linha-forte); border-radius:var(--raio);
+  box-shadow:0 14px 34px -14px rgba(23,36,46,.5); padding:10px 16px 14px;
+}
+.op-dica[hidden]{display:none}
+.op-dica-cab{display:flex; align-items:center; gap:10px; margin-bottom:6px; font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--tinta-3)}
+.op-dica-cab button{
+  margin-left:auto; background:none; border:1px solid var(--linha-forte); color:var(--tinta-2); cursor:pointer;
+  font-family:var(--corpo); font-size:12.5px; letter-spacing:0; text-transform:none; padding:3px 10px; border-radius:var(--raio);
+}
+#pg-operacional .op-dica .op-p{border:0; padding:0; margin:0; background:none; box-shadow:none}
+.op-dica-rodape{margin:12px 0 0; font-size:13.5px}
+@media (pointer:coarse){ .op-dica-cab button{min-height:40px; padding:6px 14px} }
 #pg-operacional .op-novo{display:inline-block; font-family:var(--mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--petroleo); border:1px solid var(--petroleo); padding:1px 6px; margin-left:6px; vertical-align:2px}
 
 #pg-operacional .op-p{background:var(--superficie); border:1px solid var(--linha); padding:20px 22px; margin-bottom:16px}
@@ -861,6 +878,19 @@ body{
   html{scroll-behavior:auto}
 }
 @media print{ .lateral{display:none} .pagina{display:block !important} }
+
+/* ---------- Voltar ao ponto anterior ---------- */
+.btn-voltar{
+  position:fixed; z-index:40; right:16px; bottom:16px;
+  right:max(16px, calc(env(safe-area-inset-right) + 16px)); bottom:max(16px, calc(env(safe-area-inset-bottom) + 12px));
+  display:flex; align-items:center; gap:8px; max-width:calc(100vw - 32px); min-height:44px;
+  font-family:var(--corpo); font-weight:600; font-size:14px; padding:10px 16px; cursor:pointer;
+  background:var(--tinta); color:#fff; border:1px solid var(--tinta); border-radius:var(--raio);
+  box-shadow:0 10px 26px -12px rgba(23,36,46,.6);
+}
+.btn-voltar[hidden]{display:none}
+.btn-voltar #btnVoltarTxt{overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+@media print{ .btn-voltar, .op-dica{display:none !important} }
 </style>
 </head>
 <body>
@@ -1571,7 +1601,7 @@ body{
       <a href="#" data-op-ir="op-usar"><span>1</span>Como usar este documento</a>
       <a href="#" data-op-ir="op-meta"><span>2</span>A meta que define o estudo</a>
       <a href="#" data-op-ir="op-dias"><span>3</span>Os seis dias, minuto a minuto</a>
-      <a href="#" data-op-ir="op-proc"><span>4</span>Os procedimentos (P1 a P15)</a>
+      <a href="#" data-op-ir="op-proc"><span>4</span>Os procedimentos (P1 a P16)</a>
       <a href="#" data-op-ir="op-espacada"><span>5</span>A revisão espaçada</a>
       <a href="#" data-op-ir="op-semanas"><span>6</span>As treze semanas</a>
       <a href="#" data-op-ir="op-materiais"><span>7</span>Materiais fixos da mesa</a>
@@ -1680,6 +1710,7 @@ body{
     <div class="op-chapeu">Seção 3</div>
     <h2>Os seis dias, minuto a minuto</h2>
     <p class="op-intro">Clique em um dia para abrir. Cada linha traz o horário exato, o que fazer e o procedimento que descreve como fazer. Os blocos longos têm micropausas de pé já marcadas dentro deles.</p>
+    <p class="op-intro">Para ler um procedimento sem sair desta seção, passe o cursor sobre o código dele (P1, P2…): o texto completo, o mesmo da seção 4, aparece num balão. Para deixar o balão aberto, clique no código; no celular e no iPad sem mouse, toque no código. O balão fecha no botão “Fechar”, com a tecla Esc ou com um clique fora dele.</p>
 
     <details class="op-dia" id="op-dia-1">
       <summary><span class="op-nome">Segunda</span><span class="op-janela">15h30 – 19h30</span><span class="op-foco">Processo do Trabalho</span></summary>
@@ -6824,6 +6855,7 @@ body{
 
 </main>
 </div>
+<button type="button" class="btn-voltar" id="btnVoltar" hidden><span aria-hidden="true">←</span><span id="btnVoltarTxt">Voltar</span></button>
 <dialog id="dlgZerar" class="modal" aria-labelledby="dlgZerarTitulo" aria-describedby="dlgZerarAviso">
   <form method="dialog" class="modal-corpo">
     <div class="modal-texto">
@@ -15467,7 +15499,7 @@ const LS = (function(){
 })();
 
 /* ---------- Navegação ---------- */
-function abrirPagina(pg, anc){
+function mostrarPagina(pg, anc){
   $$('.pagina').forEach(p=> p.classList.toggle('ativa', p.id === 'pg-'+pg));
   $$('.menu a').forEach(a=> a.classList.toggle('ativo', a.dataset.pg===pg && !a.dataset.anc && !anc));
   if(anc){ $$('.menu a').forEach(a=> a.classList.toggle('ativo', a.dataset.anc===anc)); }
@@ -15475,17 +15507,167 @@ function abrirPagina(pg, anc){
   if(pg === 'in39') montarIn39();
   if(pg === 'juris') montarJuris();
   if(pg === 'operacional') montarOperacional();
-  if(anc){
-    requestAnimationFrame(()=>{
-      const alvo = document.getElementById(anc);
-      if(!alvo) return;
-      if(alvo.tagName === 'DETAILS') alvo.open = true;
-      alvo.scrollIntoView({behavior:'smooth', block:'start'});
-    });
-  } else {
-    window.scrollTo({top:0, behavior:'smooth'});
-  }
 }
+function abrirPagina(pg, anc){
+  navegar(function(){
+    navAnc = anc || null;
+    mostrarPagina(pg, anc);
+    if(anc){
+      requestAnimationFrame(()=>{
+        const alvo = document.getElementById(anc);
+        if(!alvo) return;
+        if(alvo.tagName === 'DETAILS') alvo.open = true;
+        alvo.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    } else {
+      window.scrollTo({top:0, behavior:'smooth'});
+    }
+  });
+}
+
+/* ---------- Voltar ao ponto anterior ----------
+   Cada ida por link interno (menu, "ver no material", "Resolver agora", os
+   atalhos da página 03.1 e da jurisprudência, "Ir para a semana atual") vira
+   uma entrada no histórico do navegador, com a página, o ponto de leitura e,
+   no banco de questões e na página 04.2, os filtros. O botão Voltar do
+   navegador, o gesto de voltar e o botão "Voltar" da tela devolvem a esse ponto
+   sem recarregar nada. Nada disso é gravado no aparelho. */
+const NAV_APP = 'trt4';
+const TOPO_LEITURA = 12;
+let navegando = false, restaurando = false, navAnc = null, timerPosicao = 0;
+if('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+function paginaAtiva(){ const p = $('.pagina.ativa'); return p ? p.id.replace(/^pg-/, '') : 'inicio'; }
+function nomeDaPagina(pg){
+  const a = $('.menu a[data-pg="' + pg + '"]:not([data-anc])');
+  if(!a) return '';
+  const c = a.cloneNode(true);
+  $$('.num', c).forEach(x => x.remove());
+  return c.textContent.trim();
+}
+/* O elemento que está no alto da tela (o mais interno com id, ou a ficha da
+   questão) e a distância até o topo dele: volta ao mesmo ponto mesmo que algo
+   acima tenha aberto ou fechado. */
+/* A página entra com translateY(6px) por 0,28 s; medidas feitas nesse meio
+   tempo descontam o deslocamento. */
+function deslocamentoDaEntrada(pag){
+  const t = getComputedStyle(pag).transform;
+  const m = t && t !== 'none' ? /matrix\(([^)]+)\)/.exec(t) : null;
+  return m ? parseFloat(m[1].split(',')[5]) || 0 : 0;
+}
+function pontoDeLeitura(){
+  const pag = $('.pagina.ativa');
+  if(!pag) return null;
+  const ty = deslocamentoDaEntrada(pag);
+  const r = pag.getBoundingClientRect();
+  const x = Math.min(Math.max(r.left + r.width / 2, 1), window.innerWidth - 1);
+  let el = document.elementFromPoint(x, TOPO_LEITURA);
+  while(el && el !== pag && !el.id && !(el.dataset && el.dataset.q)) el = el.parentElement;
+  if(!el || el === pag || !pag.contains(el)) return null;
+  /* Ficha de questão cortada no alto: se a lista for refeita, a altura dela
+     muda (sem o gabarito); a âncora passa a ser a ficha seguinte. */
+  if(!el.id && el.getBoundingClientRect().top - ty < TOPO_LEITURA){
+    const prox = el.nextElementSibling;
+    if(prox && prox.dataset && prox.dataset.q && prox.getBoundingClientRect().top < window.innerHeight) el = prox;
+  }
+  return { id: el.id || null, q: el.id ? null : el.dataset.q, off: Math.round(TOPO_LEITURA - (el.getBoundingClientRect().top - ty)) };
+}
+function fotoQuestoes(){
+  return { mat: $('#fMateria').value, ass: $('#fAssunto').value, ano: $('#fAno').value, hist: estado.hist,
+    topico: estado.topico, jur: estado.jur, ids: estado.ids ? estado.ids.slice() : null, idsFora: estado.idsFora.slice(),
+    sim: estado.ordem !== null };
+}
+function fotoDaTela(){
+  const pg = paginaAtiva();
+  const s = { app: NAV_APP, pg: pg, y: Math.round(window.scrollY), ponto: pontoDeLeitura() };
+  if(pg === 'questoes') s.q = fotoQuestoes();
+  if(pg === 'juris') s.j = JSON.parse(JSON.stringify(jurFiltro));
+  return s;
+}
+function nossoEstado(){ const s = history.state; return s && s.app === NAV_APP ? s : null; }
+function guardarPosicao(){
+  const s = nossoEstado();
+  if(!s) return;
+  try { history.replaceState(Object.assign({}, s, fotoDaTela()), ''); } catch(e){}
+}
+function navegar(acao){
+  if(navegando || restaurando){ acao(); return; }
+  clearTimeout(timerPosicao);
+  guardarPosicao();
+  const s = nossoEstado();
+  const origem = paginaAtiva();
+  navegando = true; navAnc = null;
+  try { acao(); } finally { navegando = false; }
+  try { history.pushState(Object.assign(fotoDaTela(), { n: s ? s.n + 1 : 1, de: origem, anc: navAnc }), ''); } catch(e){}
+  atualizarBotaoVoltar();
+}
+function atualizarBotaoVoltar(){
+  const b = $('#btnVoltar');
+  if(!b) return;
+  const s = nossoEstado();
+  if(!s || !s.n){ b.hidden = true; return; }
+  const nome = s.de && s.de !== s.pg ? nomeDaPagina(s.de) : '';
+  $('#btnVoltarTxt').textContent = nome ? 'Voltar para ' + nome : 'Voltar ao ponto anterior';
+  b.hidden = false;
+}
+/* Banco de questões: se a lista na tela já não é a daquela entrada, refaz os
+   filtros dela (uma rodada nova, como em qualquer troca de filtro). Um
+   simuladão abandonado não volta: a lista volta sem filtro. */
+function restaurarQuestoes(q){
+  if(JSON.stringify(fotoQuestoes()) === JSON.stringify(q)) return;
+  $('#fMateria').value = q.mat || '';
+  atualizarAssuntos();
+  $('#fAssunto').value = q.ass || '';
+  $('#fAno').value = q.ano || '';
+  estado.hist = q.hist || ''; $('#fHist').value = estado.hist;
+  estado.topico = q.topico || null;
+  estado.jur = q.jur || null;
+  estado.ids = q.ids ? q.ids.slice() : null;
+  estado.idsFora = (q.idsFora || []).slice();
+  $('#fId').value = q.ids ? q.ids.join(', ') : '';
+  estado.ordem = null;
+  novaRodada();
+  renderQuestoes();
+}
+function rolarAoPonto(s){
+  let alvo = null;
+  if(s.ponto){
+    const pag = document.getElementById('pg-' + s.pg);
+    if(s.ponto.id) alvo = document.getElementById(s.ponto.id);
+    else if(pag && s.ponto.q) alvo = $$('[data-q]', pag).find(el => el.dataset.q === s.ponto.q) || null;
+    if(alvo && !alvo.getClientRects().length) alvo = null;   /* dentro de um <details> fechado */
+  }
+  const pag = document.getElementById('pg-' + s.pg);
+  const ty = pag ? deslocamentoDaEntrada(pag) : 0;
+  const y = Math.max(0, alvo ? window.scrollY + alvo.getBoundingClientRect().top - ty - TOPO_LEITURA + s.ponto.off : (s.y || 0));
+  /* Volta direto ao ponto, sem a rolagem animada que o CSS pede (html{scroll-behavior:smooth}). */
+  const raiz = document.documentElement;
+  raiz.style.scrollBehavior = 'auto';
+  try { window.scrollTo({ top: y, left: 0, behavior: 'instant' }); } catch(e){ window.scrollTo(0, y); }
+  setTimeout(function(){ raiz.style.scrollBehavior = ''; }, 50);
+}
+function restaurar(s){
+  clearTimeout(timerPosicao);
+  restaurando = true;
+  try {
+    if(s.pg === 'questoes' && s.q) restaurarQuestoes(s.q);
+    if(s.pg === 'juris' && s.j) jurFiltro = Object.assign(jurFiltroVazio(), s.j);
+    mostrarPagina(s.pg, s.anc);
+  } finally { restaurando = false; }
+  requestAnimationFrame(function(){ rolarAoPonto(s); });
+}
+window.addEventListener('popstate', function(ev){
+  const s = ev.state;
+  if(!s || s.app !== NAV_APP) return;
+  restaurar(s);
+  atualizarBotaoVoltar();
+});
+/* A posição de leitura da entrada atual é guardada depois que a rolagem para. */
+window.addEventListener('scroll', function(){
+  clearTimeout(timerPosicao);
+  timerPosicao = setTimeout(guardarPosicao, 250);
+}, { passive: true });
+$('#btnVoltar').addEventListener('click', function(){ history.back(); });
 $$('.menu a').forEach(a=> a.addEventListener('click', e=>{
   e.preventDefault();
   abrirPagina(a.dataset.pg, a.dataset.anc);
@@ -16271,7 +16453,8 @@ function atualizarChipTopico(){
 }
 
 /* Abre o banco de questões já filtrado. Um dos dois argumentos basta. */
-function irParaQuestoes(anc, materia){
+function irParaQuestoes(anc, materia){ navegar(function(){ irParaQuestoesAgora(anc, materia); }); }
+function irParaQuestoesAgora(anc, materia){
   estado.ordem = null;
   sairDoHistorico(); sairDaBuscaPorId();
   novaRodada();
@@ -16493,8 +16676,10 @@ $('#btnIrSemanaAtual').addEventListener('click', function(){
   const n = semanaCorrente();
   const alvo = document.getElementById('sem-' + (n === 0 ? 1 : n === 99 ? 13 : n));
   if(!alvo) return;
-  alvo.open = true;
-  alvo.scrollIntoView({behavior:'smooth', block:'start'});
+  navegar(function(){
+    alvo.open = true;
+    alvo.scrollIntoView({behavior:'smooth', block:'start'});
+  });
 });
 
 /* ---------- Desempenho por disciplina, alimentado pelo placar ---------- */
@@ -17033,11 +17218,14 @@ function cartaoJuris(j){
 }
 
 function irParaJuris(filtro){
-  jurFiltro = Object.assign(jurFiltroVazio(), filtro);
-  abrirPagina('juris');
+  navegar(function(){
+    jurFiltro = Object.assign(jurFiltroVazio(), filtro);
+    abrirPagina('juris');
+  });
 }
 
-function irParaQuestoesJur(id){
+function irParaQuestoesJur(id){ navegar(function(){ irParaQuestoesJurAgora(id); }); }
+function irParaQuestoesJurAgora(id){
   estado.ordem = null;
   sairDoHistorico(); sairDaBuscaPorId();
   novaRodada();
@@ -17515,9 +17703,9 @@ document.addEventListener('click', function(ev){
   if(d.jFinal){ irParaJuris({ prio: '1', mats: d.jFinal.split('|') }); return; }
   if(d.qJur){ irParaQuestoesJur(d.qJur); return; }
   if(d.pgIr){ abrirPagina(d.pgIr); return; }
-  if(d.opIr){ const el = document.getElementById(d.opIr); if(el) rolarPara(el); return; }
-  if(d.opDia){ const el = document.getElementById('op-dia-' + d.opDia); if(el){ el.open = true; rolarPara(el); } return; }
-  if(d.opSem){ const el = document.getElementById('op-s' + d.opSem); if(el) rolarPara(el); }
+  if(d.opIr){ const el = document.getElementById(d.opIr); if(el) navegar(function(){ rolarPara(el); }); return; }
+  if(d.opDia){ const el = document.getElementById('op-dia-' + d.opDia); if(el) navegar(function(){ el.open = true; rolarPara(el); }); return; }
+  if(d.opSem){ const el = document.getElementById('op-s' + d.opSem); if(el) navegar(function(){ rolarPara(el); }); }
 });
 
 /* Na impressão do app inteiro, as páginas montadas sob demanda precisam existir. */
@@ -17530,6 +17718,158 @@ renderCronograma();
 renderDesempenho();
 renderHistorico();
 atualizarResumoZerar();
+
+/* ---------- 03.1, seção 3: o procedimento no próprio lugar ----------
+   Passar o cursor sobre o código (P1 a P16), ou chegar nele pelo teclado,
+   mostra o texto do procedimento, copiado da seção 4 na hora. Clicar ou tocar
+   no código deixa o balão aberto até "Fechar", Esc ou um clique fora dele. */
+(function prepararProcedimentosNaSecao3(){
+  const pag = $('#pg-operacional');
+  if(!pag) return;
+  const blocos = Object.create(null);
+  $$('#op-proc .op-p').forEach(function(p){
+    const cod = p.querySelector('.op-cod');
+    if(!cod) return;
+    const c = cod.textContent.trim();
+    blocos[c] = p;
+    if(!p.id) p.id = 'op-' + c;
+  });
+  const dica = document.createElement('div');
+  dica.className = 'op-dica';
+  dica.id = 'opDica';
+  dica.hidden = true;
+  dica.setAttribute('role', 'dialog');
+  dica.setAttribute('aria-label', 'Procedimento da seção 4');
+  pag.appendChild(dica);
+  $$('#op-dias .op-proc').forEach(function(sp){
+    if(!blocos[sp.textContent.trim()]) return;
+    sp.setAttribute('role', 'button');
+    sp.setAttribute('tabindex', '0');
+    sp.setAttribute('aria-expanded', 'false');
+    sp.setAttribute('aria-controls', 'opDica');
+  });
+  let atual = null, fixa = false, tAbrir = 0, tFechar = 0;
+  const ehCodigo = el => el && el.closest ? el.closest('#op-dias .op-proc[role="button"]') : null;
+
+  function posicionar(){
+    if(!atual) return;
+    const r = atual.getBoundingClientRect();
+    const W = window.innerWidth, H = window.innerHeight, m = 12;
+    if(r.bottom < 0 || r.top > H){ fechar(); return; }
+    const larg = Math.min(480, W - 2 * m);
+    const abaixo = H - r.bottom - m - 8, acima = r.top - m - 8;
+    const emBaixo = abaixo >= 240 || abaixo >= acima;
+    dica.style.width = larg + 'px';
+    dica.style.maxHeight = Math.max(160, emBaixo ? abaixo : acima) + 'px';
+    dica.style.left = Math.round(Math.min(Math.max(m, r.left + r.width / 2 - larg / 2), W - larg - m)) + 'px';
+    if(emBaixo){ dica.style.top = Math.round(r.bottom + 8) + 'px'; dica.style.bottom = 'auto'; }
+    else { dica.style.bottom = Math.round(H - r.top + 8) + 'px'; dica.style.top = 'auto'; }
+  }
+  function abrir(sp, fixar){
+    clearTimeout(tAbrir); clearTimeout(tFechar);
+    const c = sp.textContent.trim();
+    if(atual !== sp){
+      if(atual) atual.setAttribute('aria-expanded', 'false');
+      const copia = blocos[c].cloneNode(true);
+      copia.removeAttribute('id');
+      dica.innerHTML = '<div class="op-dica-cab"><span>Seção 4 · procedimento completo</span><button type="button" class="op-dica-fechar">Fechar</button></div>';
+      dica.appendChild(copia);
+      dica.insertAdjacentHTML('beforeend', '<p class="op-dica-rodape"><a href="#" data-op-ir="op-' + c + '">Abrir o ' + c + ' na seção 4 →</a></p>');
+      dica.scrollTop = 0;
+      atual = sp;
+    }
+    fixa = !!fixar || fixa;
+    sp.setAttribute('aria-expanded', 'true');
+    dica.hidden = false;
+    posicionar();
+  }
+  function fechar(){
+    clearTimeout(tAbrir); clearTimeout(tFechar);
+    if(atual) atual.setAttribute('aria-expanded', 'false');
+    atual = null; fixa = false;
+    dica.hidden = true;
+  }
+  function fecharDepois(){
+    if(fixa) return;
+    clearTimeout(tFechar);
+    tFechar = setTimeout(fechar, 250);
+  }
+  /* mouse: passar por cima */
+  pag.addEventListener('pointerover', function(ev){
+    if(ev.pointerType !== 'mouse') return;
+    const sp = ehCodigo(ev.target);
+    if(sp){
+      clearTimeout(tFechar);
+      if(fixa || atual === sp) return;
+      clearTimeout(tAbrir);
+      tAbrir = setTimeout(function(){ abrir(sp, false); }, 150);
+    } else if(dica.contains(ev.target)){
+      clearTimeout(tFechar);
+    }
+  });
+  pag.addEventListener('pointerout', function(ev){
+    if(ev.pointerType !== 'mouse') return;
+    const de = ehCodigo(ev.target) || (dica.contains(ev.target) ? dica : null);
+    if(!de) return;
+    const para = ev.relatedTarget;
+    if(para && (dica.contains(para) || ehCodigo(para) === atual)) return;
+    clearTimeout(tAbrir);
+    fecharDepois();
+  });
+  /* clique ou toque: deixa aberto; no mesmo código de novo, fecha */
+  pag.addEventListener('click', function(ev){
+    const sp = ehCodigo(ev.target);
+    if(sp){
+      ev.preventDefault();
+      if(atual === sp && fixa) fechar(); else abrir(sp, true);
+      return;
+    }
+    if(dica.contains(ev.target)){
+      if(ev.target.closest('.op-dica-fechar')){ const volta = atual; fechar(); if(volta) volta.focus(); }
+      else if(ev.target.closest('[data-op-ir]')) fechar();
+      return;
+    }
+    if(atual) fechar();
+  });
+  /* teclado */
+  pag.addEventListener('focusin', function(ev){
+    const sp = ehCodigo(ev.target);
+    if(sp && atual !== sp && !fixa) abrir(sp, false);
+  });
+  pag.addEventListener('focusout', function(ev){
+    const para = ev.relatedTarget;
+    if(!atual || fixa) return;
+    if(para && (dica.contains(para) || para === atual)) return;
+    if(ehCodigo(ev.target) || dica.contains(ev.target)) fecharDepois();
+  });
+  pag.addEventListener('keydown', function(ev){
+    const sp = ehCodigo(ev.target);
+    if(sp && (ev.key === 'Enter' || ev.key === ' ')){
+      ev.preventDefault();
+      if(atual === sp && fixa) fechar(); else abrir(sp, true);
+    }
+  });
+  document.addEventListener('keydown', function(ev){
+    if(ev.key !== 'Escape' || !atual) return;
+    const volta = atual;
+    fechar();
+    if(document.activeElement === volta || dica.contains(document.activeElement)) volta.focus();
+  });
+  document.addEventListener('click', function(ev){
+    if(atual && !pag.contains(ev.target)) fechar();
+  });
+  window.addEventListener('scroll', function(){ if(atual) posicionar(); }, { passive: true });
+  /* no Safari, a barra de endereço que some na rolagem também dispara resize */
+  window.addEventListener('resize', function(){ if(atual) posicionar(); });
+})();
+
+/* Entrada inicial do histórico: a página de abertura. Depois de recarregar, o
+   número da entrada e a página de onde se veio continuam valendo. */
+(function iniciarHistorico(){
+  const s = nossoEstado();
+  try { history.replaceState(Object.assign(fotoDaTela(), { n: s ? s.n : 0, de: s ? s.de : null, anc: null }), ''); } catch(e){}
+  atualizarBotaoVoltar();
+})();
 </script>
 <script>
 /* Registra o service worker apenas quando servido por http(s).

@@ -1130,3 +1130,97 @@ linhas "não lido" são texto sem artigo. Teste negativo: o § 2º do CPC 125 e 
   baixar os arquivos com `cache: 'reload'` na instalação. Hoje a primeira
   abertura depois de publicar mostra a versão anterior.
 - As de antes continuam.
+
+---
+
+# Adendo 9 — 2026-09-23 (voltar ao ponto anterior e balão dos procedimentos)
+
+## Estado do repositório
+
+- `e4fa821` (Adendo 8) está no `main` pelo PR #9 e publicado, com cache **v14**.
+- Alterações desta rodada **não commitadas** em `index.html` e `sw.js` (cache
+  **v15**). O usuário commita e envia.
+- O usuário é o próprio aluno: não quer aviso de versão nova na tela.
+
+## 1. Voltar ao ponto anterior
+
+- Toda ida interna passa por `navegar(acao)`:
+  - `abrirPagina`, que é o menu e os links "ver no material";
+  - `irParaQuestoes`, `irParaQuestoesJur` e `irParaJuris`;
+  - os saltos da página 03.1 (`data-op-ir`, `data-op-dia`, `data-op-sem`);
+  - o botão "Ir para a semana atual".
+- `navegar` guarda a posição da entrada atual (`history.replaceState`), executa
+  a ida e cria uma entrada nova (`history.pushState`). Cada entrada guarda a
+  página, o `y` e o ponto de leitura. O ponto de leitura é o elemento com id
+  mais interno no alto da tela, ou a ficha da questão, com a distância até ele;
+  ficha cortada no alto passa a âncora para a seguinte. No banco, a entrada
+  guarda também os filtros; na 04.2, o `jurFiltro`.
+- `popstate` → `restaurar`. Se a lista do banco na tela já não é a da entrada,
+  os filtros dela são refeitos (uma rodada nova, como qualquer troca de filtro).
+  A rolagem é instantânea (`behavior:'instant'`, porque o CSS tem
+  `html{scroll-behavior:smooth}`) e desconta o `translateY(6px)` da animação de
+  entrada da página.
+- A posição é guardada 250 ms depois que a rolagem para;
+  `history.scrollRestoration = 'manual'`.
+- `abrirPagina` virou `mostrarPagina` (só troca de página) + rolagem.
+- **Botão "← Voltar para <página>"** (`#btnVoltar`, fixo embaixo à direita, com
+  área segura). Aparece quando a entrada tem `n > 0`. Diz "Voltar ao ponto
+  anterior" quando a ida foi na mesma página. É o que funciona no iPad em modo
+  web app, que não tem botão de voltar.
+- Recarregar abre no Panorama, como antes; o número da entrada e a página de
+  origem continuam valendo, então o Voltar ainda leva à entrada anterior.
+- Nada é gravado no aparelho.
+
+## 2. Balão dos procedimentos (03.1, seção 3)
+
+- Os `span.op-proc` da seção 3 viram botões (`role`, `tabindex`,
+  `aria-expanded`). Os blocos `.op-p` da seção 4 ganham id `op-P1` a `op-P16`
+  (atribuído por JS).
+- O balão `#opDica` fica dentro de `#pg-operacional` e é uma cópia do bloco da
+  seção 4 no momento da abertura. Portanto nunca diverge da seção 4.
+- Mouse: abre 150 ms depois de o cursor parar no código; o cursor pode entrar
+  no balão e rolar o texto; fecha 250 ms depois de sair.
+- Clique, toque ou Enter/espaço: deixa o balão aberto. Fecha com "Fechar", Esc,
+  clique fora ou o mesmo código de novo. O foco pelo teclado também abre.
+- Posição: abaixo do código, ou acima quando falta espaço; largura até 480 px;
+  segue a rolagem. No Safari, o `resize` da barra de endereço reposiciona o
+  balão em vez de fechá-lo.
+- Link "Abrir o Pn na seção 4 →" (com volta).
+- Intro da seção 3 explica o uso. O índice dizia "P1 a P15"; agora diz "P1 a
+  P16".
+
+## Verificação feita
+
+Edge sem interface pelo protocolo de depuração (`scratchpad/cdp.js`,
+`teste_navegacao.js`, `prints_navegacao.js`), com mouse, teclado e toque de
+verdade. O painel do navegador embutido estava oculto, e página oculta não roda
+`requestAnimationFrame`.
+- **Volta ao ponto exato (diferença de 0 px):**
+  - cronograma → material → volta e avança;
+  - banco com respostas → material → volta, com a mesma lista e as respostas
+    na tela;
+  - banco → material → "Resolver agora" → volta, volta: o filtro de antes é
+    refeito, e a mesma ficha fica no mesmo ponto;
+  - salto do índice da 03.1;
+  - 04.2 com o filtro de antes.
+- Depois de recarregar, o Voltar leva à entrada anterior.
+- **Balão:** os 16 códigos mostram exatamente o texto da seção 4. Passar o
+  cursor, entrar no balão, rolar, sair, clicar, Esc, Tab + Enter, "Fechar" e o
+  link com volta funcionam. No celular, com toque, o balão abre, segue a
+  rolagem e fecha com um toque fora.
+- 375 px sem rolagem lateral; console sem erro. O único 404 é o
+  `favicon.ico`, que o app não tem.
+- Também passaram: `teste_file3.js` (páginas, IN 39, histórico por questão,
+  janela de Zerar), `checar2.js` e os conferidores do material.
+
+## Armadilhas novas
+
+- No headless, `element.focus()` não dispara `focusin` sem
+  `Emulation.setFocusEmulationEnabled`.
+- Edge headless deixa processos filhos presos ao perfil. Use um perfil novo por
+  rodada e encerre só os processos com `perfil-headless` na linha de comando.
+
+## Pendências
+
+- Commit, push e PR (usuário).
+- As de antes continuam.
