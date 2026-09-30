@@ -1224,3 +1224,175 @@ verdade. O painel do navegador embutido estava oculto, e página oculta não rod
 
 - Commit, push e PR (usuário).
 - As de antes continuam.
+
+---
+
+# Adendo 10 — 2026-09-30 (cobertura do edital, questões, STF e link da FCC)
+
+## Estado do repositório
+
+- Alterações **não commitadas** em `index.html`, `sw.js` (cache **v16**) e neste
+  arquivo. O usuário commita e envia.
+- A grade nova vale a partir de segunda-feira, 05/10 (semana 6). As semanas 1 a 5
+  não mudaram.
+
+## O pedido
+
+1. "Os arts. 284 a 293 do CPC ficaram de fora de propósito?"
+   - Foi erro: eles estão no edital (valor da causa e distribuição).
+   - O pedido veio junto com a ordem de conferir todos os blocos contra o edital
+     de 2022.
+2. A CO23 listava menos legitimados do que o art. 103 da CF.
+3. Havia questões desatualizadas sobre o adicional de qualificação.
+4. Pôr um link para as questões da FCC no material, abaixo do link do banco.
+
+## O que foi feito
+
+### Grade (seção 6 do 03.1, `CRONOGRAMA`, `QC_BLOCO`)
+
+- **Cinco blocos novos**, cada um no horário de outro bloco da mesma
+  disciplina:
+
+  | Bloco | Conteúdo |
+  |---|---|
+  | `s7-da3` | Lei 8.112, arts. 1º a 4º |
+  | `s8-dt2` | Lei 6.019, Lei 12.023 e Súmula 331 — marcado "Só na lei" |
+  | `s10-da3` | Lei 14.133, arts. 112 a 194 |
+  | `s11-dt2` | CLT, arts. 224 a 351 |
+  | `s12-dpt2` | CLT, arts. 668 a 709, e LC 75, arts. 85 a 115 |
+
+  Cada um entrou nas listas de revisão R2, R7, R14 e R30 correspondentes.
+- **30 linhas** ganharam artigos. Os arts. 284 a 293 do CPC entraram na sexta
+  da semana 8. **11 títulos** mudaram no cronograma, no manual e nas listas.
+- A linha "direito coletivo" da semana 13 repetia os arts. 223-A a 223-G da CLT
+  e os arts. 19 a 22 da Lei 8.213, que já estão na linha "dano" do mesmo
+  horário. Eles ficaram só na linha "dano", que agora vai até o art. 23.
+- "Lei 9.784/1999 (a lei inteira)" e "Lei 13.146/2015 (a lei inteira)": o
+  `verif_independente.js` não lê o formato "arts. X a Y (a lei inteira)".
+- **Links corrigidos:**
+  - 18 links das listas de revisão apontavam para `dpc-recursos` ou `mat-dpc`;
+    agora apontam para `dpc-normas`, `-atos`, `-procedimento`, `-provas`,
+    `-precedentes` e `-especiais`.
+  - 2 `op-path` vazios (improbidade na semana 8, responsabilidade na semana 10).
+- **Nenhum id renomeado ou removido.** Os blocos passaram de 154 para 159.
+
+### Omissões de propósito, fora do edital ou superadas
+
+- **CPC:** 550–673, 682–711, 719–770, 929–946 e 960–965; também 1.045–1.072,
+  exceto os arts. 1.046, 1.047, 1.054 e 1.057 (direito intertemporal).
+- **CF:** 17, 42–43, 87–91, 106–110, 118–126 e 136–250.
+- **CLT:** 352–371, 626–642-A, 722–735 e 903–922; os arts. 736–762 (MPT) foram
+  superados pela LC 75.
+- **Lei 8.112:** 183–253 (seguridade).
+- **Lei 7.701:** 12–16.
+- **Quase todo o conteúdo de:** DL 200, DL 3.365, Código Civil, Lei 8.213,
+  Lei 11.101 e LC 75.
+
+### Questões
+
+- `scratchpad/aplicar_questoes.js`: 98 trocas em 58 questões. Ids, matérias e
+  gabaritos não mudaram.
+- A lista completa de achados está em `scratchpad/qv/achados.md`.
+- Destaques:
+  - **CO23:** a alternativa certa traz os nove incisos do art. 103.
+  - **LG07 e LG22:** adicional de qualificação pela Lei 15.292/2025, com
+    múltiplos do VR.
+  - **DT30:** Lei 14.611/2023.
+  - **CO26:** EC 138/2025.
+  - **DA37 e DA38:** STF, 2026.
+  - **DA43:** ADI 2.975.
+  - **PT_T53:** os periciais ficam com a União.
+  - **PT14, PT25 e PT42:** tinham duas alternativas defensáveis.
+
+### Material
+
+- **Improbidade:**
+  - a lei-nota da prescrição e o § 5º receberam `lei-alt`;
+  - caixa `.base` nova, "Atualização jurisprudencial — STF, ADIs 7.156 e 7.236",
+    com 13 itens;
+  - fontes: noticias.stf.jus.br de 28/05, 24/06, 25/06 e 01/07/2026.
+- **ADI 5766:** separados os regimes dos honorários — periciais pagos pela
+  União (Súmula 457); sucumbência com condição suspensiva de 2 anos. A mudança
+  está na caixa de custas e na lei-nota do art. 791-A.
+- **Art. 899, § 4º:** nota das ADCs 58 e 59.
+- **CSS:**
+  - `.base b` e `.revogado b` viraram `> b:first-child` (antes, todo negrito
+    dentro dessas caixas virava rótulo em bloco);
+  - novo `.lei-txt .ls-stf`.
+
+### Lei seca
+
+- **Avisos do STF:** `scratchpad/notas_stf.js` tem 33 avisos; 31 são usados, e
+  aparecem 35 vezes na página. O gerador põe `<p class="ls-stf">` depois das
+  linhas do artigo. O conferidor lê só `<p><b>`, então o aviso não interfere.
+- **Cabeçalho:** foi mudado para explicar o aviso.
+- **Caput vetado com parágrafo em vigor** (Lei 11.107, art. 10): o gerador
+  agora escreve "Art. 10 — (VETADO)". Sem isso, o parágrafo parecia do art. 9º.
+- **Números:** 1946 artigos em 44 tópicos. O aviso de 21/09 voltou a dizer 1237.
+  O `aplicar_lei_seca4.js` não mexe mais nesse número.
+- **`conferir_nada_perdido.js`:** ganhou o mapa `MOVIDO`. Os 12 artigos que
+  saíram de `dt-coletivo` são conferidos em `dt-dano`.
+
+### Link da FCC
+
+- **IIFE `injetarAtalhosFcc`**, depois de `injetarAtalhosJuris`:
+  - por tópico, os URLs de `urlQcDoBloco` dos blocos com o mesmo `anc`, sem
+    repetir;
+  - com um link, a barra mostra um botão; com vários, uma lista com o título do
+    bloco;
+  - nos 3 tópicos sem assunto no QConcursos (`leg-trt4`, `leg-outros`,
+    `info-hist`), um texto literal.
+- **Posição:** logo abaixo da barra do banco, ou no topo do tópico; a barra de
+  jurisprudência fica depois.
+- **Por matéria:** um link por disciplina de `QC_DISCIPLINA`. Legislação tem
+  dois: `leg` e `dig`.
+
+### Aviso
+
+- "Atualização de 30/09/2026 — vale a partir de segunda-feira, 05/10
+  (semana 6)", no topo do 03.1.
+
+## Verificação feita
+
+- **Scripts de edição:** todos com prova por reversão; 0 LF soltos e 0 CR
+  soltos.
+- **`checar2.js`:**
+  - 4 scripts sem erro;
+  - nenhum id de bloco ou de questão perdido;
+  - nenhuma disciplina perdida;
+  - `CHAVES` iguais.
+- **Conferência da lei seca:**
+  - `conferir_lei_seca.js`, pelo manifesto e pelo HTML: 1946 artigos, 0 falhas;
+  - `conferir_nada_perdido.js`: 1079 conferidos, 0 faltando;
+  - `verif_independente.js`: só os 22 "NÃO LIDO" que já existiam (comentários
+    das linhas).
+- **Edge sem interface** (`teste_30-09.js`, `teste_clique2.js`,
+  `teste_clique_seq.js`, `teste_file3.js`):
+  - **Atualização da versão publicada para a nova,** no mesmo perfil `file://`:
+    61 blocos marcados continuam marcados; as 4 chaves `trt4:` ficaram
+    idênticas byte a byte; o total passou de 154 para 159.
+  - **Barras FCC:** 64 de 64 tópicos têm a barra, em ordem certa; 99 links, 0
+    ruins; 8 matérias.
+  - **Seção 6:** clique real nos 13 destinos novos ou corrigidos abre o tópico
+    certo.
+  - **375 px:** sem rolagem lateral.
+  - **Console:** sem erro, fora o `manifest.json` em `file://`.
+
+## Armadilhas novas
+
+- **Comentário depois do nome da lei:** o auditor lê
+  "Lei 7.783/1989 — os arts. 223-A…" como artigos da Lei 7.783. Não ponha
+  comentário com "arts." logo depois do nome de uma lei.
+- **Planalto e STF:**
+  - trecho tachado removido pode deixar vírgula dupla (CLT 394-A e CF 100,
+    § 11); o aviso do STF explica isso;
+  - o Planalto nem sempre tacha o que o STF derrubou (Lei 12.016, arts. 7º e 22,
+    § 2º; CLT 235-C a 235-E e 702).
+- **Cliques seguidos no teste headless** logo depois de trocar de página caem
+  durante a restauração da rolagem. Espere cerca de 2,5 s ou recarregue.
+
+## Pendências
+
+- Commit, push e PR (usuário).
+- A LBI inteira e a Resolução CNJ 400 não têm assunto em `QC_BLOCO`. Conferir no
+  QConcursos se existe assunto próprio antes de associar.
