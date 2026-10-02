@@ -1396,3 +1396,69 @@ verdade. O painel do navegador embutido estava oculto, e página oculta não rod
 - Commit, push e PR (usuário).
 - A LBI inteira e a Resolução CNJ 400 não têm assunto em `QC_BLOCO`. Conferir no
   QConcursos se existe assunto próprio antes de associar.
+
+---
+
+# Adendo 11 — 2026-10-01 (tópico do PAD)
+
+## Estado do repositório
+
+- `6e5d159` (Adendo 10) está commitado. Alterações desta rodada **não
+  commitadas** em `index.html`, `sw.js` (cache **v17**) e neste arquivo.
+
+## O pedido
+
+"Por que o bloco do PAD não tem lei seca? Ele é enxuto; ponha um elemento
+sintetizador com o que as provas cobram e a lei seca dos arts. 143 a 182."
+
+## Causa
+
+O quadro Lei seca só é gerado para linhas "O material basta". A linha da
+semana 5 (`s5-da`, Lei 8.112, arts. 143 a 182) estava "Material + leitura da
+lei". Outras 14 linhas com artigos têm a mesma marca e também não geram quadro
+(semanas 1–4, 5 — Regimento —, 9, 10 e 12); a extensão a elas depende do usuário.
+
+## O que foi feito (`scratchpad/aplicar_pad.js`, com prova por reversão)
+
+- **Tópico `adm-pad`:**
+  - mapa em seis etapas (`ol.fluxo`, CSS novo em "Material");
+  - tabela dos três ritos;
+  - tabela "O que a FCC cobrou";
+  - tabela de jurisprudência (SV 5, STJ 343 cancelada, 611, 641, 592, 635,
+    591, 672, 674, 650 e 665; STF MS 23.262);
+  - pegadinha "O padrão da banca";
+  - a frase errada sobre o procedimento sumário foi corrigida (art. 133:
+    opção em 10 dias; má-fé leva à demissão).
+- **Levantamento:** 20 provas da FCC de AJAJ, 1.230 questões, lidas pelo
+  navegador embutido. O `fetch` do Node agora dá 403 (desafio da Cloudflare); o
+  `fetch` de dentro da página do QConcursos funciona. Os cartões têm
+  `.q-question-breadcrumb`, `.q-question-enunciation` e `.q-item-enum`.
+- **Linha `s5-da`:** passou a "O material basta". A lei seca entrou com 38
+  artigos (145 e 151 já estão inteiros nas caixas). O total agora é 1984 artigos
+  em 45 tópicos.
+- **`notas_stf.js`:** ganhou `L8112:170` (STF, MS 23.262 — art. 170
+  inconstitucional).
+- **`ASSUNTOS`:** PAD estava em `[2011, 2015]`; agora está em `[2011, 2022]`.
+  A prova de 2015 não tem questão de PAD; a de 2022 tem a Súmula Vinculante 5.
+- **Aviso** "Atualização de 01/10/2026" no topo do 03.1.
+
+## Verificação
+
+- **Scripts de edição:** sem LF nem CR soltos.
+- **`checar2.js`:** sem perda de ids nem de chaves.
+- **Conferidores:**
+  - `conferir_lei_seca.js` (manifesto e HTML): 1984 artigos, 0 falhas;
+  - `conferir_nada_perdido.js`: 0 faltando;
+  - `verif_independente.js`: só os 22 "NÃO LIDO" antigos.
+- **Edge sem interface (`teste_pad.js`):**
+  - da versão `HEAD` para a nova, 61 blocos marcados e 4 chaves `trt4:`
+    idênticas;
+  - o tópico mostra, na ordem: barras, mapa, tabelas e lei seca dos arts. 143 a
+    182;
+  - 375 px sem rolagem lateral;
+  - console sem erro.
+
+## Pendências
+
+- Commit e push (usuário).
+- Decidir se as outras 14 linhas "Material + leitura da lei" ganham lei seca.
