@@ -1462,3 +1462,164 @@ lei". Outras 14 linhas com artigos têm a mesma marca e também não geram quadr
 
 - Commit e push (usuário).
 - Decidir se as outras 14 linhas "Material + leitura da lei" ganham lei seca.
+
+---
+
+# Adendo 12 — 2026-10-04 (lei seca nas linhas "Material + leitura" e duração de cada etapa)
+
+## Estado do repositório
+
+- `314adcd` (Adendo 11) está commitado.
+- Alterações desta rodada **não commitadas** em `index.html`, `sw.js` (cache
+  **v18**) e neste arquivo.
+
+## 1. Lei seca nas 14 linhas "Material + leitura da lei"
+
+- **`gerar_lei_seca.js`:**
+  - também gera o quadro para linhas `Material + leitura…`;
+  - `L4717` foi incluída (o texto já estava em `leis/l4717.json`);
+  - a `IN39` fica de fora (`SEM_TEXTO`), porque está inteira na página 04.1;
+  - o fecho da lei ("Brasília, 14 de agosto de 2018; …"), grudado no último
+    artigo (Lei 9.784, art. 70; LGPD, art. 65), é cortado.
+- **Os três conferidores aceitam o mesmo fecho** (`auditar_manual.js`,
+  `verif_independente.js` e `conferir_lei_seca.js`).
+- **`conferir_lei_seca.js`:** ganhou uma regra para o falso positivo do CF, art.
+  29. O "n" de "nº" na nota casava com o rótulo "n)". A regra só se aplica a
+  trechos que a lógica antiga já reprovaria.
+  - Teste negativo: com estragos em CF 29, LGPD 65, CLT 238 e Lei 9.784, art.
+    69-A, todos foram acusados.
+- **`notas_stf.js`:** +5 avisos — CPC 46 e 52 (ADIs 5.492 e 5.737), CPC 53
+  (ADIs 6.792 e 7.055), CPC 144, VIII (ADI 5.953) e Lei 14.133, art. 75 (ADI
+  6.890). São 37 avisos usados.
+- **Marcas** (`scratchpad/aplicar_meio.js`):
+  - 10 linhas passaram a "O material basta";
+  - as 4 que citam norma que não é lei passaram a **"Material + leitura da
+    norma"**: S1 (IN 39), S5 (Regimento), S12 PJe (Res. CSJT 185 e IN 39) e S12
+    leg-outros (Res. CNJ 400 e Regimento);
+  - a legenda da seção 6 e o P3 foram ajustados.
+- **Resultado:** 52 tópicos e 2722 artigos.
+  - `auditar_manual.js` (normal): 0 ausente e 0 incompleto nas 121 linhas
+    "basta";
+  - conferidores: 0 falhas;
+  - `conferir_nada_perdido.js`: 0 faltando;
+  - `verif_independente.js`: só os 22 "NÃO LIDO" antigos.
+- **Tamanho:** o `index.html` passou de cerca de 3,9 MB para 4,6 MB.
+
+## 2. Duração de cada etapa (`scratchpad/aplicar_duracoes.js`)
+
+- **Cálculo:** `<span class="op-tempo">` é calculado dos próprios horários,
+  nunca digitado, e fica logo abaixo do horário.
+- **Seção 3:** os 54 `.op-hora`.
+- **Seção 6:**
+  - os 146 `td.op-disc`; nos 32 blocos de dois dias, cada horário tem a sua
+    duração e uma linha "total";
+  - os 70 títulos de revisão, estudo de caso e simulado;
+  - as faixas de enunciados (`OP_SLOTS.dur`).
+- A introdução da seção 6 explica que a duração vai do início ao fim e que as
+  pausas estão na seção 3.
+- **Aviso:** "Atualização de 04/10/2026" no topo do 03.1.
+
+## Verificação
+
+- Edge sem interface (`teste_0410.js`):
+  - da versão `HEAD` para a nova, 61 marcações e 4 chaves `trt4:` idênticas;
+  - 54/54 e 146/146 horários com duração;
+  - 52 quadros;
+  - 375 px sem rolagem lateral;
+  - console sem erro.
+- `checar2.js` ok.
+
+## Pendências
+
+- Commit e push (usuário).
+
+---
+
+# Adendo 13 — 2026-10-04 (revisão de Português)
+
+## O pedido
+
+"Revise os blocos de Português, compare com as provas do TRT4 e valide se é
+suficiente — o aluno tem boa base, sobretudo em interpretação."
+
+## Levantamento
+
+241 questões de Português, lidas no QConcursos pelo navegador embutido:
+- 51 das 4 provas do TRT4;
+- 190 das 16 provas recentes (`fetch` de dentro da página, seletores
+  `.q-question-breadcrumb`, `.q-question-enunciation` e `.q-item-enum`).
+
+Nas 16 recentes:
+- 91 questões são só de interpretação;
+- concordância verbal: 15 de 16 provas, sempre "As normas de concordância verbal
+  estão plenamente observadas na frase";
+- correlação de tempos e modos: 9/16;
+- voz passiva: 8/16;
+- pontuação: 10/16, quase sempre "É plenamente adequada a pontuação da seguinte
+  frase";
+- reescrita e substituição: cerca de 18 questões;
+- "emprego do elemento sublinhado" (relativo, preposição ou conectivo): 6/16;
+- discurso indireto: 5/16;
+- regência pura: 0;
+- crase: 2;
+- ortografia: 1.
+- As provas de 2025 têm menos Português: 6 a 10 questões.
+
+## Conclusão
+
+- **Tempo:** a grade basta — 75 minutos por semana mais o simulado. O aluno
+  gabaritou Português no TRT4 de 2022.
+- **Cobertura:** os 21 itens do edital têm bloco.
+- **Problema real:** o material era curto demais para os sábados de 45 minutos.
+  Concordância, regência e crase somavam 1.272 caracteres; verbos, 1.226;
+  pontuação, 1.065.
+
+## O que foi feito (`scratchpad/aplicar_portugues.js`, 34 operações, prova por reversão)
+
+- **Tópicos ampliados**, com os formatos da FCC e questões reais explicadas:
+  - `pt-crase-conc` (10,6 mil caracteres): roteiro e tabela de concordância
+    verbal; concordância nominal; regência ampliada; pronome relativo com
+    preposição; crase obrigatória, proibida e facultativa;
+  - `pt-verbos` (7,6 mil): passiva por auxiliar, correlação, flexão dos
+    derivados;
+  - `pt-pontuacao` (4,8 mil);
+  - `pt-coesao` (4,6 mil): tabela de conectivos, pronomes no lugar de
+    repetições, período único;
+  - `pt-reescrita` (3,8 mil): frases corretas, tradução de sentido;
+  - `pt-ortografia` (3,3 mil): porquês e pares de palavras.
+- **Erros corrigidos:**
+  - "se + presente do subjuntivo" → futuro do subjuntivo;
+  - padrão ofício: os parágrafos são numerados desde o primeiro quando houver
+    três ou mais (Manual de Redação da Presidência, 3ª edição).
+- **Selos corrigidos:** `pt-crase-conc` 2/4 → 4/4; `pt-coesao` 2/4 → 4/4;
+  `pt-ortografia` 3/4 → 2/4.
+- **`ASSUNTOS`** (página 02), quatro linhas corrigidas:
+  - Problemas da língua culta: 2006 a 2022;
+  - Coesão: 2006 a 2022;
+  - Ortografia: 2011 e 2015;
+  - Crase: 2011 e 2015.
+- **Grade, só títulos (nenhum id mudou):**
+  - `s8-ptt` e `s9-pt`: + pronomes relativos com preposição;
+  - `s10-ptt` e `s11-pt`: + discurso direto, indireto e indireto livre, com
+    link para `pt-interpretacao`;
+  - `s13-ptt`: sai o discurso.
+- **Aviso:** "Atualização de 04/10/2026 — Português".
+
+## Verificação
+
+- `checar2.js` ok.
+- `auditar_manual.js`: 0 ausente e 0 incompleto.
+- `conferir_lei_seca.js`: 0 falhas.
+- `verif_independente.js`: 24 "NÃO LIDO". Os 2 novos são as notas de texto das
+  linhas S8/S9 e S10/S11.
+- Edge sem interface (`teste_pt.js`):
+  - selos e página 02 certos;
+  - S10 com os dois links;
+  - 375 px sem rolagem lateral;
+  - console sem erro.
+- O cache continua **v18**: a versão ainda não publicada cobre esta rodada e a
+  anterior.
+
+## Pendências
+
+- Commit e push (usuário).
