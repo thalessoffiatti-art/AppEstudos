@@ -2046,71 +2046,133 @@ ainda não foi commitado).
 
 ---
 
+# Adendo 16 — 2026-10-08 (modo de estudo: marca-texto e P17)
+
+## O pedido
+
+Depois de commitar o Lote 2 (`d453bce`), o usuário respondeu à proposta sobre
+a falta de tempo:
+- **A** (núcleo × consulta): não entendeu; **não aplicar**; pediu uma imagem
+  que mostre o que mudaria (feita: `scratchpad/opcao_a/opcao_A_ilustracao.png`,
+  exemplo real da quarta 14/10, Processo Civil, CPC 312 a 368: 56 artigos,
+  113 min → núcleo de 15 artigos, 61 min, para 85 min de teoria);
+- **B** (Direito do Trabalho com questões primeiro): "Faça, mas deixe claro e
+  de fácil visualização";
+- **C** (anotar menos, lembrar mais, com marca-texto): "eu sempre quis";
+- **D** (remanejar minutos): em espera.
+- Também pediu explicação das RAs 58/2025 e 37/2026 (decide depois).
+
+## O que entrou no `index.html` (`scratchpad/aplicar_modo.js`, 34 recortes, prova por reversão; textos e código em `modo_conteudo.js`)
+
+- **Marca-texto (C), página 04, todos os tópicos:**
+  - selecionar um trecho (mouse ou dedo) → botão flutuante **Marcar**; a
+    marcação estende até a palavra inteira; marcação que encosta em outra vira
+    uma só;
+  - tocar numa marcação → **Tirar marcação**, com **Desfazer** por 8 s;
+  - barra amarela no alto de cada tópico (depois dos atalhos): contagem,
+    **Esconder marcações** (treino: cada trecho vira tarja; tocar revela) e
+    **Apagar as marcações deste tópico** (janela `dlgMarcas`, com confirmação);
+  - guarda em `trt4:marcas` = `{ v:1, itens:{ idDoTópico:[{ id, q (texto), p
+    (32 car. antes), s (32 depois), d (data) }] } }`; acha de novo pelo texto e
+    pelo contexto, não pela posição. Se uma atualização mudar o texto e o
+    trecho não for achado, ele **continua guardado** e aparece listado na
+    barra ("não foi achada no texto atual");
+  - valor estranho na chave nunca é sobrescrito: o marca-texto se desliga;
+  - **`CHAVE_MARCAS` fica fora de `CHAVES`** de propósito, e `LS.limparTudo`
+    pula `trt4:marcas`: "Zerar progresso" não apaga as marcações. Textos do
+    zerar (janela, resumo, `confirm`) e da página 07 dizem isso;
+  - nota na página 04 (antes de Português) explicando o uso.
+- **P2 e P8:** a segunda leitura do P2 é com o marca-texto (não copiar no
+  caderno); o passo de memória usa **Esconder marcações**; o R2 (P8) também.
+  P2 ganhou parágrafo "desde a semana 7 (12/10)".
+- **P17 (B), novo, seção 4:** "Direito do Trabalho — questões primeiro"
+  (quarta, 30 min, desde 14/10): 1 min abrir o tópico e **Resolver agora**;
+  12 min, seis questões, anotando o **Fundamento** de cada erro; 14 min, ler só
+  o que explica cada erro e marcar; 3 min, caderno de erros. Acertou as seis:
+  ler o tópico uma vez marcando números. Regra de parada: erro não lido vai ao
+  R7 da segunda. Depois, P4 como sempre.
+  - grade de quarta (seção 3): "P17 P4" no lugar de "P2 P4"; balão do P17
+    funciona;
+  - página 03: selo "questões primeiro desde a semana 7";
+  - cartões das semanas 7 a 13: selo **"Como estudar: P17 — questões
+    primeiro"** nas 10 linhas de Direito do Trabalho de quarta, com link para o
+    P17;
+  - página 04: quadro azul **"Como estudar este tópico no bloco de
+    quarta-feira · desde 14/10 · P17"** no alto de cada um dos 12 tópicos
+    `dt-*` (montado por JS, `comoEstudarDT`);
+  - índice "Os procedimentos (P1 a P17)".
+- **Aviso no 03.1:** "Atualização de 08/10/2026 — modo de estudo: marca-texto
+  no material e Direito do Trabalho com questões primeiro — vale a partir de
+  segunda-feira, 12/10 (semana 7)".
+- **`sw.js`:** cache **v21**.
+
+## Verificação
+
+- Ensaio → real, `cmp` idêntico. `checar2`: nenhum id perdido, `CHAVES`
+  iguais às do HEAD. As 146 linhas do manual (quando, título, artigos, marca,
+  âncoras), os 64 tópicos do material, `CRONOGRAMA` e `QUESTOES` idênticos ao
+  HEAD. Lei seca, nada perdido, auditor, leitor independente e selos: os
+  mesmos resultados de antes.
+- **Edge (`teste_modo.js ARQ`)**, partindo do HEAD com progresso gravado:
+  - 66 blocos marcados e 4 chaves `trt4:` iguais depois da atualização;
+  - marcar com o mouse (parágrafo, dois parágrafos do quadro, quadro Lei seca,
+    outro tópico), extensão até a palavra inteira, recarregar (mesmas
+    marcações), tirar + desfazer, treino (texto transparente; tocar revela),
+    seleção + **toque** no celular (375 px), zerar progresso (marcações
+    intactas, outras chaves saem), marcação não achada listada e guardada,
+    apagar com janela (só o tópico), P17 (4 passos, balão, link do cartão),
+    375 px sem rolagem lateral, console sem erro.
+  - Armadilhas do teste (não do app): rolagem suave depois de abrir página ou
+    recarregar move o alvo; marcação em duas linhas → clicar no primeiro
+    retângulo (`getClientRects()[0]`), não no centro do retângulo total.
+
+---
+
 # Retomada — estado em 2026-10-08 (ler primeiro depois de compactar a conversa)
 
-## ESTADO EM 08/10/2026 — Lote 2 completo; esperando o usuário
+## ESTADO EM 08/10/2026 (madrugada) — modo de estudo aplicado; esperando o usuário
 
-1. **Commit pendente (o usuário faz):** `index.html`, `sw.js` (cache **v20**)
-   e `HANDOFF-projeto.md`. O Lote 2 inteiro, inclusive a política judiciária
-   (ver "Complemento de 08/10/2026" no Adendo 15). Depois do commit, o
-   próximo lote usa **v21**.
-2. **Decisão pendente — RA TRT4 05/2022:** a compilada do TRT4 vai só até a RA
-   13/2025; depois vieram as RAs 58/2025, 13/2026 e 37/2026 (30/09/2026). Para
-   transcrever com prova, é preciso baixar a RA 58/2025 e a RA 37/2026
-   (pesquisa de atos do TRT4) — **não autorizado ainda**. Perguntado ao
-   usuário em 08/10. A RA 13/2026 já está em `scratchpad/fontes_0810/ra13/`.
-3. **Decisão pendente — falta de tempo de leitura (passo 4 do pedido de
-   08/10):** proposta apresentada em 08/10; **nada aplicado**. Esperar a
-   escolha do usuário. Resumo:
-   - **Medição** (`scratchpad/carga_leitura.js` → `carga.json`;
-     `carga_nucleo.js` → `carga_nucleo.json`): palavras de lei pedidas por
-     linha (com escopo) + palavras do texto do tópico, por horário, contra os
-     minutos de teoria da grade (seção 3). Ritmo calibrado no relato do
-     usuário: CLT 443, 452-A, 75-A a 75-F e 468 a 476-A = 2.483 palavras de
-     lei, mais cerca de 1.000 de material, em mais de 1 hora, ou seja, cerca de
-     **55 palavras/min** lendo e anotando.
-   - **Semanas 6 a 13**, teoria disponível × leitura a 55 p/min: DT 240 ×
-     1.030 min (×4,3); Constitucional 200 × 698 (×3,5); Administrativo 425 ×
-     1.339 (×3,2); ponto do edital de sexta 105 × 295 (×2,8); Legislação 455 ×
-     818 (×1,8); CPC 595 × 1.032 (×1,7); Processo do Trabalho 1.225 × 703
-     (×0,6); Português 360 × 166 (×0,5); RLM 120 × 20. Total (sem PT e RLM):
-     3.245 × 5.914 min.
-   - **Causa:** desde setembro, toda linha que cita artigos ganhou o quadro
-     com o texto integral, e o P2 manda ler o quadro na segunda leitura. Os
-     blocos curtos (DT 30 min, Constitucional 25, ponto do edital 15) foram
-     desenhados para "teoria só nos itens que você ainda não domina" (DT está
-     no grupo "Consolidado — manter, não reestudar"). A regra de parada joga o
-     que sobra no próximo bloco da mesma disciplina, que também está cheio
-     (bola de neve).
-   - **Núcleo** = artigo que o texto do tópico explica ou transcreve (auditor
-     sem quadros: T, C ou P) ou que fundamenta questão do app (`fund`). Lendo
-     só o núcleo, o total cai para cerca de 3.041 min (cabe na soma), mas DT
-     (×2,6) e Constitucional (×3,0) continuam acima.
-   - **Opções apresentadas:**
-     - **A** — duas camadas no quadro e na linha (núcleo no bloco; o resto como
-       consulta);
-     - **B** — DT "questões primeiro" (12 min de questões, 15 min lendo só o
-       que se errou, 3 min de caderno);
-     - **C** — anotação pelo P2 (copiar só números e frases de
-       pegadinha/macete; as anotações próprias vão para o ditado de sexta, de
-       memória), com marca-texto opcional no quadro;
-     - **D** — remanejar minutos sem tempo novo (RLM 15 min de teoria →
-       Constitucional; sexta: aprofundamento de Processo do Trabalho 75 → 60 e
-       ponto do edital 15 → 30), valendo de segunda-feira seguinte.
-   - Recomendação dada: A + B + C já; D só se, depois de uma semana, DT ou
-     Constitucional continuarem estourando.
-4. **Depois:** Lote 3 (roteiro abaixo), cache v21.
+1. **Commit pendente (o usuário faz):** `index.html`, `sw.js` (cache **v21**)
+   e `HANDOFF-projeto.md` — o Adendo 16 (marca-texto e P17). O Lote 2 já está
+   commitado em `d453bce`. **O próximo lote usa v22.**
+2. **Decisão pendente — RA TRT4 05/2022:** explicado ao usuário em 08/10; ele
+   decide depois. Situação:
+   - a compilada do TRT4 ("Republicação") traz as alterações das RAs 37/2023,
+     07/2024, 10/2024 e 13/2025;
+   - depois dela, pela lista da pesquisa de atos do TRT4: **RA 58/2025**
+     (23/12/2025: tira o 4º "considerando", inclui o art. 9º-A, altera os
+     arts. 10, § 4º, 12, § 3º, e 18, § 1º, I e II); **RA 13/2026** (04/05/2026,
+     já salva em `fontes_0810/ra13/`: CEJUSC-JT/2º GRAU/REVISTA, coordenação,
+     competência territorial, sete CEJUSCs de 1º grau); **RA 37/2026**
+     (30/09/2026: altera o art. 13). As três mandam republicar a RA 05/2022, mas
+     a pesquisa ainda entrega a republicação antiga;
+   - plano, se autorizado baixar a 58/2025 e a 37/2026: montar e provar a
+     leitura dos artigos que importam (estrutura, NUPEMEC-JT/TRT4,
+     CEJUSCs de 1º e 2º graus, competência, RPP), dizendo de qual RA vem cada
+     redação; ou esperar a republicação oficial.
+3. **Falta de tempo de leitura (pedido de 08/10):**
+   - **B e C aplicados** (Adendo 16): P17 e marca-texto;
+   - **A não aplicada**: o usuário não entendeu; a ilustração foi enviada
+     (`scratchpad/opcao_a/opcao_A_ilustracao.png`, fonte `opcao_a.html`).
+     Esperar a decisão. Medição em `carga_leitura.js` e `carga_nucleo.js`
+     (núcleo = artigo que o texto do tópico explica ou transcreve, ou que é
+     `fund` de questão do app). Números das semanas 6 a 13, a 55 p/min: CPC
+     595 × 1.032 → 499; Administrativo 425 × 1.339 → 565; Legislação 455 × 818
+     → 345; ponto do edital 105 × 295 → 165; Constitucional 200 × 698 → 593;
+   - **D em espera** (RLM → Constitucional; sexta: Processo do Trabalho 75 → 60
+     e ponto do edital 15 → 30). Não executar sem pedido.
+4. **Depois:** Lote 3 (roteiro abaixo), cache v22.
 
 ## Onde estamos
 
 - **Worktree:** `C:\Users\thale\Documents\GitHub\AppEstudos\.claude\worktrees\questoes-historico-in39-139338`.
 - **Branch:** `claude/lei-8112-adicionais`.
-- **Último commit:** `d5d232c` (Adendo 14, Lote 1).
-- **Lote 2 aplicado e não commitado:** `index.html`, `sw.js` (cache **v20**)
-  e este arquivo. O usuário commita e publica. **O próximo lote usa v21.**
-- **Lote 2 completo em 08/10**, inclusive a sexta da semana 10 (política
-  judiciária, Res. CSJT 415/2025). Falta só a decisão sobre a RA TRT4 05/2022
-  (ver "ESTADO EM 08/10/2026").
+- **Último commit:** `d453bce` (Adendo 15, Lote 2 completo, cache v20).
+- **Modo de estudo aplicado e não commitado (Adendo 16):** `index.html`,
+  `sw.js` (cache **v21**) e este arquivo. O usuário commita e publica. **O
+  próximo lote usa v22.**
+- Falta a decisão sobre a RA TRT4 05/2022 e sobre a opção A (ver "ESTADO EM
+  08/10/2026").
 - **Pasta principal:** `C:\Users\thale\Documents\GitHub\AppEstudos`. Tem
   `Leis/`, `Provas/`, `Jurisprudência/sumulas_stj.md` e uma cópia deste
   arquivo, que é sincronizada com `cp`.
@@ -2124,7 +2186,7 @@ ainda não foi commitado).
   - `provas_raw/questoes.json`: as 240 questões das 4 provas do TRT4, em ordem
     de leitura (`provas_colunas.py`); `q.js ANO/N` imprime uma questão.
 
-## Lote 3 — até 08/11 (semanas 11 a 13 e semanas passadas), cache v21
+## Lote 3 — até 08/11 (semanas 11 a 13 e semanas passadas), cache v22
 
 1. **Terça, semana 11 (`const-estado`):** interpretação e vigência das normas
    constitucionais.
@@ -2209,7 +2271,7 @@ ainda não foi commitado).
    `conferir_texto_res415.js` (trecho da fonte × frase do texto, com teste
    negativo `--estragar N`).
 8. **Testes:**
-   - `teste_0710.js` e `teste_0810.js`, com Edge sem interface (`cdp.js`);
+   - `teste_0710.js`, `teste_0810.js` e `teste_modo.js ARQ` (marca-texto e P17), com Edge sem interface (`cdp.js`);
    - `neg_res415.js`: modelo de teste negativo de norma nova no quadro;
    - nas buscas de texto, usar `\uXXXX`;
    - ao terminar, encerrar os processos Edge com `perfil-headless` na linha de
