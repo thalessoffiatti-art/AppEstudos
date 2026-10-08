@@ -1795,53 +1795,336 @@ São defeitos que já estavam no app publicado.
 
 ---
 
-# Retomada — estado em 2026-10-06 (ler primeiro depois de compactar a conversa)
+# Adendo 15 — 2026-10-07 (Lote 2: semanas 9 e 10, selos e defeitos antigos da lei seca)
+
+## O pedido
+
+"Lote 1 commitado, pode executar o lote 2 conforme planejamento." O roteiro é
+o da Retomada de 06/10.
+
+## O que entrou no `index.html` (`scratchpad/aplicar_lote2.js`, 53 recortes, e `aplicar_lote2b.js`, 1 recorte; prova por reversão nos dois)
+
+- **Segunda, semana 9 (`dpt-recursos`):**
+  - IN 40/2016 do TST inteira no quadro Lei seca;
+  - texto "Admissibilidade do recurso de revista no TRT — IN 40/2016", com a
+    tabela dos recursos contra a negativa de seguimento (Res. 224/2024 e
+    226/2026);
+  - aviso de que os arts. 1º, § 4º, e 2º da IN 40 citam parágrafos do art. 896
+    da CLT revogados pela Lei 13.467/2017;
+  - linha do manual: + link "IN 40/2016 do TST (a norma inteira)".
+- **Quarta, semana 9 (`dpc-execucao`):**
+  - princípios (tabela) e espécies da execução;
+  - exceção de pré-executividade;
+  - prerrogativas da Fazenda (CPC 183, 496, 534–535, 910) e precatório × RPV:
+    60 SM na União (Lei 10.259/2001, art. 17, § 1º), 40 e 30 SM (ADCT 87);
+  - Súmula 393 do STJ nova na 04.2 (`STJ-393`, bloco `s9-dpc`, prio 1). A 04.2
+    passa a ter 226 enunciados.
+- **Sexta, semana 9 (`dpt-partes`):**
+  - massa falida, recuperação judicial e liquidação extrajudicial (tabela);
+    STF Tema 90; classificação do art. 83;
+  - Lei 11.101, arts. 6º, 22, 76 e 83, no quadro. A linha passa a "O material
+    basta".
+- **Segunda, semana 10 (`dpt-execucao`):** execução provisória (até a
+  penhora), por prestações sucessivas, contra a Fazenda (30 dias para embargar,
+  Lei 9.494, art. 1º-B) e contra a massa falida.
+- **Terça, semana 10 (`adm-controle-servicos`):** serviços públicos
+  (conceito, titularidade, encampação × caducidade, interrupção, usuário) e
+  bens públicos (afetação, alienação pela Lei 14.133, art. 76, e tabela dos 5
+  instrumentos de uso).
+- **Sexta, semana 10 (política judiciária):** **não entrou texto**.
+  - **Motivo:** as Resoluções CSJT 174/2016 e 288/2021, citadas no edital,
+    foram **revogadas pela Resolução CSJT 415, de 23/05/2025** (fonte:
+    metadados do JusLaboris, handles 95527, 184270 e 250395).
+  - **RA TRT4 05/2022:** continua em vigor, com alterações; a última que vi é
+    a RA 13/2026, que a ajustou à Res. 415.
+  - **O que mudou:** só o texto da linha do manual, que diz isso.
+  - **Situação:** a linha continua "Só na lei". O download da Res. 415/2025 não
+    estava na autorização e foi pedido ao usuário em 07/10.
+  - **Resolvido em 08/10/2026:** ver "Complemento de 08/10/2026", no fim deste
+    adendo.
+- **Selos:** recontagem de 25 selos pela regra "provas do TRT4 com questão
+  ligada ao tópico no Raio-X" (`selos.js`).
+  - A regra foi escrita na legenda da página 04, e a frase "ordenados por
+    recorrência" saiu, porque não era verdade.
+  - **Textos que contradiziam o Raio-X, corrigidos:** `dpc-teoria`,
+    `dpc-especiais`, `dt-seguranca`, `pt-pontuacao` e `adm-pad`. No PAD e na
+    pontuação, uma frase explica onde o assunto apareceu dentro de questões de
+    outro tópico.
+  - **Licitações:** "Novidade do edital de 2022" virou "2 questões em 2022
+    (novidade)", e `trt4DoTopico` passa a dar 1.
+  - **Raio-X 2022/47 (força maior):** a âncora foi de `dt-cessacao` para
+    `dt-estabilidade`, onde o Lote 1 pôs o texto.
+  - **`ASSUNTOS`:** 8 âncoras antigas trocadas: 4 para `const-estado`, e
+    `dpc-procedimento`, `dpc-atos`, `dpc-precedentes` e `dpc-normas`.
+- **Aviso no 03.1:** "Atualização de 07/10/2026 — Direito: segunda parte da
+  conferência com o edital — vale para as semanas 9 e 10 (a partir de
+  segunda-feira, 26/10)".
+- **`sw.js`:** cache **v20**.
+
+## Defeitos antigos da lei seca, achados por um conferidor novo e corrigidos
+
+- **Conferidor novo:** `conferir_rotulos.js`. Ele compara a sequência de
+  parágrafos de cada artigo inteiro com a do texto oficial, usando um leitor
+  próprio.
+- **Ruído:** ele tem 42 diferenças conhecidas, todas do leitor, guardadas em
+  `rotulos_base_0710.txt`. Numa próxima rodada, só importa o que não estiver
+  nessa lista.
+- **Lei 8.429, art. 17, § 6º-A:**
+  - **Defeito:** o Planalto compilado omite ")." de "(Código de Processo
+    Civil).".
+  - **Correção:** conferido na Lei 14.230/2021 e corrigido na base
+    (`CORRECOES.json`).
+  - **Nota:** declarada no quadro (`NOTA_ARTIGO`).
+- **Lei 13.146, art. 45:**
+  - **Defeito:** "(Reglamento)", rótulo de link do Planalto escrito com erro,
+    vazava para o quadro, e o § 1º saía grudado no caput.
+  - **Correção:** `KW` e o vocabulário do conferidor ganharam `Reglament[oa]`.
+  - **Nota:** declarada no quadro.
+- **Lei 8.112, art. 78:** sobra "§ 1° e § 2°" dos parágrafos revogados.
+  Corrigido em `semRotulosVazios`.
+- **Parágrafos grudados no anterior** (fonte sem ponto final):
+  - CLT 683; CPC 112, 525 e 916; Lei 8.987, art. 15; Decreto-Lei 3.365,
+    art. 5º; Lei 8.036, art. 13; Regimento, art. 14 ("§ 3°Não", sem espaço);
+  - nova função `quebraGrudados` em `lei_seca_texto.js`: quebra antes de
+    "§ N" seguido de maiúscula, salvo depois de palavra de remissão;
+  - `grudados.js` lista os candidatos: sobraram só 7 remissões.
+- **Lei 11.101, art. 83:**
+  - o Planalto escreve "§ 6º § 6º";
+  - o quadro sai com o rótulo uma vez;
+  - o conferidor aceita só rótulo idêntico colado ao anterior e lista cada
+    caso;
+  - a nota está no quadro.
+- **Comparação com os quadros publicados** (`comparar_manifestos.js`, contra
+  `bak_0710/lei_seca_manifesto_lote1.json`):
+  - mudaram só os 11 artigos acima;
+  - em 8, o texto juntando as linhas é idêntico;
+  - entraram 10 artigos novos (IN 40 e Lei 11.101);
+  - nenhum artigo saiu.
+
+## Pipeline: o que mudou nos scripts (`scratchpad/`, cópias anteriores em `bak_0710/`)
+
+- **Chave `IN40`:**
+  - registrada em `auditar_manual`, `gerar_lei_seca` (com `NOME`, `URL`,
+    `FONTE` e `NOTA_FONTE`), `verif_independente` e `conferir_lei_seca`;
+  - extração: `in40_extrair.js` (PyMuPDF + pdftotext + `leitor_b` + conferência
+    dos arts. 1º-B e 1º-C com a Res. 226/2026 publicada no DEJT).
+- **`gerar_lei_seca.js`:**
+  - a nota diz "entre 21/09 e 07/10/2026";
+  - `NOTA_ARTIGO` ganhou `L8429:17`, `L11101:83` e `L13146:45`.
+- **`conferir_lei_seca.js`:**
+  - aceita rótulo repetido colado ("§ 6º § 6º") e lista cada caso;
+  - + `reglamento` no vocabulário de nota.
+- **Testes negativos:** `neg_lote2.js`, com 5 estragos, e um rótulo apagado
+  no conferidor de rótulos. Todos acusaram.
+
+## Verificação
+
+- **Arquivo final:** idêntico ao ensaio.
+  - `conferir_lei_seca`: 0 falha;
+  - `conferir_nada_perdido`: 0 faltando;
+  - `auditar_manual`: **128 linhas "basta"**, 0 ausente e 0 incompleto;
+  - `verif_independente`: só os 24 "NÃO LIDO";
+  - `checar2`: nenhum id perdido, `CHAVES` iguais;
+  - quadros: **52 tópicos, 2897 artigos**.
+- **Edge sem interface (`teste_0710.js`):**
+  - **Atualização do `HEAD` (Lote 1) para a nova:** 73 marcações e as 4 chaves
+    `trt4:` ficaram iguais, inclusive nos blocos `s9-*` e `s10-*` tocados.
+  - **Clique:** na linha S9 de sexta, abre `dpt-partes`.
+  - **Selos, âncoras de `ASSUNTOS` e Raio-X:** conferidos.
+  - **04.2:** 226 enunciados.
+  - **375 px:** sem rolagem lateral nas páginas 02, 03.1, 04 e 04.2.
+  - **Console:** sem erro.
+
+## Downloads e leituras deste lote
+
+- **JusLaboris (autorizado: IN 40):**
+  - IN 40, texto vigente e multivigente;
+  - Res. 224/2024, Res. 226/2026 e Ato 8/2025, para conferência.
+  - Ficaram em `scratchpad/fontes_0710/`.
+- **TRT4:** a RA 13/2026 foi salva pela busca web em `tool-results/`, ao
+  verificar a RA 05/2022, que estava autorizada.
+- **Páginas lidas no navegador, sem baixar:**
+  - Planalto: Leis 10.259, 9.494, 11.101, 14.230 e Decreto-Lei 271;
+  - STF: Tema 90.
+
+## Complemento de 08/10/2026 — sexta da semana 10 (política judiciária)
+
+**Pedido do usuário (08/10):** seguir o plano; downloads autorizados: Res.
+CSJT 415/2025 e RA TRT4 05/2022 compilada. Cache continua **v20** (o Lote 2
+ainda não foi commitado).
+
+- **Baixados** (`scratchpad/fontes_0810/`, pasta nova):
+  - `res415.pdf` (JusLaboris, handle 250395; 26 páginas; DEJT n. 4232, de
+    30/05/2025). Os metadados do JusLaboris não registram alteração em
+    08/10/2026 (`jl_250395_full.html`).
+  - `ra05/ra05_2022.pdf` (pesquisa de atos normativos do TRT4, "Baixar teor
+    integral"). É a "Republicação" com as alterações das RAs 37/2023, 07/2024,
+    10/2024 e 13/2025.
+- **A RA 05/2022 compilada está desatualizada** (achado de 08/10):
+  - a pesquisa de atos do TRT4 (tipo Resolução Administrativa, trecho exato
+    "Resolução Administrativa nº 05/2022", 2023 a 08/10/2026) mostra, depois
+    da compilada, as **RAs 58/2025 (23/12/2025), 13/2026 (04/05/2026) e 37/2026
+    (30/09/2026)**, todas "Altera a Resolução Administrativa nº 05/2022";
+  - prova interna: a RA 13/2026 altera os arts. 9º-A, 42-D e 42-F, que não
+    existem na compilada;
+  - a RA 13/2026 (já salva) reescreve estrutura, coordenação, competência
+    territorial e cria o CEJUSC-JT/2º GRAU/REVISTA;
+  - **decisão:** a RA 05/2022 **não entrou no quadro**. Baixar as RAs 58/2025
+    e 37/2026 não estava autorizado. Ficou como pergunta ao usuário.
+- **Extração:** `res415_extrair.js` → `leis/RES415.json` (57 artigos) e
+  `leis/RES415AN.json` (Anexo, Código de Ética, 8 artigos).
+  - O PDF é justificado: o PyMuPDF parte linhas palavra por palavra ("Art." /
+    "13."). O texto é remontado juntando linhas e abrindo linha nova só antes
+    de "Art." depois de fim de frase.
+  - Provas: leitor B igual; artigos + 14 títulos reconstituem o corpo; o corpo
+    é igual ao do pdftotext (sem espaço e hífen); 25 cabeçalhos de página
+    tirados.
+  - O pdftotext em UTF-8 junta parágrafos inteiros numa linha (até "… IV - a
+    Resolução… Art. 56."): serve só para conferência do texto corrido.
+- **Achado de conteúdo:** o art. 21 da Res. 415 **proíbe** levar ao Cejusc a
+  homologação de acordo extrajudicial (CLT, art. 855-B). O roteiro de 07/10
+  supunha o contrário. Só o texto baixado decide.
+- **O que entrou no `index.html`** (`aplicar_res415.js`, 4 recortes, prova por
+  reversão; conteúdo em `res415_conteudo.js`):
+  - **tópico `dpt-especiais`, antes do quadro:** "Política judiciária de
+    tratamento adequado das disputas — Resolução CSJT 415/2025" (revogação das
+    Res. 174/288; tabela Conaproc × Nupemec-JT × Cejusc-JT; quem concilia e quem
+    homologa; gravação; audiência inicial no Cejusc; pegadinha 855-B × RPP
+    coletiva) e "Mediação pré-processual — a Reclamação Pré-Processual (RPP)"
+    (tabela); Código de Ética (princípios do Anexo); parágrafo "No TRT4" sobre
+    a RA 05/2022;
+  - **linha do manual (S10, sexta):** "Resolução CSJT 415/2025, arts. 3º e 4º;
+    art. 12, caput; art. 13, caput e §§ 5º e 6º; art. 16, caput; art. 18, caput
+    e § 5º; art. 20, caput e incisos I, II e IV; arts. 21, 22, 25, 27, 29, 32 e
+    34 a 37 · Resoluções CSJT 174/2016 e 288/2021, do edital — revogadas … ·
+    Resolução Administrativa TRT4 05/2022 — o texto compilado do Tribunal traz
+    as alterações até a RA 13/2025; depois vieram as RAs 58/2025, 13/2026 e
+    37/2026 · Resolução CNJ 125/2010". Marca: "Só na lei — o material não
+    cobre" → **"Material + leitura da norma"**;
+  - **aviso de 07/10:** o item "Sexta da semana 10" agora descreve o que
+    entrou e por que a RA 05/2022 ficou fora;
+  - **quadro:** 17 artigos da Res. 415 (1.128 palavras), link "CSJT"; a nota
+    diz "entre 21/09 e 08/10/2026" e tem frase própria da Res. 415.
+- **Pipeline** (cópias anteriores em `scratchpad/bak_0810/`):
+  - chave `RES415` em `auditar_manual`, `gerar_lei_seca` (`NOME`, `URL`,
+    `FONTE` 'CSJT', `NOTA_FONTE`), `verif_independente`, `conferir_lei_seca`
+    (`NOME2K`), `conferir_rotulos` e `triagem_rot` (`patch_res415.js`);
+  - `rotuloLei`/`leiDe` reconhecem só "Resolução CSJT 415/2025" no começo do
+    trecho; "Resolução CNJ 125/2010", "Resoluções CSJT 174/…" e "Resolução
+    Administrativa TRT4 05/2022" continuam sem leitura (testado);
+  - `escopos.js`: trechos de 12, 13, 16, 18 e 20 em `dpt-especiais`;
+  - `verif_independente.js --tambem-leitura`: confere também as linhas
+    "Material + leitura" (sem a opção, saída idêntica à de antes);
+  - **armadilha do leitor independente:** em "art. 3º, caput e § 1º; art. 4º",
+    ele lê "4º" como § 4º do art. 3º. Por isso a linha pede "arts. 3º e 4º"
+    (art. 3º inteiro). Ao escrever linha, não pôr artigo com "º" logo depois
+    de um "§".
+- **Verificação:** ensaio → real, `cmp` idêntico (também manifesto e blocos).
+  - `conferir_texto_res415.js`: 43 afirmações do texto provadas na fonte
+    (Res. 415, Anexo, CLT 611/844/855-B, compilada da RA 05); 4 negativos
+    acusaram;
+  - `conferir_lei_seca` (manifesto e arquivo): 0 falha; `conferir_nada_perdido`:
+    0; `auditar_manual`: 128 "basta", 0 ausente, 0 incompleto, linha S10
+    "art 17 T17"; `verif_independente`: os mesmos 24 "NÃO LIDO"; com
+    `--tambem-leitura`, 0 falta e só os 3 "NÃO LIDO" esperados da linha nova;
+    `conferir_rotulos`: igual à base; `grudados`: 7; `comparar_manifestos`
+    contra o Lote 1: só os 17 da Res. 415 + os 10 do Lote 2 novos e as mesmas
+    11 mudanças; `selos`: só os descritivos; `checar2`: nada perdido;
+  - **atenção:** `conferir_lei_seca.js ARQUIVO` compara com o manifesto
+    **atual**. Rodar contra um arquivo antigo dá "DIFERE DO MANIFESTO" (deu 75
+    em `dpt-especiais`); com o manifesto antigo, 0 falha;
+  - `neg_res415.js`: palavra trocada (art. 35), § 5º do art. 13 apagado
+    (auditor e leitor independente) e inciso III do art. 34 apagado: 4 de 4
+    acusados. O resumo final do auditor conta só as linhas "basta"; a
+    acusação de linha "Material + leitura" sai na própria linha;
+  - **Edge (`teste_0810.js`):** do HEAD (Lote 1) para a nova, 73 marcações e
+    4 chaves `trt4:` iguais (`s10-avulso` marcado continua marcado); clique na
+    linha abre `dpt-especiais`; texto antes do quadro; caixa com os 17 artigos;
+    375 px sem rolagem lateral (03.1 e 04); console sem erro.
+- **Números:** 52 tópicos com quadro, **2914 artigos**, 128 linhas "basta",
+  5 linhas "Material + leitura da norma" no manual.
+
+---
+
+# Retomada — estado em 2026-10-08 (ler primeiro depois de compactar a conversa)
+
+## ESTADO EM 08/10/2026 — Lote 2 completo; esperando o usuário
+
+1. **Commit pendente (o usuário faz):** `index.html`, `sw.js` (cache **v20**)
+   e `HANDOFF-projeto.md`. O Lote 2 inteiro, inclusive a política judiciária
+   (ver "Complemento de 08/10/2026" no Adendo 15). Depois do commit, o
+   próximo lote usa **v21**.
+2. **Decisão pendente — RA TRT4 05/2022:** a compilada do TRT4 vai só até a RA
+   13/2025; depois vieram as RAs 58/2025, 13/2026 e 37/2026 (30/09/2026). Para
+   transcrever com prova, é preciso baixar a RA 58/2025 e a RA 37/2026
+   (pesquisa de atos do TRT4) — **não autorizado ainda**. Perguntado ao
+   usuário em 08/10. A RA 13/2026 já está em `scratchpad/fontes_0810/ra13/`.
+3. **Decisão pendente — falta de tempo de leitura (passo 4 do pedido de
+   08/10):** proposta apresentada em 08/10; **nada aplicado**. Esperar a
+   escolha do usuário. Resumo:
+   - **Medição** (`scratchpad/carga_leitura.js` → `carga.json`;
+     `carga_nucleo.js` → `carga_nucleo.json`): palavras de lei pedidas por
+     linha (com escopo) + palavras do texto do tópico, por horário, contra os
+     minutos de teoria da grade (seção 3). Ritmo calibrado no relato do
+     usuário: CLT 443, 452-A, 75-A a 75-F e 468 a 476-A = 2.483 palavras de
+     lei, mais cerca de 1.000 de material, em mais de 1 hora, ou seja, cerca de
+     **55 palavras/min** lendo e anotando.
+   - **Semanas 6 a 13**, teoria disponível × leitura a 55 p/min: DT 240 ×
+     1.030 min (×4,3); Constitucional 200 × 698 (×3,5); Administrativo 425 ×
+     1.339 (×3,2); ponto do edital de sexta 105 × 295 (×2,8); Legislação 455 ×
+     818 (×1,8); CPC 595 × 1.032 (×1,7); Processo do Trabalho 1.225 × 703
+     (×0,6); Português 360 × 166 (×0,5); RLM 120 × 20. Total (sem PT e RLM):
+     3.245 × 5.914 min.
+   - **Causa:** desde setembro, toda linha que cita artigos ganhou o quadro
+     com o texto integral, e o P2 manda ler o quadro na segunda leitura. Os
+     blocos curtos (DT 30 min, Constitucional 25, ponto do edital 15) foram
+     desenhados para "teoria só nos itens que você ainda não domina" (DT está
+     no grupo "Consolidado — manter, não reestudar"). A regra de parada joga o
+     que sobra no próximo bloco da mesma disciplina, que também está cheio
+     (bola de neve).
+   - **Núcleo** = artigo que o texto do tópico explica ou transcreve (auditor
+     sem quadros: T, C ou P) ou que fundamenta questão do app (`fund`). Lendo
+     só o núcleo, o total cai para cerca de 3.041 min (cabe na soma), mas DT
+     (×2,6) e Constitucional (×3,0) continuam acima.
+   - **Opções apresentadas:**
+     - **A** — duas camadas no quadro e na linha (núcleo no bloco; o resto como
+       consulta);
+     - **B** — DT "questões primeiro" (12 min de questões, 15 min lendo só o
+       que se errou, 3 min de caderno);
+     - **C** — anotação pelo P2 (copiar só números e frases de
+       pegadinha/macete; as anotações próprias vão para o ditado de sexta, de
+       memória), com marca-texto opcional no quadro;
+     - **D** — remanejar minutos sem tempo novo (RLM 15 min de teoria →
+       Constitucional; sexta: aprofundamento de Processo do Trabalho 75 → 60 e
+       ponto do edital 15 → 30), valendo de segunda-feira seguinte.
+   - Recomendação dada: A + B + C já; D só se, depois de uma semana, DT ou
+     Constitucional continuarem estourando.
+4. **Depois:** Lote 3 (roteiro abaixo), cache v21.
 
 ## Onde estamos
 
 - **Worktree:** `C:\Users\thale\Documents\GitHub\AppEstudos\.claude\worktrees\questoes-historico-in39-139338`.
 - **Branch:** `claude/lei-8112-adicionais`.
-- **Último commit:** `2bd46bb` (Adendo 13).
-- **Lote 1 aplicado e não commitado:** `index.html`, `sw.js` (cache **v19**)
-  e este arquivo. O usuário commita e publica. **O próximo lote usa v20.**
+- **Último commit:** `d5d232c` (Adendo 14, Lote 1).
+- **Lote 2 aplicado e não commitado:** `index.html`, `sw.js` (cache **v20**)
+  e este arquivo. O usuário commita e publica. **O próximo lote usa v21.**
+- **Lote 2 completo em 08/10**, inclusive a sexta da semana 10 (política
+  judiciária, Res. CSJT 415/2025). Falta só a decisão sobre a RA TRT4 05/2022
+  (ver "ESTADO EM 08/10/2026").
 - **Pasta principal:** `C:\Users\thale\Documents\GitHub\AppEstudos`. Tem
   `Leis/`, `Provas/`, `Jurisprudência/sumulas_stj.md` e uma cópia deste
   arquivo, que é sincronizada com `cp`.
 - **Scratchpad:**
   `C:\Users\thale\AppData\Local\Temp\claude\C--Users-thale-Documents-GitHub-AppEstudos--claude-worktrees-questoes-historico-in39-139338\987bfdd2-305d-4b53-8bfb-e15c943f2553\scratchpad\`.
-  - `fontes_0610/`: PDFs e HTML baixados em 06/10;
-  - `leis/`: a base, agora com as 8 fontes novas e `CORRECOES.json`;
-  - `ed05/`: a verificação de 05/10.
+  - `fontes_0610/`, `fontes_0710/` e `fontes_0810/`: PDFs e HTML baixados
+    (`fontes_0810/`: Res. 415, `ra05/` compilada da RA 05/2022, `ra13/` RA
+    13/2026);
+  - `leis/`: a base, agora com `IN40.json`, `RES415.json`, `RES415AN.json`
+    (Anexo da Res. 415) e `CORRECOES.json` com 3 registros;
+  - `provas_raw/questoes.json`: as 240 questões das 4 provas do TRT4, em ordem
+    de leitura (`provas_colunas.py`); `q.js ANO/N` imprime uma questão.
 
-## Plano aprovado (Opção A, downloads autorizados): Lotes 2 e 3
-
-### Lote 2 — até 25/10 (semanas 9 e 10), cache v20
-
-1. **Quarta, semana 9 (`dpc-execucao`):**
-   - princípios e espécies da execução;
-   - exceção de pré-executividade, com a Súmula 393 do STJ nova na 04.2 (texto
-     em `Jurisprudência/sumulas_stj.md`);
-   - quadro das prerrogativas da Fazenda: CPC 183, 496, 534–535 e 910;
-     precatório × RPV.
-2. **Segunda, semana 9:** IN 40/2016. **Usar a versão compilada**, porque foi
-   alterada pela Res. 224/2024 e pela Res. 226/2026. Há PDF "multivigente" no
-   TRT5 (`digepnac-precedentes.trt5.jus.br`), mas a preferência é a fonte do
-   TST/JusLaboris.
-3. **Sexta, semana 9:** Lei 11.101, arts. 6º, 22, 76 e 83, no quadro. O JSON
-   já existe. A linha passa a "basta".
-4. **Terça, semana 10 (`adm-controle-servicos`):**
-   - serviços públicos: conceito, titularidade, regime, usuário;
-   - bens públicos: afetação, alienação e os 5 instrumentos de uso por
-     terceiros.
-5. **Segunda, semana 10 (`dpt-execucao`):** execução contra a Fazenda, contra
-   a massa falida e por prestações sucessivas.
-6. **Sexta, semana 10:** trechos das Resoluções CSJT 174/2016 e 288/2021 e da
-   RA TRT4 05/2022 (baixar).
-7. **Selos:** recontar os "N/4 provas" dos 26 tópicos que divergem do `RAIOX`
-   e corrigir os textos "nunca caiu" (`dt-principios`, `dpt-custas`,
-   `dpt-excecoes`, `dt-teletrabalho` e outros).
-
-### Lote 3 — até 08/11 (semanas 11 a 13 e semanas passadas), cache v21
+## Lote 3 — até 08/11 (semanas 11 a 13 e semanas passadas), cache v21
 
 1. **Terça, semana 11 (`const-estado`):** interpretação e vigência das normas
    constitucionais.
@@ -1850,7 +2133,8 @@ São defeitos que já estavam no app publicado.
 3. **Segunda, semana 11 (`dpt-especiais`):** dissídio coletivo — extensão,
    cumprimento e revisão.
 4. **Segunda, semana 12:** princípios do processo do trabalho e IN 41/2018
-   inteira. Ver também a IN 41-A, transitória, da Res. 223/2024.
+   inteira. Ver também a IN 41-A, transitória, da Res. 223/2024. No
+   JusLaboris, procurar o "texto vigente" (como na IN 40, handle 81842).
 5. **Quarta, semana 12:** Lei 13.300 e Lei 9.507 no quadro (os JSON já
    existem).
 6. **Sexta, semana 12:** Lei 6.858 inteira (JSON existe), Lei 5.584 inteira e
@@ -1869,7 +2153,10 @@ São defeitos que já estavam no app publicado.
 
 - Responder em português.
 - O usuário commita e publica.
-- Downloads pedem autorização (os do plano já foram autorizados).
+- Downloads pedem autorização. Os do plano já foram autorizados: Regimento,
+  Leis 6.019, 12.023, 8.009, 9.029, 13.300 e 9.507, IN 38, 40 e 41,
+  Resoluções CSJT 174 e 288 e RA TRT4 05/2022; em 08/10, a Res. CSJT 415/2025
+  e a RA TRT4 05/2022 compilada (as RAs 58/2025 e 37/2026 **não**).
 - **Nunca apagar dado salvo:** ids de bloco e de questão, nomes de disciplina
   e `CHAVES` só por acréscimo.
 - **Sem tempo novo:** 23h25 por semana.
@@ -1882,8 +2169,8 @@ São defeitos que já estavam no app publicado.
 ## Como editar e conferir
 
 1. **Edição:** script Node com recortes posicionais e contagem exigida, prova
-   por reversão e gravação em CRLF. Modelos: `aplicar_lote1.js` e
-   `troca_unica.js`.
+   por reversão e gravação em CRLF. Modelos: `aplicar_lote2.js` e
+   `aplicar_lote2b.js`.
 2. **Ensaio:** sempre numa cópia antes (`ensaio.html`). Depois, aplicar no
    real e exigir `cmp` igual ao ensaio.
 3. **Pipeline da lei seca:**
@@ -1895,22 +2182,51 @@ São defeitos que já estavam no app publicado.
    - `node conferir_nada_perdido.js "$W"`: 0 faltando;
    - `node auditar_manual.js "$W" --json aud_normal.json`: 0 ausente e 0
      incompleto;
-   - `node verif_independente.js "$W"`: só os 24 "NÃO LIDO";
+   - `node verif_independente.js "$W"`: só os 24 "NÃO LIDO"; com
+     `--tambem-leitura`, também as linhas "Material + leitura" (0 falta; os
+     "NÃO LIDO" são normas sem texto na base);
+   - `node conferir_rotulos.js`: nada além de `rotulos_base_0710.txt`;
+   - `node grudados.js`: só as 7 remissões conhecidas;
+   - `node comparar_manifestos.js ./bak_…/manifesto_antigo.json ./lei_seca_manifesto.json`:
+     só as mudanças previstas;
+   - `node selos.js "$W"`: só os selos descritivos (`leg-*`, `info-hist`);
    - `node checar2.js [arquivo]`.
-5. **Números atuais:** 52 tópicos com quadro, 2887 artigos, 127 linhas
-   "basta", 159 blocos, 514 questões.
+5. **Números atuais:** 52 tópicos com quadro, 2914 artigos, 128 linhas
+   "basta", 5 linhas "Material + leitura da norma", 159 blocos, 514 questões,
+   226 enunciados na 04.2.
+   - `conferir_lei_seca.js "$W"` compara com o manifesto **atual**: contra um
+     arquivo antigo, acusa "DIFERE DO MANIFESTO" por construção.
+   - O resumo final do `auditar_manual.js` conta só as linhas "basta"; o
+     problema de uma linha "Material + leitura" aparece na própria linha.
 6. **Lei nova do Planalto:**
    - `node extrair3.js fontes/x.htm leis/X.json`;
    - `node leitor_b.js leis/X.txt leis/X.json` (tem de dar "iguais");
    - conferir os artigos com letra contra os cabeçalhos da página.
-7. **Testes:**
-   - `teste_0610.js`, com Edge sem interface (`cdp.js`);
+7. **Norma em PDF do TST:** modelo `in40_extrair.js` (dois leitores e
+   conferência com o ato que alterou). PDF justificado (palavra por linha):
+   modelo `res415_extrair.js` (remonta parágrafos e prova que nada se
+   perdeu). Texto novo sobre norma: um conferidor de afirmações como
+   `conferir_texto_res415.js` (trecho da fonte × frase do texto, com teste
+   negativo `--estragar N`).
+8. **Testes:**
+   - `teste_0710.js` e `teste_0810.js`, com Edge sem interface (`cdp.js`);
+   - `neg_res415.js`: modelo de teste negativo de norma nova no quadro;
    - nas buscas de texto, usar `\uXXXX`;
    - ao terminar, encerrar os processos Edge com `perfil-headless` na linha de
      comando.
+9. **Atenção:** `node -e` e heredoc no bash comem barra invertida de regex.
+   Para código com `\s` e `\d`, usar a ferramenta Write ou Edit, ou
+   `String.raw`.
 
 ## Pendências e ideias em aberto
 
+- **RA TRT4 05/2022:** fora do quadro até haver texto provado (ver "ESTADO EM
+  08/10/2026", item 2). Se o usuário autorizar a RA 58/2025 e a RA 37/2026:
+  montar a leitura conferida dos artigos que interessam (estrutura e
+  competência dos CEJUSCs do TRT4), declarando de qual RA vem cada redação.
+- **Linha S10 de sexta:** a marca é "Material + leitura da norma" por causa da
+  RA 05/2022. O quadro tem 17 artigos da Res. 415 (1.128 palavras) para 15
+  minutos.
 - **Tabelas de três colunas no celular:** rolam por dentro (padrão do app).
 - **Art. 34 do Regimento:** as alíneas "c" e "d" saem na mesma linha, porque
   falta ";" no próprio PDF. O texto está completo.
@@ -1919,3 +2235,9 @@ São defeitos que já estavam no app publicado.
 - **`QC_BLOCO` da LBI e da Res. CNJ 400:** sem assunto.
 - **Campo `ano` das questões:** é "estilo", não prova real.
 - **`btnSoltarTopico`:** id duplicado antigo.
+- **Lei 13.146, arts. 104 e 114:** são artigos que alteram outras leis. O
+  quadro mostra as linhas pontilhadas e as sobras "III -." do texto do
+  Planalto. É fiel, mas difícil de ler.
+- **Página 07, "Fontes":** o parágrafo de setembro ainda diz "220
+  enunciados". Foi acrescentada a frase da Súmula 393, e o número antigo ficou
+  como registro da data.
