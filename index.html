@@ -255,6 +255,37 @@ h1,h2,h3,h4{font-family:var(--disp); font-weight:600; line-height:1.15; margin:0
 .atalho-q .atalho-fcc-lista{margin:0; padding-left:18px; font-size:13.4px; width:100%}
 .atalho-q .atalho-fcc-lista li{margin:3px 0}
 .atalho-q .atalho-fcc-lista a{color:var(--petroleo)}
+/* ---------- Marca-texto do aluno (08/10/2026) ---------- */
+mark.mt{background:#FFE066; color:inherit; padding:1px 0; cursor:pointer; -webkit-box-decoration-break:clone; box-decoration-break:clone}
+mark.mt:hover{background:#FFD43B}
+.mt-treino mark.mt{background:var(--tinta-2); color:transparent; border-radius:2px}
+.mt-treino mark.mt.mt-ver{background:#FFE066; color:inherit}
+.mt-barra{display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; margin:10px 0 16px; padding:9px 12px; border-left:3px solid #D9A900; background:#FFF8DA; font-size:13.4px; color:var(--tinta-2)}
+.mt-barra-txt b{color:var(--tinta)}
+.mt-barra-acoes{display:flex; gap:8px; flex-wrap:wrap; margin-left:auto}
+.mt-alerta{color:var(--carmim); font-weight:600}
+.mt-perdidas{flex-basis:100%; font-size:13px}
+.mt-perdidas ul{margin:4px 0 0; padding-left:18px}
+.mt-flutua{position:fixed; z-index:45}
+.mt-flutua .btn{min-height:44px; box-shadow:0 10px 26px -12px rgba(23,36,46,.6)}
+.mt-aviso{position:fixed; z-index:45; left:16px; bottom:76px; max-width:calc(100vw - 32px); display:flex; align-items:center; gap:12px; padding:10px 14px; background:var(--tinta); color:#fff; font-size:14px; box-shadow:0 10px 26px -12px rgba(23,36,46,.6)}
+.mt-aviso .btn{color:#fff; border-color:#fff}
+.mt-flutua[hidden], .mt-aviso[hidden]{display:none}
+.mt-nota mark.mt-amostra{background:#FFE066; padding:1px 2px}
+/* Direito do Trabalho, quarta-feira: o passo a passo do P17 no alto do tópico */
+.como-estudar{border:2px solid var(--petroleo); background:#EDF4F6; padding:14px 16px; margin:12px 0 16px}
+.como-estudar .ce-rot{display:block; font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--petroleo); margin-bottom:8px}
+.como-estudar ol{margin:0; padding:0; list-style:none; counter-reset:ce}
+.como-estudar li{counter-increment:ce; display:grid; grid-template-columns:30px 64px 1fr; gap:8px; align-items:baseline; padding:7px 0; border-top:1px solid rgba(31,78,95,.18); font-size:14.4px}
+.como-estudar li::before{content:counter(ce); font-family:var(--disp); font-size:20px; font-weight:700; color:var(--petroleo)}
+.como-estudar .ce-min{font-family:var(--mono); font-size:12px; color:var(--petroleo); white-space:nowrap}
+.como-estudar .ce-obs{margin:10px 0 0; font-size:13.6px; color:var(--tinta-2)}
+.op-modo{display:inline-block; margin:4px 0; padding:2px 8px; background:#EDF4F6; border-left:3px solid var(--petroleo); font-size:13px}
+@media (max-width:600px){
+  .como-estudar li{grid-template-columns:26px 1fr}
+  .como-estudar .ce-txt{grid-column:2}
+}
+@media print{ .mt-barra, .mt-flutua, .mt-aviso{display:none !important} }
 .chip-topico{
   display:flex; align-items:center; gap:10px; flex-wrap:wrap;
   border:1px solid var(--petroleo); background:var(--verde-suave);
@@ -1358,7 +1389,7 @@ body{
           <tr><td class="mono" style="white-space:nowrap">17h15–17h30</td><td>Pausa</td></tr>
           <tr><td class="mono" style="white-space:nowrap">17h30–18h30</td><td>Processo Civil — questões</td></tr>
           <tr><td class="mono" style="white-space:nowrap">18h30–18h45</td><td>Enunciados da semana — Direito do Trabalho e Processo Civil <span class="tag" style="padding:1px 5px">desde a semana 4</span></td></tr>
-          <tr><td class="mono" style="white-space:nowrap">18h45–19h45</td><td>Direito do Trabalho — teoria e questões <span class="tag" style="padding:1px 5px">teoria desde a semana 4</span></td></tr>
+          <tr><td class="mono" style="white-space:nowrap">18h45–19h45</td><td>Direito do Trabalho — teoria e questões <span class="tag" style="padding:1px 5px">teoria desde a semana 4</span> <span class="tag" style="padding:1px 5px">questões primeiro desde a semana 7</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -1539,6 +1570,18 @@ body{
   <div class="op-hoje" id="opHoje" aria-live="polite"></div>
 
   <div class="op-aviso op-nota op-mudanca">
+    <b class="op-rot">Atualização de 08/10/2026 — modo de estudo: marca-texto no material e Direito do Trabalho com questões primeiro — vale a partir de segunda-feira, 12/10 (semana 7)</b>
+    Pedido seu, para caber no tempo de cada bloco sem tempo novo.
+    O que muda:
+    <ul>
+      <li><b>Marca-texto no material (página 04).</b> Em qualquer tópico — texto, caixas e quadro Lei seca —, selecione um trecho e toque em <b>Marcar</b>. Para tirar, toque na marcação e em <b>Tirar marcação</b>. Na barra amarela do alto de cada tópico, <b>Esconder marcações</b> transforma cada trecho marcado numa tarja, para você treinar de memória. As marcações ficam só no navegador em que você marcou, e <b>Zerar progresso</b> não as apaga. O marca-texto já funciona hoje.</li>
+      <li><b>P2 — Teoria pelo material.</b> A segunda leitura passa a ser feita com o marca-texto, no lugar de copiar no caderno. O passo de memória usa <b>Esconder marcações</b>. A revisão R2 de sexta (P8) também usa as marcações.</li>
+      <li><b>Quarta-feira, Direito do Trabalho — P17, procedimento novo.</b> A meia hora de teoria começa pelas questões: seis questões; depois, leitura só do que você errou, com o artigo do Fundamento do gabarito. O quadro Lei seca fica para consulta. Começa na quarta, 14/10. O passo a passo está no alto de cada tópico de Direito do Trabalho, na página 04, e na seção 4.</li>
+    </ul>
+    O que fazer: na quarta, 14/10, abra o tópico de Direito do Trabalho pelo cartão da semana 7 e siga o quadro azul “Como estudar”, no alto do tópico. O que não muda: os horários, a carga de 23h25 por semana, os blocos, a lista de artigos de cada linha e tudo o que você já marcou ou respondeu.
+  </div>
+
+  <div class="op-aviso op-nota op-mudanca">
     <b class="op-rot">Atualização de 07/10/2026 — Direito: segunda parte da conferência com o edital — vale para as semanas 9 e 10 (a partir de segunda-feira, 26/10)</b>
     Esta é a segunda das três atualizações anunciadas em 06/10. A terceira virá antes da semana 11.
     O que muda:
@@ -1705,7 +1748,7 @@ body{
       <a href="#" data-op-ir="op-usar"><span>1</span>Como usar este documento</a>
       <a href="#" data-op-ir="op-meta"><span>2</span>A meta que define o estudo</a>
       <a href="#" data-op-ir="op-dias"><span>3</span>Os seis dias, minuto a minuto</a>
-      <a href="#" data-op-ir="op-proc"><span>4</span>Os procedimentos (P1 a P16)</a>
+      <a href="#" data-op-ir="op-proc"><span>4</span>Os procedimentos (P1 a P17)</a>
       <a href="#" data-op-ir="op-espacada"><span>5</span>A revisão espaçada</a>
       <a href="#" data-op-ir="op-semanas"><span>6</span>As treze semanas</a>
       <a href="#" data-op-ir="op-materiais"><span>7</span>Materiais fixos da mesa</a>
@@ -1860,7 +1903,7 @@ body{
         <div class="op-tr op-pausa"><div class="op-hora">17h15–17h30<span class="op-tempo">15 min</span></div><div class="op-oque"><b>Pausa</b>Quinze minutos.</div></div>
         <div class="op-tr"><div class="op-hora">17h30–18h30<span class="op-tempo">1 h</span></div><div class="op-oque"><b>Processo Civil — questões</b>Ao errar, anote sempre se o instituto é compatível ou incompatível com o processo do trabalho. É assim que a FCC cobra CPC nesta prova.<span class="op-proc">P4</span></div></div>
         <div class="op-tr op-p15"><div class="op-hora">18h30–18h45<span class="op-tempo">15 min</span></div><div class="op-oque"><b>Enunciados da semana — Direito do Trabalho e Processo Civil</b>Lista no cartão da semana, na seção 6.<span class="op-novo">desde a semana 4</span><span class="op-proc">P15</span></div></div>
-        <div class="op-tr"><div class="op-hora">18h45–19h45<span class="op-tempo">1 h</span></div><div class="op-oque"><b>Direito do Trabalho — teoria e questões</b>Trinta minutos de teoria pelo tópico da semana e trinta de questões. Nas semanas 1 a 3 este bloco era de manutenção, com meia hora só de questões.<span class="op-novo">teoria desde a semana 4</span><span class="op-proc">P2</span> <span class="op-proc">P4</span></div></div>
+        <div class="op-tr"><div class="op-hora">18h45–19h45<span class="op-tempo">1 h</span></div><div class="op-oque"><b>Direito do Trabalho — teoria e questões</b>Trinta minutos de teoria pelo tópico da semana e trinta de questões. Nas semanas 1 a 3 este bloco era de manutenção, com meia hora só de questões. Desde a semana 7 (14/10), a meia hora de teoria segue o P17: questões primeiro, e você lê só o que errou.<span class="op-novo">teoria desde a semana 4 · P17 desde a semana 7</span><span class="op-proc">P17</span> <span class="op-proc">P4</span></div></div>
         <div class="op-tr"><div class="op-hora">19h45–19h50<span class="op-tempo">5 min</span></div><div class="op-oque"><b>Fechamento</b><span class="op-proc">P10</span></div></div>
       </div>
     </details>
@@ -1925,11 +1968,12 @@ body{
 
     <div class="op-p">
       <h3><span class="op-cod">P2</span> Teoria pelo material <span class="op-dur">bloco de 40 a 50 minutos</span></h3>
+      <p style="font-size:14.5px;color:var(--tinta-2);margin-top:10px">Desde a semana 7 (12/10), a segunda leitura é feita com o <b>marca-texto</b> do aplicativo, e não mais copiando no caderno. Como marcar está no alto da página 04.</p>
       <ol>
         <li>(2 min) No aplicativo, navegue até o tópico indicado na seção 6 e clique no título para abrir. Leia os dois selos de incidência: o primeiro diz em quantas das quatro provas do TRT4 o assunto caiu; o segundo, de borda tracejada, em quantas das 16 provas recentes da FCC para este cargo.</li>
         <li>(12 min) Leia o tópico inteiro uma vez, do começo ao fim, sem parar e sem anotar nada. Se não entender um trecho, siga em frente. O quadro <b>Lei seca</b>, no fim do tópico, fica para o passo seguinte.</li>
-        <li>(20 min) Segunda leitura, com o caderno aberto. Copie à mão, e só isto: os números das caixas de lei (prazos, quantidades, percentuais, incisos), inclusive as do quadro <b>Lei seca</b>, e a frase inteira de cada caixa <i>pegadinha</i> e <i>macete</i>.</li>
-        <li>(8 min) Feche o aplicativo. Em folha em branco, escreva de memória os prazos e os róis que acabou de copiar. Depois abra e confira.</li>
+        <li>(20 min) Segunda leitura, com o marca-texto: selecione o trecho e toque em <b>Marcar</b>. Marque só isto: os números das caixas de lei (prazos, quantidades, percentuais, incisos), inclusive as do quadro <b>Lei seca</b>, a frase inteira de cada caixa <i>pegadinha</i> e <i>macete</i>, e o que mais você quiser decorar. Não copie no caderno.</li>
+        <li>(8 min) Na barra amarela do alto do tópico, toque em <b>Esconder marcações</b>: cada trecho marcado vira uma tarja. Para cada tarja, diga em voz alta — ou escreva numa folha — o que está embaixo; depois toque na tarja para conferir.</li>
         <li>(3 min) O que não veio de memória vira uma entrada no caderno de erros, no formato da seção 7.</li>
       </ol>
       <div class="op-parada">
@@ -2016,8 +2060,8 @@ body{
       <h3><span class="op-cod">P8</span> Revisão R2 — a própria semana <span class="op-dur">sexta, 30 minutos</span></h3>
       <p style="font-size:14.5px;color:var(--tinta-2);margin-top:10px"><b>O que revisar:</b> os quatro assuntos que você acabou de estudar, de segunda a quinta desta mesma semana. É a revisão mais curta e a mais barata: o conteúdo ainda está fresco e custa pouco para consolidar.</p>
       <ol>
-        <li>(3 min) Abra o caderno nas páginas de segunda, terça, quarta e quinta desta semana. Localize todas as linhas com asterisco e todos os números que você copiou.</li>
-        <li>(20 min) Ditado: tape a página e escreva os números de memória em outra folha — prazos, quantidades, percentuais, quantos incisos tem cada rol. Confira ao final. Desde a semana 4, o ditado inclui os enunciados da semana: o número e a regra em até oito palavras.</li>
+        <li>(3 min) Abra o caderno nas páginas de segunda, terça, quarta e quinta desta semana e, no aplicativo, os tópicos da semana. Localize todas as linhas com asterisco, os números do caderno e os trechos que você marcou.</li>
+        <li>(20 min) Ditado: tape a página e escreva os números de memória em outra folha — prazos, quantidades, percentuais, quantos incisos tem cada rol. Confira ao final. Desde a semana 4, o ditado inclui os enunciados da semana: o número e a regra em até oito palavras. Nos tópicos da semana, ligue <b>Esconder marcações</b> e escreva o que está embaixo de cada tarja antes de tocar nela para conferir.</li>
         <li>(5 min) Os que erraram vão para uma lista única no fim do caderno, chamada “números que não colam”. Enunciado errado no ditado também entra nessa lista. Essa lista é o material da véspera da prova.</li>
         <li>(2 min) Leia essa lista inteira em voz alta uma vez, do começo ao fim, mesmo que ela já esteja longa.</li>
       </ol>
@@ -2171,6 +2215,21 @@ body{
       <div class="op-parada">
         <b>Regra de parada</b>
         Quinze minutos, uma leitura, três linhas. Este bloco não tem segunda chance nem fila de atraso: se o timer tocar no meio, escreva as três linhas com o que você entendeu e siga para a pausa. O objetivo não é dominar o ponto — é reconhecê-lo na prova e não travar.
+      </div>
+    </div>
+    <div class="op-p op-p-novo">
+      <h3><span class="op-cod">P17</span> Direito do Trabalho — questões primeiro <span class="op-dur">quarta, 30 minutos · desde a semana 7 (14/10)</span></h3>
+      <p style="font-size:14.5px;color:var(--tinta-2);margin-top:10px">Direito do Trabalho está no grupo “Consolidado”: você já acerta a maior parte das questões sem estudar. Por isso a meia hora de teoria não começa pela leitura. Começa pelas questões, e você lê só o que errou. O quadro <b>Lei seca</b> continua no tópico, para consulta: não é para ler inteiro neste bloco. O mesmo passo a passo está no alto de cada tópico de Direito do Trabalho, na página 04.</p>
+      <ol>
+        <li>(1 min) No cartão da semana (seção 6), abra o tópico de Direito do Trabalho e toque em <b>Resolver agora →</b>. Não leia o tópico antes.</li>
+        <li>(12 min) Responda <b>seis questões</b>, cerca de dois minutos cada. Se o banco do aplicativo tiver menos de seis sobre o tópico, complete com as da FCC no QConcursos (o link está no próprio tópico). A cada erro, anote no caderno só o número da questão e o <b>Fundamento</b> que aparece no gabarito — por exemplo, “CLT, art. 482”.</li>
+        <li>(14 min) Volte ao tópico. Para cada erro, leia só o que o explica: o trecho do texto e o artigo do Fundamento, numa caixa de lei ou no quadro <b>Lei seca</b>, no fim do tópico. Marque com o marca-texto a frase ou o número que você errou.</li>
+        <li>(3 min) Uma linha no caderno de erros para cada erro, no formato da seção 7.</li>
+      </ol>
+      <p style="font-size:14.5px;color:var(--tinta-2)">Se acertar as seis, use os 14 minutos do passo 3 para ler o tópico uma vez, do começo ao fim, marcando só os números: prazos, percentuais e quantidades.</p>
+      <div class="op-parada">
+        <b>Regra de parada</b>
+        Trinta minutos e pare. O erro que você não chegou a ler fica no caderno com a palavra “ler” e entra na revisão R7 da segunda-feira seguinte. Depois deste bloco vêm os trinta minutos de questões, pelo P4, como sempre.
       </div>
     </div>
 </section>
@@ -2850,7 +2909,7 @@ body{
     </tr>
       <tr>
       <td class="op-disc">Qua 18h45–19h45<span class="op-tempo">1 h</span></td>
-      <td><b>Cessação do contrato: justas causas, despedida indireta, dispensa arbitrária e coletiva, culpa recíproca e aviso prévio</b><br><a class="op-path" href="#" data-ir="dt-cessacao">Material › Direito do Trabalho › Cessação do contrato de trabalho</a><br><span class="op-arts"><a href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm" target="_blank" rel="noopener">CLT, arts. 477 a 491</a> · Lei 12.506/2011 · Súmulas 73 e 441 do TST</span><br><span class="op-edital"><b>Edital:</b> Da rescisão do contrato de trabalho: das justas causas; da despedida indireta; da dispensa arbitrária; da despedida coletiva; da culpa recíproca; da indenização · Do aviso prévio</span><br><a class="op-qc" href="https://www.qconcursos.com/questoes-de-concursos/disciplinas/direito-direito-do-trabalho/cessacao-do-contrato-de-emprego/questoes?examining_board_ids%5B%5D=1" target="_blank" rel="noopener">Questões da FCC sobre este ponto no QConcursos ↗</a></td>
+      <td><b>Cessação do contrato: justas causas, despedida indireta, dispensa arbitrária e coletiva, culpa recíproca e aviso prévio</b><br><a class="op-path" href="#" data-ir="dt-cessacao">Material › Direito do Trabalho › Cessação do contrato de trabalho</a><br><span class="op-modo">Como estudar: <a href="#" data-op-ir="op-P17">P17 — questões primeiro</a>; leia só o que errar.</span><br><span class="op-arts"><a href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm" target="_blank" rel="noopener">CLT, arts. 477 a 491</a> · Lei 12.506/2011 · Súmulas 73 e 441 do TST</span><br><span class="op-edital"><b>Edital:</b> Da rescisão do contrato de trabalho: das justas causas; da despedida indireta; da dispensa arbitrária; da despedida coletiva; da culpa recíproca; da indenização · Do aviso prévio</span><br><a class="op-qc" href="https://www.qconcursos.com/questoes-de-concursos/disciplinas/direito-direito-do-trabalho/cessacao-do-contrato-de-emprego/questoes?examining_board_ids%5B%5D=1" target="_blank" rel="noopener">Questões da FCC sobre este ponto no QConcursos ↗</a></td>
       <td class="op-cob"><span class="op-marca op-ok">O material basta</span></td>
     </tr>
       <tr>
@@ -2961,12 +3020,12 @@ body{
     </tr>
       <tr>
       <td class="op-disc">Qua 18h45–19h45<span class="op-tempo">1 h</span></td>
-      <td><b>Estabilidades e garantias provisórias de emprego</b><br><a class="op-path" href="#" data-ir="dt-estabilidade">Material › Direito do Trabalho › Estabilidades e garantias de emprego</a><br><span class="op-arts"><a href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm" target="_blank" rel="noopener">CLT, arts. 492 a 504 e 543</a> · ADCT, art. 10, II · <a href="https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm" target="_blank" rel="noopener">Lei 8.213/1991, art. 118</a> · Súmulas 244 e 378 do TST</span><br><span class="op-edital"><b>Edital:</b> Da estabilidade e das garantias provisórias de emprego: das formas de estabilidade; da despedida e da reintegração de empregado estável; da força maior · Da estabilidade da gestante; da licença-maternidade (art. 10 do ADCT)</span><br><a class="op-qc" href="https://www.qconcursos.com/questoes-de-concursos/disciplinas/direito-direito-do-trabalho/estabilidade-e-garantias-provisorias-no-emprego/questoes?examining_board_ids%5B%5D=1" target="_blank" rel="noopener">Questões da FCC sobre este ponto no QConcursos ↗</a></td>
+      <td><b>Estabilidades e garantias provisórias de emprego</b><br><a class="op-path" href="#" data-ir="dt-estabilidade">Material › Direito do Trabalho › Estabilidades e garantias de emprego</a><br><span class="op-modo">Como estudar: <a href="#" data-op-ir="op-P17">P17 — questões primeiro</a>; leia só o que errar.</span><br><span class="op-arts"><a href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm" target="_blank" rel="noopener">CLT, arts. 492 a 504 e 543</a> · ADCT, art. 10, II · <a href="https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm" target="_blank" rel="noopener">Lei 8.213/1991, art. 118</a> · Súmulas 244 e 378 do TST</span><br><span class="op-edital"><b>Edital:</b> Da estabilidade e das garantias provisórias de emprego: das formas de estabilidade; da despedida e da reintegração de empregado estável; da força maior · Da estabilidade da gestante; da licença-maternidade (art. 10 do ADCT)</span><br><a class="op-qc" href="https://www.qconcursos.com/questoes-de-concursos/disciplinas/direito-direito-do-trabalho/estabilidade-e-garantias-provisorias-no-emprego/questoes?examining_board_ids%5B%5D=1" target="_blank" rel="noopener">Questões da FCC sobre este ponto no QConcursos ↗</a></td>
       <td class="op-cob"><span class="op-marca op-ok">O material basta</span></td>
     </tr>
       <tr>
       <td class="op-disc">Qua 18h45–19h45<span class="op-tempo">1 h</span></td>
-      <td><b>Relações de trabalho lato sensu: trabalho temporário, terceirização e trabalho avulso</b><br><a class="op-path" href="#" data-ir="dt-relacao">Material › Direito do Trabalho › Relação de emprego, empregado e empregador</a><br><span class="op-arts"><a href="https://www.planalto.gov.br/ccivil_03/leis/l6019.htm" target="_blank" rel="noopener">Lei 6.019/1974 (a lei inteira)</a> · <a href="https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2009/lei/l12023.htm" target="_blank" rel="noopener">Lei 12.023/2009 (a lei inteira)</a> · <a href="https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm" target="_blank" rel="noopener">CF, art. 7º, XXXIV</a> · Súmula 331 do TST</span><br><span class="op-edital"><b>Edital:</b> Relações de trabalho lato sensu: trabalho autônomo, trabalho eventual, trabalho temporário e trabalho avulso · Da responsabilidade solidária e subsidiária</span><br><a class="op-qc" href="https://www.qconcursos.com/questoes-de-concursos/disciplinas/direito-direito-do-trabalho/terceirizacao-no-direito-do-trabalho/questoes?examining_board_ids%5B%5D=1" target="_blank" rel="noopener">Questões da FCC sobre este ponto no QConcursos ↗</a></td>
+      <td><b>Relações de trabalho lato sensu: trabalho temporário, terceirização e trabalho avulso</b><br><a class="op-path" href="#" data-ir="dt-relacao">Material › Direito do Trabalho › Relação de emprego, empregado e empregador</a><br><span class="op-modo">Como estudar: <a href="#" data-op-ir="op-P17">P17 — questões primeiro</a>; leia só o que errar.</span><br><span class="op-arts"><a href="https://www.planalto.gov.br/ccivil_03/leis/l6019.htm" target="_blank" rel="noopener">Lei 6.019/1974 (a lei inteira)</a> · <a href="https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2009/lei/l12023.htm" target="_blank" rel="noopener">Lei 12.023/2009 (a lei inteira)</a> · <a href="https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm" target="_blank" rel="noopener">CF, art. 7º, XXXIV</a> · Súmula 331 do TST</span><br><span class="op-edital"><b>Edital:</b> Relações de trabalho lato sensu: trabalho autônomo, trabalho eventual, trabalho temporário e trabalho avulso · Da responsabilidade solidária e subsidiária</span><br><a class="op-qc" href="https://www.qconcursos.com/questoes-de-concursos/disciplinas/direito-direito-do-trabalho/terceirizacao-no-direito-do-trabalho/questoes?examining_board_ids%5B%5D=1" target="_blank" rel="noopener">Questões da FCC sobre este ponto no QConcursos ↗</a></td>
       <td class="op-cob"><span class="op-marca op-ok">O material basta</span></td>
     </tr>
       <tr>
@@ -3071,7 +3130,7 @@ body{
     </tr>
       <tr>
       <td class="op-disc">Qua 18h45–19h45<span class="op-tempo">1 h</span></td>
-      <td><b>Duração do trabalho: jornada, in itinere, intervalos, DSR, noturno, extraordinário e compensação</b><br><a class="op-path" href="#" data-ir="dt-jornada">Material › Direito do Trabalho › Duração do trabalho, intervalos e adicionais</a><br><span class="op-arts"><a href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm" target="_blank" rel="noopener">CLT, arts. 4º e 57 a 75</a> · Lei 605/1949 · Súmula 85 do TST — as Súmulas 90 e 437 foram canceladas em 2025 (veja as notas na página 04.2)</span><br><span class="op-edital"><b>Edital:</b> Da duração do trabalho: da jornada de trabalho; Jornada In itinere; dos períodos de descanso; do intervalo para repouso e alimentação; do descanso semanal remunerado; do trabalho noturno e do trabalho extraordinário; do sistema de compensação de horas</span><br><a class="op-qc" href="https://www.qconcursos.com/questoes-de-concursos/disciplinas/direito-direito-do-trabalho/duracao-do-trabalho/questoes?examining_board_ids%5B%5D=1" target="_blank" rel="noopener">Questões da FCC sobre este ponto no QConcursos ↗</a></td>
+      <td><b>Duração do trabalho: jornada, in itinere, intervalos, DSR, noturno, extraordinário e compensação</b><br><a class="op-path" href="#" data-ir="dt-jornada">Material › Direito do Trabalho › Duração do trabalho, intervalos e adicionais</a><br><span class="op-modo">Como estudar: <a href="#" data-op-ir="op-P17">P17 — questões primeiro</a>; leia só o que errar.</span><br><span class="op-arts"><a href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm" target="_blank" rel="noopener">CLT, arts. 4º e 57 a 75</a> · Lei 605/1949 · Súmula 85 do TST — as Súmulas 90 e 437 foram canceladas em 2025 (veja as notas na página 04.2)</span><br><span class="op-edital"><b>Edital:</b> Da duração do trabalho: da jornada de trabalho; Jornada In itinere; dos períodos de descanso; do intervalo para repouso e alimentação; do descanso semanal remunerado; do trabalho noturno e do trabalho extraordinário; do sistema de compensação de horas</span><br><a class="op-qc" href="https://www.qconcursos.com/questoes-de-concursos/disciplinas/direito-direito-do-trabalho/duracao-do-trabalho/questoes?examining_board_ids%5B%5D=1" target="_blank" rel="noopener">Questões da FCC sobre este ponto no QConcursos ↗</a></td>
       <td class="op-cob"><span class="op-marca op-ok">O material basta</span></td>
     </tr>
       <tr>
@@ -3187,7 +3246,7 @@ body{
     </tr>
       <tr>
       <td class="op-disc">Qua 18h45–19h45<span class="op-tempo">1 h</span></td>
-      <td><b>Férias, décimo terceiro, FGTS e salário mínimo</b><br><a class="op-path" href="#" data-ir="dt-remuneracao">Material › Direito do Trabalho › Remuneração, salário e equiparação</a><br><span class="op-arts"><a href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm" target="_blank" rel="noopener">CLT, arts. 76 a 126 e 129 a 153</a> · Lei 4.090/1962 · Lei 8.036/1990, arts. 2º, 13, 15, 18, 19-A, 20, 22, 25 e 26 · <a href="https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm" target="_blank" rel="noopener">CF, art. 7º, IV, VIII e XVII</a></span><br><span class="op-edital"><b>Edital:</b> Das férias: do direito a férias e da sua duração; da concessão e da época das férias; das férias coletivas; da remuneração e do abono de férias; dos efeitos da cessação do contrato de trabalho; do início da prescrição · 13º salário · Do FGTS · Do salário mínimo: conceito, irredutibilidade e garantia</span><br><a class="op-qc" href="https://www.qconcursos.com/questoes-de-concursos/disciplinas/direito-direito-do-trabalho/descanso-no-trabalho-repouso-anual-ferias-e-semanal/questoes?examining_board_ids%5B%5D=1" target="_blank" rel="noopener">Questões da FCC sobre este ponto no QConcursos ↗</a></td>
+      <td><b>Férias, décimo terceiro, FGTS e salário mínimo</b><br><a class="op-path" href="#" data-ir="dt-remuneracao">Material › Direito do Trabalho › Remuneração, salário e equiparação</a><br><span class="op-modo">Como estudar: <a href="#" data-op-ir="op-P17">P17 — questões primeiro</a>; leia só o que errar.</span><br><span class="op-arts"><a href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm" target="_blank" rel="noopener">CLT, arts. 76 a 126 e 129 a 153</a> · Lei 4.090/1962 · Lei 8.036/1990, arts. 2º, 13, 15, 18, 19-A, 20, 22, 25 e 26 · <a href="https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm" target="_blank" rel="noopener">CF, art. 7º, IV, VIII e XVII</a></span><br><span class="op-edital"><b>Edital:</b> Das férias: do direito a férias e da sua duração; da concessão e da época das férias; das férias coletivas; da remuneração e do abono de férias; dos efeitos da cessação do contrato de trabalho; do início da prescrição · 13º salário · Do FGTS · Do salário mínimo: conceito, irredutibilidade e garantia</span><br><a class="op-qc" href="https://www.qconcursos.com/questoes-de-concursos/disciplinas/direito-direito-do-trabalho/descanso-no-trabalho-repouso-anual-ferias-e-semanal/questoes?examining_board_ids%5B%5D=1" target="_blank" rel="noopener">Questões da FCC sobre este ponto no QConcursos ↗</a></td>
       <td class="op-cob"><span class="op-marca op-ok">O material basta</span></td>
     </tr>
       <tr>
@@ -3292,12 +3351,12 @@ body{
     </tr>
       <tr>
       <td class="op-disc">Qua 18h45–19h45<span class="op-tempo">1 h</span></td>
-      <td><b>Salário e remuneração: composição, equiparação e desvio de função</b><br><a class="op-path" href="#" data-ir="dt-remuneracao">Material › Direito do Trabalho › Remuneração, salário e equiparação</a><br><span class="op-arts"><a href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm" target="_blank" rel="noopener">CLT, arts. 5º e 457 a 467</a> · Súmula 6 do TST</span><br><span class="op-edital"><b>Edital:</b> Do salário e da remuneração: conceito e distinções; composição do salário; modalidades de salário; formas e meios de pagamento do salário · Da equiparação salarial: hipóteses ensejadoras e forma de aferição; do princípio da igualdade de salário; do desvio de função</span><br><a class="op-qc" href="https://www.qconcursos.com/questoes-de-concursos/disciplinas/direito-direito-do-trabalho/remuneracao-e-salario-caracterizacao-e-distincoes/questoes?examining_board_ids%5B%5D=1" target="_blank" rel="noopener">Questões da FCC sobre este ponto no QConcursos ↗</a></td>
+      <td><b>Salário e remuneração: composição, equiparação e desvio de função</b><br><a class="op-path" href="#" data-ir="dt-remuneracao">Material › Direito do Trabalho › Remuneração, salário e equiparação</a><br><span class="op-modo">Como estudar: <a href="#" data-op-ir="op-P17">P17 — questões primeiro</a>; leia só o que errar.</span><br><span class="op-arts"><a href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm" target="_blank" rel="noopener">CLT, arts. 5º e 457 a 467</a> · Súmula 6 do TST</span><br><span class="op-edital"><b>Edital:</b> Do salário e da remuneração: conceito e distinções; composição do salário; modalidades de salário; formas e meios de pagamento do salário · Da equiparação salarial: hipóteses ensejadoras e forma de aferição; do princípio da igualdade de salário; do desvio de função</span><br><a class="op-qc" href="https://www.qconcursos.com/questoes-de-concursos/disciplinas/direito-direito-do-trabalho/remuneracao-e-salario-caracterizacao-e-distincoes/questoes?examining_board_ids%5B%5D=1" target="_blank" rel="noopener">Questões da FCC sobre este ponto no QConcursos ↗</a></td>
       <td class="op-cob"><span class="op-marca op-ok">O material basta</span></td>
     </tr>
       <tr>
       <td class="op-disc">Qua 18h45–19h45<span class="op-tempo">1 h</span></td>
-      <td><b>Disposições especiais sobre duração e condições de trabalho — bancários, professores, jornalistas e outras categorias</b><br><a class="op-path" href="#" data-ir="dt-jornada">Material › Direito do Trabalho › Duração do trabalho, intervalos e adicionais</a><br><span class="op-arts"><a href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm" target="_blank" rel="noopener">CLT, arts. 224 a 351</a> — Título III, Capítulo I: bancários, empregados em telefonia, músicos, operadores cinematográficos, ferroviários, marítimos, frigoríficos, mineiros, jornalistas, professores e químicos</span><br><span class="op-edital"><b>Edital:</b> Das disposições especiais sobre duração e condições de Trabalho (Capítulo I do Título III da CLT)</span><br><a class="op-qc" href="https://www.qconcursos.com/questoes-de-concursos/disciplinas/direito-direito-do-trabalho/duracao-do-trabalho/questoes?examining_board_ids%5B%5D=1" target="_blank" rel="noopener">Questões da FCC sobre este ponto no QConcursos ↗</a></td>
+      <td><b>Disposições especiais sobre duração e condições de trabalho — bancários, professores, jornalistas e outras categorias</b><br><a class="op-path" href="#" data-ir="dt-jornada">Material › Direito do Trabalho › Duração do trabalho, intervalos e adicionais</a><br><span class="op-modo">Como estudar: <a href="#" data-op-ir="op-P17">P17 — questões primeiro</a>; leia só o que errar.</span><br><span class="op-arts"><a href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm" target="_blank" rel="noopener">CLT, arts. 224 a 351</a> — Título III, Capítulo I: bancários, empregados em telefonia, músicos, operadores cinematográficos, ferroviários, marítimos, frigoríficos, mineiros, jornalistas, professores e químicos</span><br><span class="op-edital"><b>Edital:</b> Das disposições especiais sobre duração e condições de Trabalho (Capítulo I do Título III da CLT)</span><br><a class="op-qc" href="https://www.qconcursos.com/questoes-de-concursos/disciplinas/direito-direito-do-trabalho/duracao-do-trabalho/questoes?examining_board_ids%5B%5D=1" target="_blank" rel="noopener">Questões da FCC sobre este ponto no QConcursos ↗</a></td>
       <td class="op-cob"><span class="op-marca op-ok">O material basta</span></td>
     </tr>
       <tr>
@@ -3409,7 +3468,7 @@ body{
     </tr>
       <tr>
       <td class="op-disc">Qua 18h45–19h45<span class="op-tempo">1 h</span></td>
-      <td><b>Segurança e medicina do trabalho; trabalho da mulher, da gestante e do menor</b><br><a class="op-path" href="#" data-ir="dt-seguranca">Material › Direito do Trabalho › Segurança e medicina do trabalho</a><br><span class="op-arts"><a href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm" target="_blank" rel="noopener">CLT, arts. 154 a 201, 372 a 401 e 402 a 441</a> · Súmula Vinculante 4 · ADI 5.938 do STF</span><br><span class="op-edital"><b>Edital:</b> Da segurança e medicina no trabalho: da CIPA; do equipamento de proteção individual - EPI; das atividades insalubres e perigosas · Das disposições especiais sobre duração e condições de Trabalho (Capítulo I do Título III da CLT) · Da proteção ao trabalho da mulher, da gestante e do menor (Capítulos III e IV do Título III da CLT)</span><br><a class="op-qc" href="https://www.qconcursos.com/questoes-de-concursos/disciplinas/direito-direito-do-trabalho/saude-ocupacional/questoes?examining_board_ids%5B%5D=1" target="_blank" rel="noopener">Questões da FCC sobre este ponto no QConcursos ↗</a></td>
+      <td><b>Segurança e medicina do trabalho; trabalho da mulher, da gestante e do menor</b><br><a class="op-path" href="#" data-ir="dt-seguranca">Material › Direito do Trabalho › Segurança e medicina do trabalho</a><br><span class="op-modo">Como estudar: <a href="#" data-op-ir="op-P17">P17 — questões primeiro</a>; leia só o que errar.</span><br><span class="op-arts"><a href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm" target="_blank" rel="noopener">CLT, arts. 154 a 201, 372 a 401 e 402 a 441</a> · Súmula Vinculante 4 · ADI 5.938 do STF</span><br><span class="op-edital"><b>Edital:</b> Da segurança e medicina no trabalho: da CIPA; do equipamento de proteção individual - EPI; das atividades insalubres e perigosas · Das disposições especiais sobre duração e condições de Trabalho (Capítulo I do Título III da CLT) · Da proteção ao trabalho da mulher, da gestante e do menor (Capítulos III e IV do Título III da CLT)</span><br><a class="op-qc" href="https://www.qconcursos.com/questoes-de-concursos/disciplinas/direito-direito-do-trabalho/saude-ocupacional/questoes?examining_board_ids%5B%5D=1" target="_blank" rel="noopener">Questões da FCC sobre este ponto no QConcursos ↗</a></td>
       <td class="op-cob"><span class="op-marca op-ok">O material basta</span></td>
     </tr>
       <tr>
@@ -3516,13 +3575,13 @@ body{
     </tr>
       <tr>
       <td class="op-disc">Qua 18h45–19h45<span class="op-tempo">1 h</span></td>
-      <td><b>Direito coletivo, liberdade sindical, convenções e acordos coletivos e greve</b><br><a class="op-path" href="#" data-ir="dt-coletivo">Material › Direito do Trabalho › Direito coletivo do trabalho</a><br><span class="op-arts"><a href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm" target="_blank" rel="noopener">CLT, arts. 510-A a 510-D, 511, 545, 578, 579, 582, 583, 587, 602 e 611 a 625</a> · Lei 7.783/1989 (a lei inteira)</span><br><span class="op-edital"><b>Edital:</b> Do direito coletivo do trabalho: da liberdade sindical (Convenção nº 87 da OIT); da organização sindical: conceito de categoria; categoria diferenciada; das convenções e dos acordos coletivos de trabalho · Do direito de greve; dos serviços essenciais</span><br><a class="op-qc" href="https://www.qconcursos.com/questoes-de-concursos/disciplinas/direito-direito-do-trabalho/direito-coletivo-do-trabalho/questoes?examining_board_ids%5B%5D=1" target="_blank" rel="noopener">Questões da FCC sobre este ponto no QConcursos ↗</a></td>
+      <td><b>Direito coletivo, liberdade sindical, convenções e acordos coletivos e greve</b><br><a class="op-path" href="#" data-ir="dt-coletivo">Material › Direito do Trabalho › Direito coletivo do trabalho</a><br><span class="op-modo">Como estudar: <a href="#" data-op-ir="op-P17">P17 — questões primeiro</a>; leia só o que errar.</span><br><span class="op-arts"><a href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm" target="_blank" rel="noopener">CLT, arts. 510-A a 510-D, 511, 545, 578, 579, 582, 583, 587, 602 e 611 a 625</a> · Lei 7.783/1989 (a lei inteira)</span><br><span class="op-edital"><b>Edital:</b> Do direito coletivo do trabalho: da liberdade sindical (Convenção nº 87 da OIT); da organização sindical: conceito de categoria; categoria diferenciada; das convenções e dos acordos coletivos de trabalho · Do direito de greve; dos serviços essenciais</span><br><a class="op-qc" href="https://www.qconcursos.com/questoes-de-concursos/disciplinas/direito-direito-do-trabalho/direito-coletivo-do-trabalho/questoes?examining_board_ids%5B%5D=1" target="_blank" rel="noopener">Questões da FCC sobre este ponto no QConcursos ↗</a></td>
       <td class="op-cob"><span class="op-marca op-ok">O material basta</span></td>
     </tr>
 
       <tr>
       <td class="op-disc">Qua 18h45–19h45<span class="op-tempo">1 h</span></td>
-      <td><b>Dano extrapatrimonial, assédio, acidentes do trabalho, renúncia e transação e não discriminação</b><br><a class="op-path" href="#" data-ir="dt-dano">Material › Direito do Trabalho › Dano extrapatrimonial e assédio</a><br><span class="op-arts"><a href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm" target="_blank" rel="noopener">CLT, arts. 9º, 223-A a 223-G, 507-A e 507-B</a> · <a href="https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm" target="_blank" rel="noopener">Lei 8.213/1991, arts. 19 a 23</a> · Súmula 392 do TST</span><br><span class="op-edital"><b>Edital:</b> Dano moral nas relações de trabalho · Assédio moral e sexual · Acidentes do Trabalho · Princípios gerais de responsabilidade civil trabalhista · Da renúncia e transação · Princípios da igualdade e da não discriminação · Súmulas e Orientações da Jurisprudência uniformizada do TST e Súmulas Vinculantes do STF sobre Direito do Trabalho</span><br><a class="op-qc" href="https://www.qconcursos.com/questoes-de-concursos/disciplinas/direito-direito-do-trabalho/dano-moral-e-indenizacao/questoes?examining_board_ids%5B%5D=1" target="_blank" rel="noopener">Questões da FCC sobre este ponto no QConcursos ↗</a></td>
+      <td><b>Dano extrapatrimonial, assédio, acidentes do trabalho, renúncia e transação e não discriminação</b><br><a class="op-path" href="#" data-ir="dt-dano">Material › Direito do Trabalho › Dano extrapatrimonial e assédio</a><br><span class="op-modo">Como estudar: <a href="#" data-op-ir="op-P17">P17 — questões primeiro</a>; leia só o que errar.</span><br><span class="op-arts"><a href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm" target="_blank" rel="noopener">CLT, arts. 9º, 223-A a 223-G, 507-A e 507-B</a> · <a href="https://www.planalto.gov.br/ccivil_03/leis/l8213cons.htm" target="_blank" rel="noopener">Lei 8.213/1991, arts. 19 a 23</a> · Súmula 392 do TST</span><br><span class="op-edital"><b>Edital:</b> Dano moral nas relações de trabalho · Assédio moral e sexual · Acidentes do Trabalho · Princípios gerais de responsabilidade civil trabalhista · Da renúncia e transação · Princípios da igualdade e da não discriminação · Súmulas e Orientações da Jurisprudência uniformizada do TST e Súmulas Vinculantes do STF sobre Direito do Trabalho</span><br><a class="op-qc" href="https://www.qconcursos.com/questoes-de-concursos/disciplinas/direito-direito-do-trabalho/dano-moral-e-indenizacao/questoes?examining_board_ids%5B%5D=1" target="_blank" rel="noopener">Questões da FCC sobre este ponto no QConcursos ↗</a></td>
       <td class="op-cob"><span class="op-marca op-ok">O material basta</span></td>
     </tr>
       <tr>
@@ -3671,6 +3730,10 @@ body{
     <span class="amostra"><b>Negrito nos cards de lei</b></span>
     <span>marca <b>exatamente o dispositivo citado na referência do card</b>. Se a referência delimita — <span class="mono">art. 5º, caput e §§ 1º, 7º e 8º</span> —, só o caput e esses parágrafos vêm em negrito; o resto do artigo aparece em peso normal, como contexto de leitura. Se a referência traz apenas o artigo, o artigo inteiro, com parágrafos e incisos, vem em negrito.</span>
     <span style="flex-basis:100%; color:var(--tinta-3); font-size:12px">Os cards da <b>Lei 11.416/2006</b> já reproduzem o artigo por inteiro, conferido no texto compilado oficial. Nos demais cards, o recorte transcrito corresponde exatamente aos dispositivos citados na referência — por isso aparecem integralmente em negrito. Use o link <span class="mono">Planalto</span> no alto de cada card para ler o artigo completo.</span>
+  </div>
+
+  <div class="nota mt-nota">
+    <b>Marca-texto (desde 08/10/2026).</b> Em qualquer tópico — texto, caixas e quadro <b>Lei seca</b> —, selecione um trecho com o mouse ou com o dedo e toque em <b>Marcar</b>: ele fica assim, <mark class="mt-amostra">em amarelo</mark>. Para tirar, toque na marcação e depois em <b>Tirar marcação</b>; por alguns segundos aparece <b>Desfazer</b>. Para treinar de memória, use <b>Esconder marcações</b>, na barra amarela do alto de cada tópico: cada trecho marcado vira uma tarja escura; diga o que está embaixo e toque na tarja para conferir. As marcações ficam guardadas só neste navegador (o computador ou o celular em que você marcou). O botão <b>Zerar progresso</b> não as apaga; elas só saem pelo botão <b>Apagar as marcações deste tópico</b>, que pede confirmação.
   </div>
 
   <!-- ---------- PORTUGUÊS ---------- -->
@@ -7629,9 +7692,9 @@ body{
   </div>
 
   <h3 style="font-size:20px;margin:34px 0 12px">Progresso gravado neste navegador</h3>
-  <p>As respostas do banco de questões — as marcações da rodada em curso, o histórico de cada questão (quantas vezes foi respondida e as dez últimas respostas, com data e resultado) e o placar de acertos e erros de cada semana —, os blocos marcados no cronograma e o histórico dos simuladões ficam gravados no armazenamento local <b>deste navegador</b>, sob o prefixo <code>trt4:</code>. Nada é enviado para servidor algum — não há requisição de rede em nenhuma funcionalidade desta aplicação. Trocar de navegador, de dispositivo ou limpar os dados do site apaga o progresso.</p>
+  <p>As respostas do banco de questões — as marcações da rodada em curso, o histórico de cada questão (quantas vezes foi respondida e as dez últimas respostas, com data e resultado) e o placar de acertos e erros de cada semana —, os blocos marcados no cronograma o histórico dos simuladões e as marcações do marca-texto no material ficam gravados no armazenamento local <b>deste navegador</b>, sob o prefixo <code>trt4:</code>. Nada é enviado para servidor algum — não há requisição de rede em nenhuma funcionalidade desta aplicação. Trocar de navegador, de dispositivo ou limpar os dados do site apaga o progresso.</p>
   <div class="zerar-caixa">
-    <p><b>Zerar progresso.</b> Apaga as marcações das questões, o histórico de respostas de cada questão, o placar semanal e geral, as marcações do cronograma e o histórico de simulados. O material de estudo, as questões e as tabelas não são afetados. Só as chaves <code>trt4:</code> são removidas; qualquer outro dado deste navegador fica intacto. Antes de apagar, uma janela explica o que será removido e pede confirmação. Para apenas refazer questões sem perder o placar e o histórico, use <b>Zerar respostas</b>, no banco de questões.</p>
+    <p><b>Zerar progresso.</b> Apaga as marcações das questões, o histórico de respostas de cada questão, o placar semanal e geral, as marcações do cronograma e o histórico de simulados. O material de estudo, as questões e as tabelas não são afetados. Só as chaves <code>trt4:</code> do progresso são removidas; as marcações do marca-texto (<code>trt4:marcas</code>) ficam, e qualquer outro dado deste navegador fica intacto. Antes de apagar, uma janela explica o que será removido e pede confirmação. Para apenas refazer questões sem perder o placar e o histórico, use <b>Zerar respostas</b>, no banco de questões.</p>
     <p id="zerarResumo" class="mono" style="font-size:12.5px;color:var(--tinta-3)">—</p>
     <button class="btn sec" id="btnZerar" aria-haspopup="dialog">Zerar progresso</button>
   </div>
@@ -7692,7 +7755,7 @@ body{
 
   <div class="rodape">
     <div class="aviso-persist" id="avisoPersist"><b>Este navegador não está gravando o progresso.</b> O armazenamento local está indisponível — modo privativo, restrição de arquivo local (<code>file://</code>) ou bloqueio de dados de site. Tudo continua funcionando, mas as respostas e as marcações se perdem ao fechar a aba.</div>
-    <p>Aplicação de estudo construída a partir da análise das provas do TRT da 4ª Região. Conteúdo didático de apoio — não substitui a leitura da legislação, das súmulas e do edital vigente. O progresso das questões, as marcações do cronograma e o histórico de simulados ficam gravados no armazenamento local deste navegador, sob o prefixo <code>trt4:</code>, e podem ser apagados a qualquer momento em <b>Zerar progresso</b>, acima.</p>
+    <p>Aplicação de estudo construída a partir da análise das provas do TRT da 4ª Região. Conteúdo didático de apoio — não substitui a leitura da legislação, das súmulas e do edital vigente. O progresso das questões, as marcações do cronograma e o histórico de simulados ficam gravados no armazenamento local deste navegador, sob o prefixo <code>trt4:</code>, e podem ser apagados a qualquer momento em <b>Zerar progresso</b>, acima. As marcações do marca-texto saem pelo botão de cada tópico do material.</p>
   </div>
 </div>
 </section>
@@ -7707,7 +7770,7 @@ body{
       <h3 id="dlgZerarTitulo">Zerar progresso?</h3>
       <p id="dlgZerarAviso">Esta ação apaga o seu progresso gravado neste navegador. Leia o que acontece antes de decidir.</p>
       <h4>O que este botão faz</h4>
-      <p>Apaga, deste navegador, tudo o que o aplicativo gravou sobre o seu estudo:</p>
+      <p>Apaga, deste navegador, o que o aplicativo gravou sobre o seu progresso:</p>
       <ul id="dlgZerarLista"></ul>
       <h4>O que acontece se você confirmar</h4>
       <ul>
@@ -7717,7 +7780,7 @@ body{
         <li class="modal-alerta">Não há como desfazer. Não existe cópia desses dados em outro lugar.</li>
       </ul>
       <h4>O que não muda</h4>
-      <p>O material de estudo, as questões, a jurisprudência e as tabelas continuam iguais. Dados de outros sites neste navegador não são tocados.</p>
+      <p>O material de estudo, as questões, a jurisprudência e as tabelas continuam iguais. Dados de outros sites neste navegador não são tocados. As marcações do marca-texto também ficam: elas só saem pelo botão de cada tópico do material.</p>
       <p class="modal-dica">Se você só quer refazer questões, clique em <b>Cancelar</b> e use <b>Zerar respostas</b>, no banco de questões. Ele mantém o placar e o histórico de cada questão.</p>
     </div>
     <div class="modal-acoes">
@@ -7745,6 +7808,24 @@ body{
     <div class="modal-acoes">
       <button type="submit" class="btn sec" value="cancelar" autofocus>Cancelar</button>
       <button type="submit" class="btn perigo" value="confirmar">Remover</button>
+    </div>
+  </form>
+</dialog>
+<dialog id="dlgMarcas" class="modal" aria-labelledby="dlgMarcasTitulo" aria-describedby="dlgMarcasAviso">
+  <form method="dialog" class="modal-corpo">
+    <div class="modal-texto">
+      <p class="rotulo">04 — Material de estudo · marca-texto</p>
+      <h3 id="dlgMarcasTitulo">Apagar as marcações deste tópico?</h3>
+      <p id="dlgMarcasAviso">Tópico: <b id="dlgMarcasTopico"></b>. Saem deste navegador <b id="dlgMarcasQtd"></b>.</p>
+      <ul>
+        <li class="modal-alerta">Não há como desfazer.</li>
+        <li>As marcações dos outros tópicos, o progresso, as respostas e o cronograma não são tocados.</li>
+      </ul>
+      <p class="modal-dica">Para tirar uma marcação só, clique em <b>Cancelar</b>, toque na marcação e depois em <b>Tirar marcação</b>.</p>
+    </div>
+    <div class="modal-acoes">
+      <button type="submit" class="btn sec" value="cancelar" autofocus>Cancelar</button>
+      <button type="submit" class="btn perigo" value="confirmar" id="btnMarcasConfirma">Apagar</button>
     </div>
   </form>
 </dialog>
@@ -16275,6 +16356,9 @@ function jurLinksDaQuestao(q){
    objeto em memória e o app segue funcionando, com aviso discreto no rodapé. */
 const NS = 'trt4:';
 const CHAVES = { respostas:'respostas', cronograma:'cronograma', historico:'historicoSimulados', placar:'placarSemanal', tentativas:'historicoQuestoes' };
+/* 08/10/2026: marca-texto do material (trt4:marcas). Fica fora de CHAVES de propósito: "Zerar progresso" não a
+   apaga; as marcações só saem pelos botões do próprio tópico. */
+const CHAVE_MARCAS = 'marcas';
 let persistenciaAtiva = false;
 
 function avisarPersistencia(){
@@ -16321,16 +16405,16 @@ const LS = (function(){
       delete memoria[chave];
       try{ if(base) base.removeItem(NS + chave); }catch(e){}
     },
-    /* Remove exclusivamente as chaves do namespace trt4:. Qualquer outro dado
-       gravado por outra página da mesma origem permanece intocado. */
+    /* Remove exclusivamente as chaves do namespace trt4:, menos a do marca-texto (trt4:marcas, desde
+       08/10/2026). Qualquer outro dado gravado por outra página da mesma origem permanece intocado. */
     limparTudo: function(){
-      for(const k in memoria) delete memoria[k];
+      for(const k in memoria) if(k !== CHAVE_MARCAS) delete memoria[k];
       try{
         if(base){
           const alvos = [];
           for(let i = 0; i < base.length; i++){
             const k = base.key(i);
-            if(k && k.indexOf(NS) === 0) alvos.push(k);
+            if(k && k.indexOf(NS) === 0 && k !== NS + CHAVE_MARCAS) alvos.push(k);
           }
           alvos.forEach(function(k){ base.removeItem(k); });
         }
@@ -17792,7 +17876,7 @@ function zerarProgresso(){
   renderQuestoes(); renderCronograma(); renderDesempenho(); renderHistorico();
   atualizarResumoZerar();
   $('#zerarResumo').innerHTML = '<span class="confirma">Progresso zerado.</span> ' +
-    'As chaves <b>trt4:</b> foram removidas deste navegador. ' + esc($('#zerarResumo').textContent);
+    'As chaves <b>trt4:</b> do progresso foram removidas deste navegador; as marcações do marca-texto continuam. ' + esc($('#zerarResumo').textContent);
 }
 
 const dlgZerar = document.getElementById('dlgZerar');
@@ -17822,7 +17906,7 @@ function abrirModalZerar(){
     'Apaga deste navegador: ' + plural(c.rodada, 'questão marcada', 'questões marcadas') + ' na rodada, o histórico de ' +
     plural(c.questoes, 'questão', 'questões') + ', ' + plural(c.placar, 'resposta', 'respostas') + ' do placar, ' +
     plural(c.crono, 'bloco', 'blocos') + ' do cronograma e ' + plural(c.simulados, 'simulado', 'simulados') + '.\n\n' +
-    'Não há como desfazer. Para só refazer questões, cancele e use "Zerar respostas".');
+    'Não há como desfazer. As marcações do marca-texto continuam. Para só refazer questões, cancele e use "Zerar respostas".');
   if(ok) zerarProgresso();
 }
 
@@ -18622,6 +18706,339 @@ document.addEventListener('click', function(ev){
   if(d.opSem){ const el = document.getElementById('op-s' + d.opSem); if(el) navegar(function(){ rolarPara(el); }); }
 });
 
+/* ---------- Direito do Trabalho: P17 no alto de cada tópico (08/10/2026) ----------
+   Desde a quarta-feira, 14/10 (semana 7), a meia hora de teoria de Direito do Trabalho segue o P17: questões
+   primeiro, leitura só do que errou. O passo a passo fica no alto de cada tópico de Direito do Trabalho. */
+(function comoEstudarDT(){
+  const HTML = "<b class=\"ce-rot\">Como estudar este tópico no bloco de quarta-feira · desde 14/10 · P17</b><ol><li><span class=\"ce-min\">1 min</span><span class=\"ce-txt\">Toque em <b>Resolver agora →</b>, logo abaixo. Não leia o tópico antes.</span></li><li><span class=\"ce-min\">12 min</span><span class=\"ce-txt\">Responda <b>seis questões</b>. A cada erro, anote no caderno o número da questão e o <b>Fundamento</b> do gabarito (por exemplo, “CLT, art. 482”). Se faltarem questões no aplicativo, complete com as da FCC (link abaixo).</span></li><li><span class=\"ce-min\">14 min</span><span class=\"ce-txt\">Volte a este tópico e leia <b>só o que explica cada erro</b>: o trecho do texto e o artigo do Fundamento. Marque com o marca-texto o que você errou.</span></li><li><span class=\"ce-min\">3 min</span><span class=\"ce-txt\">Uma linha no caderno de erros para cada erro.</span></li></ol><p class=\"ce-obs\">Acertou as seis? Use os 14 minutos para ler o tópico uma vez, marcando só os números. O quadro <b>Lei seca</b> é para consulta: não precisa ler inteiro. Depois vêm os 30 minutos de questões de sempre (P4). <a href=\"#\" data-op-ir=\"op-P17\">Ver o P17 na seção 4 →</a></p>";
+  $$('#pg-material details.topico[id^="dt-"]').forEach(function(det){
+    const alvo = det.querySelector('.conteudo');
+    if(!alvo) return;
+    const c = document.createElement('div');
+    c.className = 'como-estudar';
+    c.innerHTML = HTML;
+    alvo.insertBefore(c, alvo.firstChild);
+  });
+})();
+
+/* ---------- Marca-texto do aluno (08/10/2026) ----------
+   Em qualquer tópico do material (texto, caixas e quadro Lei seca), o aluno seleciona um trecho e toca em
+   "Marcar". A marcação fica só neste navegador, na chave trt4:marcas, guardada pelo próprio texto marcado,
+   com até 32 caracteres antes e depois, e não pela posição: se uma atualização do app mudar o tópico, o trecho
+   é procurado pelo texto; se não for achado, continua guardado e aparece listado na barra do tópico.
+   "Zerar progresso" não apaga as marcações (LS.limparTudo pula CHAVE_MARCAS); elas só saem pelo botão do
+   tópico, que pede confirmação, ou uma a uma, com "Desfazer". */
+(function marcaTexto(){
+  const pag = document.getElementById('pg-material');
+  if(!pag) return;
+  const FORA = '.atalho-q, .mt-barra, .como-estudar, button, script, style';
+  const BLOCO = 'p, li, td, th, h4, h5, h6, dt, dd, div';
+  const bruto = LS.get(CHAVE_MARCAS, null);
+  /* um valor estranho na chave nunca é sobrescrito: o marca-texto fica desligado e o dado continua lá */
+  const valido = bruto === null || (!!bruto && typeof bruto === 'object' && !!bruto.itens && typeof bruto.itens === 'object' && !Array.isArray(bruto.itens));
+  if(!valido) return;
+  const dados = bruto || { v:1, itens:{} };
+  function salvar(){ LS.set(CHAVE_MARCAS, dados); }
+  const topicoDe = el => (el && el.closest) ? el.closest('#pg-material details.topico[id]') : null;
+  const conteudoDe = det => det.querySelector('.conteudo');
+  const nomeDe = det => { const s = det.querySelector('summary'); return s && s.firstChild ? s.firstChild.textContent.trim() : det.id; };
+  const novoId = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+
+  /* texto do tópico com os espaços colapsados; para cada caractere, o nó de texto e a posição de origem.
+     Entre dois blocos (parágrafo, item, célula) entra um espaço, como na leitura. */
+  function indice(raiz){
+    const nos = [], pos = [];
+    let txt = '', esp = true, blocoAnt = null;
+    const w = document.createTreeWalker(raiz, NodeFilter.SHOW_TEXT, { acceptNode: function(n){
+      const p = n.parentElement;
+      return (!p || p.closest(FORA)) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
+    } });
+    for(let n = w.nextNode(); n; n = w.nextNode()){
+      const s = n.nodeValue;
+      const bl = n.parentElement.closest(BLOCO);
+      if(bl !== blocoAnt && !esp && txt){ txt += ' '; nos.push(n); pos.push(0); esp = true; }
+      blocoAnt = bl;
+      for(let i = 0; i < s.length; i++){
+        const c = s.charCodeAt(i);
+        if(c === 32 || c === 10 || c === 13 || c === 9 || c === 160){ if(esp) continue; txt += ' '; esp = true; }
+        else { txt += s[i]; esp = false; }
+        nos.push(n); pos.push(i);
+      }
+    }
+    return { txt, nos, pos };
+  }
+  /* ponto (nó, deslocamento) de uma seleção → posição no texto do índice */
+  function posicao(ix, cont, off, fim){
+    const R = document.createRange();
+    try { R.setStart(cont, off); } catch(e){ return fim ? 0 : ix.nos.length; }
+    R.collapse(true);
+    if(!fim){
+      for(let k = 0; k < ix.nos.length; k++){
+        const n = ix.nos[k];
+        if(n === cont ? ix.pos[k] >= off : R.comparePoint(n, ix.pos[k]) >= 0) return k;
+      }
+      return ix.nos.length;
+    }
+    for(let k = ix.nos.length - 1; k >= 0; k--){
+      const n = ix.nos[k];
+      if(n === cont ? ix.pos[k] < off : R.comparePoint(n, ix.pos[k]) < 0) return k + 1;
+    }
+    return 0;
+  }
+  /* onde está o trecho guardado: a ocorrência cujo contexto (antes e depois) mais se parece com o guardado */
+  function achar(txt, m){
+    const q = m.q || '';
+    if(!q) return null;
+    let i = txt.indexOf(q), melhor = -1, nota = -1;
+    while(i >= 0){
+      const antes = txt.slice(Math.max(0, i - (m.p || '').length), i), depois = txt.slice(i + q.length, i + q.length + (m.s || '').length);
+      let a = 0; while(a < antes.length && antes[antes.length - 1 - a] === m.p[m.p.length - 1 - a]) a++;
+      let d = 0; while(d < depois.length && depois[d] === m.s[d]) d++;
+      if(a + d > nota){ nota = a + d; melhor = i; }
+      i = txt.indexOf(q, i + 1);
+    }
+    return melhor < 0 ? null : [melhor, melhor + q.length];
+  }
+  function desembrulhar(raiz){
+    raiz.querySelectorAll('mark.mt').forEach(function(mk){
+      const p = mk.parentNode;
+      while(mk.firstChild) p.insertBefore(mk.firstChild, mk);
+      p.removeChild(mk);
+      p.normalize();
+    });
+  }
+  function pintar(det){
+    const raiz = conteudoDe(det);
+    if(!raiz) return;
+    desembrulhar(raiz);
+    const lista = dados.itens[det.id] || [];
+    const perdidas = [];
+    let achadas = 0;
+    if(lista.length){
+      const ix = indice(raiz);
+      const iv = [];
+      lista.forEach(function(m){ const r = achar(ix.txt, m); if(r){ iv.push([r[0], r[1], [m.id]]); achadas++; } else perdidas.push(m); });
+      iv.sort((x, y) => x[0] - y[0]);
+      const un = [];
+      iv.forEach(function(x){ const u = un[un.length - 1]; if(u && x[0] < u[1]){ u[1] = Math.max(u[1], x[1]); u[2] = u[2].concat(x[2]); } else un.push([x[0], x[1], x[2].slice()]); });
+      const segs = [];
+      un.forEach(function(x){
+        let k = x[0];
+        while(k < x[1]){
+          const n = ix.nos[k];
+          let ini = ix.pos[k], fim = ix.pos[k];
+          while(k < x[1] && ix.nos[k] === n){ ini = Math.min(ini, ix.pos[k]); fim = Math.max(fim, ix.pos[k]); k++; }
+          segs.push({ n, ini, fim: fim + 1, ids: x[2] });
+        }
+      });
+      /* do último para o primeiro: dividir um nó de texto não muda as posições anteriores dele */
+      for(let j = segs.length - 1; j >= 0; j--){
+        const s = segs[j];
+        let alvo = s.n;
+        if(!alvo.parentNode) continue;
+        if(s.fim < alvo.nodeValue.length) alvo.splitText(s.fim);
+        if(s.ini > 0) alvo = alvo.splitText(s.ini);
+        const mk = document.createElement('mark');
+        mk.className = 'mt';
+        mk.dataset.mt = s.ids.join(' ');
+        alvo.parentNode.insertBefore(mk, alvo);
+        mk.appendChild(alvo);
+      }
+    }
+    barra(det, achadas, lista.length, perdidas);
+  }
+  function barra(det, achadas, total, perdidas){
+    const raiz = conteudoDe(det);
+    let b = raiz.querySelector(':scope > .mt-barra');
+    if(!b){
+      b = document.createElement('div');
+      b.className = 'mt-barra';
+      const antes = raiz.querySelectorAll(':scope > .atalho-q, :scope > .como-estudar');
+      if(antes.length) antes[antes.length - 1].insertAdjacentElement('afterend', b);
+      else raiz.insertBefore(b, raiz.firstChild);
+    }
+    const treino = det.classList.contains('mt-treino');
+    let h = '<span class="mt-barra-txt"><b>Marca-texto</b> · ' + (achadas
+      ? plural(achadas, 'trecho marcado', 'trechos marcados') + ' neste tópico.'
+      : 'selecione um trecho deste tópico e toque em <b>Marcar</b>.');
+    if(!LS.ativo()) h += ' <span class="mt-alerta">Este navegador não está gravando: as marcações somem ao fechar a aba.</span>';
+    h += '</span>';
+    if(total) h += '<span class="mt-barra-acoes">' +
+      (achadas ? '<button type="button" class="btn sec mini" data-mt-acao="treino">' + (treino ? 'Mostrar marcações' : 'Esconder marcações') + '</button>' : '') +
+      '<button type="button" class="btn sec mini" data-mt-acao="apagar">Apagar as marcações deste tópico</button></span>';
+    if(perdidas.length) h += '<div class="mt-perdidas"><b>' + plural(perdidas.length, 'marcação não foi achada', 'marcações não foram achadas') +
+      ' no texto atual</b> — o tópico mudou numa atualização. Continuam guardadas:<ul>' +
+      perdidas.map(m => '<li>“' + esc(m.q.length > 160 ? m.q.slice(0, 160) + '…' : m.q) + '”</li>').join('') + '</ul></div>';
+    b.innerHTML = h;
+  }
+  function criar(det, r){
+    const raiz = conteudoDe(det);
+    const ix = indice(raiz);
+    let a = posicao(ix, r.startContainer, r.startOffset, false), b = posicao(ix, r.endContainer, r.endOffset, true);
+    while(a < b && ix.txt[a] === ' ') a++;
+    while(b > a && ix.txt[b - 1] === ' ') b--;
+    if(b - a < 2) return false;
+    /* seleção que começa ou termina no meio de uma palavra (comum com o dedo) vai até a palavra inteira */
+    const letra = c => !!c && /[0-9A-Za-zÀ-ÖØ-öø-ÿºª°]/.test(c);
+    while(a > 0 && letra(ix.txt[a - 1]) && letra(ix.txt[a])) a--;
+    while(b < ix.txt.length && letra(ix.txt[b]) && letra(ix.txt[b - 1])) b++;
+    /* marcação que encosta em outra vira uma só */
+    const fica = [];
+    (dados.itens[det.id] || []).forEach(function(m){ const x = achar(ix.txt, m); if(x && x[0] < b && x[1] > a){ a = Math.min(a, x[0]); b = Math.max(b, x[1]); } else fica.push(m); });
+    fica.push({ id: novoId(), q: ix.txt.slice(a, b), p: ix.txt.slice(Math.max(0, a - 32), a), s: ix.txt.slice(b, b + 32), d: hojeISO() });
+    dados.itens[det.id] = fica;
+    salvar();
+    pintar(det);
+    return true;
+  }
+  function tirar(det, ids){
+    const lista = dados.itens[det.id] || [];
+    const saem = lista.filter(m => ids.indexOf(m.id) >= 0);
+    if(!saem.length) return;
+    const ficam = lista.filter(m => ids.indexOf(m.id) < 0);
+    if(ficam.length) dados.itens[det.id] = ficam; else delete dados.itens[det.id];
+    salvar();
+    pintar(det);
+    avisar(saem.length === 1 ? 'Marcação tirada.' : plural(saem.length, 'marcação tirada', 'marcações tiradas') + '.', function(){
+      dados.itens[det.id] = (dados.itens[det.id] || []).concat(saem);
+      salvar();
+      pintar(det);
+    });
+  }
+
+  /* botão flutuante: "Marcar" perto da seleção, ou "Tirar marcação" perto da marcação tocada */
+  const flut = document.createElement('div');
+  flut.className = 'mt-flutua';
+  flut.hidden = true;
+  document.body.appendChild(flut);
+  const aviso = document.createElement('div');
+  aviso.className = 'mt-aviso';
+  aviso.hidden = true;
+  aviso.setAttribute('role', 'status');
+  document.body.appendChild(aviso);
+  let selDet = null, selRange = null, tirarDet = null, tirarIds = null, acao = '', apertando = false, tSel = 0, tAviso = 0;
+  function esconder(){ flut.hidden = true; acao = ''; tirarDet = null; tirarIds = null; }
+  function mostrar(rect, rotulo, qual){
+    acao = qual;
+    flut.innerHTML = '<button type="button" class="btn dest">' + rotulo + '</button>';
+    flut.hidden = false;
+    const W = window.innerWidth, H = window.innerHeight, m = 10;
+    const larg = flut.offsetWidth, alt = flut.offsetHeight;
+    let top = rect.bottom + 10;
+    if(top + alt > H - m) top = Math.max(m, rect.top - alt - 10);
+    const left = Math.min(Math.max(m, rect.left + rect.width / 2 - larg / 2), W - larg - m);
+    flut.style.top = Math.round(top) + 'px';
+    flut.style.left = Math.round(left) + 'px';
+  }
+  function avisar(msg, desfazer){
+    aviso.innerHTML = '<span>' + esc(msg) + '</span>' + (desfazer ? '<button type="button" class="btn sec mini">Desfazer</button>' : '');
+    aviso.hidden = false;
+    clearTimeout(tAviso);
+    const b = aviso.querySelector('button');
+    if(b) b.addEventListener('click', function(){ desfazer(); aviso.hidden = true; });
+    tAviso = setTimeout(function(){ aviso.hidden = true; }, 8000);
+  }
+  function avaliarSelecao(){
+    const s = window.getSelection();
+    if(!s || !s.rangeCount || s.isCollapsed){ if(acao === 'marcar' && !apertando) esconder(); return; }
+    const r = s.getRangeAt(0);
+    const a = r.startContainer.nodeType === 1 ? r.startContainer : r.startContainer.parentElement;
+    const b = r.endContainer.nodeType === 1 ? r.endContainer : r.endContainer.parentElement;
+    const det = topicoDe(a);
+    const raiz = det && conteudoDe(det);
+    if(!det || topicoDe(b) !== det || !raiz || !raiz.contains(a) || !raiz.contains(b) || a.closest(FORA) || b.closest(FORA) || !s.toString().trim()){
+      if(acao === 'marcar') esconder();
+      return;
+    }
+    selDet = det;
+    selRange = r.cloneRange();
+    mostrar(r.getBoundingClientRect(), 'Marcar', 'marcar');
+  }
+  document.addEventListener('selectionchange', function(){ clearTimeout(tSel); tSel = setTimeout(avaliarSelecao, 180); });
+  flut.addEventListener('pointerdown', function(e){ apertando = true; e.preventDefault(); });
+  flut.addEventListener('mousedown', function(e){ e.preventDefault(); });
+  flut.addEventListener('click', function(){
+    apertando = false;
+    if(acao === 'marcar' && selDet && selRange) criar(selDet, selRange);
+    else if(acao === 'tirar' && tirarDet && tirarIds) tirar(tirarDet, tirarIds);
+    const s = window.getSelection();
+    if(s) s.removeAllRanges();
+    selDet = null; selRange = null;
+    esconder();
+  });
+  document.addEventListener('click', function(e){
+    if(flut.hidden || flut.contains(e.target)) return;
+    if(acao === 'tirar' && !(e.target.closest && e.target.closest('mark.mt'))) esconder();
+  });
+  window.addEventListener('scroll', function(){
+    if(flut.hidden) return;
+    if(acao === 'tirar'){ esconder(); return; }
+    const s = window.getSelection();
+    if(s && s.rangeCount && !s.isCollapsed) mostrar(s.getRangeAt(0).getBoundingClientRect(), 'Marcar', 'marcar');
+  }, { passive:true });
+
+  /* tocar numa marcação: no treino, mostra ou esconde o texto; fora dele, oferece "Tirar marcação" */
+  pag.addEventListener('click', function(e){
+    const mk = e.target.closest ? e.target.closest('mark.mt') : null;
+    if(mk){
+      const det = topicoDe(mk);
+      if(!det) return;
+      const s = window.getSelection();
+      if(s && !s.isCollapsed && s.toString().trim()) return;
+      const ids = (mk.dataset.mt || '').split(' ');
+      if(det.classList.contains('mt-treino')){
+        const ver = !mk.classList.contains('mt-ver');
+        conteudoDe(det).querySelectorAll('mark.mt').forEach(function(x){
+          if((x.dataset.mt || '').split(' ').some(i => ids.indexOf(i) >= 0)) x.classList.toggle('mt-ver', ver);
+        });
+        return;
+      }
+      tirarDet = det;
+      tirarIds = ids;
+      mostrar(mk.getBoundingClientRect(), 'Tirar marcação', 'tirar');
+      return;
+    }
+    const bt = e.target.closest ? e.target.closest('.mt-barra [data-mt-acao]') : null;
+    if(!bt) return;
+    const det = topicoDe(bt);
+    if(!det) return;
+    if(bt.dataset.mtAcao === 'treino'){
+      const liga = !det.classList.contains('mt-treino');
+      det.classList.toggle('mt-treino', liga);
+      conteudoDe(det).querySelectorAll('mark.mt.mt-ver').forEach(x => x.classList.remove('mt-ver'));
+      bt.textContent = liga ? 'Mostrar marcações' : 'Esconder marcações';
+    } else if(bt.dataset.mtAcao === 'apagar') abrirApagar(det);
+  });
+
+  /* apagar todas as marcações de um tópico: só com confirmação */
+  const dlg = document.getElementById('dlgMarcas');
+  let apagarDet = null;
+  function apagarAgora(det){
+    delete dados.itens[det.id];
+    salvar();
+    det.classList.remove('mt-treino');
+    pintar(det);
+  }
+  function abrirApagar(det){
+    const n = (dados.itens[det.id] || []).length;
+    if(!n) return;
+    apagarDet = det;
+    if(dlg && typeof dlg.showModal === 'function'){
+      document.getElementById('dlgMarcasTopico').textContent = nomeDe(det);
+      document.getElementById('dlgMarcasQtd').textContent = plural(n, 'marcação', 'marcações');
+      dlg.returnValue = '';
+      dlg.showModal();
+      return;
+    }
+    if(window.confirm('Apagar ' + plural(n, 'marcação', 'marcações') + ' do tópico “' + nomeDe(det) + '”?\n\nNão há como desfazer. As marcações dos outros tópicos e o progresso não são tocados.')) apagarAgora(det);
+  }
+  const conf = document.getElementById('btnMarcasConfirma');
+  if(conf) conf.addEventListener('click', function(){ if(apagarDet) apagarAgora(apagarDet); apagarDet = null; });
+  if(dlg) dlg.addEventListener('close', function(){ apagarDet = null; });
+
+  $$('#pg-material details.topico[id]').forEach(pintar);
+})();
+
 /* Na impressão do app inteiro, as páginas montadas sob demanda precisam existir. */
 window.addEventListener('beforeprint', function(){ montarJuris(); montarOperacional(); });
 
@@ -18634,7 +19051,7 @@ renderHistorico();
 atualizarResumoZerar();
 
 /* ---------- 03.1, seção 3: o procedimento no próprio lugar ----------
-   Passar o cursor sobre o código (P1 a P16), ou chegar nele pelo teclado,
+   Passar o cursor sobre o código (P1 a P17), ou chegar nele pelo teclado,
    mostra o texto do procedimento, copiado da seção 4 na hora. Clicar ou tocar
    no código deixa o balão aberto até "Fechar", Esc ou um clique fora dele. */
 (function prepararProcedimentosNaSecao3(){
