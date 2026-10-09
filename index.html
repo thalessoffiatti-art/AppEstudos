@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<meta name="versao-app" content="autos-do-estudo-v22">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <!-- Web app da tela de início (iPadOS/iOS). A partir do iPadOS 26, qualquer
@@ -271,6 +272,19 @@ mark.mt:hover{background:#FFD43B}
 .mt-aviso{position:fixed; z-index:45; left:16px; bottom:76px; max-width:calc(100vw - 32px); display:flex; align-items:center; gap:12px; padding:10px 14px; background:var(--tinta); color:#fff; font-size:14px; box-shadow:0 10px 26px -12px rgba(23,36,46,.6)}
 .mt-aviso .btn{color:#fff; border-color:#fff}
 .mt-flutua[hidden], .mt-aviso[hidden]{display:none}
+/* ---------- Faixa de versão nova do aplicativo (09/10/2026) ---------- */
+.faixa-versao{position:fixed; z-index:70; left:0; right:0; top:0; display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px;
+  padding:12px 16px; padding-top:max(12px, env(safe-area-inset-top)); background:var(--tinta); color:#fff; font-size:14.5px; line-height:1.45;
+  box-shadow:0 10px 26px -12px rgba(23,36,46,.7)}
+.faixa-versao[hidden]{display:none}
+.faixa-versao-txt{flex:1 1 320px}
+.faixa-versao-txt b{color:#fff}
+.faixa-versao-sim{display:block; margin-top:4px; color:#FFE066}
+.faixa-versao-acoes{display:flex; gap:10px; flex-wrap:wrap}
+.faixa-versao .btn{min-height:44px}
+.faixa-versao .btn.dest{background:#fff; border-color:#fff; color:var(--tinta)}
+.faixa-versao .btn.sec{color:#fff; border-color:#fff}
+@media print{ .faixa-versao{display:none !important} }
 .mt-nota mark.mt-amostra{background:#FFE066; padding:1px 2px}
 /* Direito do Trabalho, quarta-feira: o passo a passo do P17 no alto do tópico */
 .como-estudar{border:2px solid var(--petroleo); background:#EDF4F6; padding:14px 16px; margin:12px 0 16px}
@@ -1568,6 +1582,17 @@ body{
   </header>
 
   <div class="op-hoje" id="opHoje" aria-live="polite"></div>
+
+  <div class="op-aviso op-nota op-mudanca">
+    <b class="op-rot">Atualização de 09/10/2026 — aplicativo: faixa de versão nova — vale desde já</b>
+    O que muda:
+    <ul>
+      <li><b>Faixa “Versão nova do aplicativo pronta”.</b> O aplicativo procura versão nova quando você o abre e sempre que volta para ele, no máximo uma vez a cada 10 minutos. Quando a versão nova termina de baixar, aparece uma faixa escura no alto da tela. Toque em <b>Atualizar agora</b> para ver as mudanças na hora, ou em <b>Depois</b>: nesse caso, a versão nova entra na próxima vez que você abrir o aplicativo. Não é mais preciso fechar e abrir o aplicativo duas vezes.</li>
+      <li><b>Simuladão.</b> Se você estiver no meio do simuladão quando a faixa aparecer, ela avisa para terminar antes, porque atualizar recarrega a página e interrompe o simuladão em andamento.</li>
+      <li><b>Esta atualização ainda chegou pelo caminho antigo.</b> A faixa funciona a partir da próxima.</li>
+    </ul>
+    O que não muda: o material, os horários, a carga de 23h25 por semana e tudo o que você já marcou, respondeu ou grifou com o marca-texto.
+  </div>
 
   <div class="op-aviso op-nota op-mudanca">
     <b class="op-rot">Atualização de 08/10/2026 — modo de estudo: marca-texto no material e Direito do Trabalho com questões primeiro — vale a partir de segunda-feira, 12/10 (semana 7)</b>
@@ -19202,14 +19227,82 @@ atualizarResumoZerar();
   atualizarBotaoVoltar();
 })();
 </script>
+<div class="faixa-versao" id="faixaVersao" role="status" aria-live="polite" hidden>
+  <div class="faixa-versao-txt"><b>Versão nova do aplicativo pronta.</b> Toque em <b>Atualizar agora</b> para ver as mudanças; o seu progresso não muda. Se tocar em <b>Depois</b>, a versão nova entra na próxima vez que você abrir o aplicativo. O que mudou está no aviso do topo da página 03.1.
+    <span class="faixa-versao-sim" id="faixaVersaoSim" hidden>Você está no meio do simuladão: termine antes de atualizar, porque atualizar recarrega a página e interrompe o simuladão em andamento.</span></div>
+  <div class="faixa-versao-acoes"><button type="button" class="btn dest" id="btnVersaoAtualizar">Atualizar agora</button><button type="button" class="btn sec" id="btnVersaoDepois">Depois</button></div>
+</div>
 <script>
 /* Registra o service worker apenas quando servido por http(s).
    Aberto direto do app Arquivos (file://), o registro não é permitido e
-   o app segue funcionando normalmente, sem cache offline. */
+   o app segue funcionando normalmente, sem cache offline.
+   09/10/2026: faixa "Versão nova do aplicativo pronta". A página sabe a própria versão (meta versao-app, sempre
+   igual ao CACHE do sw.js). O app procura versão nova ao abrir e sempre que volta para a frente (no máximo uma
+   vez a cada 10 minutos). Quando o sw.js novo se instala e assume, o cache da versão desta página some e fica o
+   de uma versão maior: aí aparece a faixa, e um toque recarrega a página. A conferência é feita pelos caches, e
+   não só pelo evento de troca de controle, porque a troca pode terminar enquanto a página ainda carrega. */
 if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
-  window.addEventListener('load', function(){
-    navigator.serviceWorker.register('./sw.js').catch(function(){});
-  });
+  (function(){
+    const meta = document.querySelector('meta[name="versao-app"]');
+    const VERSAO = meta ? meta.content : '';
+    const num = function(n){ const m = /^autos-do-estudo-v(\d+)$/.exec(n); return m ? +m[1] : -1; };
+    const faixa = document.getElementById('faixaVersao');
+    let reg = null, ultima = 0, dispensada = false, nova = '';
+    function mostrar(){
+      if(!faixa || !faixa.hidden) return;
+      const sim = typeof estado !== 'undefined' && estado && estado.simulado;
+      document.getElementById('faixaVersaoSim').hidden = !sim;
+      faixa.hidden = false;
+    }
+    function conferir(){
+      if(num(VERSAO) < 0 || dispensada || !window.caches) return;
+      caches.keys().then(function(ks){
+        const nossas = ks.filter(function(k){ return num(k) >= 0; });
+        if(nossas.indexOf(VERSAO) >= 0) return;
+        const maior = nossas.sort(function(a, b){ return num(b) - num(a); })[0];
+        if(!maior || num(maior) <= num(VERSAO)) return;
+        /* já recarregou para esta versão e a página não mudou: não insiste */
+        let ja = null;
+        try { ja = sessionStorage.getItem('trt4-versao-recarregada'); } catch(e){}
+        if(ja === maior) return;
+        nova = maior;
+        mostrar();
+      }).catch(function(){});
+    }
+    function acompanhar(w){
+      if(w && w.state !== 'activated') w.addEventListener('statechange', function(){ if(w.state === 'activated') conferir(); });
+    }
+    /* a troca pode terminar sem que nenhum evento chegue à página (por exemplo, durante o carregamento):
+       por isso a página confere de novo algumas vezes; ler os nomes dos caches não baixa nada */
+    function vigiar(){ [2000, 6000, 15000, 30000, 60000].forEach(function(t){ setTimeout(conferir, t); }); }
+    function procurar(forcar){
+      if(!reg || (!forcar && Date.now() - ultima < 10 * 60 * 1000)) return;
+      ultima = Date.now();
+      reg.update().catch(function(){});
+      vigiar();
+    }
+    navigator.serviceWorker.addEventListener('controllerchange', conferir);
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('./sw.js').then(function(r){
+        reg = r;
+        r.addEventListener('updatefound', function(){ acompanhar(r.installing); });
+        acompanhar(r.installing);
+        acompanhar(r.waiting);
+        acompanhar(r.active);
+        conferir();
+        procurar(true);
+      }).catch(function(){});
+    });
+    document.addEventListener('visibilitychange', function(){
+      if(document.visibilityState === 'visible'){ conferir(); procurar(false); }
+    });
+    window.addEventListener('online', function(){ procurar(false); });
+    document.getElementById('btnVersaoAtualizar').addEventListener('click', function(){
+      try { sessionStorage.setItem('trt4-versao-recarregada', nova); } catch(e){}
+      location.reload();
+    });
+    document.getElementById('btnVersaoDepois').addEventListener('click', function(){ dispensada = true; faixa.hidden = true; });
+  })();
 }
 </script>
 </body>
