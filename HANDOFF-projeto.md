@@ -2128,13 +2128,80 @@ a falta de tempo:
 
 ---
 
-# Retomada — estado em 2026-10-08 (ler primeiro depois de compactar a conversa)
+# Adendo 17 — 2026-10-09 (faixa "Versão nova do aplicativo pronta")
 
-## ESTADO EM 08/10/2026 (madrugada) — modo de estudo aplicado; esperando o usuário
+## O pedido
 
-1. **Commit pendente (o usuário faz):** `index.html`, `sw.js` (cache **v21**)
-   e `HANDOFF-projeto.md` — o Adendo 16 (marca-texto e P17). O Lote 2 já está
-   commitado em `d453bce`. **O próximo lote usa v22.**
+O usuário commitou o Adendo 16 (`f77b6c8`, já no `main` pelo PR #16; o
+GitHub Pages servia a v21 desde 08/10 20h13 GMT), mas o app do iPad não
+atualizava. Causa: o `sw.js` é cache-first, a busca de versão nova só acontece
+numa abertura do zero, e a versão nova só aparece na abertura seguinte. Foi
+passado ao usuário o roteiro (fechar pela troca de apps, abrir, esperar 1
+minuto, fechar e abrir de novo) com o alerta de **não apagar o ícone nem
+"Dados de Sites"** (apaga o progresso). Ele pediu: "Sim, faça a faixa de versão
+nova".
+
+## O que entrou (`scratchpad/aplicar_faixa.js`, 4 recortes, prova por reversão)
+
+- **`<meta name="versao-app" content="autos-do-estudo-v22">`** no `<head>`: a
+  página sabe a própria versão. **Tem de ser sempre igual ao `CACHE` do
+  `sw.js`.** Conferir com `node versao.js INDEX SW`; subir as duas juntas com
+  `node versao.js INDEX SW NN`. **Não subir o `CACHE` à mão.**
+- **Faixa `#faixaVersao`** (fixa no alto, escura, botões **Atualizar agora** e
+  **Depois**; aviso amarelo se `estado.simulado` estiver em curso, porque
+  recarregar interrompe o simuladão, que não é gravado).
+- **Detecção pelos caches**, não só pelo evento: se o cache com o nome da
+  versão da página sumiu e existe `autos-do-estudo-vNN` com número maior, a
+  faixa aparece. Conferências: ao carregar, em `controllerchange`, quando um
+  worker chega a `activated`, ao voltar para a frente (`visibilitychange`) e
+  aos 2, 6, 15, 30 e 60 s depois de cada busca. Motivo: no teste, a troca de
+  versão terminava durante o carregamento da página (4,9 MB) e nenhum evento
+  chegava ao código.
+- **Busca de versão nova** (`reg.update()`): ao carregar e ao voltar para a
+  frente, no máximo uma vez a cada 10 minutos; também quando a rede volta.
+- **Trava contra ciclo:** "Atualizar agora" grava `trt4-versao-recarregada` no
+  `sessionStorage` (fora do `localStorage`); se, depois de recarregar, a
+  página continuar mais velha que o cache (meta esquecida para trás), a faixa
+  não volta na mesma sessão.
+- **`sw.js` v22:** a instalação busca os arquivos com `cache: 'reload'`, sem
+  passar pelo cache HTTP do navegador (o Pages manda `max-age=600`).
+- **Aviso no 03.1:** "Atualização de 09/10/2026 — aplicativo: faixa de versão
+  nova — vale desde já". Diz que esta atualização ainda chegou pelo caminho
+  antigo.
+
+## Verificação
+
+- Arquivo real idêntico ao testado; `versao.js`: iguais (v22); `checar2`:
+  nada perdido, `CHAVES` iguais; auditor e lei seca iguais; linhas do manual
+  iguais.
+- **`teste_faixa.js`:** servidor local que imita o Pages (`max-age=600`) + Edge,
+  passando por v21 (publicada) → v22 → v24 → v25 → v26:
+  - v21 → v22 pelo caminho antigo (duas aberturas), dados intactos;
+  - faixa depois de abrir (cerca de 1 s); "Atualizar agora" carrega a versão
+    nova; sem versão nova, 16 s depois, a faixa continua escondida;
+  - ao voltar para a frente depois de 10 min (relógio simulado), faixa com
+    aviso do simuladão; "Depois" esconde; a próxima abertura já vem nova;
+  - meta esquecida para trás: a faixa aparece uma vez e, depois de recarregar,
+    não volta;
+  - 375 px sem rolagem lateral; console sem erro.
+- **Armadilha do teste:** Edge que sobra de uma rodada anterior continua na
+  mesma porta de depuração, e a rodada seguinte se conecta a ele (com o perfil
+  velho). Agora a porta é sorteada; encerrar os `msedge` com `perfil-headless`
+  antes de cada rodada.
+
+---
+
+# Retomada — estado em 2026-10-09 (ler primeiro depois de compactar a conversa)
+
+## ESTADO EM 09/10/2026 — faixa de versão nova aplicada; esperando o usuário
+
+1. **Commit pendente (o usuário faz):** `index.html`, `sw.js` (**v22**) e
+   `HANDOFF-projeto.md` — o Adendo 17 (faixa de versão nova). O Adendo 16 já
+   está commitado (`f77b6c8`, no `main` pelo PR #16). **O próximo lote usa v23,
+   subindo com `node versao.js INDEX SW 23`** (meta `versao-app` e `CACHE`
+   juntos).
+   - Esta atualização chega ao iPad pelo caminho antigo (fechar, abrir, esperar
+     1 min, fechar e abrir). Daí em diante, vale a faixa.
 2. **Decisão pendente — RA TRT4 05/2022:** explicado ao usuário em 08/10; ele
    decide depois. Situação:
    - a compilada do TRT4 ("Republicação") traz as alterações das RAs 37/2023,
@@ -2161,16 +2228,17 @@ a falta de tempo:
      → 345; ponto do edital 105 × 295 → 165; Constitucional 200 × 698 → 593;
    - **D em espera** (RLM → Constitucional; sexta: Processo do Trabalho 75 → 60
      e ponto do edital 15 → 30). Não executar sem pedido.
-4. **Depois:** Lote 3 (roteiro abaixo), cache v22.
+4. **Depois:** Lote 3 (roteiro abaixo), versão v23.
 
 ## Onde estamos
 
 - **Worktree:** `C:\Users\thale\Documents\GitHub\AppEstudos\.claude\worktrees\questoes-historico-in39-139338`.
 - **Branch:** `claude/lei-8112-adicionais`.
-- **Último commit:** `d453bce` (Adendo 15, Lote 2 completo, cache v20).
-- **Modo de estudo aplicado e não commitado (Adendo 16):** `index.html`,
-  `sw.js` (cache **v21**) e este arquivo. O usuário commita e publica. **O
-  próximo lote usa v22.**
+- **Último commit:** `f77b6c8` (Adendo 16, modo de estudo, v21), no `main`
+  pelo PR #16.
+- **Faixa de versão nova aplicada e não commitada (Adendo 17):** `index.html`,
+  `sw.js` (**v22**) e este arquivo. O usuário commita e publica. **O próximo
+  lote usa v23** (`node versao.js INDEX SW 23`).
 - Falta a decisão sobre a RA TRT4 05/2022 e sobre a opção A (ver "ESTADO EM
   08/10/2026").
 - **Pasta principal:** `C:\Users\thale\Documents\GitHub\AppEstudos`. Tem
@@ -2186,7 +2254,7 @@ a falta de tempo:
   - `provas_raw/questoes.json`: as 240 questões das 4 provas do TRT4, em ordem
     de leitura (`provas_colunas.py`); `q.js ANO/N` imprime uma questão.
 
-## Lote 3 — até 08/11 (semanas 11 a 13 e semanas passadas), cache v22
+## Lote 3 — até 08/11 (semanas 11 a 13 e semanas passadas), versão v23
 
 1. **Terça, semana 11 (`const-estado`):** interpretação e vigência das normas
    constitucionais.
@@ -2271,7 +2339,8 @@ a falta de tempo:
    `conferir_texto_res415.js` (trecho da fonte × frase do texto, com teste
    negativo `--estragar N`).
 8. **Testes:**
-   - `teste_0710.js`, `teste_0810.js` e `teste_modo.js ARQ` (marca-texto e P17), com Edge sem interface (`cdp.js`);
+   - `teste_0710.js`, `teste_0810.js`, `teste_modo.js ARQ` (marca-texto e P17) e `teste_faixa.js` (faixa de versão nova, com servidor local), com Edge sem interface (`cdp.js`);
+   - **versão do app:** `node versao.js INDEX SW` (meta `versao-app` = `CACHE` do `sw.js`); para publicar versão nova, `node versao.js INDEX SW NN`;
    - `neg_res415.js`: modelo de teste negativo de norma nova no quadro;
    - nas buscas de texto, usar `\uXXXX`;
    - ao terminar, encerrar os processos Edge com `perfil-headless` na linha de
