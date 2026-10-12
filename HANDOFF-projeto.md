@@ -2191,60 +2191,115 @@ nova".
 
 ---
 
-# Retomada — estado em 2026-10-09 (ler primeiro depois de compactar a conversa)
+# Retomada — estado em 2026-10-12 (ler primeiro depois de compactar a conversa)
 
-## ESTADO EM 09/10/2026 — faixa de versão nova aplicada; esperando o usuário
+## COMO RETOMAR (fazer nesta ordem)
 
-1. **Commit pendente (o usuário faz):** `index.html`, `sw.js` (**v22**) e
-   `HANDOFF-projeto.md` — o Adendo 17 (faixa de versão nova). O Adendo 16 já
-   está commitado (`f77b6c8`, no `main` pelo PR #16). **O próximo lote usa v23,
-   subindo com `node versao.js INDEX SW 23`** (meta `versao-app` e `CACHE`
-   juntos).
-   - Esta atualização chega ao iPad pelo caminho antigo (fechar, abrir, esperar
-     1 min, fechar e abrir). Daí em diante, vale a faixa.
-2. **Decisão pendente — RA TRT4 05/2022:** explicado ao usuário em 08/10; ele
-   decide depois. Situação:
+1. Ler esta seção inteira e, se precisar de detalhe, os Adendos 15, 16 e 17
+   (logo acima).
+2. Conferir o estado real antes de mexer em qualquer coisa:
+   - `git status --short` e `git log --oneline -3` no worktree (esperado:
+     árvore limpa, último commit `9d8cddf` ou posterior);
+   - `git fetch origin` e `git log --oneline -3 origin/main` (esperado: merge
+     do PR #17 ou posterior);
+   - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
+     (esperado: `autos-do-estudo-v22` ou maior);
+   - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
+3. Ver se o usuário já respondeu às decisões pendentes (abaixo). Não aplicar
+   nenhuma delas sem a resposta.
+4. Se não houver nada pendente do usuário, o próximo trabalho é o **Lote 3**
+   (roteiro abaixo), que tem de entrar antes de 09/11 (semana 11), com a
+   versão **v23** (`node versao.js INDEX SW 23`).
+
+## ESTADO EM 12/10/2026 — tudo commitado e publicado; esperando decisões
+
+- **Commits:** Lote 2 em `d453bce` (v20); modo de estudo em `f77b6c8` (v21,
+  PR #16); faixa de versão nova em `9d8cddf` (v22, PR #17). Todos no `main`. O
+  GitHub Pages serve a **v22** (conferido em 12/10).
+- **Nada pendente de commit.** O próximo lote usa **v23**, subindo meta e
+  `CACHE` juntos com `node versao.js INDEX SW 23`.
+- **iPad:** a v22 chega pelo caminho antigo: fechar o app pela troca de apps,
+  abrir, esperar 1 minuto, fechar e abrir de novo. **Nunca** sugerir apagar o
+  ícone nem "Dados de Sites", porque isso apaga o progresso, que só existe no
+  aparelho. Da v23 em diante, vale a faixa "Versão nova do aplicativo pronta".
+
+### Calendário (semana N começa em 31/08 + 7 × (N − 1))
+
+| Semana | Começa | Observação |
+|---|---|---|
+| 7 | 12/10 | começam o P2 com marca-texto e, na quarta 14/10, o P17 (Direito do Trabalho com questões primeiro) |
+| 8 | 19/10 | |
+| 9 | 26/10 | blocos que receberam texto no Lote 2 |
+| 10 | 02/11 | sexta: política judiciária (Res. CSJT 415/2025) |
+| 11 | 09/11 | **o Lote 3 tem de estar publicado antes** |
+| 12 | 16/11 | |
+| 13 | 23/11 | revisão geral; termina em 28/11 |
+
+### Decisões que esperam o usuário (não aplicar sem resposta)
+
+1. **RA TRT4 05/2022** (explicado em 08 e 09/10; ele disse que decide depois):
    - a compilada do TRT4 ("Republicação") traz as alterações das RAs 37/2023,
      07/2024, 10/2024 e 13/2025;
-   - depois dela, pela lista da pesquisa de atos do TRT4: **RA 58/2025**
-     (23/12/2025: tira o 4º "considerando", inclui o art. 9º-A, altera os
-     arts. 10, § 4º, 12, § 3º, e 18, § 1º, I e II); **RA 13/2026** (04/05/2026,
-     já salva em `fontes_0810/ra13/`: CEJUSC-JT/2º GRAU/REVISTA, coordenação,
-     competência territorial, sete CEJUSCs de 1º grau); **RA 37/2026**
-     (30/09/2026: altera o art. 13). As três mandam republicar a RA 05/2022, mas
-     a pesquisa ainda entrega a republicação antiga;
-   - plano, se autorizado baixar a 58/2025 e a 37/2026: montar e provar a
-     leitura dos artigos que importam (estrutura, NUPEMEC-JT/TRT4,
-     CEJUSCs de 1º e 2º graus, competência, RPP), dizendo de qual RA vem cada
-     redação; ou esperar a republicação oficial.
-3. **Falta de tempo de leitura (pedido de 08/10):**
-   - **B e C aplicados** (Adendo 16): P17 e marca-texto;
-   - **A não aplicada**: o usuário não entendeu; a ilustração foi enviada
-     (`scratchpad/opcao_a/opcao_A_ilustracao.png`, fonte `opcao_a.html`).
-     Esperar a decisão. Medição em `carga_leitura.js` e `carga_nucleo.js`
-     (núcleo = artigo que o texto do tópico explica ou transcreve, ou que é
-     `fund` de questão do app). Números das semanas 6 a 13, a 55 p/min: CPC
-     595 × 1.032 → 499; Administrativo 425 × 1.339 → 565; Legislação 455 × 818
-     → 345; ponto do edital 105 × 295 → 165; Constitucional 200 × 698 → 593;
-   - **D em espera** (RLM → Constitucional; sexta: Processo do Trabalho 75 → 60
-     e ponto do edital 15 → 30). Não executar sem pedido.
-4. **Depois:** Lote 3 (roteiro abaixo), versão v23.
+   - depois dela, pela pesquisa de atos do TRT4 (tipo Resolução
+     Administrativa, trecho exato "Resolução Administrativa nº 05/2022"):
+     - **RA 58/2025** (23/12/2025): tira o 4º "considerando", inclui o art.
+       9º-A e altera os arts. 10, § 4º, 12, § 3º, e 18, § 1º, I e II;
+     - **RA 13/2026** (04/05/2026, já salva em `fontes_0810/ra13/`): cria o
+       CEJUSC-JT/2º GRAU/REVISTA e muda a coordenação, a competência
+       territorial e os sete CEJUSCs de 1º grau;
+     - **RA 37/2026** (30/09/2026): altera o art. 13;
+     - as três mandam republicar a RA 05/2022, mas a pesquisa ainda entrega a
+       republicação antiga;
+   - **opções dadas:** (a) autorizar o download da RA 58/2025 e da RA 37/2026,
+     para montar e provar a leitura dos artigos que importam (estrutura,
+     NUPEMEC-JT/TRT4, CEJUSCs, competência, RPP), dizendo de qual RA vem cada
+     redação; (b) esperar a republicação oficial;
+   - **até lá:** a linha da sexta da semana 10 fica "Material + leitura da
+     norma", com a Res. CSJT 415/2025 no quadro (17 artigos).
+2. **Opção A — núcleo × consulta** (o usuário não entendeu; pediu uma imagem,
+   que foi enviada: `scratchpad/opcao_a/opcao_A_ilustracao.png`, fonte
+   `opcao_a/opcao_a.html`):
+   - a linha e o quadro separariam "leia no bloco (núcleo)" de "consulta";
+   - núcleo = artigo que o texto do tópico explica ou transcreve, ou que é
+     `fund` de questão do app;
+   - nenhum artigo sai do quadro; a linha continua citando a faixa inteira;
+   - **exemplo:** quarta 14/10, CPC 312 a 368: 56 artigos, 113 min →
+     núcleo de 15 artigos, 61 min, para 85 min de teoria;
+   - **semanas 6 a 13, a 55 palavras/min** (teoria × leitura hoje → só
+     núcleo): CPC 595 × 1.032 → 499; Administrativo 425 × 1.339 → 565;
+     Legislação 455 × 818 → 345; ponto do edital 105 × 295 → 165;
+     Constitucional 200 × 698 → 593 (A não resolve Constitucional);
+   - medição: `carga_leitura.js` e `carga_nucleo.js` (rodar o auditor antes
+     para gerar `aud.json` e `aud_normal.json`).
+3. **Opção D — remanejar minutos: em espera** (RLM 15 min de teoria →
+   Constitucional; sexta: Processo do Trabalho 75 → 60 e ponto do edital
+   15 → 30). Não executar sem pedido. Se executar, vale da segunda seguinte e
+   ganha aviso no 03.1.
+
+### O que já foi feito para a falta de tempo (para não refazer)
+
+- **B, aplicada:** P17, Direito do Trabalho com questões primeiro, desde
+  14/10. Aparece na seção 4, na grade de quarta, nos 10 cartões de quarta das
+  semanas 7 a 13 e num quadro azul "Como estudar" no alto dos 12 tópicos
+  `dt-*`.
+- **C, aplicada:** marca-texto em todos os tópicos (`trt4:marcas`, fora de
+  `CHAVES`, não apagado por "Zerar progresso"). O P2 marca em vez de copiar, e
+  o passo de memória e o R2 usam "Esconder marcações".
+- **Ritmo do usuário:** cerca de 55 palavras/min lendo e anotando. Ele leva
+  mais de 1 hora num bloco de 30 min de teoria com cerca de 3.500 palavras.
 
 ## Onde estamos
 
 - **Worktree:** `C:\Users\thale\Documents\GitHub\AppEstudos\.claude\worktrees\questoes-historico-in39-139338`.
-- **Branch:** `claude/lei-8112-adicionais`.
-- **Último commit:** `f77b6c8` (Adendo 16, modo de estudo, v21), no `main`
-  pelo PR #16.
-- **Faixa de versão nova aplicada e não commitada (Adendo 17):** `index.html`,
-  `sw.js` (**v22**) e este arquivo. O usuário commita e publica. **O próximo
-  lote usa v23** (`node versao.js INDEX SW 23`).
-- Falta a decisão sobre a RA TRT4 05/2022 e sobre a opção A (ver "ESTADO EM
-  08/10/2026").
+- **Branch:** `claude/lei-8112-adicionais`. O usuário abre o PR para o `main`
+  depois de cada commit; o GitHub Pages publica o `main`.
+- **Último commit:** `9d8cddf` (Adendo 17, faixa de versão nova, v22), no
+  `main` pelo PR #17. Árvore limpa em 12/10.
 - **Pasta principal:** `C:\Users\thale\Documents\GitHub\AppEstudos`. Tem
   `Leis/`, `Provas/`, `Jurisprudência/sumulas_stj.md` e uma cópia deste
   arquivo, que é sincronizada com `cp`.
-- **Scratchpad:**
+- **Scratchpad** (pasta temporária desta sessão; os scripts e a base de leis
+  estão lá):
   `C:\Users\thale\AppData\Local\Temp\claude\C--Users-thale-Documents-GitHub-AppEstudos--claude-worktrees-questoes-historico-in39-139338\987bfdd2-305d-4b53-8bfb-e15c943f2553\scratchpad\`.
   - `fontes_0610/`, `fontes_0710/` e `fontes_0810/`: PDFs e HTML baixados
     (`fontes_0810/`: Res. 415, `ra05/` compilada da RA 05/2022, `ra13/` RA
@@ -2252,7 +2307,12 @@ nova".
   - `leis/`: a base, agora com `IN40.json`, `RES415.json`, `RES415AN.json`
     (Anexo da Res. 415) e `CORRECOES.json` com 3 registros;
   - `provas_raw/questoes.json`: as 240 questões das 4 provas do TRT4, em ordem
-    de leitura (`provas_colunas.py`); `q.js ANO/N` imprime uma questão.
+    de leitura (`provas_colunas.py`); `q.js ANO/N` imprime uma questão;
+  - `faixa/`: versões e servidor do `teste_faixa.js`; `opcao_a/`: a
+    ilustração da opção A.
+  - Se o scratchpad tiver sumido (limpeza do Windows), os scripts precisam
+    ser refeitos a partir dos Adendos; a base de leis sai de novo das fontes
+    com `extrair3.js`/`leitor_b.js` e dos extratores de PDF.
 
 ## Lote 3 — até 08/11 (semanas 11 a 13 e semanas passadas), versão v23
 
@@ -2351,8 +2411,8 @@ nova".
 
 ## Pendências e ideias em aberto
 
-- **RA TRT4 05/2022:** fora do quadro até haver texto provado (ver "ESTADO EM
-  08/10/2026", item 2). Se o usuário autorizar a RA 58/2025 e a RA 37/2026:
+- **RA TRT4 05/2022:** fora do quadro até haver texto provado (ver "Decisões
+  que esperam o usuário", item 1). Se o usuário autorizar a RA 58/2025 e a RA 37/2026:
   montar a leitura conferida dos artigos que interessam (estrutura e
   competência dos CEJUSCs do TRT4), declarando de qual RA vem cada redação.
 - **Linha S10 de sexta:** a marca é "Material + leitura da norma" por causa da
