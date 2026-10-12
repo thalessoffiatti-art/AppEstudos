@@ -2310,9 +2310,21 @@ nova".
     de leitura (`provas_colunas.py`); `q.js ANO/N` imprime uma questão;
   - `faixa/`: versões e servidor do `teste_faixa.js`; `opcao_a/`: a
     ilustração da opção A.
-  - Se o scratchpad tiver sumido (limpeza do Windows), os scripts precisam
-    ser refeitos a partir dos Adendos; a base de leis sai de novo das fontes
-    com `extrair3.js`/`leitor_b.js` e dos extratores de PDF.
+- **Cópia de segurança do scratchpad (12/10/2026):**
+  `C:\Users\thale\Documents\GitHub\AppEstudos\ferramentas-scratchpad\`.
+  - 593 arquivos, 147 MB, conferidos por SHA-256 contra o original: scripts,
+    base de leis, fontes baixadas, backups, `faixa/` e `opcao_a/`;
+  - ficaram de fora só os perfis de navegador dos testes (`perfil-headless*`,
+    1,7 GB, descartáveis);
+  - fica **fora do git**, como `Leis/` e `Provas/`: aparece como `??` no
+    `git status` da pasta principal e **não deve ser commitada**;
+  - os scripts usam caminhos relativos e rodam de lá (conferido com
+    `versao.js`, `conferir_lei_seca.js`, `auditar_manual.js` e `checar2.js`);
+  - **sessão nova:** se o scratchpad acima não existir, trabalhar na cópia
+    (ou copiá-la para o scratchpad novo);
+  - **atualizar a cópia** depois de cada lote, sem os perfis (no PowerShell;
+    o código de saída 1 do robocopy significa "copiado com sucesso"):
+    `robocopy "<scratchpad>" "C:\Users\thale\Documents\GitHub\AppEstudos\ferramentas-scratchpad" /E /XD perfil-headless* /R:1 /W:1`.
 
 ## Lote 3 — até 08/11 (semanas 11 a 13 e semanas passadas), versão v23
 
@@ -2408,6 +2420,12 @@ nova".
 9. **Atenção:** `node -e` e heredoc no bash comem barra invertida de regex.
    Para código com `\s` e `\d`, usar a ferramenta Write ou Edit, ou
    `String.raw`.
+10. **Não passar `/dev/null` como arquivo de saída a um script Node** (por
+    exemplo, `--json /dev/null`). O Git Bash converte para `nul`, e o Node
+    grava um arquivo de verdade chamado `nul` na pasta. Ele só sai com
+    `cmd /c 'del "\\?\<caminho>\nul"'`, porque `Remove-Item` acerta o
+    dispositivo NUL, não o arquivo. Usar um arquivo descartável do
+    scratchpad.
 
 ## Pendências e ideias em aberto
 
