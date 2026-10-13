@@ -2191,37 +2191,141 @@ nova".
 
 ---
 
+# Adendo 18 — 2026-10-12 (súmulas com texto cortado e marca-texto em trecho repetido)
+
+## O pedido
+
+O usuário commitou o HANDOFF (`9a124e5`, `bf12ef8`) e pediu, antes do Lote 3:
+1. "Existem alguns trechos que não está marcando": em "Sistema recursal
+   trabalhista", marcar só "deserção" no art. 896, § 14, não funcionava.
+2. "A súmula 383 do TST parece que teve a ementa cortada, terminando
+   abruptamente em '5 (cinco) dias para que'."
+
+## Causa e correção — marca-texto
+
+- A marcação **não falhava: caía em outro lugar.** O trecho "hipóteses de
+  intempestividade, deserção, irregularidade de representação" aparece também
+  no art. 894, § 3º, II, mais acima no mesmo quadro. As 32 letras guardadas
+  antes e depois eram iguais nas duas ocorrências, e `achar()` ficava com a
+  primeira.
+- **Correção:** `criar()` grava também `i` (posição no texto do tópico, o
+  mesmo índice de `indice()`); `achar()` desempata pela ocorrência mais perto
+  de `i`. Marcação antiga, sem `i`, continua onde estava (a primeira). Formato:
+  `{id,q,p,s,i,d}`, `v:1` mantido; nada mais muda na chave `trt4:marcas`.
+- **Prova:** `juris_1210/teste_marca_1210.js` — com o mouse, "deserção" fica
+  no § 14 e continua lá depois de recarregar; marcação antiga fica no art.
+  894; varredura com as funções do próprio script da página: 195.259 palavras
+  de 5+ letras em todos os tópicos, cada uma marcada sozinha. Com o código
+  antigo, 5.808 iriam para outro lugar; com o novo, 0.
+- O aviso do 03.1 diz ao usuário que, se ele já tentou marcar o § 14, pode
+  haver uma marcação em "deserção" no art. 894, § 3º, II.
+
+## Causa e correção — textos de jurisprudência
+
+- A fonte antiga (`fontes/tst.json`, extraída do PDF do Livro de Súmulas)
+  **não existe mais**: a pasta `scratchpad/fontes/` está vazia (também na cópia
+  `ferramentas-scratchpad`). O conferidor antigo (`conferir_juris_caixas.js`)
+  só exigia que cada peça fosse **trecho** do texto oficial, e por isso deixou
+  passar peças que paravam no meio da frase (quebra de página/linha do PDF) e
+  parênteses que sumiram partindo uma frase em duas.
+- **Fonte desta vez:** o portal oficial do TST, lido no navegador (sem
+  download): `jurisprudencia.tst.jus.br/?tipoJuris=SUM&orgao=TST&pesquisar=1`
+  (463 súmulas numa página só) e `?tipoJuris=OJ&orgao=TST&pesquisar=1` (709
+  OJs); teses vinculantes na tabela
+  `tst.jus.br/en/nugep-sp/recursos-repetitivos/precedentes-vinculantes` (214
+  temas, "atualizadas em 9 de outubro de 2026"). STF: listas
+  `portal.stf.jus.br/jurisprudencia/sumariosumulas.asp?base=30` (súmulas) e
+  `base=26` (vinculantes), com o link de cada enunciado (o número do link não é
+  o da súmula). STJ: `Jurisprudência/sumulas_stj.md`.
+- **Resultado da conferência (159 cartões do TST na 04.2 e 13 quadros):**
+  - **17 cartões com item cortado**, completados com o texto do portal (o
+    pedaço que já existia ficou igual; só se acrescentou o que faltava):
+    Súmulas 74 e 263 (parêntese sumido partia a frase em duas peças: viraram
+    uma), 85 IV, 219 I, 303 II, 364 II, 366, 369 V, 383 II, 414 I, 417 II, 421
+    II, 437 I e III, 444; OJ 69 da SDI-2; teses vinculantes 14 e 18 (item 1).
+  - **Súmula 372, I:** entrou a nota do próprio TST "(item cancelado por perda
+    de eficácia…)".
+  - **Quadro do espelho da semana 11:** Súmula 299, III, estava cortada;
+    completada, e o título virou "Súmula 299, I a III, do TST" (o item IV não
+    está no quadro).
+  - **18 cartões transcrevem só parte dos itens** (escolha antiga e
+    deliberada, explicada na nota de cada um). Campo novo `itens` em `JURIS`
+    (ex.: `"itens":"os itens I, III e V"`), e o cartão mostra "Transcritos aqui
+    só os itens I, III e V. Os outros itens estão no portal do TST.":
+    Súmulas 6, 85, 90, 100, 219, 299, 303, 331, 368, 393, 395, 436, 437, 448,
+    456; teses 18, 19 e 21.
+  - **STF:** as 15 súmulas vinculantes, as 20 súmulas e o Tema 138 conferem
+    palavra por palavra. O Tema 485 não foi reconferido (a página do tema não
+    mostra a tese). **STJ:** as 13 conferem com `sumulas_stj.md`.
+  - **Diferenças aceitas entre o app (que segue o Livro de Súmulas) e o
+    portal:** trema ("freqüência", "líqüido"), "§2o" × "§2º", Súmula 378, III
+    (portal: "prevista no n no art. 118"), Súmula 277 (portal: "modificados"),
+    OJ 83 da SDI-1 (portal: "§ 1º, da CLT"). E notas do portal que não são
+    texto: "(ex-…)" e "- Entendimento do item I reafirmado no IRR nº 284.".
+- **Conferidor novo:** `juris_1210/conferir_juris_tst.js INDEX` abre um Edge
+  sem interface no portal do TST e confere tudo em memória (nada do portal é
+  gravado). Exige, além de "ser trecho", que **cada item transcrito vá até o
+  fim** (corte só com "[...]") e que **itens fora** estejam declarados no
+  campo `itens` (cartão) ou no título (quadro, "Súmula N, I a III, do TST").
+  Contra a v22 acusou todos os defeitos acima; contra a v23, "NENHUM
+  PROBLEMA" (172 de 172).
+
+## O que entrou (`juris_1210/aplicar_1210.js` + `dados_1210.js`, 45 recortes)
+
+- Prova por reversão; conferência de `JURIS` enunciado a enunciado (31
+  mudaram, todos os outros iguais); ensaio e real iguais por `cmp`.
+- Aviso no 03.1: "Atualização de 12/10/2026 — correções: súmulas com texto
+  cortado e marca-texto — vale desde já".
+- **v23** com `node versao.js INDEX SW 23` (meta e `CACHE` iguais). É a
+  primeira atualização que chega pela faixa "Versão nova do aplicativo pronta".
+
+## Testes
+
+- `juris_1210/teste_atualiza_1210.js VELHO NOVO`: estado realista gravado na
+  v22 (66 blocos, questões, marcações) → v23 no mesmo perfil: as 5 chaves
+  `trt4:` idênticas; 04.2 com 18 linhas "Transcrito(s) aqui só…", 383 até o
+  fim, 74 em 3 parágrafos e 263 em 1; busca "seja sanado o vício" acha as
+  Súmulas 383 e 395; aviso de 12/10 no alto do 03.1; 375 px sem rolagem
+  lateral; console sem erro.
+- Conferidores de sempre com os números de antes: lei seca 0 falha; nada
+  perdido 0; auditor 0 ausente e 0 incompleto; independente só os 24 "NÃO
+  LIDO"; rótulos iguais à base; grudados 7; selos só os descritivos;
+  `checar2` sem perda de id e `CHAVES` iguais.
+
+---
+
 # Retomada — estado em 2026-10-12 (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira e, se precisar de detalhe, os Adendos 15, 16 e 17
+1. Ler esta seção inteira e, se precisar de detalhe, os Adendos 15 a 18
    (logo acima).
 2. Conferir o estado real antes de mexer em qualquer coisa:
    - `git status --short` e `git log --oneline -3` no worktree (esperado:
-     árvore limpa, último commit `9d8cddf` ou posterior);
+     árvore limpa, último commit = o do Adendo 18 ou posterior);
    - `git fetch origin` e `git log --oneline -3 origin/main` (esperado: merge
-     do PR #17 ou posterior);
+     do PR do Adendo 18 ou posterior);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (esperado: `autos-do-estudo-v22` ou maior);
+     (esperado: `autos-do-estudo-v23` ou maior);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo). Não aplicar
    nenhuma delas sem a resposta.
 4. Se não houver nada pendente do usuário, o próximo trabalho é o **Lote 3**
    (roteiro abaixo), que tem de entrar antes de 09/11 (semana 11), com a
-   versão **v23** (`node versao.js INDEX SW 23`).
+   versão **v24** (`node versao.js INDEX SW 24`).
 
-## ESTADO EM 12/10/2026 — tudo commitado e publicado; esperando decisões
+## ESTADO EM 12/10/2026 — Adendo 18 pronto (v23), esperando o commit
 
 - **Commits:** Lote 2 em `d453bce` (v20); modo de estudo em `f77b6c8` (v21,
   PR #16); faixa de versão nova em `9d8cddf` (v22, PR #17). Todos no `main`. O
-  GitHub Pages serve a **v22** (conferido em 12/10).
-- **Nada pendente de commit.** O próximo lote usa **v23**, subindo meta e
-  `CACHE` juntos com `node versao.js INDEX SW 23`.
-- **iPad:** a v22 chega pelo caminho antigo: fechar o app pela troca de apps,
-  abrir, esperar 1 minuto, fechar e abrir de novo. **Nunca** sugerir apagar o
-  ícone nem "Dados de Sites", porque isso apaga o progresso, que só existe no
-  aparelho. Da v23 em diante, vale a faixa "Versão nova do aplicativo pronta".
+  GitHub Pages servia a **v22** em 12/10.
+- **Pendente de commit:** Adendo 18 (`index.html`, `sw.js` v23 e este
+  arquivo): súmulas com texto cortado e marca-texto em trecho repetido. Testado.
+  Esperar o commit antes de mexer no `index.html` de novo. O Lote 3 usa
+  **v24** (`node versao.js INDEX SW 24`).
+- **iPad:** a v23 é a primeira que chega pela faixa "Versão nova do aplicativo
+  pronta" (a v22 instalou a faixa). **Nunca** sugerir apagar o ícone nem
+  "Dados de Sites", porque isso apaga o progresso, que só existe no aparelho.
 
 ### Calendário (semana N começa em 31/08 + 7 × (N − 1))
 
@@ -2293,8 +2397,8 @@ nova".
 - **Worktree:** `C:\Users\thale\Documents\GitHub\AppEstudos\.claude\worktrees\questoes-historico-in39-139338`.
 - **Branch:** `claude/lei-8112-adicionais`. O usuário abre o PR para o `main`
   depois de cada commit; o GitHub Pages publica o `main`.
-- **Último commit:** `9d8cddf` (Adendo 17, faixa de versão nova, v22), no
-  `main` pelo PR #17. Árvore limpa em 12/10.
+- **Último commit:** `bf12ef8` (HANDOFF; o código é o do Adendo 17, v22, no
+  `main` pelo PR #17). O Adendo 18 (v23) está no worktree, esperando o commit.
 - **Pasta principal:** `C:\Users\thale\Documents\GitHub\AppEstudos`. Tem
   `Leis/`, `Provas/`, `Jurisprudência/sumulas_stj.md` e uma cópia deste
   arquivo, que é sincronizada com `cp`.
@@ -2309,7 +2413,13 @@ nova".
   - `provas_raw/questoes.json`: as 240 questões das 4 provas do TRT4, em ordem
     de leitura (`provas_colunas.py`); `q.js ANO/N` imprime uma questão;
   - `faixa/`: versões e servidor do `teste_faixa.js`; `opcao_a/`: a
-    ilustração da opção A.
+    ilustração da opção A;
+  - `juris_1210/`: Adendo 18 (aplicação, conferidor de jurisprudência do TST
+    pelo portal, testes do marca-texto e da atualização); `bak_1210/`: o
+    `index.html` e o `sw.js` de antes;
+  - `fontes/` está **vazia**: o `tst.json` (Livro de Súmulas) sumiu. Os
+    scripts antigos que o leem (`conferir_juris_caixas.js`, `fidelidade.js`,
+    `conferir_casos.js`) não rodam mais; usar `juris_1210/conferir_juris_tst.js`.
 - **Cópia de segurança do scratchpad (12/10/2026):**
   `C:\Users\thale\Documents\GitHub\AppEstudos\ferramentas-scratchpad\`.
   - 593 arquivos, 147 MB, conferidos por SHA-256 contra o original: scripts,
@@ -2326,7 +2436,7 @@ nova".
     o código de saída 1 do robocopy significa "copiado com sucesso"):
     `robocopy "<scratchpad>" "C:\Users\thale\Documents\GitHub\AppEstudos\ferramentas-scratchpad" /E /XD perfil-headless* /R:1 /W:1`.
 
-## Lote 3 — até 08/11 (semanas 11 a 13 e semanas passadas), versão v23
+## Lote 3 — até 08/11 (semanas 11 a 13 e semanas passadas), versão v24
 
 1. **Terça, semana 11 (`const-estado`):** interpretação e vigência das normas
    constitucionais.
@@ -2392,7 +2502,12 @@ nova".
    - `node comparar_manifestos.js ./bak_…/manifesto_antigo.json ./lei_seca_manifesto.json`:
      só as mudanças previstas;
    - `node selos.js "$W"`: só os selos descritivos (`leg-*`, `info-hist`);
-   - `node checar2.js [arquivo]`.
+   - `node checar2.js [arquivo]`;
+   - `node juris_1210/conferir_juris_tst.js "$W"` (lê o portal do TST num Edge
+     sem interface, uns 2 minutos): "NENHUM PROBLEMA" (172 de 172). Toda
+     súmula, OJ ou tese nova do TST no app passa por ele: item transcrito vai
+     até o fim; item de fora vai no campo `itens` do cartão ou no título do
+     quadro ("Súmula N, I a III, do TST").
 5. **Números atuais:** 52 tópicos com quadro, 2914 artigos, 128 linhas
    "basta", 5 linhas "Material + leitura da norma", 159 blocos, 514 questões,
    226 enunciados na 04.2.
@@ -2412,6 +2527,7 @@ nova".
    negativo `--estragar N`).
 8. **Testes:**
    - `teste_0710.js`, `teste_0810.js`, `teste_modo.js ARQ` (marca-texto e P17) e `teste_faixa.js` (faixa de versão nova, com servidor local), com Edge sem interface (`cdp.js`);
+   - `juris_1210/teste_marca_1210.js ARQ` (marca-texto em trecho repetido e varredura de todas as palavras) e `juris_1210/teste_atualiza_1210.js VELHO NOVO` (atualização sem perda de dado, 04.2, 03.1, 375 px). Caminhos Windows com `/` (`cygpath -m`);
    - **versão do app:** `node versao.js INDEX SW` (meta `versao-app` = `CACHE` do `sw.js`); para publicar versão nova, `node versao.js INDEX SW NN`;
    - `neg_res415.js`: modelo de teste negativo de norma nova no quadro;
    - nas buscas de texto, usar `\uXXXX`;
@@ -2444,6 +2560,9 @@ nova".
 - **`QC_BLOCO` da LBI e da Res. CNJ 400:** sem assunto.
 - **Campo `ano` das questões:** é "estilo", não prova real.
 - **`btnSoltarTopico`:** id duplicado antigo.
+- **Tema 485 do STF:** tese não reconferida em 12/10 (a página do tema no
+  portal do STF não mostra a tese). As outras 36 entradas literais do STF
+  conferem.
 - **Lei 13.146, arts. 104 e 114:** são artigos que alteram outras leis. O
   quadro mostra as linhas pontilhadas e as sobras "III -." do texto do
   Planalto. É fiel, mas difícil de ler.
