@@ -2294,37 +2294,76 @@ O usuário commitou o HANDOFF (`9a124e5`, `bf12ef8`) e pediu, antes do Lote 3:
 
 ---
 
-# Retomada — estado em 2026-10-12 (ler primeiro depois de compactar a conversa)
+# Adendo 19 — 2026-10-14 (marca-texto: botão acima do trecho)
+
+## O pedido
+
+O usuário commitou o Adendo 18 (`ea4991e`, PR #18; o Pages servia a v23 em
+14/10) e pediu: "Altere o posicionamento do botão de marcar na marca-texto.
+Atualmente o padrão é abaixo, altere para aparecer acima por padrão e só
+aparecer abaixo quando estiver muito no topo para ficar visível".
+
+## O que entrou (`botao_1410/aplicar_1410.js`, 3 recortes, prova por reversão)
+
+- `mostrar()` do marca-texto: o botão fica **acima** do trecho (10 px de
+  folga). Vai para **baixo** só quando, acima, passaria do "teto" =
+  `topoLivre()` + 10 px. Trecho mais alto que a tela: o botão fica no pé da
+  tela. Vale para "Marcar" e para "Tirar marcação" (mesmo botão flutuante).
+- `topoLivre()`: o maior entre a área da barra de status do app instalado no
+  iPad (sonda `position:fixed` com `height:env(safe-area-inset-top)`) e o pé da
+  faixa de versão nova, quando aberta.
+- Aviso no 03.1: "Atualização de 14/10/2026 — marca-texto: botão acima do
+  trecho — vale desde já".
+- **v24** com `node versao.js INDEX SW 24`.
+
+## Testes
+
+- `botao_1410/teste_botao_1410.js ARQ`, no computador (1280×800) e no celular
+  (375×800): trecho no meio → acima; trecho a 20 px do alto → abaixo; faixa
+  aberta e trecho logo abaixo dela → abaixo, sem ficar sob a faixa; rolar com
+  a seleção ativa → continua acima; "Tirar marcação" → acima. Na versão
+  anterior (controle), os mesmos casos davam abaixo.
+- `juris_1210/teste_atualiza_1210.js` v23 → v24: as 5 chaves `trt4:` idênticas;
+  aviso de 14/10 no alto; 375 px sem rolagem lateral; console sem erro.
+  `checar2`: sem perda de id, `CHAVES` iguais.
+- **Não testável aqui:** o menu do próprio iPad (Copiar, Consultar…), que
+  também aparece acima da seleção. Se cobrir o botão, aumentar a folga ou
+  voltar o botão para baixo só no toque.
+
+---
+
+# Retomada — estado em 2026-10-14 (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira e, se precisar de detalhe, os Adendos 15 a 18
+1. Ler esta seção inteira e, se precisar de detalhe, os Adendos 15 a 19
    (logo acima).
 2. Conferir o estado real antes de mexer em qualquer coisa:
    - `git status --short` e `git log --oneline -3` no worktree (esperado:
-     árvore limpa, último commit = o do Adendo 18 ou posterior);
+     árvore limpa, último commit = o do Adendo 19 ou posterior);
    - `git fetch origin` e `git log --oneline -3 origin/main` (esperado: merge
-     do PR do Adendo 18 ou posterior);
+     do PR do Adendo 19 ou posterior);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (esperado: `autos-do-estudo-v23` ou maior);
+     (esperado: `autos-do-estudo-v24` ou maior);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo). Não aplicar
    nenhuma delas sem a resposta.
 4. Se não houver nada pendente do usuário, o próximo trabalho é o **Lote 3**
    (roteiro abaixo), que tem de entrar antes de 09/11 (semana 11), com a
-   versão **v24** (`node versao.js INDEX SW 24`).
+   versão **v25** (`node versao.js INDEX SW 25`).
 
-## ESTADO EM 12/10/2026 — Adendo 18 pronto (v23), esperando o commit
+## ESTADO EM 14/10/2026 — Adendo 19 pronto (v24), esperando o commit
 
 - **Commits:** Lote 2 em `d453bce` (v20); modo de estudo em `f77b6c8` (v21,
-  PR #16); faixa de versão nova em `9d8cddf` (v22, PR #17). Todos no `main`. O
-  GitHub Pages servia a **v22** em 12/10.
-- **Pendente de commit:** Adendo 18 (`index.html`, `sw.js` v23 e este
-  arquivo): súmulas com texto cortado e marca-texto em trecho repetido. Testado.
-  Esperar o commit antes de mexer no `index.html` de novo. O Lote 3 usa
-  **v24** (`node versao.js INDEX SW 24`).
-- **iPad:** a v23 é a primeira que chega pela faixa "Versão nova do aplicativo
-  pronta" (a v22 instalou a faixa). **Nunca** sugerir apagar o ícone nem
+  PR #16); faixa de versão nova em `9d8cddf` (v22, PR #17); súmulas cortadas e
+  marca-texto em `ea4991e` (v23, PR #18). Todos no `main`. O GitHub Pages
+  servia a **v23** em 14/10.
+- **Pendente de commit:** Adendo 19 (`index.html`, `sw.js` v24 e este
+  arquivo): botão do marca-texto acima do trecho. Testado. Esperar o commit
+  antes de mexer no `index.html` de novo. O Lote 3 usa **v25**
+  (`node versao.js INDEX SW 25`).
+- **iPad:** desde a v23 as versões chegam pela faixa "Versão nova do
+  aplicativo pronta" (a v22 instalou a faixa). **Nunca** sugerir apagar o ícone nem
   "Dados de Sites", porque isso apaga o progresso, que só existe no aparelho.
 
 ### Calendário (semana N começa em 31/08 + 7 × (N − 1))
@@ -2397,8 +2436,8 @@ O usuário commitou o HANDOFF (`9a124e5`, `bf12ef8`) e pediu, antes do Lote 3:
 - **Worktree:** `C:\Users\thale\Documents\GitHub\AppEstudos\.claude\worktrees\questoes-historico-in39-139338`.
 - **Branch:** `claude/lei-8112-adicionais`. O usuário abre o PR para o `main`
   depois de cada commit; o GitHub Pages publica o `main`.
-- **Último commit:** `bf12ef8` (HANDOFF; o código é o do Adendo 17, v22, no
-  `main` pelo PR #17). O Adendo 18 (v23) está no worktree, esperando o commit.
+- **Último commit:** `ea4991e` (Adendo 18, v23, no `main` pelo PR #18). O
+  Adendo 19 (v24) está no worktree, esperando o commit.
 - **Pasta principal:** `C:\Users\thale\Documents\GitHub\AppEstudos`. Tem
   `Leis/`, `Provas/`, `Jurisprudência/sumulas_stj.md` e uma cópia deste
   arquivo, que é sincronizada com `cp`.
@@ -2416,7 +2455,7 @@ O usuário commitou o HANDOFF (`9a124e5`, `bf12ef8`) e pediu, antes do Lote 3:
     ilustração da opção A;
   - `juris_1210/`: Adendo 18 (aplicação, conferidor de jurisprudência do TST
     pelo portal, testes do marca-texto e da atualização); `bak_1210/`: o
-    `index.html` e o `sw.js` de antes;
+    `index.html` e o `sw.js` de antes; `botao_1410/` e `bak_1410/`: Adendo 19;
   - `fontes/` está **vazia**: o `tst.json` (Livro de Súmulas) sumiu. Os
     scripts antigos que o leem (`conferir_juris_caixas.js`, `fidelidade.js`,
     `conferir_casos.js`) não rodam mais; usar `juris_1210/conferir_juris_tst.js`.
@@ -2436,7 +2475,7 @@ O usuário commitou o HANDOFF (`9a124e5`, `bf12ef8`) e pediu, antes do Lote 3:
     o código de saída 1 do robocopy significa "copiado com sucesso"):
     `robocopy "<scratchpad>" "C:\Users\thale\Documents\GitHub\AppEstudos\ferramentas-scratchpad" /E /XD perfil-headless* /R:1 /W:1`.
 
-## Lote 3 — até 08/11 (semanas 11 a 13 e semanas passadas), versão v24
+## Lote 3 — até 08/11 (semanas 11 a 13 e semanas passadas), versão v25
 
 1. **Terça, semana 11 (`const-estado`):** interpretação e vigência das normas
    constitucionais.
@@ -2527,7 +2566,7 @@ O usuário commitou o HANDOFF (`9a124e5`, `bf12ef8`) e pediu, antes do Lote 3:
    negativo `--estragar N`).
 8. **Testes:**
    - `teste_0710.js`, `teste_0810.js`, `teste_modo.js ARQ` (marca-texto e P17) e `teste_faixa.js` (faixa de versão nova, com servidor local), com Edge sem interface (`cdp.js`);
-   - `juris_1210/teste_marca_1210.js ARQ` (marca-texto em trecho repetido e varredura de todas as palavras) e `juris_1210/teste_atualiza_1210.js VELHO NOVO` (atualização sem perda de dado, 04.2, 03.1, 375 px). Caminhos Windows com `/` (`cygpath -m`);
+   - `juris_1210/teste_marca_1210.js ARQ` (marca-texto em trecho repetido e varredura de todas as palavras) e `juris_1210/teste_atualiza_1210.js VELHO NOVO` (atualização sem perda de dado, 04.2, 03.1, 375 px) e `botao_1410/teste_botao_1410.js ARQ` (posição do botão do marca-texto). Caminhos Windows com `/` (`cygpath -m`). Nos testes, rolar com `behavior:'instant'`: a página tem rolagem suave e o clique cai fora do alvo;
    - **versão do app:** `node versao.js INDEX SW` (meta `versao-app` = `CACHE` do `sw.js`); para publicar versão nova, `node versao.js INDEX SW NN`;
    - `neg_res415.js`: modelo de teste negativo de norma nova no quadro;
    - nas buscas de texto, usar `\uXXXX`;
