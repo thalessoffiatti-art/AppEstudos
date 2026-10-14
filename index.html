@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="versao-app" content="autos-do-estudo-v23">
+<meta name="versao-app" content="autos-do-estudo-v24">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <!-- Web app da tela de início (iPadOS/iOS). A partir do iPadOS 26, qualquer
@@ -1582,6 +1582,16 @@ body{
   </header>
 
   <div class="op-hoje" id="opHoje" aria-live="polite"></div>
+
+  <div class="op-aviso op-nota op-mudanca">
+    <b class="op-rot">Atualização de 14/10/2026 — marca-texto: botão acima do trecho — vale desde já</b>
+    Pedido seu.
+    O que muda:
+    <ul>
+      <li><b>Botão Marcar acima do trecho.</b> Ao selecionar um trecho, o botão <b>Marcar</b> aparece acima dele, e não mais embaixo. Ele só aparece embaixo quando o trecho está tão no alto da tela que, acima, o botão ficaria escondido. O botão <b>Tirar marcação</b>, que aparece quando você toca numa marcação, segue a mesma regra.</li>
+    </ul>
+    O que não muda: o jeito de marcar e de tirar, as marcações que você já fez, os horários, a carga de 23h25 por semana e tudo o que você já marcou ou respondeu.
+  </div>
 
   <div class="op-aviso op-nota op-mudanca">
     <b class="op-rot">Atualização de 12/10/2026 — correções: súmulas com texto cortado e marca-texto — vale desde já</b>
@@ -18952,11 +18962,23 @@ document.addEventListener('click', function(ev){
     });
   }
 
-  /* botão flutuante: "Marcar" perto da seleção, ou "Tirar marcação" perto da marcação tocada */
+  /* botão flutuante: "Marcar" perto da seleção, ou "Tirar marcação" perto da marcação tocada.
+     Desde 14/10/2026 fica acima do trecho; só vai para baixo quando, acima, ficaria escondido no alto da tela. */
   const flut = document.createElement('div');
   flut.className = 'mt-flutua';
   flut.hidden = true;
   document.body.appendChild(flut);
+  /* o que cobre o alto da tela: a barra de status (app instalado no iPad) e a faixa de versão nova, se aberta */
+  const sonda = document.createElement('div');
+  sonda.setAttribute('aria-hidden', 'true');
+  sonda.style.cssText = 'position:fixed; top:0; left:0; width:0; height:env(safe-area-inset-top, 0px); visibility:hidden; pointer-events:none';
+  document.body.appendChild(sonda);
+  function topoLivre(){
+    let t = sonda.offsetHeight;
+    const fx = document.getElementById('faixaVersao');
+    if(fx && !fx.hidden) t = Math.max(t, fx.getBoundingClientRect().bottom);
+    return t;
+  }
   const aviso = document.createElement('div');
   aviso.className = 'mt-aviso';
   aviso.hidden = true;
@@ -18970,8 +18992,11 @@ document.addEventListener('click', function(ev){
     flut.hidden = false;
     const W = window.innerWidth, H = window.innerHeight, m = 10;
     const larg = flut.offsetWidth, alt = flut.offsetHeight;
-    let top = rect.bottom + 10;
-    if(top + alt > H - m) top = Math.max(m, rect.top - alt - 10);
+    const teto = topoLivre() + m;
+    let top = rect.top - alt - 10;
+    if(top < teto) top = rect.bottom + 10;
+    /* trecho mais alto que a tela: o botão fica dentro dela, no pé */
+    if(top + alt > H - m) top = Math.max(teto, H - alt - m);
     const left = Math.min(Math.max(m, rect.left + rect.width / 2 - larg / 2), W - larg - m);
     flut.style.top = Math.round(top) + 'px';
     flut.style.left = Math.round(left) + 'px';
