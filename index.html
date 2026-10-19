@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="versao-app" content="autos-do-estudo-v24">
+<meta name="versao-app" content="autos-do-estudo-v25">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <!-- Web app da tela de início (iPadOS/iOS). A partir do iPadOS 26, qualquer
@@ -486,13 +486,14 @@ select:focus,input:focus,button:focus-visible,summary:focus-visible,a:focus-visi
 .bloco.feito .b-mat{color:var(--tinta-3)}
 
 /* Painel de desempenho */
-.d-barra{position:relative; height:10px; background:var(--papel-2); border:1px solid var(--linha); min-width:104px}
+/* display:block desde 17/10/2026: como <span> de linha, a altura e a largura eram ignoradas e a barra não aparecia */
+.d-barra{display:block; position:relative; height:10px; margin-top:4px; background:var(--papel-2); border:1px solid var(--linha); min-width:104px}
 .d-barra i{display:block; height:100%; background:var(--petroleo); width:0}
 .d-barra i.bom{background:var(--verde)}
 .d-barra i.ruim{background:var(--carmim)}
 .d-barra em{position:absolute; top:-3px; bottom:-3px; width:2px; background:var(--tinta); opacity:.7}
 .d-vazio{color:var(--tinta-3); font-family:var(--mono)}
-.d-base{display:inline-block; margin-left:8px; color:var(--tinta-3); font-family:var(--mono); font-size:11px}
+.d-base{display:block; margin-top:5px; color:var(--tinta-3); font-family:var(--mono); font-size:11px}
 .sim-registro{border:1px solid var(--linha); background:var(--superficie); padding:16px 18px; margin:0 0 18px}
 .sim-registro h4{font-size:15px; margin:0 0 6px}
 .sim-registro > p{font-size:13.8px; color:var(--tinta-2); margin:0 0 12px; max-width:70ch}
@@ -1218,7 +1219,7 @@ body{
     <tbody id="dpSemanas"></tbody>
   </table>
   </div>
-  <p style="font-size:13.2px;color:var(--tinta-3);margin-top:10px">Cada semana fecha no sábado; a partir do domingo, as respostas já contam para a semana seguinte, como no cronograma. A linha <b>Geral</b> soma todas as semanas até hoje.</p>
+  <p style="font-size:13.2px;color:var(--tinta-3);margin-top:10px">Cada semana fecha no sábado; a partir do domingo, as respostas já contam para a semana seguinte, como no cronograma. A linha <b>Geral</b> soma todas as semanas até hoje. Na última coluna, cada semana é medida contra a meta global da sua fase: a semana 1 é linha de base; as semanas 2 a 4, contra 70%; as 5 a 7, contra 78%; as 8 a 10, contra 85%; as 11 a 13, contra 90%. A linha <b>Geral</b> é medida contra a meta de hoje. O traço vertical marca a meta, e a barra fica verde quando a meta foi atingida.</p>
 
   <div class="filtro-linha" style="margin:28px 0 16px">
     <div class="campo" style="max-width:360px">
@@ -1582,6 +1583,18 @@ body{
   </header>
 
   <div class="op-hoje" id="opHoje" aria-live="polite"></div>
+
+  <div class="op-aviso op-nota op-mudanca">
+    <b class="op-rot">Atualização de 17/10/2026 — correção: barras “Contra a meta” no painel “Meu desempenho” — vale desde já</b>
+    Correção do problema que você apontou.
+    O que muda:
+    <ul>
+      <li><b>As barras passam a aparecer.</b> Na página 03, as colunas “Contra a meta global da fase” e “Contra a meta da fase”, a barra do bloco crítico e a última coluna do histórico dos simulados mostravam só um traço vertical encostado à esquerda. O defeito existia desde a primeira versão do aplicativo e era de desenho na tela, não de cálculo. A falta do simulado da semana 1 não tinha relação com ele. Agora cada barra mostra o seu percentual, o traço da meta fica no lugar certo e a barra fica verde quando a meta foi atingida.</li>
+      <li><b>Linha “Antes do placar semanal”.</b> Ela dizia “linha de base”, mas não é o diagnóstico da semana 1: são respostas dadas antes de o placar separar as semanas, sem data. Agora diz “sem meta: respostas sem data”.</li>
+      <li><b>Nota da tabela “Placar semana a semana”.</b> Agora diz contra qual meta cada semana é medida: a semana 1 é linha de base; as semanas 2 a 4, contra 70%; as 5 a 7, contra 78%; as 8 a 10, contra 85%; as 11 a 13, contra 90%.</li>
+    </ul>
+    O que não muda: as metas, os cálculos, os horários, a carga de 23h25 por semana e tudo o que você já marcou, respondeu ou registrou.
+  </div>
 
   <div class="op-aviso op-nota op-mudanca">
     <b class="op-rot">Atualização de 14/10/2026 — marca-texto: botão acima do trecho — vale desde já</b>
@@ -17664,8 +17677,9 @@ $('#btnIrSemanaAtual').addEventListener('click', function(){
 });
 
 /* ---------- Desempenho por disciplina, alimentado pelo placar ---------- */
-function barraMeta(pct, meta){
+function barraMeta(pct, meta, rotuloSemMeta){
   if(pct === null) return '<span class="d-vazio">—</span>';
+  const base = rotuloSemMeta || 'linha de base';
   const p = Math.round(pct);
   const semMeta = meta === null;
   const classe = semMeta ? '' : (p >= meta ? ' bom' : (p < meta - 15 ? ' ruim' : ''));
@@ -17674,9 +17688,9 @@ function barraMeta(pct, meta){
      rótulo diz isso em palavras, para a coluna não prometer uma comparação
      que não existe. */
   return '<span class="d-barra" role="img" aria-label="' + p + ' por cento' +
-      (semMeta ? ', fase sem meta: linha de base' : ', meta ' + meta + ' por cento') + '">' +
+      (semMeta ? ', ' + base : ', meta ' + meta + ' por cento') + '">' +
     '<i class="' + classe.trim() + '" style="width:' + Math.min(p,100) + '%"></i>' + marca + '</span>' +
-    (semMeta ? '<span class="d-base">linha de base</span>' : '');
+    (semMeta ? '<span class="d-base">' + base + '</span>' : '');
 }
 
 /* Chaves exibidas no placar semana a semana: as semanas do cronograma até a de
@@ -17695,7 +17709,7 @@ function chavesDoPlacar(){
 function renderPlacarSemanal(){
   const atual = chaveDaSemana(new Date());
   const vazio = '<span class="d-vazio">—</span>';
-  const linha = function(nome, periodo, e, meta, classe, selo){
+  const linha = function(nome, periodo, e, meta, classe, selo, semMeta){
     return '<tr' + (classe ? ' class="' + classe + '"' : '') + '>' +
       '<td><b>' + esc(nome) + '</b>' + selo + '</td>' +
       '<td class="mono" style="white-space:nowrap">' + esc(periodo) + '</td>' +
@@ -17703,7 +17717,7 @@ function renderPlacarSemanal(){
       '<td class="n">' + (e.resp ? e.ac : vazio) + '</td>' +
       '<td class="n">' + (e.resp ? e.err : vazio) + '</td>' +
       '<td class="n">' + (e.pct === null ? vazio : '<b>' + Math.round(e.pct) + '%</b>') + '</td>' +
-      '<td>' + barraMeta(e.pct, meta) + '</td></tr>';
+      '<td>' + barraMeta(e.pct, meta, semMeta) + '</td></tr>';
   };
   const chaves = chavesDoPlacar();
   if(!chaves.length){
@@ -17714,7 +17728,8 @@ function renderPlacarSemanal(){
     const r = rotuloDaSemana(chave);
     const corrente = chave === atual;
     return linha(r.nome, r.periodo, estatPlacar(chave), r.numero ? faseDoNumero(r.numero).global : null,
-      corrente ? 'linha-corrente' : '', corrente ? ' <span class="sem-selo agora">corrente</span>' : '');
+      corrente ? 'linha-corrente' : '', corrente ? ' <span class="sem-selo agora">corrente</span>' : '',
+      r.numero ? null : (chave === CHAVE_ANTERIOR ? 'sem meta: respostas sem data' : 'sem meta: fora do cronograma'));
   }).join('') + linha('Geral', 'todas as semanas', estatPlacar('geral'), faseCorrente().global, 'linha-geral', '');
 }
 
