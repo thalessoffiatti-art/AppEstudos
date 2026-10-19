@@ -2332,36 +2332,96 @@ aparecer abaixo quando estiver muito no topo para ficar visível".
 
 ---
 
-# Retomada — estado em 2026-10-14 (ler primeiro depois de compactar a conversa)
+# Adendo 20 — 2026-10-17 (barras "Contra a meta" que nunca apareceram)
+
+## O pedido
+
+O usuário commitou o Adendo 19 (`e8540d4`, PR #19; o Pages servia a v24) e
+perguntou por que a coluna "Contra a meta global da fase" "não altera mesmo
+que já estejamos na semana 7", supondo que a falta do simulado da semana 1
+impedisse. A primeira resposta (sem ver a tela) explicou a regra das fases;
+o print dele mostrou o defeito real.
+
+## Causa
+
+- `barraMeta()` devolve `<span class="d-barra">`, e a regra CSS da barra não
+  tinha `display`. Num `<span>` (elemento de linha), `height:10px` e
+  `min-width:104px` são ignorados: a barra tinha 1 px de largura, o
+  preenchimento (`<i>`, bloco) não tinha altura, e o traço da meta (`<em>`,
+  absoluto, `left:N%` de uma largura zero) ficava encostado à esquerda — o
+  traço vertical do print. **Existia desde a primeira versão (`99cc303`,
+  08/09)**, nas quatro barras: placar semana a semana, tabela por
+  disciplina, painel do bloco crítico e histórico dos simulados.
+- Os testes antigos conferiam o DOM (classe, `aria-label`, texto), nunca a
+  geometria na tela; por isso passaram.
+- A falta do simulado da semana 1 não tinha relação: a lógica das metas
+  (semana 1 linha de base; 2–4: 70%; 5–7: 78%; 8–10: 85%; 11–13: 90%; Geral:
+  meta de hoje) estava certa.
+- Segundo defeito no print: a linha "Antes do placar semanal" (respostas sem
+  data, de antes de o placar separar semanas) dizia "linha de base".
+
+## O que entrou (`meta_1710/aplicar_1710.js`, 9 recortes, prova por reversão)
+
+- `.d-barra{display:block; …; margin-top:4px}` e `.d-base{display:block;
+  margin-top:5px}` (o rótulo vai para baixo da barra).
+- `barraMeta(pct, meta, rotuloSemMeta)`: rótulo próprio quando não há meta.
+  No placar semanal, "Antes do placar semanal" → "sem meta: respostas sem
+  data"; "Fora do cronograma" → "sem meta: fora do cronograma". A semana 1
+  continua "linha de base".
+- Nota da tabela "Placar semana a semana": diz contra qual meta cada semana é
+  medida.
+- Aviso no 03.1: "Atualização de 17/10/2026 — correção: barras “Contra a
+  meta” no painel “Meu desempenho” — vale desde já".
+- **v25** com `node versao.js INDEX SW 25`.
+
+## Testes
+
+- `meta_1710/teste_barras_1710.js ARQ [rótulo]`: estado como o do print;
+  mede na tela cada barra (largura ≥ 100 px, altura ≥ 9 px, preenchimento =
+  percentual ± 1, traço na posição da meta ± 1) no iPad em retrato
+  (820×1180), no celular (375×800) e no computador. Na v24 (controle): todas
+  "ERRADO", barra 1×42 px, igual ao print. Na v25: 13 de 13 OK nas três telas;
+  sem rolagem lateral.
+- `meta_1710/ver_meta.js ARQ`: a lógica das metas em dois cenários (com e sem
+  respostas nas semanas 5 a 7), sem simulado na semana 1.
+- `juris_1210/teste_atualiza_1210.js` v24 → v25: 5 chaves `trt4:` idênticas;
+  aviso de 17/10 no alto; console sem erro. `checar2`: sem perda de id.
+- **Lição:** teste de tela mede a geometria (`getBoundingClientRect`), não só
+  o DOM.
+
+---
+
+# Retomada — estado em 2026-10-17 (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira e, se precisar de detalhe, os Adendos 15 a 19
+1. Ler esta seção inteira e, se precisar de detalhe, os Adendos 15 a 20
    (logo acima).
 2. Conferir o estado real antes de mexer em qualquer coisa:
    - `git status --short` e `git log --oneline -3` no worktree (esperado:
-     árvore limpa, último commit = o do Adendo 19 ou posterior);
+     árvore limpa, último commit = o do Adendo 20 ou posterior);
    - `git fetch origin` e `git log --oneline -3 origin/main` (esperado: merge
-     do PR do Adendo 19 ou posterior);
+     do PR do Adendo 20 ou posterior);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (esperado: `autos-do-estudo-v24` ou maior);
+     (esperado: `autos-do-estudo-v25` ou maior);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo). Não aplicar
    nenhuma delas sem a resposta.
 4. Se não houver nada pendente do usuário, o próximo trabalho é o **Lote 3**
    (roteiro abaixo), que tem de entrar antes de 09/11 (semana 11), com a
-   versão **v25** (`node versao.js INDEX SW 25`).
+   versão **v26** (`node versao.js INDEX SW 26`).
 
-## ESTADO EM 14/10/2026 — Adendo 19 pronto (v24), esperando o commit
+## ESTADO EM 17/10/2026 — Adendo 20 pronto (v25), esperando o commit
 
 - **Commits:** Lote 2 em `d453bce` (v20); modo de estudo em `f77b6c8` (v21,
   PR #16); faixa de versão nova em `9d8cddf` (v22, PR #17); súmulas cortadas e
-  marca-texto em `ea4991e` (v23, PR #18). Todos no `main`. O GitHub Pages
-  servia a **v23** em 14/10.
-- **Pendente de commit:** Adendo 19 (`index.html`, `sw.js` v24 e este
-  arquivo): botão do marca-texto acima do trecho. Testado. Esperar o commit
-  antes de mexer no `index.html` de novo. O Lote 3 usa **v25**
-  (`node versao.js INDEX SW 25`).
+  marca-texto em `ea4991e` (v23, PR #18); botão do marca-texto acima em
+  `e8540d4` (v24, PR #19). Todos no `main`. O GitHub Pages servia a **v24** em
+  17/10.
+- **Pendente de commit:** Adendo 20 (`index.html`, `sw.js` v25 e este
+  arquivo): barras "Contra a meta" que nunca apareceram. Testado. Esperar o
+  commit antes de mexer no `index.html` de novo. O Lote 3 usa **v26**
+  (`node versao.js INDEX SW 26`).
 - **iPad:** desde a v23 as versões chegam pela faixa "Versão nova do
   aplicativo pronta" (a v22 instalou a faixa). **Nunca** sugerir apagar o ícone nem
   "Dados de Sites", porque isso apaga o progresso, que só existe no aparelho.
@@ -2436,8 +2496,8 @@ aparecer abaixo quando estiver muito no topo para ficar visível".
 - **Worktree:** `C:\Users\thale\Documents\GitHub\AppEstudos\.claude\worktrees\questoes-historico-in39-139338`.
 - **Branch:** `claude/lei-8112-adicionais`. O usuário abre o PR para o `main`
   depois de cada commit; o GitHub Pages publica o `main`.
-- **Último commit:** `ea4991e` (Adendo 18, v23, no `main` pelo PR #18). O
-  Adendo 19 (v24) está no worktree, esperando o commit.
+- **Último commit:** `e8540d4` (Adendo 19, v24, no `main` pelo PR #19). O
+  Adendo 20 (v25) está no worktree, esperando o commit.
 - **Pasta principal:** `C:\Users\thale\Documents\GitHub\AppEstudos`. Tem
   `Leis/`, `Provas/`, `Jurisprudência/sumulas_stj.md` e uma cópia deste
   arquivo, que é sincronizada com `cp`.
@@ -2455,7 +2515,7 @@ aparecer abaixo quando estiver muito no topo para ficar visível".
     ilustração da opção A;
   - `juris_1210/`: Adendo 18 (aplicação, conferidor de jurisprudência do TST
     pelo portal, testes do marca-texto e da atualização); `bak_1210/`: o
-    `index.html` e o `sw.js` de antes; `botao_1410/` e `bak_1410/`: Adendo 19;
+    `index.html` e o `sw.js` de antes; `botao_1410/` e `bak_1410/`: Adendo 19; `meta_1710/` e `bak_1710/`: Adendo 20;
   - `fontes/` está **vazia**: o `tst.json` (Livro de Súmulas) sumiu. Os
     scripts antigos que o leem (`conferir_juris_caixas.js`, `fidelidade.js`,
     `conferir_casos.js`) não rodam mais; usar `juris_1210/conferir_juris_tst.js`.
@@ -2475,7 +2535,7 @@ aparecer abaixo quando estiver muito no topo para ficar visível".
     o código de saída 1 do robocopy significa "copiado com sucesso"):
     `robocopy "<scratchpad>" "C:\Users\thale\Documents\GitHub\AppEstudos\ferramentas-scratchpad" /E /XD perfil-headless* /R:1 /W:1`.
 
-## Lote 3 — até 08/11 (semanas 11 a 13 e semanas passadas), versão v25
+## Lote 3 — até 08/11 (semanas 11 a 13 e semanas passadas), versão v26
 
 1. **Terça, semana 11 (`const-estado`):** interpretação e vigência das normas
    constitucionais.
@@ -2566,7 +2626,7 @@ aparecer abaixo quando estiver muito no topo para ficar visível".
    negativo `--estragar N`).
 8. **Testes:**
    - `teste_0710.js`, `teste_0810.js`, `teste_modo.js ARQ` (marca-texto e P17) e `teste_faixa.js` (faixa de versão nova, com servidor local), com Edge sem interface (`cdp.js`);
-   - `juris_1210/teste_marca_1210.js ARQ` (marca-texto em trecho repetido e varredura de todas as palavras) e `juris_1210/teste_atualiza_1210.js VELHO NOVO` (atualização sem perda de dado, 04.2, 03.1, 375 px) e `botao_1410/teste_botao_1410.js ARQ` (posição do botão do marca-texto). Caminhos Windows com `/` (`cygpath -m`). Nos testes, rolar com `behavior:'instant'`: a página tem rolagem suave e o clique cai fora do alvo;
+   - `juris_1210/teste_marca_1210.js ARQ` (marca-texto em trecho repetido e varredura de todas as palavras) e `juris_1210/teste_atualiza_1210.js VELHO NOVO` (atualização sem perda de dado, 04.2, 03.1, 375 px) e `botao_1410/teste_botao_1410.js ARQ` (posição do botão do marca-texto) e `meta_1710/teste_barras_1710.js ARQ` (barras "Contra a meta" medidas na tela). Teste de tela mede a geometria, não só o DOM. Caminhos Windows com `/` (`cygpath -m`). Nos testes, rolar com `behavior:'instant'`: a página tem rolagem suave e o clique cai fora do alvo;
    - **versão do app:** `node versao.js INDEX SW` (meta `versao-app` = `CACHE` do `sw.js`); para publicar versão nova, `node versao.js INDEX SW NN`;
    - `neg_res415.js`: modelo de teste negativo de norma nova no quadro;
    - nas buscas de texto, usar `\uXXXX`;
