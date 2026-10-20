@@ -2391,37 +2391,158 @@ o print dele mostrou o defeito real.
 
 ---
 
-# Retomada — estado em 2026-10-17 (ler primeiro depois de compactar a conversa)
+# Adendo 21 — 2026-10-20 (parecer de um amigo desenvolvedor: plano em ondas; Onda 0 e Onda 1, v26)
+
+## O pedido
+
+O usuário commitou o Adendo 20 (`734f332`, PR #20, merge `9264103`; o Pages
+servia a v25) e trouxe um parecer de um amigo desenvolvedor
+(`C:\Users\thale\Documents\Análise amigo.md`): "Analise o parecer, diga se
+concorda e estabeleça um plano de implantação". Plano aprovado em modo de
+plano: `C:\Users\thale\.claude\plans\woolly-finding-squid.md`.
+
+## Veredito sobre o parecer (conferido no código, na base de leis e no portal)
+
+- **Concordo:**
+  - pasta principal parada na v2;
+  - 5 gabaritos "conferir" do Raio-X (2 mudaram);
+  - 4 cartões da IN 39 sem nota sobre a lei atual;
+  - avisos desatualizados sobre o STJ nas páginas 04.2 e 07;
+  - tópicos com poucas questões;
+  - backup exportar/importar;
+  - busca no material.
+- **Correções ao parecer:**
+  - 2022 Q21 vale pelo art. 25, **IV** e VII (não V);
+  - não existe "Vice-Corregedor" no art. 16, § 4º;
+  - a frase citada do cartão `in14` não existe (mas o ponto procede);
+  - as chaves do `localStorage` não têm `:v1`;
+  - o estudo de caso não é o P5 e **já existe** (9 casos com espelho e régua);
+  - o contraste Convenção 87 × unicidade **já está** em `dt-coletivo`.
+- **Discordo:**
+  - mudar a disciplina da CO04 e a âncora das OJs 64, 65 e 67 da SDI-2 (são
+    âncoras cruzadas de propósito; nenhum tópico de Processo do Trabalho trata
+    de mandado de segurança contra liminar);
+  - tirar a Lei 12.527 das fontes (foi consultada: prova de 2015, Q57);
+  - marca-texto sob demanda por ora (medir antes).
+- **Decisões do usuário (20/10):**
+  - 6 questões de `dpc-provas` já na Onda 1;
+  - **download das RAs 58/2025 e 37/2026 autorizado**;
+  - busca no material, sim;
+  - simuladão retomável, não.
+
+## Ondas
+
+| Onda | Versão | O quê | Situação |
+|---|---|---|---|
+| 0 | — | pasta principal em ff com `origin/main` | **feita** |
+| 1 | v26 | Raio-X, IN 39, textos 04.2/07, 6 questões de `dpc-provas` | **feita, esperando commit** |
+| 2 | v27 | backup exportar/importar (`navigator.share` no iPad; importação com janela modal e "Desfazer") | a fazer |
+| 3 | v28 | Lote 3 + questões até 6 por tópico + RA TRT4 05/2022 (até 05/11) | a fazer |
+| 4 | v29 | busca no material (página 04) | a fazer |
+
+## Onda 0 — pasta principal
+
+A cópia não versionada do `HANDOFF-projeto.md` na raiz era idêntica à do
+`origin/main` e bloquearia o fast-forward. Ela foi para
+`scratchpad/bak_2010/HANDOFF-raiz-antes-do-ff.md`. Depois veio o
+`git -C <raiz> merge --ff-only origin/main`, e a raiz ficou em `9264103`
+(v25). **Hábito novo:** não copiar mais o HANDOFF para a raiz com `cp`.
+Depois de cada PR do usuário, fazer o `--ff-only` na raiz.
+
+## Onda 1 — v26 (`parecer_2010/aplicar_2010.js`, 12 recortes, prova por reversão)
+
+- **6 questões novas** `PC57`–`PC62` (`dpc-provas`, ano 2006, que é o ano em
+  que o tópico caiu: coisa julgada, Q42):
+  - assuntos: ônus da prova (373), fatos que não dependem de prova
+    (374/375), inspeção (481–484), fundamentação (489/492), coisa julgada
+    (503, 504, 506) e liquidação (509/512);
+  - dados em `parecer_2010/q_dpc_provas.js`, com `provas`: 38 trechos
+    conferidos letra por letra contra `leis/cpc.json` por
+    `conferir_q_novas.js` (formato como `validar_j.js`; teste negativo
+    `--estragar`).
+- **Raio-X:**
+  - 2011 Q45 → `mudou` (Lei 8.036, art. 3º, § 3º, na redação da Lei
+    13.932/2019; hoje nenhuma alternativa certa);
+  - 2022 Q25 → `mudou` (Assento Regimental 05/2025; art. 16, § 4º, II e III;
+    as outras alternativas seguem erradas pelos §§ 7º, 8º, 10 e 13-A; nenhuma
+    certa);
+  - 2015 Q25, 2022 Q21 e 2022 Q27 → `vale` (arts. 44, IX e X; 25, IV e VII;
+    39, VI, e 154);
+  - fica `conferir` só 2006 Q25 (gabarito contra a lei);
+  - placar da página 02: 14 mudaram, 1 a conferir.
+- **IN 39** (`IN39_HTML`, campo `note` de `in3-vii`, `in3-iv`, `in14` e
+  `in3-xv`):
+  - a string é `JSON.stringify` com `<` → `\u003c` (a recodificação do
+    original é provada antes);
+  - só os 4 `note` mudaram;
+  - trechos entre aspas conferidos com a CLT (818, 840), com a Res. 415
+    (art. 12) e com a Tese 75 por `conferir_notas_in39.js`, com teste
+    negativo;
+  - a frase das ADIs 6.050, 6.069 e 6.082 é a mesma do quadro do art. 223-G;
+  - o arquivo de origem em `Leis/` não mudou.
+- **Textos fixos:**
+  - 04.2: "De onde vem o texto" (conferência de 12/10 e STJ conferido);
+  - 07: parágrafo "outubro de 2026", fontes com STJ conferido, portal do TST,
+    Lei 8.036 e Regimento; Lei 12.527 "fora do edital de 2022".
+- **Aviso no 03.1:** "Atualização de 20/10/2026 — correções apontadas no
+  parecer e 6 questões de Processo Civil — vale desde já".
+- **v26** com `node versao.js INDEX SW 26`.
+
+## Testes da Onda 1
+
+- `parecer_2010/teste_onda1.js VELHO NOVO`:
+  - v25 → v26 no mesmo perfil, as 6 chaves `trt4:` idênticas;
+  - Raio-X 14/1;
+  - as 4 notas visíveis no iframe da 04.1 (414 px de largura);
+  - "Resolver agora →" em `dpc-provas` abre `PC57`–`PC62`, e a resposta
+    entra no placar de Processo Civil;
+  - 04.2, 07 e aviso conferidos;
+  - 375 e 820 px sem rolagem lateral em 6 páginas;
+  - console sem erro.
+- Conferidores com os números da linha de base: lei seca 0 falha, nada
+  perdido 0, auditor 0/0, independente só os 24 "NÃO LIDO", selos só os
+  descritivos, `checar2` sem perda (520 questões).
+- `juris_1210/conferir_juris_tst.js`: 172 de 172. **A página de precedentes
+  do TST mudou de endereço** (sem o "/en"; o antigo dá "Não encontrado"). O
+  conferidor foi corrigido e agora para com erro se a tabela vier vazia (antes
+  acusava "SEM TEXTO OFICIAL" tese a tese). Tabela "atualizada em 15 de
+  outubro de 2026".
+
+---
+
+# Retomada — estado em 2026-10-20 (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira e, se precisar de detalhe, os Adendos 15 a 20
-   (logo acima).
+1. Ler esta seção inteira e, se precisar de detalhe, os Adendos 15 a 21
+   (logo acima). O plano em ondas está no Adendo 21 e em
+   `C:\Users\thale\.claude\plans\woolly-finding-squid.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
    - `git status --short` e `git log --oneline -3` no worktree (esperado:
-     árvore limpa, último commit = o do Adendo 20 ou posterior);
+     árvore limpa, último commit = o do Adendo 21 ou posterior);
    - `git fetch origin` e `git log --oneline -3 origin/main` (esperado: merge
-     do PR do Adendo 20 ou posterior);
+     do PR do Adendo 21 ou posterior);
+   - pasta principal: `git -C <raiz> merge --ff-only origin/main` depois de
+     cada PR (a raiz não tem mais cópia solta do HANDOFF);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (esperado: `autos-do-estudo-v25` ou maior);
+     (esperado: `autos-do-estudo-v26` ou maior);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo). Não aplicar
    nenhuma delas sem a resposta.
-4. Se não houver nada pendente do usuário, o próximo trabalho é o **Lote 3**
-   (roteiro abaixo), que tem de entrar antes de 09/11 (semana 11), com a
-   versão **v26** (`node versao.js INDEX SW 26`).
+4. O próximo trabalho é a **Onda 2 (v27, backup)**, depois a **Onda 3 (v28:
+   Lote 3, questões e RA TRT4 05/2022 — esta até 05/11)** e a **Onda 4 (v29,
+   busca no material)**. Uma onda por vez, com o commit do usuário entre elas.
 
-## ESTADO EM 17/10/2026 — Adendo 20 pronto (v25), esperando o commit
+## ESTADO EM 20/10/2026 — Adendo 21, Onda 1 pronta (v26), esperando o commit
 
 - **Commits:** Lote 2 em `d453bce` (v20); modo de estudo em `f77b6c8` (v21,
   PR #16); faixa de versão nova em `9d8cddf` (v22, PR #17); súmulas cortadas e
   marca-texto em `ea4991e` (v23, PR #18); botão do marca-texto acima em
-  `e8540d4` (v24, PR #19). Todos no `main`. O GitHub Pages servia a **v24** em
-  17/10.
-- **Pendente de commit:** Adendo 20 (`index.html`, `sw.js` v25 e este
-  arquivo): barras "Contra a meta" que nunca apareceram. Testado. Esperar o
-  commit antes de mexer no `index.html` de novo. O Lote 3 usa **v26**
-  (`node versao.js INDEX SW 26`).
+  `e8540d4` (v24, PR #19); barras "Contra a meta" em `734f332` (v25, PR #20).
+  Todos no `main`. O GitHub Pages servia a **v25** em 20/10.
+- **Pendente de commit:** Adendo 21, Onda 1 (`index.html`, `sw.js` v26 e
+  este arquivo). Testado. Esperar o commit antes de mexer no `index.html` de
+  novo. Próximas versões: Onda 2 v27, Onda 3 v28, Onda 4 v29.
 - **iPad:** desde a v23 as versões chegam pela faixa "Versão nova do
   aplicativo pronta" (a v22 instalou a faixa). **Nunca** sugerir apagar o ícone nem
   "Dados de Sites", porque isso apaga o progresso, que só existe no aparelho.
@@ -2440,7 +2561,9 @@ o print dele mostrou o defeito real.
 
 ### Decisões que esperam o usuário (não aplicar sem resposta)
 
-1. **RA TRT4 05/2022** (explicado em 08 e 09/10; ele disse que decide depois):
+1. **RA TRT4 05/2022 — DECIDIDO em 20/10: download das RAs 58/2025 e 37/2026
+   AUTORIZADO; entra na Onda 3 e tem de estar publicada até 05/11 (sexta da
+   semana 10, 06/11).** Histórico:
    - a compilada do TRT4 ("Republicação") traz as alterações das RAs 37/2023,
      07/2024, 10/2024 e 13/2025;
    - depois dela, pela pesquisa de atos do TRT4 (tipo Resolução
@@ -2496,11 +2619,12 @@ o print dele mostrou o defeito real.
 - **Worktree:** `C:\Users\thale\Documents\GitHub\AppEstudos\.claude\worktrees\questoes-historico-in39-139338`.
 - **Branch:** `claude/lei-8112-adicionais`. O usuário abre o PR para o `main`
   depois de cada commit; o GitHub Pages publica o `main`.
-- **Último commit:** `e8540d4` (Adendo 19, v24, no `main` pelo PR #19). O
-  Adendo 20 (v25) está no worktree, esperando o commit.
+- **Último commit:** `734f332` (Adendo 20, v25, no `main` pelo PR #20). O
+  Adendo 21 (v26) está no worktree, esperando o commit.
 - **Pasta principal:** `C:\Users\thale\Documents\GitHub\AppEstudos`. Tem
-  `Leis/`, `Provas/`, `Jurisprudência/sumulas_stj.md` e uma cópia deste
-  arquivo, que é sincronizada com `cp`.
+  `Leis/`, `Provas/` e `Jurisprudência/sumulas_stj.md` (fora do git). Desde
+  20/10 fica igual ao `origin/main` por `merge --ff-only` (inclusive este
+  arquivo, que é o versionado; não copiar mais com `cp`).
 - **Scratchpad** (pasta temporária desta sessão; os scripts e a base de leis
   estão lá):
   `C:\Users\thale\AppData\Local\Temp\claude\C--Users-thale-Documents-GitHub-AppEstudos--claude-worktrees-questoes-historico-in39-139338\987bfdd2-305d-4b53-8bfb-e15c943f2553\scratchpad\`.
@@ -2515,7 +2639,7 @@ o print dele mostrou o defeito real.
     ilustração da opção A;
   - `juris_1210/`: Adendo 18 (aplicação, conferidor de jurisprudência do TST
     pelo portal, testes do marca-texto e da atualização); `bak_1210/`: o
-    `index.html` e o `sw.js` de antes; `botao_1410/` e `bak_1410/`: Adendo 19; `meta_1710/` e `bak_1710/`: Adendo 20;
+    `index.html` e o `sw.js` de antes; `botao_1410/` e `bak_1410/`: Adendo 19; `meta_1710/` e `bak_1710/`: Adendo 20; `parecer_2010/` e `bak_2010/`: Adendo 21;
   - `fontes/` está **vazia**: o `tst.json` (Livro de Súmulas) sumiu. Os
     scripts antigos que o leem (`conferir_juris_caixas.js`, `fidelidade.js`,
     `conferir_casos.js`) não rodam mais; usar `juris_1210/conferir_juris_tst.js`.
@@ -2535,7 +2659,7 @@ o print dele mostrou o defeito real.
     o código de saída 1 do robocopy significa "copiado com sucesso"):
     `robocopy "<scratchpad>" "C:\Users\thale\Documents\GitHub\AppEstudos\ferramentas-scratchpad" /E /XD perfil-headless* /R:1 /W:1`.
 
-## Lote 3 — até 08/11 (semanas 11 a 13 e semanas passadas), versão v26
+## Lote 3 — até 08/11 (semanas 11 a 13 e semanas passadas), versão v28 (Onda 3)
 
 1. **Terça, semana 11 (`const-estado`):** interpretação e vigência das normas
    constitucionais.
@@ -2567,7 +2691,7 @@ o print dele mostrou o defeito real.
 - Downloads pedem autorização. Os do plano já foram autorizados: Regimento,
   Leis 6.019, 12.023, 8.009, 9.029, 13.300 e 9.507, IN 38, 40 e 41,
   Resoluções CSJT 174 e 288 e RA TRT4 05/2022; em 08/10, a Res. CSJT 415/2025
-  e a RA TRT4 05/2022 compilada (as RAs 58/2025 e 37/2026 **não**).
+  e a RA TRT4 05/2022 compilada; em 20/10, as RAs TRT4 58/2025 e 37/2026.
 - **Nunca apagar dado salvo:** ids de bloco e de questão, nomes de disciplina
   e `CHAVES` só por acréscimo.
 - **Sem tempo novo:** 23h25 por semana.
@@ -2602,6 +2726,9 @@ o print dele mostrou o defeito real.
      só as mudanças previstas;
    - `node selos.js "$W"`: só os selos descritivos (`leg-*`, `info-hist`);
    - `node checar2.js [arquivo]`;
+   - `node parecer_2010/conferir_q_novas.js "$W" DADOS.js` (questões novas:
+     formato e trechos provados contra o CPC; `--estragar` para o teste
+     negativo) e `node parecer_2010/conferir_notas_in39.js "$W"`;
    - `node juris_1210/conferir_juris_tst.js "$W"` (lê o portal do TST num Edge
      sem interface, uns 2 minutos): "NENHUM PROBLEMA" (172 de 172). Toda
      súmula, OJ ou tese nova do TST no app passa por ele: item transcrito vai
