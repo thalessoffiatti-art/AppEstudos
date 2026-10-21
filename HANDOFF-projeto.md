@@ -2510,39 +2510,140 @@ Depois de cada PR do usuário, fazer o `--ff-only` na raiz.
 
 ---
 
+# Adendo 22 — 2026-10-20 (Onda 2: cópia de segurança do progresso, v27)
+
+## O pedido
+
+"já fiz o commit, siga para a Onda 2". O commit da Onda 1 (`8a2a6fa`) estava
+no ramo do GitHub, mas o PR ainda não tinha sido mesclado (o Pages servia a
+v25). O usuário foi avisado de que precisa abrir e mesclar o PR para a v26
+chegar ao iPad.
+
+## O que entrou (`backup_2010/aplicar_backup.js` + `modulo_backup.js`, 14 recortes, prova por reversão)
+
+- **Página 07, seção "Progresso gravado neste navegador":** caixa `#backup`
+  (antes da caixa de zerar) com os botões **Salvar backup**, **Restaurar
+  backup** e **Desfazer a última restauração** (este só aparece quando existe
+  a cópia), um `<input type="file">` escondido e a linha de estado
+  `#backupMsg`.
+- **Salvar backup:**
+  - arquivo `autos-do-estudo-backup-AAAA-MM-DD.json` com
+    `{app:'autos-do-estudo', formato:1, versao, exportadoEm, chaves:{'trt4:…': texto exato}}`;
+  - entram as 6 chaves do progresso (`CHAVES` + `trt4:marcas`);
+  - com tela de toque (`pointer: coarse`) e `navigator.canShare`, usa
+    `navigator.share` com o arquivo (no iPad: "Salvar em Arquivos"). Se a
+    janela for fechada (`AbortError`): "Backup não salvo". No computador:
+    `<a download>` com blob.
+- **Restaurar backup:**
+  - lê o arquivo e confere: JSON, `app`, `formato`, só as 6 partes
+    conhecidas, cada parte com JSON válido e a forma que o carregador aceita;
+    qualquer falha recusa tudo com "Nada foi alterado";
+  - a janela `#dlgBackup` mostra a tabela "No arquivo × Neste navegador
+    agora × Ao restaurar";
+  - o que o arquivo traz substitui; o que ele não traz fica como está;
+  - antes de trocar, grava `trt4:antesDaRestauracao` = `{em, chaves:{parte: texto ou null}}`
+    (chave nova, só acréscimo); se não conseguir gravar, desfaz e avisa;
+  - depois `location.reload()`, com o recado no `sessionStorage`
+    (`trt4-backup-aviso`).
+- **Desfazer a última restauração:** janela com "Antes da restauração ×
+  Agora". Volta cada parte (`null` = apaga a chave), apaga a cópia e
+  recarrega.
+- **`LS.lerCru` e `LS.gravarCru`**, novos (texto exato; `gravarCru` relê
+  para confirmar).
+- **Zerar progresso:** a janela diz que apaga também a cópia de antes da
+  restauração (se houver) e que "a única cópia desses dados é um backup que
+  você tenha salvo antes". `zerarProgresso()` chama
+  `window.atualizarBackupUI`.
+- **Página 03, "Meu desempenho":** link "cópia de segurança, na página 07"
+  (`data-pg-ir="metodo" data-pg-anc="backup"`). O tratador geral de cliques
+  passou a repassar `data-pg-anc` para `abrirPagina(pg, anc)`.
+- **Marca-texto pintado só ao abrir o tópico:** tópico fechado com marcações
+  ganha um `toggle` de uma vez só. Tópico sem marcação continua com a barra
+  criada na hora. Medição (`backup_2010/medir_marcas.js`), com marcações nos
+  64 tópicos:
+  - índice ~320 ms;
+  - abertura do app ~600 ms → ~260 ms (CPU 1×);
+  - abertura ~5,7 s → ~3,1 s (CPU 4×);
+  - igual a sem marcações.
+- **Comentário da `IN39_HTML`** corrigido: o conteúdo não é mais
+  "inalterado"; 4 `note` mudaram em 20/10.
+- **Aviso no 03.1:** "Atualização de 20/10/2026 — cópia de segurança (backup)
+  do progresso — vale desde já".
+- **v27** com `node versao.js INDEX SW 27`.
+
+## Testes
+
+- `backup_2010/teste_backup.js VELHO NOVO`, por HTTP (`servir.js`,
+  `/velho.html` e `/novo.html` na mesma origem):
+  - v26 → v27 sem perda;
+  - salvar → o arquivo tem as 6 chaves com o texto exato;
+  - zerar → restaurar → as 6 chaves voltam iguais ao backup;
+  - a cópia de antes = o estado zerado;
+  - o app lê os dados (80 blocos, 15 respostas);
+  - desfazer → volta ao estado zerado (o app grava `historicoQuestoes = {}`
+    ao abrir; vazio = ausente) e o botão some;
+  - JSON estragado, arquivo de outro app e parte estragada são recusados sem
+    mudar nada;
+  - cancelar não muda nada;
+  - arquivo sem marcações: as marcações daqui ficam e o resto vem do
+    arquivo.
+- `backup_2010/teste_backup_ipad.js URL ARQ`:
+  - tela de toque com `navigator.share` simulado: compartilha o arquivo, não
+    baixa e mostra "Backup não salvo" se a janela fecha;
+  - o link da página 03 leva à caixa;
+  - botões de 44 px dentro da tela a 375 e 820 px;
+  - a janela cabe, sem rolagem lateral e com o botão visível.
+- `juris_1210/teste_marca_1210.js` (marcar, recarregar, marcação antiga e
+  varredura de 195.259 palavras: 0 erros) e `teste_modo_2010.js` (cópia do
+  `teste_modo.js` que reabre os dois tópicos marcados antes de comparar;
+  com a pintura sob demanda, tópico fechado não tem `mark` desenhado).
+- Conferidores com os números de sempre; `checar2` sem perda; `CHAVES`
+  iguais.
+- **Armadilha do teste:** o Edge sem interface **ignora**
+  `Browser/Page.setDownloadBehavior` e grava os downloads em
+  `C:\Users\thale\Downloads`. Sete arquivos de teste foram parar lá e
+  foram movidos para `backup_2010/downloads_reais/`. **Nunca disparar
+  download real em teste**: trocar `HTMLAnchorElement.prototype.click` só
+  para os links com `download` e chamar o original para os demais (trocar
+  para todos quebra os links do app).
+
+---
+
 # Retomada — estado em 2026-10-20 (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira e, se precisar de detalhe, os Adendos 15 a 21
+1. Ler esta seção inteira e, se precisar de detalhe, os Adendos 15 a 22
    (logo acima). O plano em ondas está no Adendo 21 e em
    `C:\Users\thale\.claude\plans\woolly-finding-squid.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
    - `git status --short` e `git log --oneline -3` no worktree (esperado:
-     árvore limpa, último commit = o do Adendo 21 ou posterior);
+     árvore limpa, último commit = o do Adendo 22 ou posterior);
    - `git fetch origin` e `git log --oneline -3 origin/main` (esperado: merge
-     do PR do Adendo 21 ou posterior);
+     do PR do Adendo 22 ou posterior);
    - pasta principal: `git -C <raiz> merge --ff-only origin/main` depois de
      cada PR (a raiz não tem mais cópia solta do HANDOFF);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (esperado: `autos-do-estudo-v26` ou maior);
+     (esperado: `autos-do-estudo-v27` ou maior);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo). Não aplicar
    nenhuma delas sem a resposta.
-4. O próximo trabalho é a **Onda 2 (v27, backup)**, depois a **Onda 3 (v28:
+4. O próximo trabalho é a **Onda 3 (v28:
    Lote 3, questões e RA TRT4 05/2022 — esta até 05/11)** e a **Onda 4 (v29,
    busca no material)**. Uma onda por vez, com o commit do usuário entre elas.
 
-## ESTADO EM 20/10/2026 — Adendo 21, Onda 1 pronta (v26), esperando o commit
+## ESTADO EM 20/10/2026 — Adendo 22, Onda 2 pronta (v27), esperando o commit
 
 - **Commits:** Lote 2 em `d453bce` (v20); modo de estudo em `f77b6c8` (v21,
   PR #16); faixa de versão nova em `9d8cddf` (v22, PR #17); súmulas cortadas e
   marca-texto em `ea4991e` (v23, PR #18); botão do marca-texto acima em
   `e8540d4` (v24, PR #19); barras "Contra a meta" em `734f332` (v25, PR #20).
   Todos no `main`. O GitHub Pages servia a **v25** em 20/10.
-- **Pendente de commit:** Adendo 21, Onda 1 (`index.html`, `sw.js` v26 e
+- **Onda 1 (v26):** commitada em `8a2a6fa` no ramo; **o PR ainda não tinha
+  sido mesclado em 20/10** (o Pages servia a v25).
+- **Pendente de commit:** Adendo 22, Onda 2 (`index.html`, `sw.js` v27 e
   este arquivo). Testado. Esperar o commit antes de mexer no `index.html` de
-  novo. Próximas versões: Onda 2 v27, Onda 3 v28, Onda 4 v29.
+  novo. Próximas versões: Onda 3 v28, Onda 4 v29.
 - **iPad:** desde a v23 as versões chegam pela faixa "Versão nova do
   aplicativo pronta" (a v22 instalou a faixa). **Nunca** sugerir apagar o ícone nem
   "Dados de Sites", porque isso apaga o progresso, que só existe no aparelho.
@@ -2619,8 +2720,8 @@ Depois de cada PR do usuário, fazer o `--ff-only` na raiz.
 - **Worktree:** `C:\Users\thale\Documents\GitHub\AppEstudos\.claude\worktrees\questoes-historico-in39-139338`.
 - **Branch:** `claude/lei-8112-adicionais`. O usuário abre o PR para o `main`
   depois de cada commit; o GitHub Pages publica o `main`.
-- **Último commit:** `734f332` (Adendo 20, v25, no `main` pelo PR #20). O
-  Adendo 21 (v26) está no worktree, esperando o commit.
+- **Último commit:** `8a2a6fa` (Adendo 21, v26), no ramo, ainda sem PR
+  mesclado em 20/10. O Adendo 22 (v27) está no worktree, esperando o commit.
 - **Pasta principal:** `C:\Users\thale\Documents\GitHub\AppEstudos`. Tem
   `Leis/`, `Provas/` e `Jurisprudência/sumulas_stj.md` (fora do git). Desde
   20/10 fica igual ao `origin/main` por `merge --ff-only` (inclusive este
@@ -2639,7 +2740,7 @@ Depois de cada PR do usuário, fazer o `--ff-only` na raiz.
     ilustração da opção A;
   - `juris_1210/`: Adendo 18 (aplicação, conferidor de jurisprudência do TST
     pelo portal, testes do marca-texto e da atualização); `bak_1210/`: o
-    `index.html` e o `sw.js` de antes; `botao_1410/` e `bak_1410/`: Adendo 19; `meta_1710/` e `bak_1710/`: Adendo 20; `parecer_2010/` e `bak_2010/`: Adendo 21;
+    `index.html` e o `sw.js` de antes; `botao_1410/` e `bak_1410/`: Adendo 19; `meta_1710/` e `bak_1710/`: Adendo 20; `parecer_2010/` e `bak_2010/`: Adendo 21; `backup_2010/` e `bak_2010b/`: Adendo 22;
   - `fontes/` está **vazia**: o `tst.json` (Livro de Súmulas) sumiu. Os
     scripts antigos que o leem (`conferir_juris_caixas.js`, `fidelidade.js`,
     `conferir_casos.js`) não rodam mais; usar `juris_1210/conferir_juris_tst.js`.
@@ -2753,7 +2854,7 @@ Depois de cada PR do usuário, fazer o `--ff-only` na raiz.
    negativo `--estragar N`).
 8. **Testes:**
    - `teste_0710.js`, `teste_0810.js`, `teste_modo.js ARQ` (marca-texto e P17) e `teste_faixa.js` (faixa de versão nova, com servidor local), com Edge sem interface (`cdp.js`);
-   - `juris_1210/teste_marca_1210.js ARQ` (marca-texto em trecho repetido e varredura de todas as palavras) e `juris_1210/teste_atualiza_1210.js VELHO NOVO` (atualização sem perda de dado, 04.2, 03.1, 375 px) e `botao_1410/teste_botao_1410.js ARQ` (posição do botão do marca-texto) e `meta_1710/teste_barras_1710.js ARQ` (barras "Contra a meta" medidas na tela). Teste de tela mede a geometria, não só o DOM. Caminhos Windows com `/` (`cygpath -m`). Nos testes, rolar com `behavior:'instant'`: a página tem rolagem suave e o clique cai fora do alvo;
+   - `juris_1210/teste_marca_1210.js ARQ` (marca-texto em trecho repetido e varredura de todas as palavras) e `juris_1210/teste_atualiza_1210.js VELHO NOVO` (atualização sem perda de dado, 04.2, 03.1, 375 px) e `botao_1410/teste_botao_1410.js ARQ` (posição do botão do marca-texto), `backup_2010/teste_backup.js` e `teste_backup_ipad.js` (backup, por HTTP com `servir.js`; nunca download real) e `meta_1710/teste_barras_1710.js ARQ` (barras "Contra a meta" medidas na tela). Teste de tela mede a geometria, não só o DOM. Caminhos Windows com `/` (`cygpath -m`). Nos testes, rolar com `behavior:'instant'`: a página tem rolagem suave e o clique cai fora do alvo;
    - **versão do app:** `node versao.js INDEX SW` (meta `versao-app` = `CACHE` do `sw.js`); para publicar versão nova, `node versao.js INDEX SW NN`;
    - `neg_res415.js`: modelo de teste negativo de norma nova no quadro;
    - nas buscas de texto, usar `\uXXXX`;
