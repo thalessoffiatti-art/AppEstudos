@@ -2748,56 +2748,183 @@ ficam para a **v29**, e a busca no material (Onda 4) passa a **v30**.
 - Heredoc no bash comeu as barras invertidas de novo; scripts com regex, só
   pela ferramenta Write/Edit.
 
+# Adendo 24 — 2026-10-21 (Onda 3, partes B e C: resto do Lote 3 e 23 questões, v29)
+
+## O pedido
+
+"já fiz o commit, siga para as partes B e C" (v28 em `4b7536a`, PR #23,
+merge `d32da4e`, publicada) e, depois de compactar, "continue de onde parou".
+Tudo do trabalho fica em `scratchpad/lote3/` (o `PLANO.md` de lá tem o
+registro do caminho).
+
+## Fontes
+
+- **IN 41/2018 do TST** (`fontes_2110/in41/in41.pdf`, JusLaboris handle
+  138949, sem alteração registrada; download autorizado no plano de 06/10):
+  `in41_extrair.js` → `leis/IN41.json`, 21 artigos; leitor B e `pdftotext`
+  iguais; 4 rodapés tirados. A IN 41-A (Res. 223/2024, handle 242697) trata
+  de recursos em IRDR/IAC e ficou fora.
+- **Portal do TST** (`lote3/tst_portal.js`, Edge sem interface, nada gravado
+  em disco; devolve `{SUM, OJ}` com situação e texto). Achados: Súmula 372, I,
+  cancelada (2025); OJ 270 da SDI-1 cancelada; **OJ 227 da SDI-1
+  (denunciação da lide) cancelada em 22/11/2005**.
+
+## Erros antigos achados e corrigidos
+
+- **`dpc-terceiros`, caixa "Pegadinha clássica — e o filtro trabalhista":**
+  dizia que a IN 39/2016 considera inaplicáveis a denunciação da lide e o
+  chamamento ao processo. A IN 39 não trata dos dois (arts. 2º e 3º
+  conferidos no texto do app, `lote3/_in39b.js`). Trocada (item C8d), com a
+  OJ 227 cancelada em 2005.
+- **Base de leis** (`lote3/corrigir_base_2110.js`; `CORRECOES.json` com **13
+  registros**; cópias em `bak_2110/`). Defeitos da marcação do Planalto ou do
+  extrator, achados pela varredura de fim de linha e de começo de artigo
+  (`lote3/_partidas.js`, `_rotulos_chave.js`):
+  - CF 96, parágrafo único: "docaputdeste" → "do caput deste";
+  - CF 100, § 11, e CLT 394-A, II e III: ",," → "," (vírgula dupla que
+    sobra do trecho tachado);
+  - CLT 416: "art. 422" repetido no fim, tirado;
+  - CLT 511: vírgula solta, tirada;
+  - CLT 579: "50,00" solto no fim, tirado;
+  - Lei 11.419, art. 13: título "CAPÍTULO IV DISPOSIÇÕES GERAIS E FINAIS"
+    grudado ao § 3º (vetado), tirado;
+  - Lei 13.300, art. 1º: "Federa l." → "Federal." (fora de quadro);
+  - Lei 11.416, art. 30: guardava a tabela do anexo; virou
+    "Art. 30. (Revogado pela Lei nº 14.523, de 2023)" e saiu do quadro
+    `leg-outros`.
+  - Cada artigo corrigido que está em quadro ganha nota (`NOTA_ARTIGO` no
+    gerador): CF:96, CF:100, CLT:394-A, CLT:416, CLT:511, CLT:579,
+    L11419:13.
+- **Fiéis ao Planalto, não mexidos:** artigos do CPC sem ponto final; Lei
+  4.717, art. 4º, VIII, a ("regulamentares,, regimentais … gerias").
+
+## O que entrou no `index.html` (`lote3/aplicar_lote3.js`, 23 recortes, prova por reversão; conteúdo em `lote3/conteudo.js`)
+
+| Item | Tópico | O quê |
+|---|---|---|
+| C1 | `const-estado` | interpretação e vigência das normas constitucionais |
+| C2 | `dt-remuneracao` | desvio de função, substituição e acúmulo (OJ 125, Súm. 159 e 275, CLT 456) |
+| C3 | `dpt-especiais` | sentença normativa: extensão, cumprimento e revisão (CLT 868 a 875; Súm. 246 em caixa) |
+| C4 | `dpt-pje` | princípios do processo do trabalho, audiências, IN 41/2018 |
+| C5 | `dpc-especiais` | mandado de injunção e habeas data |
+| C6a/b/c | `dpt-execucao` | caixa "Leitura integral" trocada (as leis agora estão no quadro); bens impenhoráveis e bem de família |
+| C7 | `dt-dano` | renúncia e transação; igualdade e não discriminação (Lei 9.029) |
+| C8a–g | revisão (semanas 1 a 6) | jurisdição; elementos da ação, classificação e relação processual; sujeitos do processo (síntese) e a correção da IN 39; fontes heterônomas × autônomas; poderes do empregador; *jus variandi* |
+
+- **Manual:** S12 segunda + "IN 41/2018 do TST (a instrução inteira)" (marca
+  continua "Material + leitura da norma": a Res. CSJT 185/2017 não tem texto
+  na base); S12 quarta + "Lei 13.300/2016, arts. 2º, 3º, 8º, 9º, 12 e 13 ·
+  Lei 9.507/1997, arts. 7º, 8º e 21"; S12 sexta: "Só na lei — o material não
+  cobre" → **"O material basta"** (era a única linha "Só na lei"); S13 quarta
+  (`dt-dano`) + "Lei 9.029/1995 (a lei inteira)".
+- **Quadros novos:** IN 41 (21 artigos) em `dpt-pje`; Leis 13.300 e 9.507 em
+  `dpc-especiais`; Leis 6.858, 5.584 (arts. 1º a 13, 19 e 20), 8.009 e CPC
+  833 em `dpt-execucao`; Lei 9.029 em `dt-dano`.
+- **23 questões** (`lote3/questoes.js`; o campo `provas` não vai para o app):
+  DT80–82 `dt-seguranca` (ano 2015), DT83–85 `dt-coletivo` (2022), DT86–90
+  `dt-dano` (2022; DT87 liga TST-S-276 e DT90 liga TST-S-443), PC63–68
+  `dpc-especiais` (2022), PC69–74 `dpc-teoria` (2011). As DT entram antes de
+  "LÍNGUA PORTUGUESA"; as PC antes de `PT_T65`. 520 → **543**.
+- **Aviso no 03.1:** "Atualização de 21/10/2026 — material das semanas 11 a
+  13, 23 questões novas e correções — vale desde já" (8 itens: semanas 11,
+  12 e 13; revisão geral; questões; correção da IN 39; correções de quadro;
+  minutos a mais). Antes do aviso da RA 05/2022.
+- **Leitura a mais** (palavras novas ÷ 55): S11 seg +12 min, ter +8, qua +5;
+  S12 seg +33, qua +19, sex +48; S13 qua +20; revisão geral +23.
+- **v29** com `node versao.js INDEX SW 29`.
+
+## Pipeline (`lote3/patch_pipeline_lote3.js`; cópias anteriores em `scratchpad/bak_2110b/`)
+
+- Chave `IN41` em `gerar_lei_seca` (`NOME` 'IN 41/2018 do TST', `URL`
+  handle 138949, `FONTE` 'TST', `NOTA_FONTE`), `auditar_manual`,
+  `verif_independente`, `conferir_lei_seca` (`NOME2K`), `conferir_rotulos` e
+  `triagem_rot`. Data de cópia 21/10/2026 também para a IN 41.
+- `NOTA_ARTIGO` para os 7 artigos corrigidos que estão em quadro.
+
+## Verificação
+
+- Ensaio → real, `cmp` idêntico (`index.html` e `sw.js`).
+- `lote3/provas.js`: **165 afirmações** do texto novo provadas contra a fonte
+  (base de leis, IN 41, portal do TST, 04.2), 0 falha; negativos: 146 locais
+  acusados, mais dígito, maiúscula e ausência, mais amostras do portal.
+- `lote3/conferir_questoes.js INDEX lote3/questoes.js`: 23 questões, **116
+  trechos** provados (lei da base, portal do TST ou 04.2), formato, âncora,
+  cota e "art. N citado tem prova"; `--estragar`: 114 de 114 acusados.
+- `conferir_lei_seca`: 0 falha, **2981 artigos** (+64; −L11416 30);
+  `conferir_nada_perdido`: 0; `auditar_manual`: **130 "basta"**, 0 ausente,
+  0 incompleto; `verif_independente`: 25 linhas com 26 "NÃO LIDO" (iguais à
+  v28); `checar2`: nada perdido, `CHAVES` iguais; `conferir_rotulos`: 41
+  diferenças, uma a menos que a base (L11419 13 ficou coerente); `grudados`:
+  7; `selos`: iguais à v28; `comparar_manifestos`: só os 8 artigos
+  corrigidos mudaram; RA 05 (`conferir_texto_ra05.js`): 31/0;
+  `juris_1210/conferir_juris_tst.js`: **173 de 173**, "NENHUM PROBLEMA".
+- Notas de correção aparecem nos quadros certos (`lote3/_notas.js`).
+- `lote3/teste_lote3.js VELHO NOVO` (Edge sem interface): v28 → v29 com as 5
+  chaves `trt4:` iguais; aviso com 8 itens; as 4 linhas do manual; as 11
+  seções novas; os quadros (IN 41, 13.300/9.507, execução, 9.029; Lei 11.416
+  sem a tabela e sem o art. 30; CF 96 corrigido); marcação na frase antiga da
+  IN 39 vai para "não foi achada" e continua guardada, a de um trecho que
+  ficou continua pintada; DT80 a PC74 na lista; 375 e 820 px sem rolagem
+  lateral (as tabelas de 3 colunas rolam por dentro no celular); console sem
+  erro. Telas em `lote3/telas/`.
+
+## Armadilhas novas
+
+- **Resíduo do extrator só aparece no fim ou no começo da linha:** "50,00",
+  "art. 422", título de capítulo e tabela de anexo grudados. O conferidor
+  compara a base com ela mesma e não vê. Antes de pôr lei nova no quadro,
+  rodar a varredura de começo de artigo (`_partidas.js`) e de fim de linha.
+- Texto antigo do app pode afirmar o que a norma não diz (IN 39 ×
+  denunciação): provar também o texto vizinho ao que se acrescenta.
+
 ---
 
 # Retomada — estado em 2026-10-21 (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira e, se precisar de detalhe, os Adendos 15 a 23
+1. Ler esta seção inteira e, se precisar de detalhe, os Adendos 15 a 24
    (logo acima). O plano em ondas está no Adendo 21 e em
    `C:\Users\thale\.claude\plans\woolly-finding-squid.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
    - `git status --short` e `git log --oneline -3` no worktree (esperado:
-     árvore limpa e último commit = o do Adendo 23, v28; em 21/10 o
-     Adendo 23 estava no worktree, esperando o commit, e o último commit era
-     `5238f05`, Adendo 22, v27);
+     árvore limpa e último commit = o do Adendo 24, v29; em 21/10 o
+     Adendo 24 estava no worktree, esperando o commit, e o último commit era
+     `4b7536a`, Adendo 23, v28);
    - `git fetch origin` e `git log --oneline -3 origin/main` (esperado: merge
-     do PR do Adendo 23; em 21/10 o `main` estava no PR #21, `1c72dfa`, v26:
-     os PRs da v27 e da v28 ainda não tinham sido mesclados);
+     do PR do Adendo 24; em 21/10 o `main` estava no PR #23, `d32da4e`, v28);
    - pasta principal: `git -C <raiz> merge --ff-only origin/main` depois de
      cada PR (a raiz não tem mais cópia solta do HANDOFF);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (esperado: `autos-do-estudo-v28` ou maior);
+     (esperado: `autos-do-estudo-v29` ou maior; **se continuar na v28 perto
+     de 08/11, lembrar o usuário**: o Lote 3 é da semana 11, que começa em
+     09/11);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo). Não aplicar
    nenhuma delas sem a resposta.
-4. **PRÓXIMO PASSO IMEDIATO: Onda 3, partes B e C (v29)**, roteiro na seção
-   "Onda 3 — roteiro detalhado", mais abaixo: questões novas e resto do Lote
-   3 (prazo **08/11**). A parte A (RA TRT4 05/2022) saiu como **v28**
-   (Adendo 23). **Antes de mexer no `index.html`, esperar o commit da v28.**
-   Depois, a **Onda 4 (busca no material, v30)**. Uma onda por vez, com o
-   commit e o PR do usuário entre elas. Ao terminar cada onda: HANDOFF
-   (adendo + Retomada), memória, `robocopy` da cópia dos scripts e, depois
-   do PR, `--ff-only` na pasta principal.
+4. **PRÓXIMO PASSO: Onda 4 (busca no material, v30), só quando o usuário
+   pedir e depois do commit da v29.** A Onda 3 terminou em 21/10: parte A
+   na v28 (Adendo 23) e partes B e C na **v29** (Adendo 24). Roteiro da
+   Onda 4 no fim da seção "Onda 3 — roteiro detalhado", mais abaixo, e no
+   plano. Uma onda por vez, com o commit e o PR do usuário entre elas. Ao
+   terminar cada onda: HANDOFF (adendo + Retomada), memória, `robocopy` da
+   cópia dos scripts e, depois do PR, `--ff-only` na pasta principal.
 
-## ESTADO EM 21/10/2026 — v26 publicada; v27 commitada (PR pendente); v28 pronta, esperando o commit
+## ESTADO EM 21/10/2026 — v28 publicada; v29 pronta, esperando o commit
 
 - **Commits:** Lote 2 em `d453bce` (v20); modo de estudo em `f77b6c8` (v21,
   PR #16); faixa de versão nova em `9d8cddf` (v22, PR #17); súmulas cortadas e
   marca-texto em `ea4991e` (v23, PR #18); botão do marca-texto acima em
   `e8540d4` (v24, PR #19); barras "Contra a meta" em `734f332` (v25, PR #20).
-  Onda 1 do parecer em `8a2a6fa` (v26, **PR #21, merge `1c72dfa`**). Todos
-  no `main`. O GitHub Pages servia a **v26** em 21/10.
-- **Onda 2 (v27, backup):** commitada em `5238f05` e enviada ao ramo
-  `claude/lei-8112-adicionais`; **o PR ainda não tinha sido mesclado em
-  21/10**. Lembrar o usuário se o site continuar na v26.
-- **Pasta principal:** em `1c72dfa` (v26) desde 21/10, por `--ff-only`.
-- **Pendente de commit:** Adendo 23, Onda 3 parte A, **v28** (`index.html`,
-  `sw.js` e este arquivo). Testado. Esperar o commit antes de mexer no
-  `index.html` de novo.
-- Próximas versões: Onda 3 partes B e C **v29**, Onda 4 **v30**
-  (`node versao.js INDEX SW NN`).
+  Onda 1 do parecer em `8a2a6fa` (v26, PR #21, merge `1c72dfa`); backup em
+  `5238f05` (v27, PR #22, merge `4c185c4`); RA TRT4 05/2022 em `4b7536a`
+  (v28, **PR #23, merge `d32da4e`**). Todos no `main`. O GitHub Pages
+  servia a **v28** em 21/10.
+- **Pasta principal:** em `d32da4e` (v28) desde 21/10, por `--ff-only`.
+- **Pendente de commit:** Adendo 24, Onda 3 partes B e C, **v29**
+  (`index.html`, `sw.js` e este arquivo). Testado. Esperar o commit antes de
+  mexer no `index.html` de novo. **O PR tem de estar mesclado até 08/11.**
+- Próxima versão: Onda 4 **v30** (`node versao.js INDEX SW NN`).
 - **iPad:** desde a v23 as versões chegam pela faixa "Versão nova do
   aplicativo pronta" (a v22 instalou a faixa). **Nunca** sugerir apagar o ícone nem
   "Dados de Sites", porque isso apaga o progresso, que só existe no aparelho.
@@ -2810,9 +2937,9 @@ ficam para a **v29**, e a busca no material (Onda 4) passa a **v30**.
 | 8 | 19/10 | quarta 21/10: `dpc-provas`, com as 6 questões novas (PC57–PC62, v26) |
 | 9 | 26/10 | blocos que receberam texto no Lote 2 |
 | 10 | 02/11 | sexta 06/11: política judiciária (Res. CSJT 415/2025 e RA TRT4 05/2022, que entrou na v28; o PR tem de estar mesclado até 05/11) |
-| 11 | 09/11 | **o Lote 3 tem de estar publicado antes** |
-| 12 | 16/11 | quarta 18/11: `dt-seguranca` (P17) e `dpc-especiais` (precisam de questões novas) |
-| 13 | 23/11 | quarta 25/11: `dt-coletivo` e `dt-dano` (P17; precisam de questões novas); revisão geral; termina em 28/11 |
+| 11 | 09/11 | **o Lote 3 (v29) tem de estar publicado antes** |
+| 12 | 16/11 | quarta 18/11: `dt-seguranca` (P17) e `dpc-especiais` (questões novas na v29: DT80–82, PC63–68) |
+| 13 | 23/11 | quarta 25/11: `dt-coletivo` e `dt-dano` (P17; questões novas na v29: DT83–90); revisão geral (PC69–74 em `dpc-teoria`); termina em 28/11 |
 
 ### Decisões que esperam o usuário (não aplicar sem resposta)
 
@@ -2874,8 +3001,8 @@ ficam para a **v29**, e a busca no material (Onda 4) passa a **v30**.
 - **Worktree:** `C:\Users\thale\Documents\GitHub\AppEstudos\.claude\worktrees\questoes-historico-in39-139338`.
 - **Branch:** `claude/lei-8112-adicionais`. O usuário abre o PR para o `main`
   depois de cada commit; o GitHub Pages publica o `main`.
-- **Último commit:** `5238f05` (Adendo 22, v27), no ramo, sem PR mesclado
-  em 21/10. O Adendo 23 (v28) está no worktree, esperando o commit.
+- **Último commit:** `4b7536a` (Adendo 23, v28), mesclado pelo PR #23. O
+  Adendo 24 (v29) está no worktree, esperando o commit.
 - **Pasta principal:** `C:\Users\thale\Documents\GitHub\AppEstudos`. Tem
   `Leis/`, `Provas/` e `Jurisprudência/sumulas_stj.md` (fora do git). Desde
   20/10 fica igual ao `origin/main` por `merge --ff-only` (inclusive este
@@ -2886,13 +3013,15 @@ ficam para a **v29**, e a busca no material (Onda 4) passa a **v30**.
   - `fontes_0610/`, `fontes_0710/` e `fontes_0810/`: PDFs e HTML baixados
     (`fontes_0810/`: Res. 415, `ra05/` compilada da RA 05/2022, `ra13/` RA
     13/2026);
-  - `leis/`: a base, agora com `IN40.json`, `RES415.json`, `RES415AN.json`
-    (Anexo da Res. 415) e `CORRECOES.json` com 3 registros;
+  - `leis/`: a base, agora com `IN40.json`, `IN41.json`, `RES415.json`,
+    `RES415AN.json` (Anexo da Res. 415), `RA05.json` e `CORRECOES.json` com
+    13 registros;
   - `provas_raw/questoes.json`: as 240 questões das 4 provas do TRT4, em ordem
     de leitura (`provas_colunas.py`); `q.js ANO/N` imprime uma questão;
   - `faixa/`: versões e servidor do `teste_faixa.js`; `opcao_a/`: a
     ilustração da opção A;
-  - `fontes_ra05/` (RAs 35/2025, 58/2025, 37/2026, 24/2022 e 23/2024, PDF e os dois textos) e `ra05/` (montador, conferidores, aplicação e testes da RA 05/2022; Adendo 23); `bak_2110/`: `index.html`, `sw.js` e scripts do pipeline de antes do Adendo 23;
+  - `fontes_ra05/` (RAs 35/2025, 58/2025, 37/2026, 24/2022 e 23/2024, PDF e os dois textos) e `ra05/` (montador, conferidores, aplicação e testes da RA 05/2022; Adendo 23); `bak_2110/`: `index.html`, `sw.js` e scripts do pipeline de antes do Adendo 23 (e as leis de antes das correções do Adendo 24);
+  - `fontes_2110/in41/` (PDF da IN 41/2018) e `lote3/` (conteúdo, provas, questões, conferidores, aplicação e teste do Adendo 24; `PLANO.md` com o registro); `bak_2110b/`: `index.html`, `sw.js` e scripts do pipeline de antes do Adendo 24;
   - `juris_1210/`: Adendo 18 (aplicação, conferidor de jurisprudência do TST
     pelo portal, testes do marca-texto e da atualização); `bak_1210/`: o
     `index.html` e o `sw.js` de antes; `botao_1410/` e `bak_1410/`: Adendo 19; `meta_1710/` e `bak_1710/`: Adendo 20; `parecer_2010/` e `bak_2010/`: Adendo 21; `backup_2010/` e `bak_2010b/`: Adendo 22;
@@ -2915,7 +3044,10 @@ ficam para a **v29**, e a busca no material (Onda 4) passa a **v30**.
     o código de saída 1 do robocopy significa "copiado com sucesso"):
     `robocopy "<scratchpad>" "C:\Users\thale\Documents\GitHub\AppEstudos\ferramentas-scratchpad" /E /XD perfil-headless* /R:1 /W:1`.
 
-## Lote 3 — até 08/11 (semanas 11 a 13 e semanas passadas), versão v28 (Onda 3)
+## Lote 3 — até 08/11 (semanas 11 a 13 e semanas passadas) — FEITO em 21/10 na v29 (Adendo 24)
+
+Lista original, mantida como registro (o que valeu está no Adendo 24; a IN
+41-A ficou fora porque trata de recursos em IRDR/IAC):
 
 1. **Terça, semana 11 (`const-estado`):** interpretação e vigência das normas
    constitucionais.
@@ -2962,8 +3094,10 @@ que o roteiro não previa):
    conferidor de afirmações (modelo `conferir_texto_res415.js`), com teste
    negativo.
 
+**B e C — FEITAS em 21/10 (Adendo 24, v29).** Registro do roteiro:
+
 **B. Questões novas — v29** (até 6 por tópico; modelo `parecer_2010/q_dpc_provas.js`
-e `conferir_q_novas.js`):
+e `conferir_q_novas.js`, generalizado em `lote3/conferir_questoes.js`):
 - `dt-seguranca` +3 (tem 3) e `dpc-especiais` +6 (tem 0): semana 12;
 - `dt-coletivo` +3 (tem 3) e `dt-dano` +5 (tem 1): semana 13, junto com o
   texto novo do Lote 3 (renúncia e transação, não discriminação, Lei 9.029);
@@ -3052,15 +3186,25 @@ do marca-texto. Testes com "art. 855-B", "Súmula 463" e "reconvenção".
      `node ra05/conferir_texto_ra05.js` (31 afirmações; `--estragar N`),
      `node ra05/neg_ra05.js` (6 de 6, sobre `ensaio.html`) e
      `node ra05/teste_ra05.js VELHO NOVO` (tela);
+   - Lote 3 (Adendo 24): `node lote3/conferir_questoes.js "$W" DADOS.js`
+     (questões novas de qualquer lei da base, do portal do TST ou da 04.2:
+     `provas:[['clt:223-G','…'], ['tst:SUM-443','…'], ['juris:ID','…']]`;
+     `--estragar Q P` para o negativo; `--sem-portal` pula o TST; substitui o
+     `parecer_2010/conferir_q_novas.js`); `lote3/provas.js` (modelo de
+     conferidor de afirmações com fontes mistas); `lote3/tst_portal.js`
+     (`lerPortal()` → `{SUM, OJ}` com situação e texto, sem gravar);
+     `node lote3/teste_lote3.js VELHO NOVO` (tela);
    - `node juris_1210/conferir_juris_tst.js "$W"` (lê o portal do TST num Edge
-     sem interface, uns 2 minutos): "NENHUM PROBLEMA" (172 de 172). Toda
+     sem interface, uns 2 minutos): "NENHUM PROBLEMA" (173 de 173). Toda
      súmula, OJ ou tese nova do TST no app passa por ele: item transcrito vai
      até o fim; item de fora vai no campo `itens` do cartão ou no título do
      quadro ("Súmula N, I a III, do TST").
-5. **Números atuais (v28):** 52 tópicos com quadro, 2918 artigos, 129 linhas
-   "basta", 4 linhas "Material + leitura da norma", 159 blocos, 520 questões,
-   226 enunciados na 04.2; `verif_independente`: 25 linhas com 26 "NÃO
-   LIDO".
+5. **Números atuais (v29):** 52 tópicos com quadro, 2981 artigos, 130 linhas
+   "basta", 4 linhas "Material + leitura da norma", nenhuma "Só na lei", 159
+   blocos, 543 questões, 226 enunciados na 04.2, `CORRECOES.json` com 13
+   registros; `verif_independente`: 25 linhas com 26 "NÃO LIDO";
+   `conferir_rotulos`: 41 diferenças (a base `rotulos_base_0710.txt` tem 42;
+   a L11419 13 deixou de diferir).
    - `conferir_lei_seca.js "$W"` compara com o manifesto **atual**: contra um
      arquivo antigo, acusa "DIFERE DO MANIFESTO" por construção.
    - O resumo final do `auditar_manual.js` conta só as linhas "basta"; o
@@ -3069,8 +3213,13 @@ do marca-texto. Testes com "art. 855-B", "Súmula 463" e "reconvenção".
    - `node extrair3.js fontes/x.htm leis/X.json`;
    - `node leitor_b.js leis/X.txt leis/X.json` (tem de dar "iguais");
    - conferir os artigos com letra contra os cabeçalhos da página.
+   - **Antes de pôr lei da base num quadro**, varrer resíduo do extrator no
+     começo do artigo (`lote3/_partidas.js`, `lote3/_rotulos_chave.js`) e no
+     fim das linhas (número, remissão, título de capítulo ou tabela grudados).
+     Correção vai em `leis/CORRECOES.json` e ganha `NOTA_ARTIGO` no gerador
+     (modelo: `lote3/corrigir_base_2110.js` e `lote3/patch_pipeline_lote3.js`).
 7. **Norma em PDF do TST:** modelo `in40_extrair.js` (dois leitores e
-   conferência com o ato que alterou). PDF justificado (palavra por linha):
+   conferência com o ato que alterou); `in41_extrair.js` (com rodapés). PDF justificado (palavra por linha):
    modelo `res415_extrair.js` (remonta parágrafos e prova que nada se
    perdeu). Texto novo sobre norma: um conferidor de afirmações como
    `conferir_texto_res415.js` (trecho da fonte × frase do texto, com teste
@@ -3103,6 +3252,12 @@ do marca-texto. Testes com "art. 855-B", "Súmula 463" e "reconvenção".
   pesado da semana 10: Res. 415 (17 artigos, 1.128 palavras) + RA 05/2022
   (~720 palavras) para 15 minutos.
 - **Tabelas de três colunas no celular:** rolam por dentro (padrão do app).
+- **Resíduo do extrator fora dos quadros (não exibido, não mexido):**
+  Decreto-Lei 200, chave 109, começa por "Art. 109 da Lei nº 3.470…" (mesmo
+  defeito do art. 30 da Lei 11.416); palavras grudadas na CF 159 e 212-A, no
+  ADCT 76 e 92-B e "n o" no CC. Corrigir se algum deles entrar num quadro.
+- **Linha S12 de segunda:** continua "Material + leitura da norma" só pela
+  Res. CSJT 185/2017 (sem texto na base).
 - **Art. 34 do Regimento:** as alíneas "c" e "d" saem na mesma linha, porque
   falta ";" no próprio PDF. O texto está completo.
 - **Na base, mas não pedidos:** Lei 11.101, arts. 6º-A a 6º-C e 7º-A, e
