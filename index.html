@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="versao-app" content="autos-do-estudo-v29">
+<meta name="versao-app" content="autos-do-estudo-v30">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <!-- Web app da tela de início (iPadOS/iOS). A partir do iPadOS 26, qualquer
@@ -957,6 +957,35 @@ body{
 }
 @media print{ .lateral{display:none} .pagina{display:block !important} }
 
+/* ---------- Busca no material (21/10/2026) ---------- */
+.busca{margin:0 0 22px}
+.busca > label{display:block; font-family:var(--mono); font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--tinta-3); margin-bottom:6px}
+.busca-linha{display:flex; flex-wrap:wrap; gap:10px}
+.busca-linha input[type=search]{flex:1 1 260px; width:auto; min-width:0; font-size:16px}
+.busca-linha .btn{flex:0 0 auto}
+.busca-linha .btn[hidden]{display:none}
+.busca-res{background:var(--superficie); border:1px solid var(--linha); box-shadow:var(--sombra); padding:16px 18px 10px; margin:0 0 26px}
+.busca-res[hidden]{display:none}
+.bz-resumo{margin:0 0 10px; font-size:15px; color:var(--tinta)}
+.bz-grupo{border-top:1px solid var(--linha); padding:12px 0 6px}
+.bz-top{display:flex; flex-wrap:wrap; align-items:baseline; gap:2px 10px; margin-bottom:8px}
+.bz-mat{flex-basis:100%; font-family:var(--mono); font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--tinta-3)}
+.bz-top b{font-family:var(--disp); font-size:17px; font-weight:600}
+.bz-n{font-size:13px; color:var(--tinta-3)}
+.bz-lista{list-style:none; margin:0; padding:0}
+.bz-item{display:block; width:100%; margin:0 0 8px; padding:8px 12px; text-align:left; font:inherit; font-size:14px; line-height:1.5; color:var(--tinta);
+  background:#FBFBF9; border:1px solid var(--linha); border-left:3px solid var(--petroleo-claro); border-radius:var(--raio); cursor:pointer}
+.bz-rot{display:block; margin-bottom:2px; font-size:12px; color:var(--tinta-3); overflow-wrap:anywhere}
+.bz-trecho{display:block; overflow-wrap:anywhere}
+.bz-trecho mark{background:var(--grifo-suave); color:inherit; font-weight:600; padding:0 1px}
+.bz-mais{margin:0 0 8px}
+.bz-juris{margin:8px 0 6px; padding-top:10px; border-top:1px solid var(--linha); font-size:14px; color:var(--tinta-2)}
+@media (hover:hover){ .bz-item:hover{border-color:var(--petroleo-claro)} }
+.bz-camada{position:absolute; top:0; left:0; width:0; height:0; z-index:30; pointer-events:none}
+.bz-realce{position:absolute; background:rgba(46,111,132,.14); outline:3px solid var(--petroleo-claro); border-radius:2px; transition:opacity 1s}
+.bz-camada.bz-some .bz-realce{opacity:0}
+@media print{ .busca, .busca-res, .bz-camada{display:none !important} }
+
 /* ---------- Voltar ao ponto anterior ---------- */
 .btn-voltar{
   position:fixed; z-index:40; right:16px; bottom:16px;
@@ -1593,6 +1622,20 @@ body{
   </header>
 
   <div class="op-hoje" id="opHoje" aria-live="polite"></div>
+
+  <div class="op-aviso op-nota op-mudanca">
+    <b class="op-rot">Atualização de 21/10/2026 — busca no material — vale desde já</b>
+    Quinta e última parte do plano que você aprovou a partir do parecer.
+    O que muda:
+    <ul>
+      <li>No alto da página <b>04 — Material de estudo</b> há um campo <b>Buscar no material</b>. Ele procura o que você digitar em todos os tópicos: no texto, nas caixas de lei e nos quadros Lei seca. Acento e maiúscula não fazem diferença: “reconvencao” acha “reconvenção”.</li>
+      <li>A lista mostra cada tópico que tem o trecho, quantas vezes ele aparece e, para cada vez, onde está (a seção do texto, a caixa de lei ou o quadro Lei seca) e as palavras em volta. Cada tópico mostra as três primeiras; o botão abaixo delas mostra as outras.</li>
+      <li>Ao tocar num resultado, o tópico abre, a tela rola até o trecho e o trecho fica contornado por alguns segundos. O botão <b>Voltar ao ponto anterior</b>, no pé da tela, traz você de volta à lista, no mesmo lugar.</li>
+      <li>Número no começo ou no fim da busca não se emenda em outro número: “art. 85” não acha o art. 855-B.</li>
+      <li>Súmulas, orientações jurisprudenciais e teses que estão só na página 04.2 não aparecem nesta busca. No fim da lista há um atalho que faz a mesma busca na página 04.2.</li>
+    </ul>
+    O que não muda: os horários, a carga de 23h25 por semana, os blocos, o material e tudo o que você já marcou, respondeu ou grifou com o marca-texto. A busca não grava nada no aparelho.
+  </div>
 
   <div class="op-aviso op-nota op-mudanca">
     <b class="op-rot">Atualização de 21/10/2026 — material das semanas 11 a 13, 23 questões novas e correções — vale desde já</b>
@@ -3848,6 +3891,17 @@ body{
     <h2>O conteúdo, organizado pelo que cai.</h2>
     <p class="sub">Cada disciplina abre com o seu peso real. O primeiro selo de cada tópico indica em quantas das quatro provas do TRT4 houve questão sobre ele; o segundo, em quantas das 16 provas recentes da FCC para este cargo. Clique para abrir.</p>
   </header>
+
+  <form class="busca" id="formBusca" role="search">
+    <label for="fBusca">Buscar no material</label>
+    <div class="busca-linha">
+      <input type="search" id="fBusca" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="search" placeholder="Exemplo: art. 855-B, Súmula 331, reconvenção">
+      <button class="btn dest" type="submit">Buscar</button>
+      <button class="btn sec" type="button" id="btnBuscaLimpar" hidden>Limpar a busca</button>
+    </div>
+    <p class="filtro-dica">Procura em todos os tópicos desta página — no texto, nas caixas de lei e nos quadros Lei seca —, sem diferença de acento ou de maiúscula. Toque num resultado para ir ao trecho: o tópico abre e o trecho fica contornado por alguns segundos. O botão <b>Voltar</b>, no pé da tela, traz você de volta a esta lista.</p>
+  </form>
+  <div class="busca-res" id="buscaRes" hidden></div>
 
   <div class="nota">
     <b>Como ler os selos.</b> O primeiro selo conta as provas do TRT4 que tiveram questão ligada ao tópico no Raio-X da página 02. Lá, cada questão leva a um tópico só: o que ensina o ponto que decide a questão. Um assunto que apareceu só dentro de uma questão de outro tópico — numa alternativa, por exemplo — não conta para o selo. <span class="selo q4" style="margin:0 4px 0 0">4/4 provas</span> caiu em todas — inegociável. <span class="selo q3" style="margin:0 4px">3/4 provas</span> altíssima chance. <span class="selo q2" style="margin:0 4px">2/4 provas</span> revise. <span class="selo q1" style="margin:0 4px">1/4 provas</span> leitura de reconhecimento. O segundo selo, de borda tracejada — <span class="selo fcc q4" style="margin:0 4px">FCC recente 16/16</span> —, conta as 16 provas de Analista Judiciário, Área Judiciária, que a FCC aplicou em outros TRTs de 2022 a 2025, na mesma escala de cores: vermelho de 13 a 16, amarelo de 9 a 12, azul de 5 a 8, cinza de 1 a 4. Três tópicos não têm o segundo selo: o Regimento Interno do TRT4, porque cada tribunal cobra o próprio regimento; o processo administrativo disciplinar, que o QConcursos classifica junto com a Lei 8.112; e a teoria geral do processo civil, que ele distribui pelos demais tópicos de Processo Civil. Na revisão, comece pelos tópicos vermelhos em qualquer dos dois selos.
@@ -20085,6 +20139,278 @@ document.addEventListener('click', function(ev){
     if(det.open || !(dados.itens[det.id] || []).length){ pintar(det); return; }
     det.addEventListener('toggle', function primeira(){ if(!det.open) return; det.removeEventListener('toggle', primeira); pintar(det); });
   });
+})();
+
+/* ---------- Busca no material (21/10/2026) ----------
+   Campo no alto da página 04: procura um trecho no texto de todos os tópicos, com as caixas e os quadros Lei
+   seca, sem diferença de acento nem de maiúscula. O índice é montado na primeira busca e guarda só textos: o
+   texto de um tópico não muda com o app aberto (o marca-texto embrulha trechos, mas não muda o texto). Cada
+   resultado diz o tópico e onde está o trecho (seção do texto, caixa de lei ou quadro Lei seca). O toque abre o
+   tópico, rola até o trecho e o contorna por alguns segundos; a ida entra no histórico, e o botão "Voltar"
+   devolve à lista. Nada é gravado no aparelho. */
+(function buscaNoMaterial(){
+  const form = document.getElementById('formBusca');
+  if(!form) return;
+  const campo = document.getElementById('fBusca'), saida = document.getElementById('buscaRes'), limpar = document.getElementById('btnBuscaLimpar');
+  const FORA = '.atalho-q, .mt-barra, .como-estudar, .lei-cab a, button, script, style, [hidden]';
+  const BLOCO = 'p, li, td, th, h4, h5, h6, dt, dd, div';
+  const PRIMEIROS = 3, LOTE = 200, MINIMO = 2;
+  /* cada caractere do texto vira um caractere da forma de busca (sem acento, minúsculo, "º" = "o", travessão =
+     hífen, aspas curvas = retas): as posições do texto e da forma coincidem */
+  const tabela = new Map();
+  function forma1(c){
+    const k = c.charCodeAt(0);
+    if(k < 128) return k >= 65 && k <= 90 ? String.fromCharCode(k + 32) : c;
+    let r = tabela.get(c);
+    if(r !== undefined) return r;
+    r = c.normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase();
+    if(r.length !== 1){ r = c.toLowerCase(); if(r.length !== 1) r = c; }
+    if(/[‐-―−]/.test(r)) r = '-';
+    else if(/[“”„«»]/.test(r)) r = '"';
+    else if(/[‘’‚]/.test(r)) r = "'";
+    tabela.set(c, r);
+    return r;
+  }
+  /* branco = o \s das expressões regulares (sem o U+FEFF, que é ignorado, como o hífen invisível) */
+  const branco = k => k === 32 || (k >= 9 && k <= 13) || k === 160 || k === 0x1680 || (k >= 0x2000 && k <= 0x200a) || k === 0x2028 || k === 0x2029 || k === 0x202f || k === 0x205f || k === 0x3000;
+  const ignora = k => k === 0xad || k === 0x200b || k === 0x200c || k === 0x200d || k === 0xfeff;
+  const IGN = /[­​-‍﻿]/g, NAO_ASCII = /[^\x00-\x7f]/g;
+  /* a mesma forma, de um texto inteiro de uma vez (o caminho rápido do índice) */
+  function formaTxt(t){
+    const l = t.toLowerCase();
+    if(l.length !== t.length){ let o = ''; for(let i = 0; i < t.length; i++) o += forma1(t[i]); return o; }
+    NAO_ASCII.lastIndex = 0;
+    return NAO_ASCII.test(l) ? l.replace(NAO_ASCII, forma1) : l;
+  }
+  function formaDe(s){
+    let o = '', esp = true;
+    for(let i = 0; i < s.length; i++){
+      const k = s.charCodeAt(i);
+      if(ignora(k)) continue;
+      if(branco(k)){ if(!esp){ o += ' '; esp = true; } continue; }
+      o += forma1(s[i]); esp = false;
+    }
+    return o.replace(/ $/, '');
+  }
+  const curto = t => t.length > 90 ? t.slice(0, t.lastIndexOf(' ', 88) > 40 ? t.lastIndexOf(' ', 88) : 88) + ' …' : t;
+  /* texto do tópico com os espaços colapsados (entre dois blocos entra um espaço, como no marca-texto), a forma
+     de busca e os marcos de "onde está"; com comNos (só o tópico do trecho tocado), também o nó e a posição de
+     origem de cada caractere. Os dois caminhos dão o mesmo texto. */
+  function ler(raiz, comNos){
+    let txt = '', frm = '', esp = true, blocoAnt = null, elAnt = null, caixa = null, rotCaixa = '', secao = 'início do tópico', rotAnt = null, rot = '';
+    const nos = comNos ? [] : null, pos = comNos ? [] : null, marcos = [];
+    const w = document.createTreeWalker(raiz, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT, { acceptNode: function(n){
+      if(n.nodeType === 1) return n.matches(FORA) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_SKIP;
+      return NodeFilter.FILTER_ACCEPT;
+    } });
+    for(let n = w.nextNode(); n; n = w.nextNode()){
+      const el = n.parentElement;
+      if(el !== elAnt){
+        elAnt = el;
+        const bl = el.closest(BLOCO);
+        if(bl !== blocoAnt && !esp && txt){ txt += ' '; frm += ' '; if(comNos){ nos.push(n); pos.push(0); } esp = true; }
+        blocoAnt = bl;
+        const cx = el.closest('.lei');
+        if(cx){
+          if(cx !== caixa){
+            caixa = cx;
+            const r = cx.querySelector('.lei-ref');
+            rotCaixa = (cx.closest('.lei-seca') ? 'Quadro Lei seca · ' : 'Caixa de lei · ') + curto(r ? r.textContent.replace(/\s+/g, ' ').trim() : '');
+          }
+          rot = rotCaixa;
+        } else if(el.closest('.lei-seca')) rot = 'Quadro Lei seca';
+        else {
+          const h = el.closest('h5');
+          if(h) secao = curto(h.textContent.replace(/\s+/g, ' ').trim());
+          rot = 'Texto · ' + secao;
+        }
+        if(rot !== rotAnt){ marcos.push([txt.length, rot]); rotAnt = rot; }
+      }
+      const s = n.nodeValue;
+      if(comNos){
+        for(let i = 0; i < s.length; i++){
+          const k = s.charCodeAt(i);
+          if(ignora(k)) continue;
+          if(branco(k)){ if(esp) continue; txt += ' '; frm += ' '; esp = true; }
+          else { txt += s[i]; frm += forma1(s[i]); esp = false; }
+          nos.push(n); pos.push(i);
+        }
+      } else {
+        let t = s.replace(IGN, '').replace(/\s+/g, ' ');
+        if(esp && t.charCodeAt(0) === 32) t = t.slice(1);
+        if(!t) continue;
+        txt += t; frm += formaTxt(t); esp = t.charCodeAt(t.length - 1) === 32;
+      }
+    }
+    return { txt, frm, nos, pos, marcos };
+  }
+  /* o índice começa a ser montado aos poucos quando o campo ganha o foco (sem travar a digitação); a busca
+     termina o que faltar */
+  let indice = null, fila = null, tFila = 0;
+  function entrada(det){
+    const raiz = det.querySelector('.conteudo'), s = det.querySelector('summary'), mat = det.closest('.materia');
+    const h3 = mat ? mat.querySelector('.materia-cab h3') : null;
+    const r = raiz ? ler(raiz, false) : { txt:'', frm:'', marcos:[] };
+    return { id: det.id, nome: s && s.firstChild ? s.firstChild.textContent.trim() : det.id, mat: h3 ? h3.textContent.trim() : '', txt: r.txt, frm: r.frm, marcos: r.marcos };
+  }
+  function passo(ate){
+    if(!fila) fila = { dets: $$('#pg-material details.topico[id]'), feitos: [] };
+    while(fila.feitos.length < fila.dets.length && (ate === Infinity || performance.now() < ate)) fila.feitos.push(entrada(fila.dets[fila.feitos.length]));
+    if(fila.feitos.length < fila.dets.length) return false;
+    indice = fila.feitos; fila = null;
+    return true;
+  }
+  function adiantar(){ if(!indice && !passo(performance.now() + 12)) tFila = setTimeout(adiantar, 0); }
+  function montar(){ clearTimeout(tFila); if(!indice) passo(Infinity); }
+  campo.addEventListener('focus', function(){ if(!indice){ clearTimeout(tFila); tFila = setTimeout(adiantar, 0); } });
+  /* número no começo ou no fim do que foi digitado não emenda em outro número: "art. 46" não acha o art. 463 */
+  const digito = c => !!c && c >= '0' && c <= '9';
+  function ocorrencias(frm, q){
+    const out = [], ini = digito(q[0]), fim = digito(q[q.length - 1]);
+    let i = frm.indexOf(q);
+    while(i >= 0){
+      if(!(ini && digito(frm[i - 1])) && !(fim && digito(frm[i + q.length]))) out.push(i);
+      i = frm.indexOf(q, i + 1);
+    }
+    return out;
+  }
+
+  let atual = null;
+  function rotulo(t, i){
+    let a = 0, b = t.marcos.length - 1, r = '';
+    while(a <= b){ const m = (a + b) >> 1; if(t.marcos[m][0] <= i){ r = t.marcos[m][1]; a = m + 1; } else b = m - 1; }
+    return r;
+  }
+  function trecho(t, i, n){
+    let a = Math.max(0, i - 70), b = Math.min(t.txt.length, i + n + 110);
+    if(a > 0){ const e = t.txt.indexOf(' ', a); if(e >= 0 && e < i) a = e + 1; }
+    if(b < t.txt.length){ const e = t.txt.lastIndexOf(' ', b); if(e > i + n) b = e; }
+    return (a > 0 ? '… ' : '') + esc(t.txt.slice(a, i)) + '<mark>' + esc(t.txt.slice(i, i + n)) + '</mark>' + esc(t.txt.slice(i + n, b)) + (b < t.txt.length ? ' …' : '');
+  }
+  function item(ti, i){
+    const t = indice[ti];
+    return '<li><button type="button" class="bz-item" data-bz-t="' + ti + '" data-bz-i="' + i + '"><span class="bz-rot">' + esc(rotulo(t, i)) +
+      '</span><span class="bz-trecho">' + trecho(t, i, atual.f.length) + '</span></button></li>';
+  }
+  function grupo(g, todos){
+    const t = indice[g.t], n = g.pos.length;
+    let h = '<div class="bz-top"><span class="bz-mat">' + esc(t.mat) + '</span><b>' + esc(t.nome) + '</b><span class="bz-n">' + plural(n, 'trecho', 'trechos') + '</span></div>' +
+      '<ol class="bz-lista">' + g.pos.slice(0, todos ? LOTE : PRIMEIROS).map(i => item(g.t, i)).join('') + '</ol>';
+    if(!todos && n > PRIMEIROS) h += '<button type="button" class="btn sec mini bz-mais" data-bz-mais="' + g.t + '">' +
+      (n <= LOTE ? 'Mostrar todos os ' + n + ' trechos deste tópico' : 'Mostrar os ' + LOTE + ' primeiros dos ' + n + ' trechos deste tópico') + '</button>';
+    if(todos && n > LOTE) h += '<p class="filtro-dica">Aparecem os ' + LOTE + ' primeiros dos ' + n + ' trechos deste tópico. Para chegar a um trecho determinado, busque mais palavras dele.</p>';
+    return h;
+  }
+  function mostrar(){
+    const total = atual.res.reduce((s, g) => s + g.pos.length, 0);
+    /* súmulas, OJs e teses que só estão na 04.2 não aparecem aqui: atalho com a mesma busca (lá há busca própria) */
+    const juris = '<p class="bz-juris">Súmulas, orientações jurisprudenciais e teses também estão na página 04.2. <a href="#" data-bz-juris>Procurar “' + esc(atual.q) + '” na página 04.2 — Jurisprudência que cai →</a></p>';
+    if(!total){
+      saida.innerHTML = '<p class="bz-resumo" role="status">Nenhum trecho com “' + esc(atual.q) + '” nos tópicos desta página.</p>' +
+        '<p class="filtro-dica">A busca procura o que foi digitado exatamente nessa ordem, sem diferença de acento ou de maiúscula. Tente menos palavras.</p>' + juris;
+    } else {
+      saida.innerHTML = '<p class="bz-resumo" role="status">“' + esc(atual.q) + '”: ' + plural(total, 'trecho', 'trechos') + ' em ' + plural(atual.res.length, 'tópico', 'tópicos') + '.' +
+        (atual.res.length > 1 ? ' Os tópicos estão na ordem desta página.' : '') + '</p>' +
+        atual.res.map(g => '<div class="bz-grupo" id="busca-g' + g.t + '">' + grupo(g, false) + '</div>').join('') + juris;
+    }
+    saida.hidden = false;
+    limpar.hidden = false;
+  }
+  function zerar(){ atual = null; saida.innerHTML = ''; saida.hidden = true; limpar.hidden = true; apagarRealce(); }
+  form.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    apagarRealce();
+    const q = campo.value.replace(/\s+/g, ' ').trim(), f = formaDe(q);
+    if(!q){ zerar(); return; }
+    if(f.replace(/ /g, '').length < MINIMO){
+      atual = null;
+      saida.innerHTML = '<p class="bz-resumo" role="status">Digite pelo menos ' + MINIMO + ' letras ou números.</p>';
+      saida.hidden = false; limpar.hidden = false;
+      return;
+    }
+    if(!indice) montar();
+    atual = { q, f, res: [] };
+    indice.forEach(function(t, ti){ const p = ocorrencias(t.frm, f); if(p.length) atual.res.push({ t: ti, pos: p }); });
+    mostrar();
+    campo.blur();
+  });
+  limpar.addEventListener('click', function(){ campo.value = ''; zerar(); campo.focus(); });
+  campo.addEventListener('input', function(){ if(!campo.value) zerar(); });
+  saida.addEventListener('click', function(ev){
+    const b = ev.target.closest ? ev.target.closest('[data-bz-t], [data-bz-mais], [data-bz-juris]') : null;
+    if(!b || !atual) return;
+    if(b.dataset.bzJuris !== undefined){ ev.preventDefault(); irParaJuris({ busca: atual.q }); return; }
+    if(b.dataset.bzMais !== undefined){
+      const ti = +b.dataset.bzMais, g = atual.res.find(x => x.t === ti), cx = document.getElementById('busca-g' + ti);
+      if(!g || !cx) return;
+      cx.innerHTML = grupo(g, true);
+      const prox = cx.querySelectorAll('.bz-item')[PRIMEIROS];
+      if(prox) prox.focus({ preventScroll: true });
+      return;
+    }
+    irAoTrecho(+b.dataset.bzT, +b.dataset.bzI);
+  });
+
+  /* ida ao trecho: abre o tópico (o marca-texto pinta as marcações na primeira abertura; a busca espera), rola
+     até o trecho a 30% da altura da tela e o contorna */
+  function irAoTrecho(ti, i){
+    const t = indice[ti], f = atual.f, det = document.getElementById(t.id);
+    if(!det) return;
+    const g = atual.res.find(x => x.t === ti), k = g ? Math.max(0, g.pos.indexOf(i)) : 0;
+    navegar(function(){
+      const fechado = !det.open;
+      let feito = false;
+      const seguir = function(){ if(feito) return; feito = true; det.removeEventListener('toggle', seguir); realcar(det, i, f, k); };
+      det.open = true;
+      if(fechado){ det.addEventListener('toggle', seguir); setTimeout(seguir, 400); }
+      else requestAnimationFrame(seguir);
+    });
+  }
+  function rolarAte(dy){
+    const raiz = document.documentElement, y = Math.max(0, Math.round(window.scrollY + dy));
+    raiz.style.scrollBehavior = 'auto';
+    try { window.scrollTo({ top: y, left: 0, behavior: 'instant' }); } catch(e){ window.scrollTo(0, y); }
+    setTimeout(function(){ raiz.style.scrollBehavior = ''; }, 50);
+  }
+  function realcar(det, i, f, k){
+    const raiz = det.querySelector('.conteudo');
+    if(!raiz) return;
+    const ix = ler(raiz, true);
+    let a = ix.frm.substr(i, f.length) === f ? i : -1;
+    if(a < 0){ const p = ocorrencias(ix.frm, f); a = p.length ? p[Math.min(k, p.length - 1)] : -1; }
+    if(a < 0){ rolarAte(det.getBoundingClientRect().top - 24); return; }
+    const b = a + f.length, R = document.createRange();
+    R.setStart(ix.nos[a], ix.pos[a]);
+    R.setEnd(ix.nos[b - 1], ix.pos[b - 1] + 1);
+    rolarAte(R.getBoundingClientRect().top - Math.round(window.innerHeight * 0.3));
+    desenhar(R);
+  }
+  const camada = document.createElement('div');
+  camada.className = 'bz-camada';
+  camada.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(camada);
+  let tSome = 0, tFim = 0, largura = window.innerWidth;
+  function apagarRealce(){ clearTimeout(tSome); clearTimeout(tFim); camada.innerHTML = ''; camada.classList.remove('bz-some'); }
+  function desenhar(R){
+    apagarRealce();
+    const sx = window.scrollX, sy = window.scrollY;
+    Array.prototype.forEach.call(R.getClientRects(), function(q){
+      if(q.width < 1 || q.height < 1) return;
+      const d = document.createElement('div');
+      d.className = 'bz-realce';
+      d.style.left = Math.round(q.left + sx - 2) + 'px';
+      d.style.top = Math.round(q.top + sy - 1) + 'px';
+      d.style.width = Math.round(q.width + 4) + 'px';
+      d.style.height = Math.round(q.height + 2) + 'px';
+      camada.appendChild(d);
+    });
+    largura = window.innerWidth;
+    tSome = setTimeout(function(){ camada.classList.add('bz-some'); }, 5000);
+    tFim = setTimeout(apagarRealce, 6200);
+  }
+  window.addEventListener('popstate', apagarRealce);
+  /* só a troca de largura (girar o iPad) desmancha o contorno; a barra do Safari muda só a altura */
+  window.addEventListener('resize', function(){ if(window.innerWidth !== largura) apagarRealce(); });
 })();
 
 /* Na impressão do app inteiro, as páginas montadas sob demanda precisam existir. */
