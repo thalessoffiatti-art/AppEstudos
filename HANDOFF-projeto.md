@@ -2877,40 +2877,122 @@ registro do caminho).
 - Texto antigo do app pode afirmar o que a norma não diz (IN 39 ×
   denunciação): provar também o texto vizinho ao que se acrescenta.
 
+# Adendo 25 — 2026-10-21 (Onda 4: busca no material, v30)
+
+## O pedido
+
+"commit feito, prossiga com o plano" (v29 em `a2f243c`, PR #24, merge
+`6360115`, publicada; raiz em ff). O próximo item do plano era a Onda 4. Com
+ela, o plano do parecer (Adendo 21) termina. Trabalho em `scratchpad/busca_2110/`.
+
+## O que entrou no `index.html` (`busca_2110/aplicar_busca.js`, 4 inserções, prova por subtração e por reversão; peças em `busca_2110/pecas.js` e `busca_2110/modulo_busca.js`)
+
+- **Campo "Buscar no material"** no alto da página 04, entre o cabeçalho e a
+  nota "Como ler os selos": campo (16 px, para o iPad não dar zoom), botão
+  **Buscar**, botão **Limpar a busca** (só aparece com lista) e a explicação.
+  A busca roda no Enter ou no botão, não a cada letra.
+- **O que procura:** o texto da `.conteudo` dos 64 tópicos, com caixas de lei
+  e quadros Lei seca. Ficam de fora as mesmas peças que o marca-texto pula
+  (barra "Resolver agora", barra do marca-texto, quadro P17, botões) e os
+  links "Planalto"/"TST" das caixas. Sem diferença de acento nem de
+  maiúscula; "º" = "o", travessões = hífen, aspas curvas = retas, espaços
+  colapsados. O trecho digitado é procurado inteiro, na ordem. Número no
+  começo ou no fim não emenda em outro número ("art. 85" não acha 855-B).
+- **Lista:** resumo ("“X”: N trechos em M tópicos"), um grupo por tópico na
+  ordem da página (disciplina, nome, quantos trechos), três trechos por
+  tópico e o botão "Mostrar todos os N trechos deste tópico" (até 200). Cada
+  trecho diz onde está: "Texto · <último h5>", "Caixa de lei · <referência>"
+  ou "Quadro Lei seca · <referência>" (referência longa cortada em ~90
+  caracteres). No fim, sempre, o atalho "Procurar “X” na página 04.2 —
+  Jurisprudência que cai →" (`irParaJuris({ busca })`; a 04.2 já tinha busca
+  sem acento). "Súmula 463", por exemplo, não está em nenhum tópico, só na
+  04.2.
+- **Ida ao trecho:** `navegar()` (entra no histórico); abre o tópico; se ele
+  estava fechado, espera o `toggle` (o marca-texto pinta as marcações na
+  primeira abertura) ou 400 ms; relê só aquele tópico com nó e posição de
+  cada caractere, acha o trecho pela posição (ou, se o texto mudou, pela
+  ordem da ocorrência), rola sem animação até 30% da altura da tela e
+  contorna o trecho com uma camada à parte (`.bz-camada`, `pointer-events:
+  none`; não mexe no texto, então não briga com o marca-texto). O contorno
+  some em 5 s (+1 s de esmaecer), ao voltar ou ao girar a tela. O botão
+  "Voltar ao ponto anterior" devolve à lista no mesmo ponto.
+- **Índice:** só textos (texto, forma de busca e marcos de "onde está" por
+  tópico; ~2,6 milhões de caracteres). Começa a ser montado aos poucos (fatias
+  de 12 ms) quando o campo ganha o foco; a busca termina o que faltar. Medido
+  no Edge: ~300 ms no total; com o foco antes, a primeira busca levou 34 ms e
+  as outras 3 a 9 ms. Nada é gravado no aparelho.
+- **Aviso no 03.1:** "Atualização de 21/10/2026 — busca no material — vale
+  desde já" (5 itens; "O que não muda": nada gravado).
+- **v30** com `node versao.js INDEX SW 30`.
+
+## Verificação
+
+- Ensaio → real, `cmp` idêntico (`index.html` e `sw.js`).
+- `busca_2110/teste_busca.js VELHO NOVO` (Edge sem interface; clique, digitação
+  e Enter de verdade), **24 de 24, duas vezes**: v29 → v30 com as 5 chaves
+  `trt4:` iguais (antes e depois do uso); aviso; Enter mostra a lista
+  ("reconvenção": 29 trechos em 7 tópicos) e tira o foco do campo; "Mostrar
+  todos"; clique num trecho de tópico fechado com marcação: abre, pinta a
+  marcação, contorna "reconvenção" a ~30% da tela (texto debaixo do contorno
+  conferido com `caretRangeFromPoint`); contorno some; Voltar devolve à
+  lista no mesmo `scrollY`; os 5 trechos do grupo expandido caem em
+  "reconvenção"; "art. 85" sem emendar; "art. 855-B" (6 em 3 tópicos);
+  "Súmula 463" (nenhum, com atalho) → 04.2 com "Exibindo 1 de 226" e Voltar
+  para a lista; Limpar; 375, 820 e 1280 px sem rolagem lateral e com tudo
+  dentro da tela; console sem erro; os dois caminhos de leitura (índice
+  rápido e o do trecho) dão o mesmo texto nos 64 tópicos (`internos.js`
+  carrega uma cópia do módulo numa página à parte e expõe as funções).
+- `busca_2110/neg_busca.js` (contorno 40 caracteres adiante e sem o limite de
+  número): o teste acusou 4 falhas.
+- Conferidores do material, iguais à v29 (o material não mudou):
+  `conferir_lei_seca` 0 falha (2981 artigos), `conferir_nada_perdido` 0,
+  auditor 130 "basta" e 0 ausente/incompleto, `verif_independente` 25/26,
+  rótulos 41, grudados 7, `selos` igual à v29, `checar2` nada perdido e
+  `CHAVES` iguais. `conferir_juris_tst` não rodou (nenhuma jurisprudência
+  mudou).
+
+## Armadilhas novas
+
+- **Enter pelo protocolo de depuração precisa do caractere** (`text: '\r'`
+  no `Input.dispatchKeyEvent`); sem ele o formulário não é enviado e os
+  cliques seguintes do teste caem em outra página.
+- **Link que quebra linha:** clicar no centro do `getBoundingClientRect()`
+  pode cair fora do link; usar `getClientRects()[0]`.
+- A 1280 px (não móvel) a barra de rolagem come 15 px: comparar com
+  `clientWidth`, não com a largura emulada.
+
 ---
 
 # Retomada — estado em 2026-10-21 (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira e, se precisar de detalhe, os Adendos 15 a 24
+1. Ler esta seção inteira e, se precisar de detalhe, os Adendos 15 a 25
    (logo acima). O plano em ondas está no Adendo 21 e em
    `C:\Users\thale\.claude\plans\woolly-finding-squid.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
    - `git status --short` e `git log --oneline -3` no worktree (esperado:
-     árvore limpa e último commit = o do Adendo 24, v29; em 21/10 o
-     Adendo 24 estava no worktree, esperando o commit, e o último commit era
-     `4b7536a`, Adendo 23, v28);
+     árvore limpa e último commit = o do Adendo 25, v30; em 21/10 o
+     Adendo 25 estava no worktree, esperando o commit, e o último commit era
+     `a2f243c`, Adendo 24, v29);
    - `git fetch origin` e `git log --oneline -3 origin/main` (esperado: merge
-     do PR do Adendo 24; em 21/10 o `main` estava no PR #23, `d32da4e`, v28);
+     do PR do Adendo 25; em 21/10 o `main` estava no PR #24, `6360115`, v29);
    - pasta principal: `git -C <raiz> merge --ff-only origin/main` depois de
      cada PR (a raiz não tem mais cópia solta do HANDOFF);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (esperado: `autos-do-estudo-v29` ou maior; **se continuar na v28 perto
-     de 08/11, lembrar o usuário**: o Lote 3 é da semana 11, que começa em
-     09/11);
+     (esperado: `autos-do-estudo-v30` ou maior);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo). Não aplicar
    nenhuma delas sem a resposta.
-4. **PRÓXIMO PASSO: Onda 4 (busca no material, v30), só quando o usuário
-   pedir e depois do commit da v29.** A Onda 3 terminou em 21/10: parte A
-   na v28 (Adendo 23) e partes B e C na **v29** (Adendo 24). Roteiro da
-   Onda 4 no fim da seção "Onda 3 — roteiro detalhado", mais abaixo, e no
-   plano. Uma onda por vez, com o commit e o PR do usuário entre elas. Ao
-   terminar cada onda: HANDOFF (adendo + Retomada), memória, `robocopy` da
-   cópia dos scripts e, depois do PR, `--ff-only` na pasta principal.
+4. **O plano do parecer terminou em 21/10** (Ondas 0 a 4; a última, a busca
+   no material, é a **v30**, Adendo 25). **Não há próximo passo marcado:**
+   esperar o pedido do usuário. O que está em aberto: as opções A e D
+   (decisões abaixo) e as "Pendências e ideias em aberto", no fim. Antes de
+   mexer no `index.html`, esperar o commit da v30. Ao terminar qualquer
+   versão: HANDOFF (adendo + Retomada), memória, `robocopy` da cópia dos
+   scripts e, depois do PR, `--ff-only` na pasta principal.
 
-## ESTADO EM 21/10/2026 — v28 publicada; v29 pronta, esperando o commit
+## ESTADO EM 21/10/2026 — v29 publicada; v30 pronta, esperando o commit
 
 - **Commits:** Lote 2 em `d453bce` (v20); modo de estudo em `f77b6c8` (v21,
   PR #16); faixa de versão nova em `9d8cddf` (v22, PR #17); súmulas cortadas e
@@ -2918,13 +3000,14 @@ registro do caminho).
   `e8540d4` (v24, PR #19); barras "Contra a meta" em `734f332` (v25, PR #20).
   Onda 1 do parecer em `8a2a6fa` (v26, PR #21, merge `1c72dfa`); backup em
   `5238f05` (v27, PR #22, merge `4c185c4`); RA TRT4 05/2022 em `4b7536a`
-  (v28, **PR #23, merge `d32da4e`**). Todos no `main`. O GitHub Pages
-  servia a **v28** em 21/10.
-- **Pasta principal:** em `d32da4e` (v28) desde 21/10, por `--ff-only`.
-- **Pendente de commit:** Adendo 24, Onda 3 partes B e C, **v29**
-  (`index.html`, `sw.js` e este arquivo). Testado. Esperar o commit antes de
-  mexer no `index.html` de novo. **O PR tem de estar mesclado até 08/11.**
-- Próxima versão: Onda 4 **v30** (`node versao.js INDEX SW NN`).
+  (v28, PR #23, merge `d32da4e`); Lote 3 e 23 questões em `a2f243c` (v29,
+  **PR #24, merge `6360115`**). Todos no `main`. O GitHub Pages servia a
+  **v29** em 21/10.
+- **Pasta principal:** em `6360115` (v29) desde 21/10, por `--ff-only`.
+- **Pendente de commit:** Adendo 25, Onda 4, **v30** (`index.html`, `sw.js`
+  e este arquivo). Testado. Esperar o commit antes de mexer no `index.html`
+  de novo.
+- Próxima versão: **v31** (`node versao.js INDEX SW NN`).
 - **iPad:** desde a v23 as versões chegam pela faixa "Versão nova do
   aplicativo pronta" (a v22 instalou a faixa). **Nunca** sugerir apagar o ícone nem
   "Dados de Sites", porque isso apaga o progresso, que só existe no aparelho.
@@ -2937,7 +3020,7 @@ registro do caminho).
 | 8 | 19/10 | quarta 21/10: `dpc-provas`, com as 6 questões novas (PC57–PC62, v26) |
 | 9 | 26/10 | blocos que receberam texto no Lote 2 |
 | 10 | 02/11 | sexta 06/11: política judiciária (Res. CSJT 415/2025 e RA TRT4 05/2022, que entrou na v28; o PR tem de estar mesclado até 05/11) |
-| 11 | 09/11 | **o Lote 3 (v29) tem de estar publicado antes** |
+| 11 | 09/11 | blocos que receberam texto no Lote 3 (v29, publicada em 21/10) |
 | 12 | 16/11 | quarta 18/11: `dt-seguranca` (P17) e `dpc-especiais` (questões novas na v29: DT80–82, PC63–68) |
 | 13 | 23/11 | quarta 25/11: `dt-coletivo` e `dt-dano` (P17; questões novas na v29: DT83–90); revisão geral (PC69–74 em `dpc-teoria`); termina em 28/11 |
 
@@ -3001,8 +3084,8 @@ registro do caminho).
 - **Worktree:** `C:\Users\thale\Documents\GitHub\AppEstudos\.claude\worktrees\questoes-historico-in39-139338`.
 - **Branch:** `claude/lei-8112-adicionais`. O usuário abre o PR para o `main`
   depois de cada commit; o GitHub Pages publica o `main`.
-- **Último commit:** `4b7536a` (Adendo 23, v28), mesclado pelo PR #23. O
-  Adendo 24 (v29) está no worktree, esperando o commit.
+- **Último commit:** `a2f243c` (Adendo 24, v29), mesclado pelo PR #24. O
+  Adendo 25 (v30) está no worktree, esperando o commit.
 - **Pasta principal:** `C:\Users\thale\Documents\GitHub\AppEstudos`. Tem
   `Leis/`, `Provas/` e `Jurisprudência/sumulas_stj.md` (fora do git). Desde
   20/10 fica igual ao `origin/main` por `merge --ff-only` (inclusive este
@@ -3022,6 +3105,7 @@ registro do caminho).
     ilustração da opção A;
   - `fontes_ra05/` (RAs 35/2025, 58/2025, 37/2026, 24/2022 e 23/2024, PDF e os dois textos) e `ra05/` (montador, conferidores, aplicação e testes da RA 05/2022; Adendo 23); `bak_2110/`: `index.html`, `sw.js` e scripts do pipeline de antes do Adendo 23 (e as leis de antes das correções do Adendo 24);
   - `fontes_2110/in41/` (PDF da IN 41/2018) e `lote3/` (conteúdo, provas, questões, conferidores, aplicação e teste do Adendo 24; `PLANO.md` com o registro); `bak_2110b/`: `index.html`, `sw.js` e scripts do pipeline de antes do Adendo 24;
+  - `busca_2110/` (módulo, peças, aplicação, testes e telas da busca no material; Adendo 25); `bak_2110c/`: `index.html`, `sw.js` e manifesto da v29;
   - `juris_1210/`: Adendo 18 (aplicação, conferidor de jurisprudência do TST
     pelo portal, testes do marca-texto e da atualização); `bak_1210/`: o
     `index.html` e o `sw.js` de antes; `botao_1410/` e `bak_1410/`: Adendo 19; `meta_1710/` e `bak_1710/`: Adendo 20; `parecer_2010/` e `bak_2010/`: Adendo 21; `backup_2010/` e `bak_2010b/`: Adendo 22;
@@ -3129,11 +3213,13 @@ a regra: toda afirmação provada contra a fonte.
 - teste de atualização sem perda e teste de tela com geometria (375 e
   820 px).
 
-**Onda 4 — v30 — busca no material** (depois da Onda 3): campo no alto da
-página 04 que procura no texto dos tópicos e dos quadros Lei seca (sem acento,
-sem maiúscula), com lista de resultados (tópico + trecho). O toque abre o
-tópico, rola até o trecho e o realça. Modelo de leitor de texto: `indice()`
-do marca-texto. Testes com "art. 855-B", "Súmula 463" e "reconvenção".
+**Onda 4 — v30 — busca no material — FEITA em 21/10 (Adendo 25).** Roteiro
+original: campo no alto da página 04 que procura no texto dos tópicos e dos
+quadros Lei seca (sem acento, sem maiúscula), com lista de resultados (tópico
++ trecho). O toque abre o tópico, rola até o trecho e o realça. Modelo de
+leitor de texto: `indice()` do marca-texto. Testes com "art. 855-B", "Súmula
+463" e "reconvenção" ("Súmula 463" só está na 04.2: a lista ganhou um atalho
+para a busca de lá).
 
 ## Regras do usuário (valem sempre)
 
@@ -3194,12 +3280,19 @@ do marca-texto. Testes com "art. 855-B", "Súmula 463" e "reconvenção".
      conferidor de afirmações com fontes mistas); `lote3/tst_portal.js`
      (`lerPortal()` → `{SUM, OJ}` com situação e texto, sem gravar);
      `node lote3/teste_lote3.js VELHO NOVO` (tela);
+   - busca no material (Adendo 25): `node busca_2110/teste_busca.js VELHO NOVO`
+     (24 verificações de uso, com geometria; tem de dar "TUDO CERTO"),
+     `node busca_2110/neg_busca.js` (gera `ensaio_neg.html` estragado; o
+     teste tem de acusar), `busca_2110/internos.js` (expõe as funções do
+     módulo numa página à parte) e `node busca_2110/sonda.js ARQ [foco]`
+     (tempos e resultados de termos de exemplo). Mudou o texto de algum
+     tópico? A busca acompanha sozinha (lê a página); rodar o teste de novo;
    - `node juris_1210/conferir_juris_tst.js "$W"` (lê o portal do TST num Edge
      sem interface, uns 2 minutos): "NENHUM PROBLEMA" (173 de 173). Toda
      súmula, OJ ou tese nova do TST no app passa por ele: item transcrito vai
      até o fim; item de fora vai no campo `itens` do cartão ou no título do
      quadro ("Súmula N, I a III, do TST").
-5. **Números atuais (v29):** 52 tópicos com quadro, 2981 artigos, 130 linhas
+5. **Números atuais (v30; o material é o da v29):** 52 tópicos com quadro, 2981 artigos, 130 linhas
    "basta", 4 linhas "Material + leitura da norma", nenhuma "Só na lei", 159
    blocos, 543 questões, 226 enunciados na 04.2, `CORRECOES.json` com 13
    registros; `verif_independente`: 25 linhas com 26 "NÃO LIDO";
