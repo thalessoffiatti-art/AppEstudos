@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="versao-app" content="autos-do-estudo-v26">
+<meta name="versao-app" content="autos-do-estudo-v27">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <!-- Web app da tela de início (iPadOS/iOS). A partir do iPadOS 26, qualquer
@@ -553,6 +553,15 @@ select:focus,input:focus,button:focus-visible,summary:focus-visible,a:focus-visi
 .zerar-caixa{border:1px solid var(--linha-forte); background:#F6F7F4; padding:16px 18px; margin-top:16px}
 .zerar-caixa p{margin:0 0 12px; font-size:14.3px; color:var(--tinta-2)}
 .zerar-caixa .confirma{color:var(--carmim); font-weight:600}
+/* ---------- Cópia de segurança (backup), 20/10/2026 ---------- */
+.backup-acoes{display:flex; flex-wrap:wrap; gap:10px; margin:0 0 10px}
+.backup-msg{font-size:12.5px; color:var(--tinta-3); margin:0 !important}
+.backup-msg.ok{color:var(--verde)}
+.backup-msg.erro{color:var(--carmim); font-weight:600}
+.modal .backup-tab{width:100%; border-collapse:collapse; font-size:13.5px; margin:6px 0 4px}
+.modal .backup-tab th, .modal .backup-tab td{border-bottom:1px solid var(--linha); padding:6px 6px; text-align:left; vertical-align:top}
+.modal .backup-tab td.n{text-align:right; font-family:var(--mono); white-space:nowrap}
+.modal .backup-tab th{font-family:var(--mono); font-size:10.5px; font-weight:500; letter-spacing:.1em; text-transform:uppercase; color:var(--tinta-3)}
 
 /* Janela de confirmação do "Zerar progresso". */
 dialog:not([open]){display:none}
@@ -1211,6 +1220,7 @@ body{
 
   <h3 style="font-size:20px;margin:48px 0 6px">Meu desempenho</h3>
   <p style="color:var(--tinta-2);margin-top:0;max-width:70ch">Alimentado sozinho pelo placar do banco de questões: cada resposta conta na semana em que foi dada, inclusive as das questões refeitas depois de zerar as respostas, trocar de filtro ou sortear um simuladão. Sua linha de base é atípica — você já domina 27 das 60 questões —, então o <b>percentual global engana</b>. Meça por bloco.</p>
+  <p style="font-size:13.6px;color:var(--tinta-2);margin-top:-4px">Para guardar uma cópia de todo o progresso ou levá-lo a outro aparelho, use a <a href="#" data-pg-ir="metodo" data-pg-anc="backup">cópia de segurança, na página 07</a>.</p>
 
   <h4 style="font-size:16px;margin:26px 0 10px;color:var(--petroleo)">Placar semana a semana</h4>
   <div class="tabela-rolagem">
@@ -1583,6 +1593,20 @@ body{
   </header>
 
   <div class="op-hoje" id="opHoje" aria-live="polite"></div>
+
+  <div class="op-aviso op-nota op-mudanca">
+    <b class="op-rot">Atualização de 20/10/2026 — cópia de segurança (backup) do progresso — vale desde já</b>
+    Segunda parte do plano que você aprovou a partir do parecer.
+    O que muda:
+    <ul>
+      <li><b>Três botões novos na página 07</b>, seção “Progresso gravado neste navegador”: <b>Salvar backup</b>, <b>Restaurar backup</b> e <b>Desfazer a última restauração</b>. No painel “Meu desempenho”, na página 03, um link leva até eles.</li>
+      <li><b>Salvar backup</b> gera um arquivo com tudo o que está gravado: as respostas e o histórico das questões, o placar, os blocos do cronograma, os simulados e as marcações do marca-texto. No iPad, abre a janela do sistema: escolha <b>Salvar em Arquivos</b>. No computador, o arquivo vai para a pasta de downloads.</li>
+      <li><b>Restaurar backup</b> lê um desses arquivos, de qualquer aparelho. Antes de trocar qualquer coisa, mostra numa janela o que há no arquivo e o que há neste navegador e pede confirmação. O que o arquivo traz substitui o que está aqui; o que ele não traz fica como está. O estado de antes fica guardado: <b>Desfazer a última restauração</b> volta a ele.</li>
+      <li>Serve para levar o progresso do computador para o iPad, ou ao contrário, e para não perder as semanas de estudo se os dados do site forem apagados.</li>
+      <li><b>Abertura mais rápida com muitas marcações.</b> As marcações do marca-texto passam a ser desenhadas quando você abre o tópico, e não todas na abertura do aplicativo. Com marcações em todos os tópicos, a abertura ficava cerca de 0,3 s mais lenta. Na tela, nada muda.</li>
+    </ul>
+    O que não muda: os horários, a carga de 23h25 por semana, os blocos e tudo o que você já marcou, respondeu ou grifou com o marca-texto. Nada é enviado para a internet: o arquivo só vai para onde você escolher.
+  </div>
 
   <div class="op-aviso op-nota op-mudanca">
     <b class="op-rot">Atualização de 20/10/2026 — correções apontadas no parecer e 6 questões de Processo Civil — vale desde já</b>
@@ -7765,7 +7789,17 @@ body{
   </div>
 
   <h3 style="font-size:20px;margin:34px 0 12px">Progresso gravado neste navegador</h3>
-  <p>As respostas do banco de questões — as marcações da rodada em curso, o histórico de cada questão (quantas vezes foi respondida e as dez últimas respostas, com data e resultado) e o placar de acertos e erros de cada semana —, os blocos marcados no cronograma o histórico dos simuladões e as marcações do marca-texto no material ficam gravados no armazenamento local <b>deste navegador</b>, sob o prefixo <code>trt4:</code>. Nada é enviado para servidor algum — não há requisição de rede em nenhuma funcionalidade desta aplicação. Trocar de navegador, de dispositivo ou limpar os dados do site apaga o progresso.</p>
+  <p>As respostas do banco de questões — as marcações da rodada em curso, o histórico de cada questão (quantas vezes foi respondida e as dez últimas respostas, com data e resultado) e o placar de acertos e erros de cada semana —, os blocos marcados no cronograma o histórico dos simuladões e as marcações do marca-texto no material ficam gravados no armazenamento local <b>deste navegador</b>, sob o prefixo <code>trt4:</code>. Nada é enviado para servidor algum — não há requisição de rede em nenhuma funcionalidade desta aplicação. Trocar de navegador, de dispositivo ou limpar os dados do site apaga o progresso. A <b>cópia de segurança</b>, logo abaixo, guarda tudo isso num arquivo.</p>
+  <div class="zerar-caixa" id="backup">
+    <p><b>Cópia de segurança (backup).</b> <b>Salvar backup</b> gera um arquivo (.json) com tudo o que está gravado neste navegador: as respostas e o histórico de cada questão, o placar, os blocos marcados no cronograma, os simulados e as marcações do marca-texto. No iPad, abre a janela do sistema: escolha <b>Salvar em Arquivos</b>. No computador, o arquivo vai para a pasta de downloads. <b>Restaurar backup</b> lê um desses arquivos, de qualquer aparelho, mostra o que há no arquivo e o que há neste navegador e só troca depois da sua confirmação. O que o arquivo traz substitui o que está aqui; o que ele não traz fica como está. Antes de trocar, o aplicativo guarda o estado atual, e o botão <b>Desfazer a última restauração</b> volta a ele.</p>
+    <div class="backup-acoes">
+      <button type="button" class="btn sec" id="btnBackupSalvar">Salvar backup</button>
+      <button type="button" class="btn sec" id="btnBackupRestaurar" aria-haspopup="dialog">Restaurar backup</button>
+      <button type="button" class="btn sec" id="btnBackupDesfazer" aria-haspopup="dialog" hidden>Desfazer a última restauração</button>
+      <input type="file" id="backupArquivo" accept=".json,application/json" hidden>
+    </div>
+    <p id="backupMsg" class="mono backup-msg" role="status" aria-live="polite">—</p>
+  </div>
   <div class="zerar-caixa">
     <p><b>Zerar progresso.</b> Apaga as marcações das questões, o histórico de respostas de cada questão, o placar semanal e geral, as marcações do cronograma e o histórico de simulados. O material de estudo, as questões e as tabelas não são afetados. Só as chaves <code>trt4:</code> do progresso são removidas; as marcações do marca-texto (<code>trt4:marcas</code>) ficam, e qualquer outro dado deste navegador fica intacto. Antes de apagar, uma janela explica o que será removido e pede confirmação. Para apenas refazer questões sem perder o placar e o histórico, use <b>Zerar respostas</b>, no banco de questões.</p>
     <p id="zerarResumo" class="mono" style="font-size:12.5px;color:var(--tinta-3)">—</p>
@@ -7854,7 +7888,7 @@ body{
         <li>As questões voltam a aparecer como nunca respondidas, sem a faixa “Já respondida”.</li>
         <li>O placar da semana, o placar geral e o painel <b>Meu desempenho</b> voltam a zero.</li>
         <li>O cronograma volta sem nenhum bloco marcado, e o histórico de simulados fica vazio.</li>
-        <li class="modal-alerta">Não há como desfazer. Não existe cópia desses dados em outro lugar.</li>
+        <li class="modal-alerta">Não há como desfazer. A única cópia desses dados é um backup que você tenha salvo antes (botão <b>Salvar backup</b>, nesta página).</li>
       </ul>
       <h4>O que não muda</h4>
       <p>O material de estudo, as questões, a jurisprudência e as tabelas continuam iguais. Dados de outros sites neste navegador não são tocados. As marcações do marca-texto também ficam: elas só saem pelo botão de cada tópico do material.</p>
@@ -7863,6 +7897,20 @@ body{
     <div class="modal-acoes">
       <button type="submit" class="btn sec" value="cancelar" id="btnZerarCancela" autofocus>Cancelar</button>
       <button type="submit" class="btn perigo" value="confirmar" id="btnZerarConfirma">Confirmar</button>
+    </div>
+  </form>
+</dialog>
+<dialog id="dlgBackup" class="modal" aria-labelledby="dlgBackupTitulo" aria-describedby="dlgBackupAviso">
+  <form method="dialog" class="modal-corpo">
+    <div class="modal-texto">
+      <p class="rotulo">07 — Metodologia e fontes · cópia de segurança</p>
+      <h3 id="dlgBackupTitulo">Restaurar este backup?</h3>
+      <p id="dlgBackupAviso"></p>
+      <div id="dlgBackupCorpo"></div>
+    </div>
+    <div class="modal-acoes">
+      <button type="submit" class="btn sec" value="cancelar" id="btnBackupCancela" autofocus>Cancelar</button>
+      <button type="submit" class="btn perigo" value="confirmar" id="btnBackupConfirma">Restaurar</button>
     </div>
   </form>
 </dialog>
@@ -7909,8 +7957,9 @@ body{
 <script>
 /* =========================================================
    04.1 IN 39 INTERATIVA
-   Conteúdo integral e inalterado do arquivo
-   "IN39(atualizada)-TST_CPC-no-Processo-do-Trabalho2.html". Fica guardado
+   Conteúdo integral do arquivo
+   "IN39(atualizada)-TST_CPC-no-Processo-do-Trabalho2.html", inalterado salvo o campo "note" de quatro
+   cartões (in3-iv, in3-vii, in3-xv e in14), que ganharam em 20/10/2026 nota com a lei atual. Fica guardado
    como texto e só é montado, num iframe isolado, com os estilos e os
    scripts do próprio documento, na primeira vez em que a página 04.1 é
    aberta (ver montarIn39). Para atualizar, substitua a string inteira.
@@ -16568,6 +16617,13 @@ const LS = (function(){
       try{ if(base) base.setItem(NS + chave, t); }
       catch(e){ base = null; persistenciaAtiva = false; avisarPersistencia(); }
     },
+    /* backup (20/10/2026): o texto exato gravado numa chave, e a gravação de um texto já pronto */
+    lerCru: function(chave){ const t = cru(chave); return (t === undefined) ? null : t; },
+    gravarCru: function(chave, texto){
+      memoria[chave] = texto;
+      try{ if(base){ base.setItem(NS + chave, texto); return base.getItem(NS + chave) === texto; } return true; }
+      catch(e){ base = null; persistenciaAtiva = false; avisarPersistencia(); return false; }
+    },
     remover: function(chave){
       delete memoria[chave];
       try{ if(base) base.removeItem(NS + chave); }catch(e){}
@@ -18043,6 +18099,7 @@ function zerarProgresso(){
   placar.semanas = Object.create(null);
   cronoEstado.feitos = Object.create(null);
   renderQuestoes(); renderCronograma(); renderDesempenho(); renderHistorico();
+  if(typeof window.atualizarBackupUI === 'function') window.atualizarBackupUI();
   atualizarResumoZerar();
   $('#zerarResumo').innerHTML = '<span class="confirma">Progresso zerado.</span> ' +
     'As chaves <b>trt4:</b> do progresso foram removidas deste navegador; as marcações do marca-texto continuam. ' + esc($('#zerarResumo').textContent);
@@ -18059,7 +18116,8 @@ function preencherModalZerar(){
     'os blocos marcados no cronograma: <b>' + plural(c.crono, 'bloco', 'blocos') + '</b>;',
     'o histórico dos simuladões concluídos: <b>' + plural(c.simulados, 'simulado', 'simulados') + '</b>.'
   ].map(t => '<li>' + t + '</li>').join('') +
-    (persistenciaAtiva ? '' : '<li>Este navegador não está gravando: esses dados existem só nesta aba.</li>');
+    (persistenciaAtiva ? '' : '<li>Este navegador não está gravando: esses dados existem só nesta aba.</li>') +
+    (LS.get('antesDaRestauracao', null) ? '<li>a cópia guardada antes da última restauração de backup (o botão <b>Desfazer a última restauração</b> some).</li>' : '');
 }
 
 function abrirModalZerar(){
@@ -18078,6 +18136,223 @@ function abrirModalZerar(){
     'Não há como desfazer. As marcações do marca-texto continuam. Para só refazer questões, cancele e use "Zerar respostas".');
   if(ok) zerarProgresso();
 }
+
+/* ---------- Cópia de segurança (backup) do progresso (20/10/2026) ----------
+   Salvar: junta as 6 chaves do progresso (as de CHAVES e trt4:marcas), com o texto exato que está gravado, num
+   arquivo .json. Em tela de toque (iPad), abre o compartilhamento do sistema ("Salvar em Arquivos"); no
+   computador, baixa o arquivo.
+   Restaurar: lê um arquivo desses, confere cada parte com a mesma forma que os carregadores aceitam, mostra numa
+   janela o que há no arquivo e o que há aqui, e só troca depois da confirmação. O que o arquivo traz substitui o
+   que está aqui; o que ele não traz fica como está. Antes de trocar, guarda o estado atual em
+   trt4:antesDaRestauracao, e "Desfazer a última restauração" volta a ele. Depois de trocar, a página recarrega,
+   para todos os carregadores lerem os dados novos. Nenhuma chave existente muda de nome ou de formato. */
+(function backup(){
+  const msg = document.getElementById('backupMsg');
+  if(!msg) return;
+  const APP = 'autos-do-estudo', FORMATO = 1, CHAVE_ANTES = 'antesDaRestauracao';
+  const PARTES = [CHAVES.cronograma, CHAVES.placar, CHAVES.tentativas, CHAVES.historico, CHAVE_MARCAS, CHAVES.respostas];
+  const ROTULO = {};
+  ROTULO[CHAVES.cronograma] = 'Blocos marcados no cronograma';
+  ROTULO[CHAVES.placar] = 'Respostas no placar (semanas e geral)';
+  ROTULO[CHAVES.tentativas] = 'Questões com histórico de respostas';
+  ROTULO[CHAVES.historico] = 'Simulados no histórico';
+  ROTULO[CHAVE_MARCAS] = 'Trechos marcados com o marca-texto';
+  ROTULO[CHAVES.respostas] = 'Questões marcadas na rodada em curso';
+  const objeto = v => !!v && typeof v === 'object' && !Array.isArray(v);
+  const VALIDA = {};
+  VALIDA[CHAVES.respostas] = v => objeto(v) && Object.keys(v).every(k => Number.isInteger(v[k]) && v[k] >= 0 && v[k] <= 4);
+  VALIDA[CHAVES.cronograma] = v => objeto(v);
+  VALIDA[CHAVES.historico] = v => Array.isArray(v);
+  VALIDA[CHAVES.placar] = v => objeto(v) && objeto(v.semanas);
+  VALIDA[CHAVES.tentativas] = v => objeto(v);
+  VALIDA[CHAVE_MARCAS] = v => objeto(v) && objeto(v.itens);
+
+  const versaoApp = () => { const m = document.querySelector('meta[name="versao-app"]'); return m ? m.content : ''; };
+  const p2 = n => String(n).padStart(2, '0');
+  function dataHora(iso){ const d = new Date(iso); return isNaN(d) ? 'data desconhecida' : p2(d.getDate()) + '/' + p2(d.getMonth() + 1) + '/' + d.getFullYear() + ' às ' + p2(d.getHours()) + 'h' + p2(d.getMinutes()); }
+  function aviso(t, tipo){ msg.textContent = t; msg.className = 'mono backup-msg' + (tipo ? ' ' + tipo : ''); }
+  function atual(){ const c = {}; PARTES.forEach(k => { c[k] = LS.lerCru(k); }); return c; }
+  /* quantidades de cada parte, a partir dos textos gravados; null = a parte não existe */
+  function contar(cru){
+    const le = k => { if(cru[k] === null || cru[k] === undefined) return null; try{ return JSON.parse(cru[k]); }catch(e){ return null; } };
+    const n = {};
+    const cr = le(CHAVES.cronograma); n[CHAVES.cronograma] = objeto(cr) ? Object.keys(cr).filter(k => cr[k]).length : null;
+    const pl = le(CHAVES.placar); let resp = 0;
+    if(objeto(pl) && objeto(pl.semanas)) Object.keys(pl.semanas).forEach(s => { const sem = pl.semanas[s]; if(objeto(sem)) Object.keys(sem).forEach(m => { const v = sem[m] || {}; resp += (Number(v.ac) || 0) + (Number(v.er) || 0); }); });
+    n[CHAVES.placar] = objeto(pl) ? resp : null;
+    const hq = le(CHAVES.tentativas); n[CHAVES.tentativas] = objeto(hq) ? Object.keys(hq).length : null;
+    const hs = le(CHAVES.historico); n[CHAVES.historico] = Array.isArray(hs) ? hs.length : null;
+    const mk = le(CHAVE_MARCAS); let mt = 0;
+    if(objeto(mk) && objeto(mk.itens)) Object.keys(mk.itens).forEach(t => { if(Array.isArray(mk.itens[t])) mt += mk.itens[t].length; });
+    n[CHAVE_MARCAS] = objeto(mk) ? mt : null;
+    const rs = le(CHAVES.respostas); n[CHAVES.respostas] = objeto(rs) ? Object.keys(rs).length : null;
+    return n;
+  }
+
+  /* ---- Salvar ---- */
+  async function salvar(){
+    const chaves = {};
+    PARTES.forEach(k => { const t = LS.lerCru(k); if(t !== null) chaves[NS + k] = t; });
+    if(!Object.keys(chaves).length){ aviso('Não há progresso gravado neste navegador para salvar.', 'erro'); return; }
+    const texto = JSON.stringify({ app: APP, formato: FORMATO, versao: versaoApp(), exportadoEm: new Date().toISOString(), chaves: chaves }, null, 1);
+    const nome = 'autos-do-estudo-backup-' + hojeISO() + '.json';
+    const toque = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+    let arquivo = null;
+    try{ arquivo = new File([texto], nome, { type: 'application/json' }); }catch(e){ arquivo = null; }
+    if(toque && arquivo && navigator.canShare && navigator.share){
+      let pode = false;
+      try{ pode = navigator.canShare({ files: [arquivo] }); }catch(e){ pode = false; }
+      if(pode){
+        try{
+          await navigator.share({ files: [arquivo], title: 'Backup — Autos do Estudo' });
+          aviso('Backup pronto: ' + nome + '. Ele foi para o lugar que você escolheu na janela do sistema.', 'ok');
+          return;
+        }catch(e){
+          if(e && e.name === 'AbortError'){ aviso('Backup não salvo: a janela foi fechada sem escolher onde guardar.', 'erro'); return; }
+          /* outro erro: segue para o download */
+        }
+      }
+    }
+    const url = URL.createObjectURL(new Blob([texto], { type: 'application/json' }));
+    const a = document.createElement('a');
+    a.href = url; a.download = nome; a.hidden = true;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
+    aviso('Backup salvo como ' + nome + ', na pasta de downloads do navegador.', 'ok');
+  }
+
+  /* ---- Restaurar ---- */
+  function conferir(texto){
+    let d;
+    try{ d = JSON.parse(texto); }catch(e){ return { erro: 'Este arquivo não é um backup do aplicativo: não é um arquivo .json válido.' }; }
+    if(!objeto(d) || d.app !== APP || !objeto(d.chaves)) return { erro: 'Este arquivo não é um backup do aplicativo.' };
+    if(d.formato !== FORMATO) return { erro: 'Este backup foi gerado num formato que esta versão do aplicativo não conhece.' };
+    const chaves = {};
+    for(const kc of Object.keys(d.chaves)){
+      const k = kc.indexOf(NS) === 0 ? kc.slice(NS.length) : '';
+      if(PARTES.indexOf(k) < 0) return { erro: 'O backup tem uma parte desconhecida (' + kc + ').' };
+      const t = d.chaves[kc];
+      let v;
+      try{ v = typeof t === 'string' ? JSON.parse(t) : undefined; }catch(e){ v = undefined; }
+      if(v === undefined || !VALIDA[k](v)) return { erro: 'A parte “' + ROTULO[k] + '” do backup está estragada.' };
+      chaves[k] = t;
+    }
+    if(!Object.keys(chaves).length) return { erro: 'O backup está vazio.' };
+    return { dados: { versao: String(d.versao || ''), em: String(d.exportadoEm || ''), chaves: chaves } };
+  }
+  const fmt = v => v === null ? '—' : String(v);
+  function tabela(colunas, linhas){
+    return '<table class="backup-tab"><thead><tr>' + colunas.map(c => '<th>' + c + '</th>').join('') + '</tr></thead><tbody>' +
+      linhas.map(l => '<tr>' + l.map(c => '<td' + (/^(\d+|—)$/.test(c) ? ' class="n"' : '') + '>' + c + '</td>').join('') + '</tr>').join('') + '</tbody></table>';
+  }
+  const dlg = document.getElementById('dlgBackup');
+  let modo = '', pendente = null, textoSimples = '';
+  function abrirJanela(){
+    if(dlg && typeof dlg.showModal === 'function'){ dlg.returnValue = ''; dlg.showModal(); return; }
+    if(window.confirm(textoSimples)) executar(); else aviso('Nada foi alterado.', '');
+  }
+  function confirmarRestaurar(){
+    modo = 'restaurar';
+    const n = contar(pendente.dados.chaves), a = contar(atual());
+    const linhas = PARTES.map(k => [ROTULO[k],
+      pendente.dados.chaves[k] === undefined ? 'não traz' : fmt(n[k]),
+      fmt(a[k]),
+      pendente.dados.chaves[k] === undefined ? 'fica como está' : 'troca pelo do arquivo']);
+    document.getElementById('dlgBackupTitulo').textContent = 'Restaurar este backup?';
+    document.getElementById('dlgBackupAviso').textContent = 'Arquivo ' + pendente.nome + ', salvo em ' + dataHora(pendente.dados.em) +
+      (pendente.dados.versao ? ' pela versão ' + pendente.dados.versao.replace(/^autos-do-estudo-/, '') : '') + ' do aplicativo.';
+    document.getElementById('dlgBackupCorpo').innerHTML =
+      '<h4>O que há em cada lugar</h4>' + tabela(['O quê', 'No arquivo', 'Neste navegador agora', 'Ao restaurar'], linhas) +
+      '<h4>O que acontece se você confirmar</h4><ul>' +
+      '<li>Cada parte que o arquivo traz substitui a deste navegador. As partes que ele não traz ficam como estão.</li>' +
+      '<li>Antes de trocar, o aplicativo guarda uma cópia do que está aqui agora. Para voltar a ela, use <b>Desfazer a última restauração</b>.</li>' +
+      '<li>A página recarrega sozinha, já com o progresso do arquivo.</li></ul>' +
+      '<h4>O que não muda</h4><p>O material, as questões, a jurisprudência e as tabelas continuam iguais. Nada é enviado para a internet.</p>';
+    document.getElementById('btnBackupConfirma').textContent = 'Restaurar';
+    textoSimples = 'Restaurar o backup ' + pendente.nome + '? As partes que o arquivo traz substituem as deste navegador; o estado atual fica guardado para desfazer.';
+    abrirJanela();
+  }
+  function confirmarDesfazer(){
+    const antes = LS.get(CHAVE_ANTES, null);
+    if(!objeto(antes) || !objeto(antes.chaves)){ aviso('Não há restauração para desfazer.', 'erro'); mostrarBotoes(); return; }
+    modo = 'desfazer';
+    const cru = {}; PARTES.forEach(k => { cru[k] = Object.prototype.hasOwnProperty.call(antes.chaves, k) ? antes.chaves[k] : null; });
+    const b = contar(cru), a = contar(atual());
+    document.getElementById('dlgBackupTitulo').textContent = 'Desfazer a última restauração?';
+    document.getElementById('dlgBackupAviso').textContent = 'Volta ao que este navegador tinha em ' + dataHora(antes.em) + ', logo antes da restauração.';
+    document.getElementById('dlgBackupCorpo').innerHTML =
+      '<h4>O que há em cada momento</h4>' + tabela(['O quê', 'Antes da restauração', 'Agora'], PARTES.map(k => [ROTULO[k], fmt(b[k]), fmt(a[k])])) +
+      '<h4>O que acontece se você confirmar</h4><ul>' +
+      '<li>Cada parte volta a ser como era antes da restauração. O que foi feito depois da restauração se perde.</li>' +
+      '<li>A cópia guardada é usada e apagada: o botão <b>Desfazer a última restauração</b> some.</li>' +
+      '<li>A página recarrega sozinha.</li></ul>';
+    document.getElementById('btnBackupConfirma').textContent = 'Desfazer';
+    textoSimples = 'Desfazer a última restauração e voltar ao que este navegador tinha em ' + dataHora(antes.em) + '?';
+    abrirJanela();
+  }
+  function recarregar(t){ try{ sessionStorage.setItem('trt4-backup-aviso', t); }catch(e){} location.reload(); }
+  function executar(){
+    if(modo === 'restaurar' && pendente){
+      const p = pendente; pendente = null; modo = '';
+      const antes = { em: new Date().toISOString(), chaves: atual() };
+      LS.set(CHAVE_ANTES, antes);
+      if(LS.lerCru(CHAVE_ANTES) === null){ aviso('Não consegui guardar a cópia do estado atual. Nada foi alterado.', 'erro'); return; }
+      const ok = Object.keys(p.dados.chaves).every(k => LS.gravarCru(k, p.dados.chaves[k]));
+      if(!ok){
+        PARTES.forEach(k => { if(antes.chaves[k] === null) LS.remover(k); else LS.gravarCru(k, antes.chaves[k]); });
+        LS.remover(CHAVE_ANTES);
+        aviso('O navegador não deixou gravar o backup (pode faltar espaço). O progresso ficou como estava.', 'erro');
+        return;
+      }
+      recarregar('Backup restaurado: ' + p.nome + '. Para voltar ao que havia antes, use Desfazer a última restauração.');
+    } else if(modo === 'desfazer'){
+      modo = '';
+      const antes = LS.get(CHAVE_ANTES, null);
+      if(!objeto(antes) || !objeto(antes.chaves)) return;
+      PARTES.forEach(k => { const t = Object.prototype.hasOwnProperty.call(antes.chaves, k) ? antes.chaves[k] : null; if(t === null) LS.remover(k); else LS.gravarCru(k, t); });
+      LS.remover(CHAVE_ANTES);
+      recarregar('Restauração desfeita: o progresso voltou a ser o de ' + dataHora(antes.em) + '.');
+    }
+  }
+  function mostrarBotoes(){
+    const b = document.getElementById('btnBackupDesfazer');
+    const antes = LS.get(CHAVE_ANTES, null);
+    b.hidden = !(objeto(antes) && objeto(antes.chaves));
+    if(!b.hidden) b.textContent = 'Desfazer a última restauração (de ' + dataHora(antes.em) + ')';
+  }
+  window.atualizarBackupUI = mostrarBotoes;
+
+  document.getElementById('btnBackupSalvar').addEventListener('click', function(){ salvar(); });
+  const entrada = document.getElementById('backupArquivo');
+  document.getElementById('btnBackupRestaurar').addEventListener('click', function(){
+    if(!LS.ativo()){ aviso('Este navegador não está gravando dados; restaurar aqui não adiantaria. Nada foi alterado.', 'erro'); return; }
+    entrada.value = '';
+    entrada.click();
+  });
+  entrada.addEventListener('change', async function(){
+    const f = entrada.files && entrada.files[0];
+    if(!f) return;
+    let texto = '';
+    try{ texto = await f.text(); }catch(e){ aviso('Não consegui ler o arquivo ' + f.name + '. Nada foi alterado.', 'erro'); return; }
+    const r = conferir(texto);
+    if(r.erro){ aviso(r.erro + ' Nada foi alterado.', 'erro'); return; }
+    pendente = { nome: f.name, dados: r.dados };
+    confirmarRestaurar();
+  });
+  document.getElementById('btnBackupDesfazer').addEventListener('click', confirmarDesfazer);
+  /* como na janela de zerar: a troca acontece no clique de Confirmar, não no evento close */
+  document.getElementById('btnBackupConfirma').addEventListener('click', function(){ executar(); });
+  if(dlg) dlg.addEventListener('close', function(){
+    if(modo){ modo = ''; pendente = null; aviso('Nada foi alterado.', ''); }
+    dlg.returnValue = '';
+  });
+
+  mostrarBotoes();
+  let recado = null;
+  try{ recado = sessionStorage.getItem('trt4-backup-aviso'); sessionStorage.removeItem('trt4-backup-aviso'); }catch(e){}
+  if(recado) aviso(recado, 'ok');
+  else aviso(LS.ativo() ? 'Nenhum backup salvo ou restaurado nesta sessão.' : 'Este navegador não está gravando: o backup só leva o que existe nesta aba.', '');
+})();
 
 $('#btnZerar').addEventListener('click', abrirModalZerar);
 if(dlgZerar){
@@ -18873,7 +19148,7 @@ document.addEventListener('click', function(ev){
   if(d.jSemana){ irParaJuris({ sem: d.jSemana }); return; }
   if(d.jFinal){ irParaJuris({ prio: '1', mats: d.jFinal.split('|') }); return; }
   if(d.qJur){ irParaQuestoesJur(d.qJur); return; }
-  if(d.pgIr){ abrirPagina(d.pgIr); return; }
+  if(d.pgIr){ abrirPagina(d.pgIr, d.pgAnc || null); return; }
   if(d.opIr){ const el = document.getElementById(d.opIr); if(el) navegar(function(){ rolarPara(el); }); return; }
   if(d.opDia){ const el = document.getElementById('op-dia-' + d.opDia); if(el) navegar(function(){ el.open = true; rolarPara(el); }); return; }
   if(d.opSem){ const el = document.getElementById('op-s' + d.opSem); if(el) navegar(function(){ rolarPara(el); }); }
@@ -19229,7 +19504,11 @@ document.addEventListener('click', function(ev){
   if(conf) conf.addEventListener('click', function(){ if(apagarDet) apagarAgora(apagarDet); apagarDet = null; });
   if(dlg) dlg.addEventListener('close', function(){ apagarDet = null; });
 
-  $$('#pg-material details.topico[id]').forEach(pintar);
+  /* tópico fechado com marcações só é pintado quando abre: montar o índice de todos custava ~0,3 s na abertura */
+  $$('#pg-material details.topico[id]').forEach(function(det){
+    if(det.open || !(dados.itens[det.id] || []).length){ pintar(det); return; }
+    det.addEventListener('toggle', function primeira(){ if(!det.open) return; det.removeEventListener('toggle', primeira); pintar(det); });
+  });
 })();
 
 /* Na impressão do app inteiro, as páginas montadas sob demanda precisam existir. */

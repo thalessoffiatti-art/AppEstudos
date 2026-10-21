@@ -2,7 +2,7 @@
    Para publicar uma versão nova do material, troque o número do CACHE e, junto, a meta versao-app do
    index.html (as duas têm de ser iguais; o script versao.js faz e confere). Desde 09/10/2026, quando a versão
    nova assume o controle, a página mostra a faixa "Versão nova do aplicativo pronta". */
-const CACHE = 'autos-do-estudo-v26';
+const CACHE = 'autos-do-estudo-v27';
 const ARQUIVOS = ['./', './index.html', './manifest.json', './icone-180.png', './icone-512.png'];
 
 self.addEventListener('install', e => {
