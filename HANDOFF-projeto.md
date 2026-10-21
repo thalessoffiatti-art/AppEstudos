@@ -2609,41 +2609,195 @@ chegar ao iPad.
 
 ---
 
-# Retomada — estado em 2026-10-20 (ler primeiro depois de compactar a conversa)
+# Adendo 23 — 2026-10-21 (Onda 3, parte A: Resolução Administrativa TRT4 05/2022, v28)
+
+## O pedido
+
+"Continue do próximo passo do HANDOFF" (depois de compactar). O próximo passo
+era a Onda 3. A parte A (RA TRT4 05/2022, prazo 05/11) saiu sozinha como
+**v28**, como a Retomada previa; as partes B e C (questões e resto do Lote 3)
+ficam para a **v29**, e a busca no material (Onda 4) passa a **v30**.
+
+## Fontes (pasta nova `scratchpad/fontes_ra05/`)
+
+- **A busca por trecho exato escondia uma RA.** "Resolução Administrativa nº
+  05/2022" não acha os atos que escrevem "Resolução Administrativa **TRT4** nº
+  05/2022". Pesquisa certa: tipo Resolução Administrativa, "Todas as
+  palavras" = `05/2022`, data inicial depois da compilada (01/05/2025).
+  Resultado em 21/10/2026: **RA 35/2025** (17/09/2025, cria o CEJUSC-JT/BENTO
+  GONÇALVES; inclui o art. 10, VII, o art. 11, VII e muda o Anexo), **RA
+  58/2025**, **RA 13/2026** e **RA 37/2026**. Nenhuma republicação nova (a
+  pesquisa ainda entrega a compilada até a RA 13/2025).
+- **Downloads autorizados em 21/10/2026:** RA 35/2025, RA 24/2022
+  (republicada em 2024) e RA 23/2024 (além das RAs 58/2025 e 37/2026, de
+  20/10). O `curl` só passa com user-agent de navegador e
+  `Referer: https://pesquisatextual.trt4.jus.br/pesquisas/atos_normativos`;
+  os links de download (`/pesquisas/rest/download/ato/…`) saem da página de
+  resultados.
+- **RA 24/2022:** o art. 4º dela, o que alterava a RA 05/2022, foi
+  **revogado pela RA 37/2023**; nada dela vale hoje na RA 05/2022. A **RA
+  23/2024** só mexe na RA 08/2022 (Ouvidoria) e na própria 24/2022.
+- **RA 58/2025** muda muito mais do que a pesquisa mostrava: arts. 2º, 3º,
+  4º, 9º-A (novo), 10, 12, 13, 15, 16, 18, 19, 21, 24, 26, 28, 32, 37, 38,
+  40, 41, 42, 42-A a 42-H (novos), 43, 45 e 45-A (novo); revoga o art. 17.
+- **Achado de conteúdo:** até a RA 58/2025, o art. 40 permitia que os
+  CEJUSCs de 1º Grau fizessem audiência de homologação de acordo
+  extrajudicial; hoje o art. 40 repete o art. 21 da Res. CSJT 415/2025
+  (não vai ao CEJUSC). Regra de transição da RA 13/2026, art. 30: a
+  coordenação do CEJUSC-JT/2º GRAU pelo Vice-Presidente Institucional começa
+  em 01/12/2026.
+
+## Redação vigente montada (`scratchpad/ra05/`)
+
+- `ra05_lib.js`: lê o texto do PyMuPDF corrido e divide em dispositivos
+  (rótulo no começo de linha ou depois de ". ; :"; "§"/"Art." só abrem
+  dispositivo se a palavra seguinte é maiúscula). A RA 58/2025 tem trechos
+  justificados com uma palavra por linha ("§" / "1º" / "Compete"); a RA
+  13/2026 tem "§ 2º" sozinho numa linha.
+- `ra05_montar.js` → `leis/RA05.json` (61 artigos, 250 dispositivos):
+  compilada + RA 35/2025 + RA 58/2025 + RA 13/2026 + RA 37/2026, na ordem;
+  cada dispositivo alterado leva a nota "(redação dada pela Resolução
+  Administrativa TRT4 nº …)" ou "(incluído pela …)", no estilo da compilada
+  (o gerador do quadro tira essas notas, como faz com as do Regimento).
+  Revogações escritas à mão (RA 58, art. 28; RA 13/2026, art. 29, I) e
+  conferidas no texto. Saídas auxiliares: `RA05_origem.json`,
+  `RA05_ops.json`, `RA05_relatorio.txt` (cada artigo alterador, a
+  instrução e o que trouxe).
+- `ra05_conferir.js` (0 falha): os dois leitores (pdftotext × PyMuPDF)
+  iguais nos 5 documentos (fora o Anexo Único, que não entra); cada
+  dispositivo está na fonte que a nota diz, inteiro (depois dele vem outro
+  rótulo); cadeia (vale a última RA que transcreveu; revogado não aparece);
+  as 53 instruções ("Alterar … do artigo N") batem com o que foi transcrito.
+  `--estragar 1..5`: 5 de 5 acusados.
+
+## O que entrou no `index.html` (`ra05/aplicar_ra05.js`, 4 recortes, prova por reversão; conteúdo em `ra05/ra05_conteudo.js`)
+
+- **Tópico `dpt-especiais`:** o parágrafo "No TRT4" de 08/10 virou a seção
+  "No TRT4 — Resolução Administrativa 05/2022": por que o texto foi montado;
+  art. 45-A; tabela (NUPEMEC-JT/TRT4 e quem o coordena; os 7 CEJUSCs de 1º
+  Grau; os 2 de 2º Grau e quem coordena cada um); transição até 30/11/2026;
+  mediação pré-processual no TRT4 (arts. 41, 42, 44 e 45); caixa "Mudou em
+  dezembro de 2025" (art. 40 antigo × atual).
+- **Linha do manual (S10, sexta):** "Resolução Administrativa TRT4 05/2022,
+  art. 2º, caput e § 4º; art. 10, caput e incisos I a VII; arts. 14 e 45-A —
+  na redação de hoje…" e "Resolução CNJ 125/2010 — na Justiça do Trabalho, a
+  política que ela instituiu é regida pela Resolução CSJT 415/2025 (art.
+  1º)". Marca: "Material + leitura da norma" → **"O material basta"**.
+- **Quadro Lei seca:** caixa da RA 05/2022 com os arts. 2º (caput e § 4º),
+  10 (caput e incisos), 14 e 45-A, link "TRT4" (pesquisa de atos). A nota da
+  caixa diz que o texto foi montado pelo aplicativo e de qual RA vem cada
+  artigo; a data de cópia desse tópico vai até 21/10/2026 (nos outros 51,
+  continua 08/10/2026).
+- **Recorte por carga:** a primeira escolha (também arts. 15, 16, 41, 42, 44 e
+  45 no quadro) dava ~1.070 palavras (~20 min a 55 palavras/min) num bloco
+  de 15 min; ficou ~720 palavras (texto 446 + lei 276, ~13 min), fora a nota.
+  O texto do material cobre os artigos que saíram do quadro.
+- **Aviso no 03.1:** "Atualização de 21/10/2026 — Resolução Administrativa
+  TRT4 05/2022 no material — vale desde já" (diz o acréscimo de leitura e que
+  marcação feita no parágrafo antigo fica guardada como não achada).
+- **v28** com `node versao.js INDEX SW 28`.
+
+## Pipeline (`ra05/patch_pipeline_ra05.js`; cópias anteriores em `scratchpad/bak_2110/`)
+
+- Chave `RA05` em `auditar_manual`, `gerar_lei_seca` (`NOME`, `URL`,
+  `FONTE` 'TRT4', `NOTA_FONTE` = `ra05/nota_fonte_ra05.txt`),
+  `verif_independente`, `conferir_lei_seca` (`NOME2K`; e a regra de notas do
+  Regimento também para `RA05` em `perdas`), `conferir_rotulos` e
+  `triagem_rot`; `rotuloLei`/`leiDe` reconhecem "Resolução Administrativa
+  TRT4 05/2022" no começo do trecho; `escopos.js`: `RA05:2` (§ 4º) e
+  `RA05:10` (incisos I a VII) em `dpt-especiais`.
+- **Atenção:** os conferidores novos leem a linha antiga (sem artigos) como
+  "RA 05/2022 inteira" e acusam FALTA num arquivo de antes da v28; é
+  esperado.
+
+## Verificação
+
+- Ensaio → real, `cmp` idêntico (`index.html` e `sw.js`).
+- `ra05/conferir_texto_ra05.js`: 31 afirmações provadas (RA05.json,
+  compilada, RAs 13/2026, 35/2025, 37/2026 e 58/2025, Res. 415, CLT), mais
+  "sete" (7 incisos no art. 10), "dois" (2 no art. 14) e o § 3º dentro do
+  art. 30 da RA 13/2026; `--estragar 0..30`: 31 de 31 acusados.
+- `conferir_lei_seca` (manifesto e arquivo): 0 falha, 2918 artigos;
+  `conferir_nada_perdido`: 0; `auditar_manual`: 129 "basta", 0 ausente, 0
+  incompleto (linha S10 "art 21 T21"); `verif_independente`: 25 linhas com
+  26 "NÃO LIDO" (os 24 de antes + a S10: Resoluções CSJT 174/288 e CNJ 125,
+  sem texto na base); `conferir_rotulos`: igual à base; `grudados`: 7;
+  `comparar_manifestos` contra `bak_2110`: só os 4 da RA 05, 0 artigo com
+  linha diferente; `selos`: iguais à v27; `checar2`: nada perdido, `CHAVES`
+  iguais.
+- `ra05/neg_ra05.js`: palavra trocada no art. 10, VII; § 4º do art. 2º
+  apagado (auditor e leitor independente); inciso VII apagado; art. 45-A
+  apagado (auditor e leitor independente): 6 de 6 acusados. Artigo apagado
+  que o texto do tópico cita aparece no auditor como **incompleto**, não
+  ausente.
+- `ra05/teste_ra05.js VELHO NOVO` (Edge sem interface): v27 → v28 com as 5
+  chaves `trt4:` iguais; aviso, linha ("O material basta") e clique que abre
+  o tópico; texto novo depois da Res. 415 e antes do quadro; caixa com os 4
+  artigos e nenhuma nota de alteração; marcação num trecho que ficou continua
+  pintada e a do parágrafo antigo aparece em "não foi achada" e continua
+  guardada; 375 px e 820 px sem rolagem lateral (a tabela de 3 colunas rola
+  por dentro no celular, padrão do app); console sem erro. Telas em
+  `ra05/telas/`.
+
+## Armadilhas novas
+
+- A ferramenta Edit apagou o espaço do fim de um `new_string` ("37/2026 ·" +
+  "Resolução CNJ" virou "·Resolução"): o leitor independente deixou de
+  separar o trecho. Conferir separadores " · " depois de editar linha do
+  manual (`grep -c " ·[^ ]"`).
+- Heredoc no bash comeu as barras invertidas de novo; scripts com regex, só
+  pela ferramenta Write/Edit.
+
+---
+
+# Retomada — estado em 2026-10-21 (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira e, se precisar de detalhe, os Adendos 15 a 22
+1. Ler esta seção inteira e, se precisar de detalhe, os Adendos 15 a 23
    (logo acima). O plano em ondas está no Adendo 21 e em
    `C:\Users\thale\.claude\plans\woolly-finding-squid.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
    - `git status --short` e `git log --oneline -3` no worktree (esperado:
-     árvore limpa, último commit = o do Adendo 22 ou posterior);
+     árvore limpa e último commit = o do Adendo 23, v28; em 21/10 o
+     Adendo 23 estava no worktree, esperando o commit, e o último commit era
+     `5238f05`, Adendo 22, v27);
    - `git fetch origin` e `git log --oneline -3 origin/main` (esperado: merge
-     do PR do Adendo 22 ou posterior);
+     do PR do Adendo 23; em 21/10 o `main` estava no PR #21, `1c72dfa`, v26:
+     os PRs da v27 e da v28 ainda não tinham sido mesclados);
    - pasta principal: `git -C <raiz> merge --ff-only origin/main` depois de
      cada PR (a raiz não tem mais cópia solta do HANDOFF);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (esperado: `autos-do-estudo-v27` ou maior);
+     (esperado: `autos-do-estudo-v28` ou maior);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo). Não aplicar
    nenhuma delas sem a resposta.
-4. O próximo trabalho é a **Onda 3 (v28:
-   Lote 3, questões e RA TRT4 05/2022 — esta até 05/11)** e a **Onda 4 (v29,
-   busca no material)**. Uma onda por vez, com o commit do usuário entre elas.
+4. **PRÓXIMO PASSO IMEDIATO: Onda 3, partes B e C (v29)**, roteiro na seção
+   "Onda 3 — roteiro detalhado", mais abaixo: questões novas e resto do Lote
+   3 (prazo **08/11**). A parte A (RA TRT4 05/2022) saiu como **v28**
+   (Adendo 23). **Antes de mexer no `index.html`, esperar o commit da v28.**
+   Depois, a **Onda 4 (busca no material, v30)**. Uma onda por vez, com o
+   commit e o PR do usuário entre elas. Ao terminar cada onda: HANDOFF
+   (adendo + Retomada), memória, `robocopy` da cópia dos scripts e, depois
+   do PR, `--ff-only` na pasta principal.
 
-## ESTADO EM 20/10/2026 — Adendo 22, Onda 2 pronta (v27), esperando o commit
+## ESTADO EM 21/10/2026 — v26 publicada; v27 commitada (PR pendente); v28 pronta, esperando o commit
 
 - **Commits:** Lote 2 em `d453bce` (v20); modo de estudo em `f77b6c8` (v21,
   PR #16); faixa de versão nova em `9d8cddf` (v22, PR #17); súmulas cortadas e
   marca-texto em `ea4991e` (v23, PR #18); botão do marca-texto acima em
   `e8540d4` (v24, PR #19); barras "Contra a meta" em `734f332` (v25, PR #20).
-  Todos no `main`. O GitHub Pages servia a **v25** em 20/10.
-- **Onda 1 (v26):** commitada em `8a2a6fa` no ramo; **o PR ainda não tinha
-  sido mesclado em 20/10** (o Pages servia a v25).
-- **Pendente de commit:** Adendo 22, Onda 2 (`index.html`, `sw.js` v27 e
-  este arquivo). Testado. Esperar o commit antes de mexer no `index.html` de
-  novo. Próximas versões: Onda 3 v28, Onda 4 v29.
+  Onda 1 do parecer em `8a2a6fa` (v26, **PR #21, merge `1c72dfa`**). Todos
+  no `main`. O GitHub Pages servia a **v26** em 21/10.
+- **Onda 2 (v27, backup):** commitada em `5238f05` e enviada ao ramo
+  `claude/lei-8112-adicionais`; **o PR ainda não tinha sido mesclado em
+  21/10**. Lembrar o usuário se o site continuar na v26.
+- **Pasta principal:** em `1c72dfa` (v26) desde 21/10, por `--ff-only`.
+- **Pendente de commit:** Adendo 23, Onda 3 parte A, **v28** (`index.html`,
+  `sw.js` e este arquivo). Testado. Esperar o commit antes de mexer no
+  `index.html` de novo.
+- Próximas versões: Onda 3 partes B e C **v29**, Onda 4 **v30**
+  (`node versao.js INDEX SW NN`).
 - **iPad:** desde a v23 as versões chegam pela faixa "Versão nova do
   aplicativo pronta" (a v22 instalou a faixa). **Nunca** sugerir apagar o ícone nem
   "Dados de Sites", porque isso apaga o progresso, que só existe no aparelho.
@@ -2653,18 +2807,18 @@ chegar ao iPad.
 | Semana | Começa | Observação |
 |---|---|---|
 | 7 | 12/10 | começam o P2 com marca-texto e, na quarta 14/10, o P17 (Direito do Trabalho com questões primeiro) |
-| 8 | 19/10 | |
+| 8 | 19/10 | quarta 21/10: `dpc-provas`, com as 6 questões novas (PC57–PC62, v26) |
 | 9 | 26/10 | blocos que receberam texto no Lote 2 |
-| 10 | 02/11 | sexta: política judiciária (Res. CSJT 415/2025) |
+| 10 | 02/11 | sexta 06/11: política judiciária (Res. CSJT 415/2025 e RA TRT4 05/2022, que entrou na v28; o PR tem de estar mesclado até 05/11) |
 | 11 | 09/11 | **o Lote 3 tem de estar publicado antes** |
-| 12 | 16/11 | |
-| 13 | 23/11 | revisão geral; termina em 28/11 |
+| 12 | 16/11 | quarta 18/11: `dt-seguranca` (P17) e `dpc-especiais` (precisam de questões novas) |
+| 13 | 23/11 | quarta 25/11: `dt-coletivo` e `dt-dano` (P17; precisam de questões novas); revisão geral; termina em 28/11 |
 
 ### Decisões que esperam o usuário (não aplicar sem resposta)
 
-1. **RA TRT4 05/2022 — DECIDIDO em 20/10: download das RAs 58/2025 e 37/2026
-   AUTORIZADO; entra na Onda 3 e tem de estar publicada até 05/11 (sexta da
-   semana 10, 06/11).** Histórico:
+1. **RA TRT4 05/2022 — FEITO em 21/10 (Adendo 23, v28).** Downloads
+   autorizados: RAs 58/2025 e 37/2026 (20/10); RAs 35/2025, 24/2022 e
+   23/2024 (21/10). Histórico:
    - a compilada do TRT4 ("Republicação") traz as alterações das RAs 37/2023,
      07/2024, 10/2024 e 13/2025;
    - depois dela, pela pesquisa de atos do TRT4 (tipo Resolução
@@ -2720,8 +2874,8 @@ chegar ao iPad.
 - **Worktree:** `C:\Users\thale\Documents\GitHub\AppEstudos\.claude\worktrees\questoes-historico-in39-139338`.
 - **Branch:** `claude/lei-8112-adicionais`. O usuário abre o PR para o `main`
   depois de cada commit; o GitHub Pages publica o `main`.
-- **Último commit:** `8a2a6fa` (Adendo 21, v26), no ramo, ainda sem PR
-  mesclado em 20/10. O Adendo 22 (v27) está no worktree, esperando o commit.
+- **Último commit:** `5238f05` (Adendo 22, v27), no ramo, sem PR mesclado
+  em 21/10. O Adendo 23 (v28) está no worktree, esperando o commit.
 - **Pasta principal:** `C:\Users\thale\Documents\GitHub\AppEstudos`. Tem
   `Leis/`, `Provas/` e `Jurisprudência/sumulas_stj.md` (fora do git). Desde
   20/10 fica igual ao `origin/main` por `merge --ff-only` (inclusive este
@@ -2738,6 +2892,7 @@ chegar ao iPad.
     de leitura (`provas_colunas.py`); `q.js ANO/N` imprime uma questão;
   - `faixa/`: versões e servidor do `teste_faixa.js`; `opcao_a/`: a
     ilustração da opção A;
+  - `fontes_ra05/` (RAs 35/2025, 58/2025, 37/2026, 24/2022 e 23/2024, PDF e os dois textos) e `ra05/` (montador, conferidores, aplicação e testes da RA 05/2022; Adendo 23); `bak_2110/`: `index.html`, `sw.js` e scripts do pipeline de antes do Adendo 23;
   - `juris_1210/`: Adendo 18 (aplicação, conferidor de jurisprudência do TST
     pelo portal, testes do marca-texto e da atualização); `bak_1210/`: o
     `index.html` e o `sw.js` de antes; `botao_1410/` e `bak_1410/`: Adendo 19; `meta_1710/` e `bak_1710/`: Adendo 20; `parecer_2010/` e `bak_2010/`: Adendo 21; `backup_2010/` e `bak_2010b/`: Adendo 22;
@@ -2785,6 +2940,67 @@ chegar ao iPad.
    - poderes do empregador (`dt-relacao`);
    - jus variandi (`dt-alteracao`).
 
+## Onda 3 — roteiro detalhado (A em v28; B e C em v29; plano do parecer, Adendo 21)
+
+**A. RA TRT4 05/2022 — FEITA em 21/10 (Adendo 23, v28).** O roteiro abaixo
+ficou como registro; o que valeu está no Adendo 23 (inclusive a RA 35/2025,
+que o roteiro não previa):
+1. Achar no site do TRT4 (pesquisa de atos: tipo Resolução Administrativa,
+   trecho exato "Resolução Administrativa nº 05/2022") a **RA 58/2025**
+   (23/12/2025) e a **RA 37/2026** (30/09/2026). Baixar cada uma numa pasta
+   nova do scratchpad (`fontes_ra05/`). A compilada já está em
+   `fontes_0810/ra05/` e a RA 13/2026 em `fontes_0810/ra13/`. Antes, ver se
+   o TRT4 já publicou a republicação atualizada: se sim, usar ela.
+2. Ler cada PDF com dois leitores (PyMuPDF `python -E -P` com `import pymupdf`,
+   e `pdftotext -enc UTF-8`), como no `res415_extrair.js`. Montar a redação
+   vigente dos artigos que importam: estrutura, NUPEMEC-JT/TRT4, CEJUSCs,
+   competência e RPP. **Cada artigo diz de qual RA vem a redação.** Conferir
+   também se outra RA posterior mexeu neles.
+3. Entra no tópico `dpt-especiais` (onde está a Res. 415) e no quadro Lei
+   seca. A linha da sexta da semana 10 pode passar de "Material + leitura da
+   norma" a "basta" se o material cobrir o que a linha pede. Provar com o
+   conferidor de afirmações (modelo `conferir_texto_res415.js`), com teste
+   negativo.
+
+**B. Questões novas — v29** (até 6 por tópico; modelo `parecer_2010/q_dpc_provas.js`
+e `conferir_q_novas.js`):
+- `dt-seguranca` +3 (tem 3) e `dpc-especiais` +6 (tem 0): semana 12;
+- `dt-coletivo` +3 (tem 3) e `dt-dano` +5 (tem 1): semana 13, junto com o
+  texto novo do Lote 3 (renúncia e transação, não discriminação, Lei 9.029);
+- `dpc-teoria` +6 (tem 0): revisão geral da semana 13.
+- **Ids:** Direito do Trabalho continua de `DT80` em diante (o maior em
+  21/10 era `DT79`); Processo Civil, de `PC63` em diante (o maior era `PC62`).
+  Antes de gravar, conferir de novo que o id é inédito.
+- **Ano:** o da prova do TRT4 em que o assunto do tópico caiu (selo "N/4
+  provas" do tópico e Raio-X); a página 07 diz que "Cada questão traz o ano
+  da prova em que aquele assunto apareceu".
+- **Generalizar o `conferir_q_novas.js`** antes de usar: hoje ele só lê o
+  `leis/cpc.json`. Trocar `provas:[['373', '…']]` por
+  `provas:[['cpc:373', '…'], ['clt:223-G', '…'], ['l9029:4', '…']]`, que
+  aponta a lei da base (`leis/clt.json`, `cf.json`, `L9029.json`,
+  `L13300.json`, `L9507.json` etc.), e manter o teste negativo.
+
+**C. Resto do Lote 3 — v29** (lista acima, itens 1 a 8). Itens com JSON na base:
+Leis 13.300, 9.507, 6.858, 8.009 e 9.029. Lei 5.584 inteira: `leis/L5584.json`
+existe (conferir se está completa). IN 41/2018: baixar o "texto vigente" no
+JusLaboris (autorizado no plano de 06/10). Cada texto novo de doutrina segue
+a regra: toda afirmação provada contra a fonte.
+
+**D. Fechamento da v29:**
+- aviso no 03.1;
+- v29 com `versao.js`;
+- conferidores de sempre (lei seca, nada perdido, auditor, independente,
+  rótulos, grudados, selos, `checar2`, `conferir_juris_tst.js` se mexer em
+  jurisprudência, `conferir_q_novas.js`);
+- teste de atualização sem perda e teste de tela com geometria (375 e
+  820 px).
+
+**Onda 4 — v30 — busca no material** (depois da Onda 3): campo no alto da
+página 04 que procura no texto dos tópicos e dos quadros Lei seca (sem acento,
+sem maiúscula), com lista de resultados (tópico + trecho). O toque abre o
+tópico, rola até o trecho e o realça. Modelo de leitor de texto: `indice()`
+do marca-texto. Testes com "art. 855-B", "Súmula 463" e "reconvenção".
+
 ## Regras do usuário (valem sempre)
 
 - Responder em português.
@@ -2792,7 +3008,8 @@ chegar ao iPad.
 - Downloads pedem autorização. Os do plano já foram autorizados: Regimento,
   Leis 6.019, 12.023, 8.009, 9.029, 13.300 e 9.507, IN 38, 40 e 41,
   Resoluções CSJT 174 e 288 e RA TRT4 05/2022; em 08/10, a Res. CSJT 415/2025
-  e a RA TRT4 05/2022 compilada; em 20/10, as RAs TRT4 58/2025 e 37/2026.
+  e a RA TRT4 05/2022 compilada; em 20/10, as RAs TRT4 58/2025 e 37/2026;
+  em 21/10, as RAs TRT4 35/2025, 24/2022 e 23/2024.
 - **Nunca apagar dado salvo:** ids de bloco e de questão, nomes de disciplina
   e `CHAVES` só por acréscimo.
 - **Sem tempo novo:** 23h25 por semana.
@@ -2830,14 +3047,20 @@ chegar ao iPad.
    - `node parecer_2010/conferir_q_novas.js "$W" DADOS.js` (questões novas:
      formato e trechos provados contra o CPC; `--estragar` para o teste
      negativo) e `node parecer_2010/conferir_notas_in39.js "$W"`;
+   - RA 05/2022 (Adendo 23): `node ra05/ra05_montar.js` (refaz `leis/RA05.json`),
+     `node ra05/ra05_conferir.js` (0 falha; `--estragar 1..5`),
+     `node ra05/conferir_texto_ra05.js` (31 afirmações; `--estragar N`),
+     `node ra05/neg_ra05.js` (6 de 6, sobre `ensaio.html`) e
+     `node ra05/teste_ra05.js VELHO NOVO` (tela);
    - `node juris_1210/conferir_juris_tst.js "$W"` (lê o portal do TST num Edge
      sem interface, uns 2 minutos): "NENHUM PROBLEMA" (172 de 172). Toda
      súmula, OJ ou tese nova do TST no app passa por ele: item transcrito vai
      até o fim; item de fora vai no campo `itens` do cartão ou no título do
      quadro ("Súmula N, I a III, do TST").
-5. **Números atuais:** 52 tópicos com quadro, 2914 artigos, 128 linhas
-   "basta", 5 linhas "Material + leitura da norma", 159 blocos, 514 questões,
-   226 enunciados na 04.2.
+5. **Números atuais (v28):** 52 tópicos com quadro, 2918 artigos, 129 linhas
+   "basta", 4 linhas "Material + leitura da norma", 159 blocos, 520 questões,
+   226 enunciados na 04.2; `verif_independente`: 25 linhas com 26 "NÃO
+   LIDO".
    - `conferir_lei_seca.js "$W"` compara com o manifesto **atual**: contra um
      arquivo antigo, acusa "DIFERE DO MANIFESTO" por construção.
    - O resumo final do `auditar_manual.js` conta só as linhas "basta"; o
@@ -2872,13 +3095,13 @@ chegar ao iPad.
 
 ## Pendências e ideias em aberto
 
-- **RA TRT4 05/2022:** fora do quadro até haver texto provado (ver "Decisões
-  que esperam o usuário", item 1). Se o usuário autorizar a RA 58/2025 e a RA 37/2026:
-  montar a leitura conferida dos artigos que interessam (estrutura e
-  competência dos CEJUSCs do TRT4), declarando de qual RA vem cada redação.
-- **Linha S10 de sexta:** a marca é "Material + leitura da norma" por causa da
-  RA 05/2022. O quadro tem 17 artigos da Res. 415 (1.128 palavras) para 15
-  minutos.
+- **RA TRT4 05/2022:** no quadro desde a v28 (Adendo 23), com texto montado
+  pelo aplicativo. **Quando o TRT4 publicar a republicação atualizada**,
+  conferir o `leis/RA05.json` contra ela (os arts. do quadro e os citados no
+  texto) e trocar a nota da caixa.
+- **Linha S10 de sexta:** "O material basta" desde a v28. É o bloco mais
+  pesado da semana 10: Res. 415 (17 artigos, 1.128 palavras) + RA 05/2022
+  (~720 palavras) para 15 minutos.
 - **Tabelas de três colunas no celular:** rolam por dentro (padrão do app).
 - **Art. 34 do Regimento:** as alíneas "c" e "d" saem na mesma linha, porque
   falta ";" no próprio PDF. O texto está completo.
