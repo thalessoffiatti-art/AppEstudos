@@ -2963,36 +2963,369 @@ ela, o plano do parecer (Adendo 21) termina. Trabalho em `scratchpad/busca_2110/
 
 ---
 
-# Retomada — estado em 2026-10-21 (ler primeiro depois de compactar a conversa)
+# Adendo 26 — 2026-10-22 (edital de 2026: análise, plano e grade nova, v31)
+
+## O pedido
+
+"O edital do concurso 2026 foi publicado!" O PDF está em
+`Edital/Edital TRT4 2026.pdf` (SHA-256 `b41e3e84…1543`). Pedido: analisar só
+o cargo 01, Analista Judiciário – Área Judiciária (sem especialidade; o
+Oficial de Justiça fica de fora); fazer um plano para adaptar o aplicativo; a
+prova é em 31/01/2027. O plano foi aprovado em 22/10
+(`C:\Users\thale\.claude\plans\woolly-finding-squid.md`) com um ajuste: no
+03.1 só o aviso mais recente fica aberto; os outros ficam no bloco fechado
+"Avisos anteriores".
+
+**Decisões do usuário (22/10):**
+- PcD (TEA): vai se inscrever. O app ganha a lista de passos com os prazos.
+  Os simulados completos continuam em 4 h, porque o parecer para o tempo
+  adicional ainda é incerto.
+- Recesso: sem trabalho de 20/12 a 30/01. 6 h por dia, de segunda a sábado,
+  com um seletor para 8 h. 24/12, 25/12, 31/12 e 01/01 em meio período.
+- Grade nova a partir de segunda, 02/11 (semana 10). A semana 9 não muda.
+- Downloads: toda a lista do plano, mais o Código Civil compilado e o Manual
+  de Redação da Presidência.
+
+## Passo 1 — levantamento (`scratchpad/edital2026/`, registro em `PLANO.md`)
+
+- **Anexo II do cargo 01:** 322 itens (CG 71, CE 251), extraídos com
+  `pdftotext` (`extrair_anexo.js` → `anexo2_aj.json`) e conferidos por um
+  segundo leitor (layout). Duas correções provadas: "Vice-Presidente" e o
+  parêntese do item do Regimento.
+- **Matriz edital × app** (`matriz.js`): para cada item, tópico, evidência
+  (expressões procuradas no texto do tópico) e situação. Resultado: 152
+  coberto, 34 parcial, 136 ausente. `conferir_edital_2026.js INDEX` dá
+  "MATRIZ CONFERE"; teste negativo com `--estragar pt-pontuacao virgula`
+  acusa. Tópicos que nenhum item aponta: `adm-improbidade`, `dt-ctps` e
+  `info-hist`.
+- **Prova e nota:**
+  - CG 30 questões, peso 1; CE 30, peso 2. A nota objetiva precisa ser
+    ≥ 6,00 (PcD: 4,80).
+  - Estudo de caso: uma questão, de 20 a 30 linhas, nota de 0 a 10, mínimo
+    de 6,00. Só é corrigido para os 800 primeiros da ampla concorrência e
+    para todos os PcD e cotistas.
+  - Nota final = objetiva + estudo de caso: o caso vale metade.
+- **Composição estimada** (pelas provas do TRT-1 e do TRT-6 de 2025, no
+  QConcursos): CG = Português 10 e 5 de cada uma das outras (Matemática/RL,
+  Legislação, DH, Informática); CE = 5 de cada disciplina. Em `incidencia.md`.
+- **Direito Civil nas 16 provas, por incidência:** parte geral 14/16,
+  direitos reais 10/16, família 7/16, sucessões 7/16; obrigações, contratos e
+  responsabilidade civil, menos. A ordem dos tópicos de Civil segue essa
+  incidência.
+- **Downloads** em `fontes_2210/`:
+  - Planalto, leis: 9.099, 13.140, LINDB, 13.869, 13.019, 11.079, 12.527 e o
+    Código Civil compilado;
+  - Planalto, decretos dos tratados de DH: PIDCP, PIDESC, CADH, San
+    Salvador, discriminação racial, CEDAW e o Protocolo, criança, pessoa com
+    deficiência, diversidade biológica, patrimônio mundial, Estatuto de Roma
+    e Carta da ONU;
+  - TRT4: Código de Conduta compilado (Portaria 4.573/2023 com a 2.808/2025)
+    e Regimento até a **RA 38/2026, de 1º/10/2026** (Assento Regimental
+    05/2026). O edital cita a RA 31/2026 (Assento 04/2026);
+  - CNJ: Res. 351/2020 compilada.
+  - **Faltam:** Decreto 80.978/1977 (a URL do Planalto deu 404); DUDH;
+    Declaração Americana; Declaração da ONU sobre povos indígenas; Res. CNJ
+    492/2023; Res. CSJT 360/2023 e 368/2023 (o TRT-7 tem cópias, mas a fonte
+    deve ser oficial); Protocolos para Atuação e Julgamento na JT; Manual de
+    Redação.
+
+## O que entrou no `index.html` (v31)
+
+Script: `v31/aplicar_v31.js`, 108 trocas, cada uma com âncora única.
+`bash v31/montar.sh` refaz o ensaio do zero a partir de `bak_2210/` (v30):
+gerar → aplicar → v31 → pipeline da lei seca.
+
+Antes de gravar, o script confere:
+- os 20 avisos antigos estão inteiros;
+- as 11 citações do edital entre aspas são trechos do edital;
+- as semanas 1 a 9 do `CRONOGRAMA` são idênticas às da v30, e nenhum id
+  sumiu;
+- as datas das 22 semanas são contínuas e terminam em 30/01/2027;
+- nenhum id de elemento ficou repetido a mais.
+
+**Fontes dos textos:**
+- `v31/semanas.js`: a grade das semanas 10 a 22;
+- `v31/simulados.js`: provas de sábado com validade em 2026;
+- `v31/textos_manual.js`: 03.1;
+- `v31/textos_paginas.js`: páginas 01, 02, 03, 04 e 07;
+- `v31/codigo_v31.js`: CSS e JS.
+
+**Geradores:**
+- `v31/gerar.js` → `out/cronograma.js`, `out/cartoes.html` e
+  `out/relatorio.txt` (minutos por dia; os 322 itens têm bloco ou tópico já
+  estudado);
+- `v31/gerar_p02.js` → `out/edital_p02.html`.
+
+### Grade (CRONOGRAMA)
+
+22 semanas e 335 blocos:
+- 6 blocos têm `fora:true`: saíram do edital, ficam gravados e não contam;
+- 33 têm `ext:true`: só valem no modo de 8 horas;
+- as semanas 17 e 18 têm `meios`.
+
+Os ids das semanas 10 a 13 continuam; os novos entraram só por acréscimo.
+
+Contam 296 blocos no modo de 6 horas e 329 no de 8.
+
+Semana 22 com `marco:true`: o selo diz "Semana da prova" (antes, "Pico de
+preparo").
+
+### Grades da seção 3
+
+| Fase | Semanas | Horas | ids |
+|---|---|---|---|
+| Fase 1 | 10 a 16 | 23h25 | `op-dia-1` a `op-dia-6` |
+| Recesso | 17 a 22 | 6 h por dia, com trilho "Só no modo de 8 horas" | `op-rdia-1` a `op-rdia-6` |
+
+- Notas do recesso: `#op-meio-notas` e `#op-sem22-notas`.
+- A grade das semanas 4 a 9 fica num quadro fechado (`#op-grade-antiga`),
+  com os ids renomeados para `op-dia9-N`.
+
+### Modo do recesso
+
+- Chave nova `trt4:recesso` (`CHAVE_RECESSO`, fora de `CHAVES`, como o
+  marca-texto). Formato: `{v:1, hist:[{modo:'6'|'8', desde:'AAAA-MM-DD', em}]}`.
+- A escolha vale da segunda seguinte. Duas escolhas antes da mesma segunda
+  viram uma.
+- Funções: `lerRecesso`, `modoDaSemana`, `modoEscolhido`, `escolherRecesso`,
+  `blocosVisiveis`, `cronoTotal` e `renderRecessoModo`.
+- O quadro `#recessoModo` fica na página 03. Depois de 25/01, os botões
+  travam.
+- "Zerar progresso" não apaga a chave. Ela entra na cópia de segurança
+  (`PARTES`, `ROTULO`, `VALIDA`, `contar`).
+- "Desfazer a última restauração" só mexe nas partes que a cópia traz: uma
+  cópia de antes do v31 não apaga o modo.
+
+### Carregador do cronograma
+
+Guarda todos os ids marcados, inclusive os que não estão na grade. Os blocos
+`fora` aparecem riscados e travados, "não conta no progresso".
+
+### Metas e desempenho
+
+- `METAS` por fase, até a semana 22. As fases de 2026 têm
+  `bloco:BLOCO_2026` (Civil + Processo do Trabalho + Processo Civil).
+- Funções `blocoCritico(fase)` e `nomesDoBloco`.
+- `CADERNO` e `COTA_SIMULADO` com a estimativa de 2026 (60 questões, peso 90).
+- A regra de corte da semana 7 só vale nas semanas 7 a 9.
+
+### Simuladão
+
+- `disciplina2026(q)` é usada só no sorteio:
+  - LGPD, Lei 11.416 e LG23 (LAI) contam como Administrativo;
+  - LG08 e LG24 (LBI), `adm-improbidade` e `dt-ctps` ficam fora.
+- Civil, DH e Informática não têm questões ainda; a sobra é redistribuída.
+
+### Simulados de sábado (`SIM_REAL`, semanas 5 a 21)
+
+As semanas 10 a 21 usam os números de 2026:
+
+| Semanas | Provas |
+|---|---|
+| 14 a 17 | TRT-6, TRT-1 e TRT-15 de 2025 e TRT-21 de 2023 |
+| 18 a 21 | Oficial de Justiça: TRT-20 de 2024 e TRT-6, TRT-1 e TRT-2 de 2025 |
+
+`SIM_RESERVA` ficou só com o TRT-7 de 2024 (75/80, crítico 17). A semana 22 é
+o simuladão do app.
+
+### 03.1
+
+- **Lista de PcD** (`#opPcd`): 8 passos, com trechos literais do edital
+  (itens 5.5 "a", "e" e "f" e 13.6). Fica aberta até 26/11.
+- Aviso novo; os 20 anteriores ficam em `.op-avisos-ant`.
+- Seção 2: prova de 2026, metas e meta do caso.
+- Seção 3: as três grades.
+- P11 a P14 no formato de 2026.
+- Seção 6: "As vinte e duas semanas"; cartões das semanas 10 a 22, com os
+  itens do edital em cada linha.
+- Seção 8 atualizada.
+
+### Painel "Hoje"
+
+- `gradeDoDia()` escolhe a grade da fase. Também trata os meios períodos, a
+  semana 22 e o dia da prova.
+- "de 22" no lugar de "de 13".
+- O atalho `data-op-dia` aceita id.
+- P15-F (semana 13 em diante) no horário do P15 de cada fase; na semana 22,
+  sem quinta.
+
+### Páginas
+
+- **01:** painel "A prova de 2026" (`#prova2026`).
+- **02:** "Edital de 2026, item a item": 11 disciplinas e 322 linhas; o
+  número da semana leva ao cartão.
+- **03:**
+  - título e subtítulo;
+  - quadro do recesso;
+  - metas;
+  - carga de 2026, com a de 2022 e a calibragem num quadro fechado;
+  - grade de 2022 fechada;
+  - feriados de 02/11 e 20/11;
+  - formato do caso de 2026;
+  - "O recesso e a reta final", no lugar de "Se a prova cair em dezembro";
+  - três ressalvas reescritas.
+- **04:**
+  - matérias novas `#mat-dciv` e `#mat-dh`, com plano e link da FCC;
+  - Informática "de volta";
+  - linha "Edital de 2026" com o peso em 8 matérias;
+  - selo "fora do edital de 2026" em `adm-improbidade` e `dt-ctps`;
+  - notas em `leg-outros` e `dpt-especiais`.
+- **07:** seção "Edital de 2026"; textos de backup e zerar com o modo do
+  recesso.
+- **Menu:** atalhos para Civil, DH e Informática.
+
+### Correções que vieram junto (estão no aviso)
+
+- `JUR_SLOT` (04.2) dizia terça 17h45–18h00 e quarta 18h45–19h00; a grade
+  sempre foi 17h30–17h45 e 18h30–18h45.
+- `.lei-alt` com `nowrap` fazia a página 04 rolar 14 px de lado a 820 px
+  (iPad em pé) com o tópico de improbidade aberto. O erro já existia na v30.
+  Até 1.100 px, a nota agora quebra a linha.
+
+### Textos de linhas reaproveitadas
+
+`gerar.js`, `TEXTO_2026`:
+- "Teoria no sábado da semana N" (N ≥ 10) virou "Teoria na quinta da semana
+  N";
+- "Duas metades de vinte minutos" virou "quinze", porque o bloco agora tem
+  30 min;
+- "Último item do programa de Português" foi trocado, porque há itens novos
+  nas semanas 14 e 15.
+
+### Outros
+
+- `QC_DISCIPLINA` ganhou civ, dh e info.
+- `QC_BLOCO` ganhou 109 blocos novos, pela disciplina; `s13-rlm` passou a
+  `rlm/`.
+
+## Pipeline e conferidores (no ensaio e no real, iguais)
+
+- `auditar_manual.js` e `verif_independente.js` vão até a semana 22 (cópias
+  de antes em `bak_2210/`).
+- **Lei seca:**
+  - 52 tópicos e **2742 artigos** (eram 2981);
+  - saíram, como previsto e avisado: o quadro da Res. CSJT 415/2025 e da RA
+    TRT4 05/2022 em `dpt-especiais`, a CLT 224 a 351 (disposições especiais)
+    em `dt-jornada` e a Lei 13.146 inteira em `leg-outros`;
+  - entraram os arts. 926 a 928 do CPC em `dpt-recursos`;
+  - nenhum artigo que ficou mudou de texto (`comparar_manifestos`).
+- **Resultados:**
+  - `conferir_lei_seca` 0 falha;
+  - `conferir_nada_perdido` 0 faltando, com a exceção declarada "fora do
+    edital de 2026 (Lei 13.146)", 5 artigos;
+  - auditor: 287 linhas, 207 "basta", 0 ausente e 0 incompleto;
+  - `verif_independente`: 18 "NÃO LIDO", todos de prosa;
+  - `--tambem-leitura`: 0 falta;
+  - rótulos: 37 diferenças, todas da base (as que sumiram eram da LBI);
+  - grudados: 6, as remissões conhecidas (a 7ª era da LBI);
+  - `selos.js`: os mesmos 5 descritivos;
+  - `checar2`: nenhum id de bloco ou questão perdido, `CHAVES` iguais;
+  - `conferir_edital_2026` sobre o ensaio: "MATRIZ CONFERE", com teste
+    negativo. Ele regrava `edital2026/blocos.json` e `topicos.json`; as
+    saídas dos geradores ficam idênticas.
+
+## Testes
+
+- **`v31/teste_v31.js VELHO NOVO`:** 60 de 60. Datas simuladas por
+  `Page.addScriptToEvaluateOnNewDocument`. Cobre:
+  - a atualização sem perda;
+  - id desconhecido preservado ao clicar;
+  - a página 03;
+  - o seletor de 6 ou 8 h: escolha, data, 33 blocos, meio do recesso, trava;
+  - a cópia de segurança, sem download real, com zerar, restaurar e
+    desfazer antigo;
+  - a lista de PcD, inclusive fechada depois de 26/11;
+  - o painel "Hoje" em 9 datas, com o clique medido na tela;
+  - cartões e avisos;
+  - desempenho na semana 8 e na 10;
+  - 30 sorteios do simuladão;
+  - o formulário do simulado;
+  - a 04.2;
+  - as páginas 02, 01 e 04;
+  - 375 e 820 px sem rolagem lateral, com todos os tópicos abertos;
+  - o console.
+- **`busca_2110/teste_busca.js`:** agora lê a versão e o aviso do próprio
+  arquivo novo, e "art. 855-B" dá 5 trechos (o 6º era o art. 21 da Res. 415).
+  Resultado: TUDO CERTO.
+- `juris_1210/teste_marca_1210.js` (com caminho absoluto): 0 marcação fora
+  do lugar.
+- `meta_1710/teste_barras_1710.js`: 13 de 13.
+- Capturas para revisão: `v31/telas_v31.js`.
+
+## Armadilhas novas
+
+- `returnByValue` do protocolo de depuração não serializa `dataset`, que vem
+  `{}`. Ler o campo antes de devolver.
+- `teste_marca_1210.js` e `teste_barras_1710.js` precisam de caminho
+  absoluto. Com caminho relativo, o `localStorage` dá `SecurityError`.
+- `conferir_edital_2026.js` regrava `blocos.json` e `topicos.json` com o
+  arquivo que recebe.
+- `aplicar_lei_seca4.js` só confere a frase dos números no aviso de 21/09;
+  não muda aviso nenhum.
+- `node -e` com `\s` e `\/` de novo: usar Write ou Edit.
+
+---
+
+# Retomada — estado em 2026-10-22 (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira e, se precisar de detalhe, os Adendos 15 a 25
-   (logo acima). O plano em ondas está no Adendo 21 e em
-   `C:\Users\thale\.claude\plans\woolly-finding-squid.md`.
+1. Ler esta seção inteira e o **Adendo 26** (edital de 2026, logo acima). O
+   plano aprovado em 22/10 está em
+   `C:\Users\thale\.claude\plans\woolly-finding-squid.md` (o plano em ondas do
+   parecer, Adendo 21, terminou na v30). O levantamento do edital está em
+   `scratchpad/edital2026/PLANO.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
    - `git status --short` e `git log --oneline -3` no worktree (esperado:
-     árvore limpa e último commit = o do Adendo 25, v30; em 21/10 o
-     Adendo 25 estava no worktree, esperando o commit, e o último commit era
-     `a2f243c`, Adendo 24, v29);
-   - `git fetch origin` e `git log --oneline -3 origin/main` (esperado: merge
-     do PR do Adendo 25; em 21/10 o `main` estava no PR #24, `6360115`, v29);
+     árvore limpa e último commit = o do Adendo 26, v31; em 22/10 o Adendo 26
+     estava no worktree, esperando o commit, e o último commit era `fadc505`,
+     Adendo 25, v30);
+   - `git fetch origin` e `git log --oneline -3 origin/main` (em 22/10 o
+     `main` estava no PR #25, `6290f56`, v30);
    - pasta principal: `git -C <raiz> merge --ff-only origin/main` depois de
      cada PR (a raiz não tem mais cópia solta do HANDOFF);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (esperado: `autos-do-estudo-v30` ou maior);
+     (esperado: `autos-do-estudo-v31` ou maior);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo). Não aplicar
    nenhuma delas sem a resposta.
-4. **O plano do parecer terminou em 21/10** (Ondas 0 a 4; a última, a busca
-   no material, é a **v30**, Adendo 25). **Não há próximo passo marcado:**
-   esperar o pedido do usuário. O que está em aberto: as opções A e D
-   (decisões abaixo) e as "Pendências e ideias em aberto", no fim. Antes de
-   mexer no `index.html`, esperar o commit da v30. Ao terminar qualquer
-   versão: HANDOFF (adendo + Retomada), memória, `robocopy` da cópia dos
-   scripts e, depois do PR, `--ff-only` na pasta principal.
+4. **Próximo passo: v32, conteúdo da semana 10, publicar até sábado,
+   31/10** (o usuário commita a v31 antes de 02/11; esperar o commit antes de
+   mexer no `index.html`). A v32 traz:
+   - Direito Civil: LINDB e pessoa natural (personalidade, capacidade,
+     direitos da personalidade), em `mat-dciv`;
+   - Direitos Humanos: teoria, gerações, fontes, interpretação, em `mat-dh`;
+   - Informática: segurança da informação, em `mat-info`;
+   - `adm-atos-poderes`: poderes hierárquico, disciplinar e regulamentar,
+     poderes e deveres do administrador (linha `s10-da4`, que hoje diz
+     "Material em preparo — chega até 31/10");
+   - o caso C10 já existe; conferir se cabe em 20 a 30 linhas.
+   Cada lote segue o plano: texto com cada afirmação provada contra a fonte
+   (modelo `lote3/provas.js`), lei seca pelo pipeline (chave nova por
+   norma; varrer resíduo do extrator antes), ~20 questões
+   (`lote3/conferir_questoes.js`), selos "FCC recente", aviso no 03.1 (o
+   aviso da v31 vai para "Avisos anteriores": o `aplicar` de cada versão
+   move o aviso que estava aberto para dentro do bloco fechado, no alto da
+   lista). Depois do lote, trocar a marca "Material em preparo" da linha
+   por "O material basta" (`v31/semanas.js` + `gerar.js`, ou edição
+   direta), refazer `gerar_p02.js` com a matriz atualizada (a situação de
+   cada item muda) e rodar `conferir_edital_2026.js`.
+   Calendário dos lotes: v33 até 07/11 (semana 11), v34 até 14/11, v35 até
+   21/11, v36 até 28/11, v37 até 05/12, v38 até 12/12 (semana 16 e cartões
+   finais do recesso); Civil também obrigações e contratos até 19/12 e
+   responsabilidade civil e empresa até 26/12. O que cada semana pede está
+   em `v31/semanas.js` (blocos com `nova:true` e `marca`) e na página 02.
+   Ao terminar qualquer versão: HANDOFF (adendo + Retomada), memória,
+   `robocopy` da cópia dos scripts e, depois do PR, `--ff-only` na pasta
+   principal.
 
-## ESTADO EM 21/10/2026 — v29 publicada; v30 pronta, esperando o commit
+## ESTADO EM 22/10/2026 — v30 publicada; v31 (edital de 2026) pronta, esperando o commit
+
+- **v31 (Adendo 26):** `index.html`, `sw.js` e este arquivo no worktree,
+  testados, iguais ao ensaio (`cmp`). Tem de estar publicada antes de
+  segunda, 02/11, quando começa a grade nova.
+
+## ESTADO EM 21/10/2026 — v29 publicada; v30 pronta, esperando o commit (registro)
 
 - **Commits:** Lote 2 em `d453bce` (v20); modo de estudo em `f77b6c8` (v21,
   PR #16); faixa de versão nova em `9d8cddf` (v22, PR #17); súmulas cortadas e
@@ -3012,7 +3345,20 @@ ela, o plano do parecer (Adendo 21) termina. Trabalho em `scratchpad/busca_2110/
   aplicativo pronta" (a v22 instalou a faixa). **Nunca** sugerir apagar o ícone nem
   "Dados de Sites", porque isso apaga o progresso, que só existe no aparelho.
 
-### Calendário (semana N começa em 31/08 + 7 × (N − 1))
+### Calendário (semana N começa em 31/08 + 7 × (N − 1)) — desde a v31, 22 semanas
+
+| Semana | Começa | Observação (v31) |
+|---|---|---|
+| 9 | 26/10 | última da grade de 2022; quarta 28/10, ponto facultativo |
+| 10 | 02/11 | **grade do edital de 2026** (Finados: grade normal); Civil, DH e Informática; simulado TRT-20 2024 (60 válidas) |
+| 11–13 | 09/11–23/11 | conteúdo novo pela página 02; semana 13: P15-F e refazer casos |
+| 14–16 | 30/11–14/12 | fim da Fase 1 (23h25); 25/11 prazo PcD; 26/11 pagamento |
+| 17–18 | 21/12–28/12 | recesso, 6 h ou 8 h; meio período em 24/12, 25/12, 31/12 e 01/01 |
+| 19–20 | 04/01–11/01 | recesso; conteúdo novo só até 16/01 |
+| 21 | 18/01 | revisão final |
+| 22 | 25/01 | semana da prova: quinta 28/01 simulado final, sexta leve, sábado 30/01 véspera; prova domingo, 31/01, à tarde |
+
+Calendário da v30 (registro):
 
 | Semana | Começa | Observação |
 |---|---|---|
@@ -3062,10 +3408,16 @@ ela, o plano do parecer (Adendo 21) termina. Trabalho em `scratchpad/busca_2110/
      Constitucional 200 × 698 → 593 (A não resolve Constitucional);
    - medição: `carga_leitura.js` e `carga_nucleo.js` (rodar o auditor antes
      para gerar `aud.json` e `aud_normal.json`).
-3. **Opção D — remanejar minutos: em espera** (RLM 15 min de teoria →
-   Constitucional; sexta: Processo do Trabalho 75 → 60 e ponto do edital
-   15 → 30). Não executar sem pedido. Se executar, vale da segunda seguinte e
-   ganha aviso no 03.1.
+3. **Opção D — remanejar minutos: superada pela grade de 2026 (v31).** Era
+   sobre a grade das semanas 4 a 9 (RLM 15 min de teoria → Constitucional;
+   sexta: Processo do Trabalho 75 → 60 e ponto do edital 15 → 30).
+4. **Edital de 2026 (v31), a confirmar com o usuário quando surgir:**
+   - Regimento: o edital cita a RA 31/2026 (Assento 04/2026); o material vai
+     seguir a RA 38/2026 (Assento 05/2026) e dizer o que mudou (ressalva na
+     página 03). Bloco `s14-leg`, até 28/11;
+   - tempo adicional de PcD: se o usuário conseguir o parecer, os simulados
+     completos passam a 5 h (pedido dele: não estender antes);
+   - registro da nota de cada estudo de caso (chave nova): adiado.
 
 ### O que já foi feito para a falta de tempo (para não refazer)
 
@@ -3084,10 +3436,11 @@ ela, o plano do parecer (Adendo 21) termina. Trabalho em `scratchpad/busca_2110/
 - **Worktree:** `C:\Users\thale\Documents\GitHub\AppEstudos\.claude\worktrees\questoes-historico-in39-139338`.
 - **Branch:** `claude/lei-8112-adicionais`. O usuário abre o PR para o `main`
   depois de cada commit; o GitHub Pages publica o `main`.
-- **Último commit:** `a2f243c` (Adendo 24, v29), mesclado pelo PR #24. O
-  Adendo 25 (v30) está no worktree, esperando o commit.
+- **Último commit:** `fadc505` (Adendo 25, v30), mesclado pelo PR #25
+  (`6290f56`). O Adendo 26 (v31) está no worktree, esperando o commit.
 - **Pasta principal:** `C:\Users\thale\Documents\GitHub\AppEstudos`. Tem
-  `Leis/`, `Provas/` e `Jurisprudência/sumulas_stj.md` (fora do git). Desde
+  `Leis/`, `Provas/`, `Edital/` (o PDF do edital de 2026) e
+  `Jurisprudência/sumulas_stj.md` (fora do git). Desde
   20/10 fica igual ao `origin/main` por `merge --ff-only` (inclusive este
   arquivo, que é o versionado; não copiar mais com `cp`).
 - **Scratchpad** (pasta temporária desta sessão; os scripts e a base de leis
@@ -3106,6 +3459,7 @@ ela, o plano do parecer (Adendo 21) termina. Trabalho em `scratchpad/busca_2110/
   - `fontes_ra05/` (RAs 35/2025, 58/2025, 37/2026, 24/2022 e 23/2024, PDF e os dois textos) e `ra05/` (montador, conferidores, aplicação e testes da RA 05/2022; Adendo 23); `bak_2110/`: `index.html`, `sw.js` e scripts do pipeline de antes do Adendo 23 (e as leis de antes das correções do Adendo 24);
   - `fontes_2110/in41/` (PDF da IN 41/2018) e `lote3/` (conteúdo, provas, questões, conferidores, aplicação e teste do Adendo 24; `PLANO.md` com o registro); `bak_2110b/`: `index.html`, `sw.js` e scripts do pipeline de antes do Adendo 24;
   - `busca_2110/` (módulo, peças, aplicação, testes e telas da busca no material; Adendo 25); `bak_2110c/`: `index.html`, `sw.js` e manifesto da v29;
+  - `edital2026/` (texto do edital, Anexo II em `anexo2_aj.json`, matriz, conferidor, incidência e `PLANO.md`), `fontes_2210/` (downloads de 22/10) e `v31/` (grade, simulados, textos, código, geradores, `aplicar_v31.js`, `montar.sh`, `teste_v31.js`, telas; Adendo 26); `bak_2210/`: `index.html`, `sw.js`, manifesto, `blocos.json`/`topicos.json` e scripts do pipeline da v30;
   - `juris_1210/`: Adendo 18 (aplicação, conferidor de jurisprudência do TST
     pelo portal, testes do marca-texto e da atualização); `bak_1210/`: o
     `index.html` e o `sw.js` de antes; `botao_1410/` e `bak_1410/`: Adendo 19; `meta_1710/` e `bak_1710/`: Adendo 20; `parecer_2010/` e `bak_2010/`: Adendo 21; `backup_2010/` e `bak_2010b/`: Adendo 22;
@@ -3229,13 +3583,27 @@ para a busca de lá).
   Leis 6.019, 12.023, 8.009, 9.029, 13.300 e 9.507, IN 38, 40 e 41,
   Resoluções CSJT 174 e 288 e RA TRT4 05/2022; em 08/10, a Res. CSJT 415/2025
   e a RA TRT4 05/2022 compilada; em 20/10, as RAs TRT4 58/2025 e 37/2026;
-  em 21/10, as RAs TRT4 35/2025, 24/2022 e 23/2024.
-- **Nunca apagar dado salvo:** ids de bloco e de questão, nomes de disciplina
-  e `CHAVES` só por acréscimo.
-- **Sem tempo novo:** 23h25 por semana.
-- Mudança de grade vale da segunda seguinte.
+  em 21/10, as RAs TRT4 35/2025, 24/2022 e 23/2024; **em 22/10, toda a lista
+  do plano do edital de 2026** (leis, decretos dos tratados de DH, CNJ 351 e
+  492, CSJT 360 e 368, Protocolos da JT, Código de Conduta e Regimento do
+  TRT4), mais o Código Civil compilado e o Manual de Redação da Presidência.
+  Páginas de ajuda da Microsoft e do Google são lidas no navegador; salvar
+  cópia pede autorização.
+- **Nunca apagar dado salvo:** ids de bloco e de questão, nomes de disciplina,
+  `CHAVES` e chaves `trt4:` só por acréscimo (`trt4:marcas` e, desde a v31,
+  `trt4:recesso` ficam fora de `CHAVES` e "Zerar progresso" não as apaga).
+- **Carga:** 23h25 por semana até 19/12; no recesso (21/12 a 30/01), 6 h por
+  dia de segunda a sábado, ou 8 h no modo escolhido na página 03; meio
+  período em 24/12, 25/12, 31/12 e 01/01.
+- Mudança de grade vale da segunda seguinte; semanas já estudadas não são
+  reescritas.
 - Textos literais.
 - Toda mudança ganha aviso no topo do 03.1 ("O que muda / O que não muda").
+  **Só o aviso mais recente fica aberto;** os outros ficam no bloco fechado
+  "Avisos anteriores" (`.op-avisos-ant`), do mais novo para o mais antigo, e
+  o texto de nenhum aviso muda.
+- O usuário é a pessoa que estuda; é autista: previsibilidade, textos
+  literais, datas e horários exatos.
 - **Lei transcrita:** fiel. "Não podemos correr o risco de erros passarem
   batidos."
 
@@ -3246,10 +3614,17 @@ para a busca de lá).
    `aplicar_lote2b.js`.
 2. **Ensaio:** sempre numa cópia antes (`ensaio.html`). Depois, aplicar no
    real e exigir `cmp` igual ao ensaio.
-3. **Pipeline da lei seca:**
+3. **Pipeline da lei seca** (desde a v31, o auditor e o leitor independente
+   vão até a semana 22):
    1. `node auditar_manual.js "$W" --sem-lei-seca --json aud.json`
    2. `node gerar_lei_seca.js aud.json`
    3. `node aplicar_lei_seca4.js "$W"`
+   - **v31:** `bash v31/montar.sh` faz tudo (geradores → aplicar → versão →
+     pipeline) a partir de `bak_2210/` (a v30). Para a v32 em diante, partir
+     do `index.html` commitado, com um `aplicar` próprio; `v31/gerar.js` e
+     `v31/gerar_p02.js` continuam a ser as fontes dos cartões e da página 02
+     (rodar `conferir_edital_2026.js` antes, para atualizar
+     `edital2026/topicos.json`).
 4. **Conferidores:**
    - `node conferir_lei_seca.js` e `node conferir_lei_seca.js "$W"`: 0 falha;
    - `node conferir_nada_perdido.js "$W"`: 0 faltando;
@@ -3292,12 +3667,22 @@ para a busca de lá).
      súmula, OJ ou tese nova do TST no app passa por ele: item transcrito vai
      até o fim; item de fora vai no campo `itens` do cartão ou no título do
      quadro ("Súmula N, I a III, do TST").
-5. **Números atuais (v30; o material é o da v29):** 52 tópicos com quadro, 2981 artigos, 130 linhas
-   "basta", 4 linhas "Material + leitura da norma", nenhuma "Só na lei", 159
-   blocos, 543 questões, 226 enunciados na 04.2, `CORRECOES.json` com 13
-   registros; `verif_independente`: 25 linhas com 26 "NÃO LIDO";
-   `conferir_rotulos`: 41 diferenças (a base `rotulos_base_0710.txt` tem 42;
-   a L11419 13 deixou de diferir).
+5. **Números atuais (v31):** 52 tópicos com quadro, 2742 artigos; 287 linhas
+   no manual: 207 "basta", 3 "Material + leitura da norma", 35 "Material em
+   preparo", 42 "Método", nenhuma "Só na lei"; 335 blocos em 22 semanas (6
+   fora, 33 do modo de 8 horas; contam 296 ou 329); 543 questões; 226
+   enunciados na 04.2; `CORRECOES.json` com 13 registros;
+   `verif_independente`: 18 "NÃO LIDO" (prosa); `conferir_rotulos`: 37
+   diferenças, todas da base `rotulos_base_0710.txt`; grudados: 6;
+   `conferir_nada_perdido`: 5 artigos da Lei 13.146 como exceção declarada
+   (fora do edital de 2026). Edital: 322 itens, 152 coberto, 34 parcial, 136
+   ausente (`conferir_edital_2026.js INDEX`).
+   - **Testes da v31:** `node v31/teste_v31.js VELHO NOVO` (60 verificações,
+     datas simuladas; "TUDO CERTO"); `busca_2110/teste_busca.js` agora lê a
+     versão e o aviso do arquivo novo; `teste_marca_1210.js` e
+     `teste_barras_1710.js` pedem caminho absoluto.
+   - (v30: 2981 artigos, 130 "basta", 4 "Material + leitura", 159 blocos,
+     `verif_independente` 25/26, rótulos 41.)
    - `conferir_lei_seca.js "$W"` compara com o manifesto **atual**: contra um
      arquivo antigo, acusa "DIFERE DO MANIFESTO" por construção.
    - O resumo final do `auditar_manual.js` conta só as linhas "basta"; o
@@ -3336,6 +3721,29 @@ para a busca de lá).
     scratchpad.
 
 ## Pendências e ideias em aberto
+
+- **Edital de 2026 (v31):**
+  - **Fontes que faltam** (baixar num lote, com a autorização de 22/10):
+    Decreto 80.978/1977 (a URL do Planalto deu 404; procurar outra), DUDH,
+    Declaração Americana, Declaração da ONU sobre povos indígenas, Res. CNJ
+    492/2023, Res. CSJT 360/2023 e 368/2023 (de fonte oficial), Protocolos
+    para Atuação e Julgamento na JT, Manual de Redação;
+  - **semana 8:** `adm-atos-poderes` não tem os poderes hierárquico,
+    disciplinar e regulamentar nem os deveres do administrador; entram na
+    v32 (linha `s10-da4`);
+  - **Regimento:** o material segue a RA 38/2026; dizer, artigo por artigo,
+    o que o Assento 05/2026 mudou (semana 14);
+  - **página 02** é estática: refazer `v31/gerar_p02.js` a cada lote (a
+    situação dos itens muda) e trocar a data "Situação em";
+  - **`SIM_RESERVA`:** só o TRT-7 2024. O TRT-23 2022 e as outras reservas
+    antigas saíram do formulário (os registros feitos com elas guardam o
+    rótulo e continuam no histórico);
+  - **Civil, DH e Informática** não têm questões no banco: o simuladão
+    redistribui as 15 vagas até as questões dos lotes chegarem;
+  - **estudos de caso das semanas 14 a 22:** os enunciados e espelhos
+    entram nos cartões com cada lote (as caixas já dizem a data);
+  - **cartões do recesso:** os blocos estão na grade; os textos finais
+    entram até 12/12 (v38).
 
 - **RA TRT4 05/2022:** no quadro desde a v28 (Adendo 23), com texto montado
   pelo aplicativo. **Quando o TRT4 publicar a republicação atualizada**,
