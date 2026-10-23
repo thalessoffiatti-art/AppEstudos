@@ -3512,56 +3512,245 @@ Ao entregar cada um, a linha volta a "O material basta" e o item vira
 
 ---
 
-# Retomada — estado em 2026-10-22 (ler primeiro depois de compactar a conversa)
+# Adendo 28 — 2026-10-23 (material da semana 11 do edital de 2026, v33)
+
+## O pedido
+
+"Commit concluído. Pode continuar": o segundo lote do plano de 22/10, com o
+conteúdo da semana 11 (09/11 a 14/11), para publicar até 07/11. A v32 foi
+mesclada no PR #27 (`5b3bcc2`) e está publicada; a pasta principal está em
+`5b3bcc2`. Download autorizado em 23/10: a Lei 13.460/2017 do Planalto
+(`fontes_2310/l13460/l13460.htm`, 69.906 bytes).
+
+**Antes de começar:** a limpeza de temporários do Windows apagou, na noite de
+22 para 23/10, uns 590 arquivos do scratchpad (inclusive quase toda a pasta
+`leis/`). Restaurado com `robocopy <ferramentas-scratchpad> <scratchpad> /E
+/XO` e provado refazendo a v32 (`v32/montar.sh` + `cmp` com o `index.html`
+commitado: igual). Desde então, `robocopy` de volta ao fim de cada etapa.
+
+## O que entrou no `index.html` (v33)
+
+Scripts em `scratchpad/v33/`. `bash v33/montar.sh` refaz o ensaio do zero a
+partir de `bak_2210/index_v32.html`: fase A → `edital2026/topicos.js` →
+`v31/gerar.js` e `v31/gerar_p02.js` → fase B → versão 33 → pipeline da lei
+seca. Os patches (`v33/patch_*.js`) foram aplicados uma vez e não estão no
+`montar.sh`.
+
+### Texto (`v33/conteudo.js`, provado por `v33/provas.js`: 333 afirmações)
+
+- **Direito Civil:**
+  - `civ-pj`, "Pessoa jurídica: espécies, existência, desconsideração,
+    associações e fundações", com quadro dos arts. 40 a 69 do CC;
+  - `civ-bens`, "Domicílio e bens: domicílio civil, classes de bens e bens
+    públicos", com quadro dos arts. 70 a 103. O domicílio foi para
+    `civ-bens`, como no assunto "Domicílio e Bens" do QConcursos.
+  - Selos "FCC recente": `civ-pj` [6, 6] e `civ-bens` [5, 5].
+- **Direito Administrativo:**
+  - `adm-lindb` (depois de `adm-principios`), LINDB arts. 20 a 30, com quadro;
+  - `adm-abuso` (depois de `adm-improbidade`), Lei 13.869/2019, com quadro dos
+    arts. 1º a 38 e tabela dos 25 crimes em vigor (o art. 15-A, violência
+    institucional, tem pena de 3 meses a 1 ano);
+  - em `adm-controle-servicos`, a seção "Direitos dos usuários de serviços
+    públicos: a Lei 13.460/2017" (antes de "Bens públicos: afetação…"), com
+    os arts. 4º a 6º e 8º no quadro.
+- **Direitos Humanos:**
+  - `dh-tratados`: hierarquia (EC 45 e supralegalidade, STF), controle de
+    convencionalidade (Recomendação CNJ 123/2022 na redação de 2026), IDC
+    (CF, art. 109, V-A e § 5º) e sistema interamericano (CADH, art. 33). Sem
+    quadro: caixas `div.lei` com o art. 5º (caput e §§ 2º a 4º) e o art. 109
+    (caput, V, V-A e § 5º), e entradas em `escopos.js`;
+  - `dh-onu`: Carta da ONU, Estatuto da CIJ (texto do Decreto 19.841/1945,
+    com a grafia da época; trechos com defeito de digitalização só em
+    paráfrase) e DUDH.
+- **Legislação:** `leg-conduta` (depois de `leg-trt4`), Código de Conduta e
+  Valores Éticos do TRT4, com quadro dos 29 artigos.
+- **Informática:** `info-windows` (antes de `info-seguranca`), com atalhos e
+  regras de nome de arquivo das páginas oficiais da Microsoft.
+- Trocas P1 a P3 nos planos das matérias ("no material (semana 11)").
+- **Fontes web** (`v33/fontes_web.json`, lidas no navegador, sem salvar
+  cópia): DUDH (UNICEF Brasil), STF (SV 25, RE 466.343 e HC 95.967, por
+  `fetch` na página do STF), CNJ (Recomendação 123/2022), Microsoft (atalhos;
+  nomes de arquivo). Fonte nova `juris:ID` (cartão da 04.2) em
+  `v33/fontes.js`.
+- **Provas calculadas** em `v33/provas.js`: `calc:penas13869`,
+  `calc:pena:N` (cada linha da tabela de crimes), `calc:artigos:LEI` e
+  `calc:incisos:LEI:N` (as contagens "29 artigos" e "23 condutas").
+
+### Questões
+
+20 novas (564 → 584), no fim do `QUESTOES`: CV09 a CV14, DA101 a DA104, DH06 a
+DH10, LG33, LG34, IF06 a IF08. Ano 2026, menos DA104 (tópico antigo:
+2022). `node v33/conferir_questoes.js INDEX v33/questoes.js --ja-aplicadas`:
+20 questões, 99 trechos.
+
+### Atalhos e QConcursos
+
+- `QC_TOPICO` aceita lista de `[assunto, rótulo]` (dois links em `dh-onu` e
+  `info-windows`); assuntos novos para os oito tópicos, menos `leg-conduta`
+  (sem assunto no QConcursos).
+- `QC_DISCIPLINA` ganhou `penal` (`direito-direito-penal`), por causa do
+  abuso de autoridade.
+- `QC_BLOCO`: `s11-info` → `sistema-operacional`.
+- Os nove endereços foram abertos no site em 23/10, com o filtro da FCC.
+
+### Grade, cartões e página 02
+
+- `v33/patch_semanas_v33.js` e `v33/patch_semanas_v33b.js`: as seis linhas
+  da semana 11 com âncora (e `anc2`), leitura, nota e "O material basta". A
+  linha reusada de controle (`s10-da2`) ganhou `artsMais` (Lei 13.460) e
+  `nota`; `v31/gerar.js` passou a aceitar `artsMais` e `nota` em linha
+  reusada.
+- A nota de `s11-da` manda ler no quadro só a LINDB: com a parte geral da Lei
+  13.869, a sexta dava 57 de 50 minutos.
+- `v31/gerar_p02.js`: a data "Situação em …" virou a constante `SITUACAO`
+  (23/10/2026).
+- Matriz (`v33/patch_matriz_v33.js`): **177 coberto, 31 parcial, 114
+  ausente**. CG-DH-28 fica parcial (os Protocolos da JT são da semana 15).
+- Página 02: 14 itens mudaram (13 a "No material"; Carta da ONU a "Em
+  parte — completa até 05/12").
+- As linhas de sábado das semanas 11, 12, 13 e 15 trocaram o link "Direito
+  Civil (disciplina inteira)" pelo do tópico `civ-pj`.
+
+### Base de leis e pipeline
+
+- **Chaves novas** `L13460`, `L13869` e `CONDUTA` (`v33/patch_pipeline_v33.js`):
+  - na base;
+  - nos scripts que leem `leis/`;
+  - no gerador: nome, endereço, fonte, nota e data de cópia 23/10/2026;
+  - no auditor e no leitor independente: "Portaria GP.TRT4 4.573/2023" e
+    "Código de Conduta do TRT4" valem como `CONDUTA`.
+- **`leis/CONDUTA.json`:** `v33/conduta_extrair.js`. O texto principal vem do
+  PyMuPDF, por `v33/pdf_texto.py`, rodado com `python -P` (o `-I` desliga
+  os pacotes do usuário, onde o PyMuPDF está). Conferências: o pdftotext,
+  o leitor B e os 13 cabeçalhos de página tirados.
+- **Correções na base** (`CORRECOES.json`, agora 17 registros):
+  - L13869:9, o "’" final que vem do ato de promulgação;
+  - CC:66, o "º" do § 1º, que estava tachado na página (`v33/patch_cc66.js`).
+    Achado por `v33/tachados_curtos.js`, que procura, nas páginas, tachado
+    de um sinal só.
+- **`lei_seca_texto.js`** (cópia de antes: `bak_2210/lei_seca_texto_v32.js`):
+  - "(alterado pela…)", em minúscula, sai como nota;
+  - "Pena - …" depois de ". ; :" é linha própria (mudou o quadro da Lei 8.429,
+    art. 19, e o da Lei 9.029, art. 2º; texto igual, provado por
+    `comparar_manifestos`, e a marcação sobre a linha continua pintada);
+  - "§ 1º I – II –" (parágrafo e incisos revogados) some.
+- **`gerar_lei_seca.js`:** o `DONO` aceita faixa (`['CC', 40, 69]`); donas da
+  semana 11: `civ-pj`, `civ-bens`, `adm-lindb` e `adm-abuso`.
+- **`verif_independente.js`:** aceita inciso com letra ("V-A").
+- **Resultado:** 60 tópicos com quadro e 2.954 artigos (eram 55 e 2.812); 5
+  quadros novos e nenhum removido.
+
+## Conferidores e testes (no ensaio; o real é igual, `cmp`)
+
+- `bash v33/conferir_tudo.sh`:
+  - provas: 333;
+  - questões: 20 e 99 trechos;
+  - matriz: confere;
+  - sintaxe: ok;
+  - lei seca: 0 falha;
+  - nada perdido: ok;
+  - auditor: 0 ausente e 0 incompleto, 213 "basta";
+  - leitor independente: 18 "NÃO LIDO";
+  - rótulos: 38;
+  - grudados: 6;
+  - manifestos: 2 artigos mudados, as linhas "Pena";
+  - selos: 17, os 9 de antes e 8 tópicos novos;
+  - `checar2`: ok.
+- **`node v33/teste_v33.js VELHO NOVO`: 40 de 40.** Inclui uma marcação feita
+  com o mouse na v32 sobre a linha "Pena" da Lei 9.029, que continua pintada
+  na v33. Negativo (`v33/neg_tela.js`): 2 falhas, as plantadas.
+- `busca_2110/teste_busca.js bak_2210/index_v32.html v33/ensaio.html`: TUDO
+  CERTO.
+
+## Carga de leitura da semana 11 (55 palavras/min)
+
+| Dia | Bloco | Leitura | Tempo do bloco |
+|---|---|---|---|
+| Segunda | Civil: pessoa jurídica | 60 min | 75 min |
+| Quarta | Civil: domicílio e bens | 40 min | 60 min |
+| Terça | Direitos Humanos | 29 min | 45 min |
+| Quinta | Código de Conduta (arts. 1º a 6º no quadro) | 41 min | 45 min |
+| Quinta | Informática | 10 min | 45 min |
+| Sexta | LINDB e abuso de autoridade | cerca de 45 min | 50 min |
+
+O bloco de controle da Administração (terça, 90 min) já passava do tempo
+antes da v33: o tópico tem 144 min de leitura. A v33 acrescenta uns 24 min.
+Fica para o usuário decidir se esse bloco passa ao modo P17.
+
+## Armadilhas novas
+
+- A limpeza de temporários do Windows pode apagar o scratchpad. Fazer o
+  `robocopy` ao fim de cada etapa e restaurar com `/XO`.
+- Artigo com letra (15-A, 49-A): toda afirmação de contagem ou de "todos os
+  artigos" tem de percorrer as chaves da base, e não números de 1 a N.
+- O auditor exige o artigo inteiro, salvo quando há entrada em `escopos.js`
+  (lei:artigo@tópico). Sem ela, artigo citado vira quadro inteiro (foi o
+  caso dos arts. 1º, 4º e 5º da CF em `dh-teoria`, na v32).
+- O PyMuPDF só funciona com `python -P` (o `-I` desliga os pacotes do
+  usuário).
+- Tachado de um sinal só na página do Planalto: rodar
+  `v33/tachados_curtos.js` em toda página nova.
+- Ao mexer em `lei_seca_texto.js`, refazer a versão anterior e comparar: a v32
+  refeita mostrou as duas linhas "Pena" que mudariam.
+
+---
+
+# Retomada — estado em 2026-10-23 (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira, o **Adendo 27** (v32, semana 10, logo acima) e o
-   **Adendo 26** (edital de 2026, antes dele). O plano aprovado em 22/10 está em
+1. Ler esta seção inteira, o **Adendo 28** (v33, semana 11, logo acima), o
+   **Adendo 27** (v32, semana 10) e o **Adendo 26** (edital de 2026). Se o
+   scratchpad tiver perdido arquivos, restaurar antes (memória
+   appestudos-retomada: `robocopy … /E /XO` e refazer a última versão para
+   provar). O plano aprovado em 22/10 está em
    `C:\Users\thale\.claude\plans\woolly-finding-squid.md` (o plano em ondas do
    parecer, Adendo 21, terminou na v30). O levantamento do edital está em
    `scratchpad/edital2026/PLANO.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
    - `git status --short` e `git log --oneline -3` no worktree (esperado:
-     árvore limpa e último commit = o do Adendo 27, v32; em 22/10 o Adendo 27
-     estava no worktree, esperando o commit, e o último commit era `a482619`,
-     Adendo 26, v31);
-   - `git fetch origin` e `git log --oneline -3 origin/main` (em 22/10 o
-     `main` estava no PR #26, `78d9818`, v31, publicada);
+     árvore limpa e último commit = o do Adendo 28, v33; em 23/10 o Adendo 28
+     estava no worktree, esperando o commit, e o último commit era `1346849`,
+     Adendo 27, v32);
+   - `git fetch origin` e `git log --oneline -3 origin/main` (em 23/10 o
+     `main` estava no PR #27, `5b3bcc2`, v32, publicada);
    - pasta principal: `git -C <raiz> merge --ff-only origin/main` depois de
      cada PR (a raiz não tem mais cópia solta do HANDOFF);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (esperado: `autos-do-estudo-v32` ou maior; a v32 tem de estar publicada
-     antes de segunda, 02/11);
+     (esperado: `autos-do-estudo-v33` ou maior; a v33 tem de estar publicada
+     antes de segunda, 09/11);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo). Não aplicar
    nenhuma delas sem a resposta.
-4. **Próximo passo: v33, conteúdo da semana 11 (09/11 a 14/11), publicar
-   até sábado, 07/11** (o usuário commita a v32 antes de 02/11; esperar o
-   commit antes de mexer no `index.html`). As seis linhas da semana 11 em
-   "Material em preparo — chega até 07/11":
-   - `s11-civ`: pessoas jurídicas, domicílio e bens (CE-CIV-04 a 06), num
-     tópico novo `civ-pj` (já planejado na matriz);
-   - `s10-da2` (na semana 11): **direitos dos usuários de serviço público**
-     (CE-ADM-28: Lei 13.460/2017 e Lei 8.987, art. 7º), em
-     `adm-controle-servicos`. Foi acrescentado pela v32;
-   - `s11-da`: LINDB na Administração Pública (arts. 20 a 30, em
-     `novo:adm-lindb`; os arts. 1º a 19 já estão em `civ-lindb`) e abuso de
-     autoridade (Lei 13.869/2019), CE-ADM-05 e 09;
-   - `s11-dh`: tratados e CF, controle de convencionalidade, Carta da ONU e
-     CIJ, DUDH (CG-DH-06 a 08, 23 e 28);
-   - `s11-leg2`: Código de Conduta do TRT4 (CG-LEG-02);
-   - `s11-info`: Windows 10 e 11, arquivos e pastas (CG-INFO-01 e 08).
+4. **Próximo passo: v34, conteúdo da semana 12 (16/11 a 21/11), publicar
+   até sábado, 14/11** (o usuário commita a v33 antes de 09/11; esperar o
+   commit antes de mexer no `index.html`). As quatro linhas da semana 12 em
+   "Material em preparo — chega até 14/11":
+   - `s12-civ`: negócio jurídico (conceito, classificação, elementos,
+     condição, termo e encargo, defeitos e invalidade), prescrição e
+     decadência e prova (CE-CIV-07 a 13);
+   - `s12-da`: Lei 13.019/2014, PPP (Lei 11.079/2004) e LAI (Lei
+     12.527/2011) (CE-ADM-25, 26, 31 e 43). As Leis 13.019 e 11.079 estão em
+     `fontes_2210/` (baixadas em 22/10); a 12.527 já está na base;
+   - `s12-dh`: PIDCP e PIDESC, com os protocolos (CG-DH-09 e 10), nos
+     decretos de `fontes_2210/`;
+   - `s12-info`: Google Workspace (CG-INFO-02 a 04): páginas de ajuda do
+     Google, lidas no navegador (salvar cópia pede autorização).
 
-   **Como fazer**, pelo modelo da v32 (Adendo 27, `scratchpad/v32/`):
-   - copiar `v32/` para `v33/` e trocar `conteudo.js`, `provas.js`,
+   **Como fazer**, pelo modelo da v33 (Adendo 28, `scratchpad/v33/`):
+   - copiar `v33/` para `v34/` e trocar `conteudo.js`, `provas.js`,
      `questoes.js`, `aviso.js` e os patches;
-   - `montar.sh` a partir do `index.html` da v32 commitada (`bak_…`);
+   - `montar.sh` a partir do `index.html` da v33 commitada
+     (`bak_2210/index_v33.html`);
+   - lei nova: `extrair3.js` + `leitor_b.js` + `v32/varrer_v32.js` +
+     `v33/tachados_curtos.js`, e entrada em `escopos.js` quando a linha pedir
+     só parte de um artigo;
    - `conferir_tudo.sh`;
-   - um `teste_v33.js` no molde do `teste_v32.js`;
+   - `teste_v34.js` no molde do `teste_v33.js`, com teste negativo;
    - carga de leitura a 55 palavras por minuto, com nota no cartão quando
-     o quadro passar do bloco;
-   - QConcursos por assunto, com os endereços abertos no site.
+     passar do bloco;
+   - QConcursos por assunto, com os endereços abertos no site;
+   - `SITUACAO` em `v31/gerar_p02.js` com a data da versão.
 
    Depois do lote, a marca da linha volta a "O material basta"
    (`v31/semanas.js`), a matriz é atualizada e `gerar_p02.js` é refeito. O
@@ -3584,13 +3773,16 @@ Ao entregar cada um, a linha volta a "O material basta" e o item vira
    `robocopy` da cópia dos scripts e, depois do PR, `--ff-only` na pasta
    principal.
 
-## ESTADO EM 22/10/2026 — v31 publicada (PR #26); v32 (semana 10) pronta, esperando o commit
+## ESTADO EM 23/10/2026 — v32 publicada (PR #27); v33 (semana 11) pronta, esperando o commit
 
-- **v32 (Adendo 27):** `index.html`, `sw.js` e este arquivo no worktree,
+- **v33 (Adendo 28):** `index.html`, `sw.js` e este arquivo no worktree,
   testados e iguais ao ensaio (`cmp`). Tem de estar publicada antes de
-  segunda, 02/11, quando começa a semana 10.
-- **v31 (Adendo 26):** mesclada no PR #26 (`78d9818`) e publicada
-  (`autos-do-estudo-v31`); a pasta principal está em `78d9818`.
+  segunda, 09/11, quando começa a semana 11.
+- **v32 (Adendo 27):** mesclada no PR #27 (`5b3bcc2`) e publicada
+  (`autos-do-estudo-v32`); a pasta principal está em `5b3bcc2`.
+- **Decisão que espera o usuário:** o bloco de controle da Administração da
+  terça da semana 11 (90 min) tem cerca de 168 min de leitura. Já passava do
+  tempo antes da v33. Passar ao modo P17 (questões primeiro) é decisão dele.
 
 ## ESTADO EM 21/10/2026 — v29 publicada; v30 pronta, esperando o commit (registro)
 
@@ -3934,18 +4126,21 @@ para a busca de lá).
      súmula, OJ ou tese nova do TST no app passa por ele: item transcrito vai
      até o fim; item de fora vai no campo `itens` do cartão ou no título do
      quadro ("Súmula N, I a III, do TST").
-5. **Números atuais (v32):**
-   - 55 tópicos com quadro e 2.812 artigos;
-   - 287 linhas no manual, 207 delas "basta";
-   - 68 tópicos na página 04;
-   - 564 questões;
-   - `CORRECOES.json` com 15 registros;
-   - edital: 164 coberto, 32 parcial, 126 ausente;
-   - rótulos: 38 diferenças;
-   - selos: 9 divergentes (os 5 descritivos e os 4 tópicos novos, com
+5. **Números atuais (v33):**
+   - 60 tópicos com quadro e 2.954 artigos;
+   - 287 linhas no manual, 213 delas "basta";
+   - 76 tópicos na página 04;
+   - 584 questões;
+   - `CORRECOES.json` com 17 registros;
+   - edital: 177 coberto, 31 parcial, 114 ausente;
+   - rótulos: 38 diferenças; grudados: 6; leitor independente: 18 "NÃO LIDO";
+   - selos: 17 divergentes (os 5 descritivos e os 12 tópicos novos, com
      "Novo no edital de 2026").
 
-   Testes: `v32/teste_v32.js` (40) e `v32/conferir_tudo.sh`.
+   Testes: `v33/teste_v33.js` (40) e `v33/conferir_tudo.sh`.
+
+   **Números da v32 (registro):** 55 tópicos com quadro e 2.812 artigos; 207
+   "basta"; 68 tópicos; 564 questões; 15 correções; edital 164/32/126.
 
    **Números da v31 (registro):** 52 tópicos com quadro, 2742 artigos; 287 linhas
    no manual: 207 "basta", 3 "Material + leitura da norma", 35 "Material em
