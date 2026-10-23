@@ -3266,64 +3266,331 @@ o simuladão do app.
 
 ---
 
+# Adendo 27 — 2026-10-22 (material da semana 10 do edital de 2026, v32)
+
+## O pedido
+
+"Commit feito. Pode prosseguir": o primeiro lote do plano de 22/10, com o
+conteúdo da semana 10 (02/11 a 07/11), para publicar até 31/10. O v31 foi
+mesclado no PR #26 (`78d9818`) e está publicado. Downloads autorizados em
+22/10: os três PDFs do CERT.br ("Baixar os três PDFs").
+
+## O que entrou no `index.html` (v32)
+
+Scripts em `scratchpad/v32/`. `bash v32/montar.sh` refaz o ensaio do zero a
+partir de `bak_2210/index_v31.html`: fase A → `edital2026/topicos.js` →
+`v31/gerar.js` e `v31/gerar_p02.js` → fase B → versão 32 → pipeline da lei
+seca. Desde a v32 o `montar.sh` usa `set -e -o pipefail` (antes, um `| tail`
+escondia a falha de uma etapa).
+
+### Texto (fase A, `v32/conteudo.js`)
+
+- **Direito Civil (`mat-dciv`):**
+  - `civ-lindb`: "LINDB — vigência, revogação, lacunas, interpretação e a
+    lei no tempo e no espaço", com quadro Lei seca dos arts. 1º a 19 do
+    Decreto-Lei 4.657/1942;
+  - `civ-pessoas`: "Pessoa natural: personalidade, capacidade, direitos da
+    personalidade e ausência", com quadro dos arts. 1º a 39 do Código Civil.
+- **Direitos Humanos (`mat-dh`):** `dh-teoria`, "Teoria geral: evolução,
+  fundamentos, fontes, características, gerações, interpretação e colisão",
+  com quadro da CF (arts. 1º, 4º e 5º, inteiros pela regra do quadro).
+- **Informática (`mat-info`):** `info-seguranca`, "Segurança da informação:
+  pragas virtuais, aplicativos de proteção, dois fatores e senhas", sem lei;
+  as definições seguem a Cartilha de Segurança para Internet do CERT.br e os
+  fascículos "Códigos maliciosos" e "Autenticação" (`fontes_2210/certbr/`,
+  texto por `pdftotext` e `v32/texto_certbr.js`, que recompõe os acentos).
+- **`adm-atos-poderes`:** seção "Poderes hierárquico, disciplinar e
+  regulamentar; deveres do administrador", antes de "Conceito de ato
+  administrativo…", com a pegadinha CE-NO-RE do art. 13 da Lei 9.784.
+- Trocas P1 a P4: o plano das matérias diz "no material (semana 10)".
+- Os quatro tópicos novos têm o selo "Novo no edital de 2026"; `civ-pessoas`
+  e `civ-lindb` ganharam o selo "FCC recente" (`FCC_RECENTE`: [6, 7] e
+  [4, 4], pelo assunto do QConcursos lido em 22/10).
+- **Prova do texto:** `v32/provas.js`, 178 afirmações em pares [fonte, trecho
+  da fonte, trecho do texto], 0 falha; teste negativo acusa. Fontes em
+  `v32/fontes.js`: leis da base, `html:` (decretos do Planalto, por
+  `v32/texto_html.js`), `cert:` (CERT.br), `web:` (citações conferidas no
+  navegador, em `v32/fontes_web.json`: DUDH no site do UNICEF Brasil e
+  Declaração de Viena no DHnet).
+
+### Questões
+
+- 21 novas, no fim do `QUESTOES`, sob o cabeçalho "EDITAL DE 2026 — semana
+  10": CV01 a CV08 (Civil), DH01 a DH05, IF01 a IF05 (ano 2026) e DA98 a
+  DA100 (poderes, ano 2015). 543 → 564.
+- **Ano 2026:** assunto novo, que nunca caiu numa prova do TRT4. A etiqueta
+  mostra "Edital 2026", e o filtro "Prova de referência" ganhou a opção
+  "Edital de 2026 — assuntos novos". A página 07 explica.
+- **Conferidor:** `node v32/conferir_questoes.js INDEX v32/questoes.js
+  [--ja-aplicadas] [--estragar Q P]`.
+  - Com `--ja-aplicadas`, uma questão que já está no INDEX tem de ser igual
+    à nova, campo a campo (sem `provas`), em vez de dar "id repetido".
+  - Prova com terceiro campo = número do artigo, para fonte sem número
+    (tratado no decreto): `['html:cadh', '…', '29']`.
+  - Resultado: 21 questões, 88 trechos provados. Negativos: prova estragada,
+    questão gravada diferente, explicação sem prova do artigo citado.
+
+### Atalhos
+
+- `MATERIA_DA_SECAO` e `DISCIPLINAS_QC` ganharam as três matérias novas:
+  abaixo do título aparecem "Banco de questões desta matéria" e o link da
+  FCC no QConcursos.
+- **QConcursos por assunto** (endereços abertos no site em 22/10, com o
+  filtro da FCC; todos deram 200 e uma questão da FCC de 2026 no alto):
+  - `QC_BLOCO`: `s10-dh` → `direito-internacional-dos-direitos-humanos`;
+    `s10-info` → `seguranca-da-informacao`; `s10-da4` →
+    `poder-normativo-poder-hierarquico-e-poder-disciplinar`. `s10-civ`
+    continua na disciplina inteira, porque liga dois tópicos.
+  - `QC_TOPICO` (novo): `civ-lindb` → `lei-de-introducao-as-normas-do-direito-brasileiro-lindb`;
+    `civ-pessoas` → `personalidade-pessoa-natural-e-capacidade`. Vale no
+    lugar dos links tirados dos blocos do tópico.
+  - `urlQcDoBloco` passou a chamar `urlQcDe(v)`, que monta o endereço a
+    partir de "disciplina/assunto".
+
+### Grade, cartões e página 02 (fase B)
+
+- **`v31/semanas.js`** (patches `v32/patch_semanas_v32.js`, `patch_v32c.js`
+  e `patch_v32d.js`):
+  - semana 10: `s10-civ` com `anc: 'civ-lindb'` e `anc2: 'civ-pessoas'`;
+    `s10-da4`, `s10-dh` e `s10-info` com âncora no tópico, leitura de lei e
+    `nota` (o que ler em cada dia); as quatro passam a "O material basta";
+  - `s10-dh`, nota de carga: "No quadro Lei seca, leia só o art. 1º, III, o
+    art. 4º, II, e o art. 5º, §§ 2º e 3º" (o quadro tem 2.387 palavras);
+  - quatro linhas passam a "Material em preparo", porque falta um ponto do
+    edital (veja "Lotes", abaixo): `s10-da2` (semana 11) até 07/11;
+    `s13-dt` e `s13-dpt` até 21/11; `s14-rlm` até 28/11.
+- **`v31/gerar.js`:**
+  - `anc2` (segundo link de tópico na linha) e `nota` (fora de `op-arts`,
+    que o auditor lê como lista de artigos);
+  - a marca explícita vale também nos blocos `reusa`; a nota "O texto deste
+    ponto entra no material até DD/MM" entra também neles
+    (`avisoPreparo`).
+- **`v31/gerar_p02.js`** — data de "Em parte — completa até":
+  - Agora é a do primeiro bloco "Material em preparo" do item. Antes era a
+    do primeiro bloco qualquer; com isso, 4 itens diziam "completa até
+    31/10", e a v32 não completa nenhum deles (um, o discurso indireto
+    livre, já estava no material; a matriz é que estava errada).
+  - `POR_QUESTOES` (CG-MAT-01, 02 e 04): "Em parte — o resto é por
+    questões".
+  - `TEXTO_EM` (CE-DT-03: 21/11): texto que entra num tópico já estudado.
+  - Item "em parte" ou "ausente" sem data: erro, e o arquivo não é gravado.
+- **Matriz:** `v32/patch_matriz_v32.js` (CG-DH-01 a 05, CG-INFO-09,
+  CE-CIV-01 a 03, CE-ADM-06 e 07 cobertos; CE-ADM-05 parcial; CE-CIV-04 e 05
+  → `novo:civ-pj`) e `patch_v32c.js`: CG-LP-07 coberto, porque a seção
+  "Discurso direto, indireto e indireto livre" está em `pt-interpretacao`.
+  Resultado: **164 coberto, 32 parcial, 126 ausente**.
+- **Página 02:** 20 itens mudaram da v31 para a v32 (`v32/dif_p02.js VELHO
+  NOVO`): 12 viraram "No material", o LINDB virou "Em parte", e 7 tiveram a
+  data ou o rótulo de "em parte" corrigidos.
+- `edital2026/topicos.js`: o nome da matéria vem do texto do `<h3>` antes do
+  `<span>`, porque o caminho dos cartões das matérias novas saía vazio.
+
+### Aviso
+
+"Atualização de 22/10/2026 — material da semana 10 — vale desde já", com 10
+itens e "O que não muda". O da v31 é o primeiro de "Avisos anteriores (21)".
+
+### Lei seca e base de leis
+
+- **Chave nova `DL4657` (LINDB):**
+  - `leis/DL4657.json` e `.txt`;
+  - NOME "Decreto-Lei 4.657/1942 (LINDB)", URL `del4657compilado.htm`;
+  - na lista de chaves de `gerar_lei_seca`, `auditar_manual`,
+    `verif_independente`, `conferir_lei_seca`, `conferir_rotulos` e
+    `triagem_rot` (`v32/patch_pipeline_v32.js`).
+- **Correções na base (`CORRECOES.json`, agora 15 registros):**
+  - no art. 7º da LINDB, o "º" do § 6º vem tachado na página do Planalto.
+    Ficou "§ 6º O divórcio", com `NOTA_ARTIGO 'DL4657:7'`;
+  - no CC, o "o" dos ordinais estava separado do número: 430 trocas em 184
+    artigos (`v32/corrigir_base_v32.js`). A prova mostra que só os espaços
+    mudaram.
+- **`gerar_lei_seca.js`:**
+  - tabela `DONO` (`patch_pipeline_v32b.js`): numa linha com dois tópicos,
+    a LINDB vai para `civ-lindb` e o CC para `civ-pessoas`;
+  - linhas "Material em preparo" com tópico também dão quadro
+    (`patch_pipeline_v32c.js`). Sem isso, os quadros já publicados de
+    `adm-controle-servicos` e `dt-coletivo` sumiriam quando as linhas deles
+    passaram a "em preparo".
+- **Resultado:**
+  - 55 tópicos com quadro e 2.812 artigos (eram 52 e 2.742);
+  - 3 quadros novos (`civ-lindb` com DL4657 ×19; `civ-pessoas` com CC ×39;
+    `dh-teoria` com CF ×3) e nenhum removido;
+  - `adm-atos-poderes` ganhou a Lei 9.784, arts. 11 a 15, a CF, arts. 49 e
+    84, e a Lei 8.112, arts. 116, 128 e 143.
+- `rotulos_base_0710.txt`: + "DIFERE civ-lindb DL4657 18". O link
+  "Vigência" do Planalto fica antes do "§ 2o", e o quadro está certo.
+
+### Conferência de que nada some (fase A)
+
+`aplicar_v32.js` agora prova o que antes só dizia num comentário: toda
+linha do arquivo de entrada continua no de saída (contando as repetidas),
+menos as linhas que as trocas declararam (`tocar`, linhas inteiras). Teste
+negativo: `node v32/neg_linhas.js` gera um aplicar que apaga "Vinte e duas
+semanas", e a conferência acusa.
+
+## Lotes futuros — o que a v32 acrescentou ao que cada um tem de trazer
+
+Os itens abaixo eram "em parte", mas nenhum bloco trazia o texto que falta.
+A v31 os dava como completos em 31/10 ou com a data do primeiro bloco.
+
+| Lote | Até | Tópico | Ponto do edital |
+|---|---|---|---|
+| v33 | 07/11 | `adm-controle-servicos` (linha `s10-da2`, semana 11) | CE-ADM-28: direitos dos usuários (Lei 13.460/2017; Lei 8.987, art. 7º) |
+| v35 | 21/11 | `dt-coletivo` (`s13-dt`) | CE-DT-25: categoria diferenciada |
+| v35 | 21/11 | `dpt-recursos` / `dpc-precedentes` (`s13-dpt`) | CE-DT-33 e CE-DPT-38: listas das súmulas vinculantes; CE-DPT-35: uniformização no processo do trabalho |
+| v35 | 21/11 | `dt-relacao` (já estudado; `TEXTO_EM`) | CE-DT-03: trabalho eventual |
+| v36 | 28/11 | `rlm-proposicoes` (`s14-rlm`) | CG-MAT-03: validade de argumentos |
+
+Ao entregar cada um, a linha volta a "O material basta" e o item vira
+"coberto" na matriz.
+
+## Carga de leitura (55 palavras/min)
+
+| Bloco | Minutos do bloco | Leitura | Observação |
+|---|---|---|---|
+| `s10-civ` | 135 | 108 | inclui os dois quadros (3.548 palavras) |
+| `s10-dh` | 45 | 64 → cerca de 24 | só com a nota do cartão |
+| `s10-info` | 45 | 18 | |
+| `s10-da4` | 50 | 29 | |
+
+## Conferidores e testes (no ensaio; o real é igual, `cmp`)
+
+- `bash v32/conferir_tudo.sh [ARQ]`: todos os conferidores, saída em
+  `v32/conf/`.
+  - provas: 178 afirmações, 0 falha;
+  - questões: 21 e 88 trechos;
+  - matriz: "MATRIZ CONFERE";
+  - sintaxe: 4 scripts e `sw.js`;
+  - `conferir_lei_seca` (base e arquivo): 0 falha;
+  - `nada_perdido`: 0 faltando;
+  - auditor: 287 linhas, 207 "basta", 0 ausente e 0 incompleto;
+  - `verif_independente`: 18 "NÃO LIDO", de prosa; com `--tambem-leitura`,
+    21;
+  - rótulos: 38;
+  - grudados: 6;
+  - manifestos: 0 artigo com linha diferente, só acréscimos;
+  - selos: 9 divergentes, 4 descritivos novos;
+  - `checar2`: nada perdido, `CHAVES` iguais.
+- `v32/sintaxe.js INDEX SW`: compila cada `<script>`; o negativo com um
+  ")" a mais acusa.
+- `conferir_edital_2026.js --estragar civ-pessoas nascituro` acusa.
+- **`node v32/teste_v32.js VELHO NOVO`: 40 de 40.** Cobre:
+  - atualização v31 → v32 sem perda, com o marca-texto antigo pintado;
+  - 21 questões, filtro 2026, resposta por clique, DA98 com "Prova 2015";
+  - os quatro tópicos, com selos, atalhos e quadros;
+  - os links do QConcursos por tópico, por matéria e no bloco de poderes da
+    página 03;
+  - a seção nova de atos e poderes e "Resolver agora";
+  - marca-texto com o mouse num tópico novo, que volta depois de recarregar;
+  - os cartões das semanas 10, 11, 13 e 14, com o link medido na tela;
+  - os avisos;
+  - a página 02, com o link medido na tela;
+  - a busca de três termos novos;
+  - marcar o bloco de Civil;
+  - 375 e 820 px;
+  - o console.
+
+  Negativo (`v32/neg_tela.js`): sem o atalho de DH e com a etiqueta antiga,
+  são 4 falhas.
+- `busca_2110/teste_busca.js bak_2210/index_v31.html v32/ensaio.html`: TUDO
+  CERTO. O número de tópicos agora sai do arquivo novo (são 68).
+
+## Armadilhas novas
+
+- **O menu rola a página suavemente até o topo.** Um clique logo depois
+  cai em outro ponto. No teste, esperar o `scrollY` parar (`assentar`).
+- Num link que quebra a linha, o centro da caixa toda pode cair fora do
+  texto: clicar no primeiro retângulo (`getClientRects()[0]`).
+- O marca-texto leva a seleção até a palavra inteira nas duas pontas.
+- `gerar_p02.js` gravava a saída mesmo com erro, sem as linhas puladas;
+  agora não grava.
+- Trocar a marca de uma linha para "Material em preparo" tirava o quadro
+  Lei seca do tópico (corrigido no gerador). Ao mexer em marca, comparar a
+  lista de `id="ls-…"` antes e depois.
+- `node -e` com `'\n'` dentro de aspas: virou quebra de linha de verdade.
+  Usar Write ou Edit.
+
+---
+
 # Retomada — estado em 2026-10-22 (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira e o **Adendo 26** (edital de 2026, logo acima). O
-   plano aprovado em 22/10 está em
+1. Ler esta seção inteira, o **Adendo 27** (v32, semana 10, logo acima) e o
+   **Adendo 26** (edital de 2026, antes dele). O plano aprovado em 22/10 está em
    `C:\Users\thale\.claude\plans\woolly-finding-squid.md` (o plano em ondas do
    parecer, Adendo 21, terminou na v30). O levantamento do edital está em
    `scratchpad/edital2026/PLANO.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
    - `git status --short` e `git log --oneline -3` no worktree (esperado:
-     árvore limpa e último commit = o do Adendo 26, v31; em 22/10 o Adendo 26
-     estava no worktree, esperando o commit, e o último commit era `fadc505`,
-     Adendo 25, v30);
+     árvore limpa e último commit = o do Adendo 27, v32; em 22/10 o Adendo 27
+     estava no worktree, esperando o commit, e o último commit era `a482619`,
+     Adendo 26, v31);
    - `git fetch origin` e `git log --oneline -3 origin/main` (em 22/10 o
-     `main` estava no PR #25, `6290f56`, v30);
+     `main` estava no PR #26, `78d9818`, v31, publicada);
    - pasta principal: `git -C <raiz> merge --ff-only origin/main` depois de
      cada PR (a raiz não tem mais cópia solta do HANDOFF);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (esperado: `autos-do-estudo-v31` ou maior);
+     (esperado: `autos-do-estudo-v32` ou maior; a v32 tem de estar publicada
+     antes de segunda, 02/11);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo). Não aplicar
    nenhuma delas sem a resposta.
-4. **Próximo passo: v32, conteúdo da semana 10, publicar até sábado,
-   31/10** (o usuário commita a v31 antes de 02/11; esperar o commit antes de
-   mexer no `index.html`). A v32 traz:
-   - Direito Civil: LINDB e pessoa natural (personalidade, capacidade,
-     direitos da personalidade), em `mat-dciv`;
-   - Direitos Humanos: teoria, gerações, fontes, interpretação, em `mat-dh`;
-   - Informática: segurança da informação, em `mat-info`;
-   - `adm-atos-poderes`: poderes hierárquico, disciplinar e regulamentar,
-     poderes e deveres do administrador (linha `s10-da4`, que hoje diz
-     "Material em preparo — chega até 31/10");
-   - o caso C10 já existe; conferir se cabe em 20 a 30 linhas.
-   Cada lote segue o plano: texto com cada afirmação provada contra a fonte
-   (modelo `lote3/provas.js`), lei seca pelo pipeline (chave nova por
-   norma; varrer resíduo do extrator antes), ~20 questões
-   (`lote3/conferir_questoes.js`), selos "FCC recente", aviso no 03.1 (o
-   aviso da v31 vai para "Avisos anteriores": o `aplicar` de cada versão
-   move o aviso que estava aberto para dentro do bloco fechado, no alto da
-   lista). Depois do lote, trocar a marca "Material em preparo" da linha
-   por "O material basta" (`v31/semanas.js` + `gerar.js`, ou edição
-   direta), refazer `gerar_p02.js` com a matriz atualizada (a situação de
-   cada item muda) e rodar `conferir_edital_2026.js`.
-   Calendário dos lotes: v33 até 07/11 (semana 11), v34 até 14/11, v35 até
-   21/11, v36 até 28/11, v37 até 05/12, v38 até 12/12 (semana 16 e cartões
-   finais do recesso); Civil também obrigações e contratos até 19/12 e
-   responsabilidade civil e empresa até 26/12. O que cada semana pede está
-   em `v31/semanas.js` (blocos com `nova:true` e `marca`) e na página 02.
-   Ao terminar qualquer versão: HANDOFF (adendo + Retomada), memória,
+4. **Próximo passo: v33, conteúdo da semana 11 (09/11 a 14/11), publicar
+   até sábado, 07/11** (o usuário commita a v32 antes de 02/11; esperar o
+   commit antes de mexer no `index.html`). As seis linhas da semana 11 em
+   "Material em preparo — chega até 07/11":
+   - `s11-civ`: pessoas jurídicas, domicílio e bens (CE-CIV-04 a 06), num
+     tópico novo `civ-pj` (já planejado na matriz);
+   - `s10-da2` (na semana 11): **direitos dos usuários de serviço público**
+     (CE-ADM-28: Lei 13.460/2017 e Lei 8.987, art. 7º), em
+     `adm-controle-servicos`. Foi acrescentado pela v32;
+   - `s11-da`: LINDB na Administração Pública (arts. 20 a 30, em
+     `novo:adm-lindb`; os arts. 1º a 19 já estão em `civ-lindb`) e abuso de
+     autoridade (Lei 13.869/2019), CE-ADM-05 e 09;
+   - `s11-dh`: tratados e CF, controle de convencionalidade, Carta da ONU e
+     CIJ, DUDH (CG-DH-06 a 08, 23 e 28);
+   - `s11-leg2`: Código de Conduta do TRT4 (CG-LEG-02);
+   - `s11-info`: Windows 10 e 11, arquivos e pastas (CG-INFO-01 e 08).
+
+   **Como fazer**, pelo modelo da v32 (Adendo 27, `scratchpad/v32/`):
+   - copiar `v32/` para `v33/` e trocar `conteudo.js`, `provas.js`,
+     `questoes.js`, `aviso.js` e os patches;
+   - `montar.sh` a partir do `index.html` da v32 commitada (`bak_…`);
+   - `conferir_tudo.sh`;
+   - um `teste_v33.js` no molde do `teste_v32.js`;
+   - carga de leitura a 55 palavras por minuto, com nota no cartão quando
+     o quadro passar do bloco;
+   - QConcursos por assunto, com os endereços abertos no site.
+
+   Depois do lote, a marca da linha volta a "O material basta"
+   (`v31/semanas.js`), a matriz é atualizada e `gerar_p02.js` é refeito. O
+   gerador agora acusa um item "em parte" ou "ausente" sem bloco "em
+   preparo".
+
+   Os pontos que a v32 acrescentou aos lotes v35 e v36 estão na tabela
+   "Lotes futuros" do Adendo 27.
+
+   **Calendário dos lotes:**
+   - v34 até 14/11, v35 até 21/11, v36 até 28/11, v37 até 05/12;
+   - v38 até 12/12: semana 16 e cartões finais do recesso;
+   - Civil: obrigações e contratos até 19/12; responsabilidade civil e
+     empresa até 26/12.
+
+   O que cada semana pede está em `v31/semanas.js` (blocos com `nova:true`
+   e `marca`) e na página 02.
+
+   **Ao terminar qualquer versão:** HANDOFF (adendo e Retomada), memória,
    `robocopy` da cópia dos scripts e, depois do PR, `--ff-only` na pasta
    principal.
 
-## ESTADO EM 22/10/2026 — v30 publicada; v31 (edital de 2026) pronta, esperando o commit
+## ESTADO EM 22/10/2026 — v31 publicada (PR #26); v32 (semana 10) pronta, esperando o commit
 
-- **v31 (Adendo 26):** `index.html`, `sw.js` e este arquivo no worktree,
-  testados, iguais ao ensaio (`cmp`). Tem de estar publicada antes de
-  segunda, 02/11, quando começa a grade nova.
+- **v32 (Adendo 27):** `index.html`, `sw.js` e este arquivo no worktree,
+  testados e iguais ao ensaio (`cmp`). Tem de estar publicada antes de
+  segunda, 02/11, quando começa a semana 10.
+- **v31 (Adendo 26):** mesclada no PR #26 (`78d9818`) e publicada
+  (`autos-do-estudo-v31`); a pasta principal está em `78d9818`.
 
 ## ESTADO EM 21/10/2026 — v29 publicada; v30 pronta, esperando o commit (registro)
 
@@ -3667,7 +3934,20 @@ para a busca de lá).
      súmula, OJ ou tese nova do TST no app passa por ele: item transcrito vai
      até o fim; item de fora vai no campo `itens` do cartão ou no título do
      quadro ("Súmula N, I a III, do TST").
-5. **Números atuais (v31):** 52 tópicos com quadro, 2742 artigos; 287 linhas
+5. **Números atuais (v32):**
+   - 55 tópicos com quadro e 2.812 artigos;
+   - 287 linhas no manual, 207 delas "basta";
+   - 68 tópicos na página 04;
+   - 564 questões;
+   - `CORRECOES.json` com 15 registros;
+   - edital: 164 coberto, 32 parcial, 126 ausente;
+   - rótulos: 38 diferenças;
+   - selos: 9 divergentes (os 5 descritivos e os 4 tópicos novos, com
+     "Novo no edital de 2026").
+
+   Testes: `v32/teste_v32.js` (40) e `v32/conferir_tudo.sh`.
+
+   **Números da v31 (registro):** 52 tópicos com quadro, 2742 artigos; 287 linhas
    no manual: 207 "basta", 3 "Material + leitura da norma", 35 "Material em
    preparo", 42 "Método", nenhuma "Só na lei"; 335 blocos em 22 semanas (6
    fora, 33 do modo de 8 horas; contam 296 ou 329); 543 questões; 226
