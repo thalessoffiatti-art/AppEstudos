@@ -3695,12 +3695,144 @@ Fica para o usuário decidir se esse bloco passa ao modo P17.
 
 ---
 
-# Retomada — estado em 2026-10-23 (ler primeiro depois de compactar a conversa)
+# Adendo 29 — 2026-10-26 (material da semana 12 do edital de 2026, v34)
+
+## O pedido
+
+"Prossiga com os próximos passos" (26/10): o terceiro lote do plano de 22/10,
+com o conteúdo da semana 12 (16/11 a 21/11), para publicar até 14/11. A v33
+foi mesclada no PR #28 (`48aaa80`) e está publicada. Nenhum download novo:
+as Leis 13.019, 11.079 e 12.527 e os Decretos 591 e 592 já estavam em
+`fontes_2210/` (lista autorizada em 22/10); o Decreto 11.777/2023, a ONU
+(Treaty Collection) e as páginas de ajuda do Google foram lidos no navegador,
+sem salvar cópia (trechos em `v34/fontes_web.json`).
+
+## O que entrou no `index.html` (v34)
+
+Scripts em `scratchpad/v34/`. `bash v34/montar.sh` refaz o ensaio do zero a
+partir de `bak_2210/index_v33.html`. Os patches (`v34/patch_*.js`) foram
+aplicados uma vez e não estão no `montar.sh`. O registro etapa por etapa está
+na seção "TRABALHO EM ANDAMENTO" da Retomada.
+
+### Texto (`v34/conteudo.js`, provado por `v34/provas.js`: 444 afirmações)
+
+- **Direito Civil** (antes de `mat-dh`, selos "FCC recente" 3/16):
+  - `civ-negocio`, "Negócio jurídico: validade, interpretação,
+    representação, condição, termo e encargo, defeitos e invalidade", com
+    quadro dos arts. 104 a 184 do CC e uma tabela de classificação só com as
+    categorias que o próprio Código usa (benéficos/onerosos, bilaterais,
+    entre vivos/testamento, forma prescrita/livre, execução continuada);
+  - `civ-prescricao`, "Prescrição, decadência e prova", com quadro dos arts.
+    189 a 232 (o art. 227 abre com "Art. 227 — (Revogado pela Lei nº
+    13.105, de 2015)", porque o caput foi revogado e o parágrafo único
+    continua); pegadinha com o prazo trabalhista da CF, art. 7º, XXIX.
+- **Direito Administrativo** (no fim de `mat-dadm`):
+  - `adm-parcerias`, "Convênios, parcerias com organizações da sociedade
+    civil (Lei 13.019/2014) e parcerias público-privadas (Lei
+    11.079/2004)", com convênios (Lei 13.019, arts. 84 e 84-A; Lei 14.133,
+    arts. 184 e 189), instrumentos, chamamento, requisitos, vedações, a
+    responsabilidade trabalhista exclusiva da OSC (art. 42, XX), sanções e
+    PPP; quadro com os artigos escolhidos das duas leis;
+  - `adm-lai`, "Acesso à informação (Lei 12.527/2011)", com quadro dos
+    arts. 1º a 34.
+- **Direitos Humanos**: `dh-pactos` (depois de `dh-onu`), "Pactos
+  internacionais de 1966 (PIDCP e PIDESC) e protocolos facultativos": texto
+  dos Decretos 592 e 591/1992; protocolos do PIDCP promulgados pelo Decreto
+  11.777/2023 (DL 311/2009, reserva ao art. 2º do Segundo Protocolo; adesão
+  em 25/9/2009, registro da ONU); o Brasil **não** está entre os
+  participantes do Protocolo do PIDESC (ONU, 26/10/2026). Sem quadro.
+- **Informática**: `info-workspace` (entre `info-windows` e
+  `info-seguranca`), "Google Workspace: Drive, Documentos, Agenda, Tarefas,
+  Meet e Gmail", das páginas oficiais de ajuda do Google (funções Leitor,
+  **Comentador** e Editor; lixeira de 30 dias; até 600 e-mails por arquivo;
+  até 200 convidados; acesso Aberto/Confiável/Restrito no Meet;
+  configurações rápidas, painel de leitura e marcadores no Gmail).
+- Trocas P1 a P3 nos planos de Civil, DH e Informática.
+
+### Questões
+
+22 novas (584 → 606), no fim do `QUESTOES`: CV15 a CV22, DA105 a DA110,
+DH11 a DH14, IF09 a IF12. Ano 2026. Gabaritos A5 B4 C5 D4 E4. `node
+v34/conferir_questoes.js INDEX v34/questoes.js --ja-aplicadas`: 22 questões,
+120 trechos.
+
+### QConcursos
+
+`QC_TOPICO` dos seis tópicos (endereços abertos em 26/10 com o filtro da
+FCC): Civil por "Ato jurídico… negócio jurídico", "Defeitos", "Teoria das
+nulidades", "Prescrição e decadência" e "Prova"; a Lei 13.019 e a LAI em
+**Legislação Federal**; terceiro setor e PPP em Direito Administrativo; os
+dois pactos e o Comitê de DH; o Google Workspace sem assunto próprio (nuvem,
+webmail e Google Meet). `QC_BLOCO` sem mudança.
+
+### Grade, cartões e página 02
+
+- `v34/patch_semanas_v34.js`: as quatro linhas da semana 12 com âncora (e
+  `anc2`), leitura, nota e "O material basta".
+- Matriz (`v34/patch_matriz_v34.js`): **192 coberto, 29 parcial, 101
+  ausente**. CG-INFO-02 fica parcial (o Office 365 é da semana 13).
+- Página 02: 16 itens mudaram (15 a "No material"; CG-INFO-02 a "Em parte —
+  completa até 21/11"). `v31/gerar_p02.js`: `SITUACAO` vem do ambiente (o
+  `montar.sh` da v34 passa 26/10/2026; sem ela, 23/10/2026).
+
+### Base de leis e pipeline
+
+- Chaves novas `L13019` e `L11079` (a `L12527` já tinha chave sem arquivo)
+  — `v34/patch_pipeline_v34.js`; donas `civ-negocio` (CC 104–188),
+  `civ-prescricao` (CC 189–232), `adm-parcerias` (13.019 e 11.079), `adm-lai`
+  (12.527).
+- Correção da base (`CORRECOES.json`, 18 registros): na L13019, as chaves
+  `15-A` e `15-B` eram o texto da Lei 9.790 citado no art. 86, e os arts. 85
+  e 86 tinham perdido o texto citado; refeitos do `.txt` do extrator.
+- `gerar_lei_seca.js` (`v34/patch_pipeline_v34b.js`): caput revogado com
+  parágrafo vigente ganha cabeçalho com a nota do Planalto.
+- `v34/varrer_v34.js`: o varredor percorre as chaves da base (com letra).
+- Resultado: 64 tópicos com quadro e 3.150 artigos (eram 60 e 2.954).
+- Prova de que nada mudou para trás: `bash v33/montar.sh` refeito depois do
+  patch de base deu a v33 igual à commitada (antes dos patches de grade).
+
+## Conferidores e testes (no ensaio; o real é igual, `cmp`)
+
+- `bash v34/conferir_tudo.sh`: provas 444; questões 22 e 120 trechos;
+  matriz confere; sintaxe ok; lei seca 0 falha; nada perdido ok; auditor 0
+  ausente e 0 incompleto, 217 "basta"; leitor independente 18 "NÃO LIDO"
+  (igual); rótulos 39 (a nova, Lei 11.079 art. 6º, é falso positivo: o
+  Planalto põe "Vigência" solto antes do rótulo); grudados 6; manifestos 0
+  linha diferente; selos 23 (os 6 tópicos novos sem Raio-X); `checar2` ok.
+- **`node v34/teste_v34.js VELHO NOVO`: 38 de 38.** Negativo: 3 falhas, só
+  dos 2 estragos plantados.
+- `busca_2110/teste_busca.js`: TUDO CERTO.
+
+## Carga de leitura da semana 12 (55 palavras/min)
+
+| Dia | Bloco | Leitura | Tempo do bloco |
+|---|---|---|---|
+| Segunda | Civil: negócio jurídico (tópico + quadro arts. 138 a 165) | 67 min | 75 min |
+| Quarta | Civil: prescrição, decadência e prova (tópico + arts. 189 a 211) | 46 min | 60 min |
+| Terça | Direitos Humanos | 30 min | 45 min |
+| Quinta | Informática | 21 min | 45 min |
+| Sexta | Convênios, parcerias e PPP + LAI (quadros para consulta) | 49 min | 50 min |
+
+## Armadilhas novas
+
+- Heredoc do Bash e `node -e` comem a barra invertida: scripts com regex vão
+  por Write ou Edit.
+- O extrator lê como artigo da lei o "Art. N" de outra lei citado entre aspas
+  (L13019, art. 86): conferir chaves que não deveriam existir.
+- Caput revogado com parágrafo vigente (CC, art. 227) quebrava o gerador.
+- `mat-dpt` não tem linha em branco antes: âncora própria.
+- O Planalto às vezes deixa "Vigência" solto entre a nota e o rótulo do
+  parágrafo: o conferidor de rótulos acusa falso positivo.
+
+---
+
+# Retomada — estado em 2026-10-26 (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira, o **Adendo 28** (v33, semana 11, logo acima), o
-   **Adendo 27** (v32, semana 10) e o **Adendo 26** (edital de 2026). Se o
+1. Ler esta seção inteira, o **Adendo 29** (v34, semana 12, logo acima), o
+   **Adendo 28** (v33, semana 11), o **Adendo 27** (v32, semana 10) e o
+   **Adendo 26** (edital de 2026). Se o
    scratchpad tiver perdido arquivos, restaurar antes (memória
    appestudos-retomada: `robocopy … /E /XO` e refazer a última versão para
    provar). O plano aprovado em 22/10 está em
@@ -3708,49 +3840,75 @@ Fica para o usuário decidir se esse bloco passa ao modo P17.
    parecer, Adendo 21, terminou na v30). O levantamento do edital está em
    `scratchpad/edital2026/PLANO.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
-   - `git status --short` e `git log --oneline -3` no worktree (esperado:
-     árvore limpa e último commit = o do Adendo 28, v33; em 23/10 o Adendo 28
-     estava no worktree, esperando o commit, e o último commit era `1346849`,
-     Adendo 27, v32);
-   - `git fetch origin` e `git log --oneline -3 origin/main` (em 23/10 o
-     `main` estava no PR #27, `5b3bcc2`, v32, publicada);
+   - `git status --short` e `git log --oneline -3` no worktree (em 26/10, à
+     noite: `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v34
+     pronta, esperando o commit do usuário; último commit `492bdd0`, Adendo
+     28, v33. Depois do commit, o último será o do Adendo 29);
+   - `git fetch origin` e `git log --oneline -3 origin/main` (em 26/10 o
+     `main` estava no PR #28, `48aaa80`, v33, publicada);
    - pasta principal: `git -C <raiz> merge --ff-only origin/main` depois de
      cada PR (a raiz não tem mais cópia solta do HANDOFF);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (esperado: `autos-do-estudo-v33` ou maior; a v33 tem de estar publicada
-     antes de segunda, 09/11);
+     (esperado: `autos-do-estudo-v33` ou maior; a v34 tem de estar publicada
+     antes de segunda, 16/11);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo). Não aplicar
    nenhuma delas sem a resposta.
-4. **Próximo passo: v34, conteúdo da semana 12 (16/11 a 21/11), publicar
-   até sábado, 14/11** (o usuário commita a v33 antes de 09/11; esperar o
-   commit antes de mexer no `index.html`). As quatro linhas da semana 12 em
-   "Material em preparo — chega até 14/11":
-   - `s12-civ`: negócio jurídico (conceito, classificação, elementos,
-     condição, termo e encargo, defeitos e invalidade), prescrição e
-     decadência e prova (CE-CIV-07 a 13);
-   - `s12-da`: Lei 13.019/2014, PPP (Lei 11.079/2004) e LAI (Lei
-     12.527/2011) (CE-ADM-25, 26, 31 e 43). As Leis 13.019 e 11.079 estão em
-     `fontes_2210/` (baixadas em 22/10); a 12.527 já está na base;
-   - `s12-dh`: PIDCP e PIDESC, com os protocolos (CG-DH-09 e 10), nos
-     decretos de `fontes_2210/`;
-   - `s12-info`: Google Workspace (CG-INFO-02 a 04): páginas de ajuda do
-     Google, lidas no navegador (salvar cópia pede autorização).
+4. **Próximo passo: esperar o commit e o PR da v34 (Adendo 29).** A v34
+   está pronta no worktree (`index.html` = `bak_2210/index_v34.html`, `sw.js`
+   = `bak_2210/sw_v34.js`, conferidos com `cmp`); tem de ser publicada antes
+   de segunda, 16/11. **Não mexer no `index.html` antes do commit.** Depois
+   do commit e do PR: `--ff-only` na pasta principal e começar a **v35,
+   conteúdo da semana 13 (23/11 a 28/11), publicar até sábado, 21/11.**
+   Antes, ler a seção "TRABALHO EM ANDAMENTO": se ela registrar uma v35 já
+   começada, continuar dela. A semana 13 é a maior até aqui: nove linhas em
+   "Material em preparo — chega até 21/11" (`v31/semanas.js`, linhas 100 a
+   110):
+   - `s13-dpt`: uniformização de jurisprudência e precedentes no processo do
+     trabalho; súmulas vinculantes e teses de repercussão geral (já tem
+     `arts` com as SVs; obrigação da tabela "Lotes futuros" do Adendo 27);
+   - `s13-civ`: direitos reais I — posse e propriedade (CE-CIV-20 a 31; CC,
+     arts. 1.196 e seguintes);
+   - `s13-da`: atos administrativos (formação e efeitos, cassação e
+     caducidade), agentes públicos e regime de emprego público (CE-ADM-14,
+     16, 32 e 37) — em `adm-atos-poderes`, tópico que já existe;
+   - `s13-dh`: convenções da ONU (racial, mulher, criança, pessoa com
+     deficiência, patrimônio mundial, diversidade biológica) e Declaração
+     sobre os povos indígenas (CG-DH-11 a 17); os decretos estão em
+     `fontes_2210/dh_*` (a pasta `dh_patrimonio` está vazia, e a Declaração
+     dos povos indígenas ainda falta: ler no navegador ou pedir download);
+   - `s13-rlm`: Noções de Estatística e frações (CG-MAT-05 e 07);
+   - `s13-dpc`: Lei 9.099/1995 (CE-DPC-35; `fontes_2210/l9099`);
+   - `s13-dt`: direito coletivo, Convenção 87, categoria diferenciada,
+     convenções e acordos, greve (linha reusada; a categoria diferenciada é
+     obrigação do Adendo 27);
+   - `s13-leg`: Res. CSJT 360/2023 e Res. CNJ 351/2020 (CG-LEG-04 e 05; a
+     351 está em `fontes_2210/cnj351`; a **CSJT 360 ainda falta**, está na
+     lista autorizada do plano);
+   - `s13-info`: Microsoft Office 365 (CG-INFO-02 completa): páginas da
+     Microsoft lidas no navegador.
 
-   **Como fazer**, pelo modelo da v33 (Adendo 28, `scratchpad/v33/`):
-   - copiar `v33/` para `v34/` e trocar `conteudo.js`, `provas.js`,
-     `questoes.js`, `aviso.js` e os patches;
-   - `montar.sh` a partir do `index.html` da v33 commitada
-     (`bak_2210/index_v33.html`);
-   - lei nova: `extrair3.js` + `leitor_b.js` + `v32/varrer_v32.js` +
-     `v33/tachados_curtos.js`, e entrada em `escopos.js` quando a linha pedir
-     só parte de um artigo;
-   - `conferir_tudo.sh`;
-   - `teste_v34.js` no molde do `teste_v33.js`, com teste negativo;
+   **Como fazer**, pelo modelo da v34 (Adendo 29, `scratchpad/v34/`):
+   - copiar de `v34/` os scripts (`aplicar_v34.js`, `montar.sh`,
+     `conferir_tudo.sh`, `fontes.js`, `conferir_questoes.js`,
+     `teste_v34.js`, `neg_tela.js`, `cartao.js`, `mostrar.js`,
+     `varrer_v34.js`, `olhar.js`, `_gab.js`, `sintaxe.js`, `texto_html.js`,
+     `texto_certbr.js`, `dif_p02.js`) e trocar `conteudo.js`, `provas.js`,
+     `questoes.js`, `aviso.js`, `fontes_web.json` e os patches;
+   - `montar.sh` a partir de `bak_2210/index_v34.html` e `sw_v34.js`, com
+     `SITUACAO=<data>`; `conferir_tudo.sh` comparando manifestos com
+     `bak_2210/lei_seca_manifesto_v34.json`;
+   - na fase B do `aplicar`, o aviso aberto esperado passa a ser o de
+     "26/10/2026 — material da semana 12";
+   - lei nova: `extrair3.js` + `leitor_b.js` + `v34/varrer_v34.js` (chaves) +
+     `v33/tachados_curtos.js`; conferir chaves que não deveriam existir
+     (lei citada entre aspas); `escopos.js` quando a linha pedir parte de
+     um artigo;
+   - `teste_v35.js` no molde do `teste_v34.js`, com teste negativo;
    - carga de leitura a 55 palavras por minuto, com nota no cartão quando
      passar do bloco;
-   - QConcursos por assunto, com os endereços abertos no site;
-   - `SITUACAO` em `v31/gerar_p02.js` com a data da versão.
+   - QConcursos por assunto, com os endereços abertos no site (fetch dentro
+     da página do QConcursos, status 200 e título do assunto).
 
    Depois do lote, a marca da linha volta a "O material basta"
    (`v31/semanas.js`), a matriz é atualizada e `gerar_p02.js` é refeito. O
@@ -3773,13 +3931,229 @@ Fica para o usuário decidir se esse bloco passa ao modo P17.
    `robocopy` da cópia dos scripts e, depois do PR, `--ff-only` na pasta
    principal.
 
-## ESTADO EM 23/10/2026 — v32 publicada (PR #27); v33 (semana 11) pronta, esperando o commit
+## TRABALHO EM ANDAMENTO (atualizar ao fim de cada etapa)
 
-- **v33 (Adendo 28):** `index.html`, `sw.js` e este arquivo no worktree,
-  testados e iguais ao ensaio (`cmp`). Tem de estar publicada antes de
-  segunda, 09/11, quando começa a semana 11.
-- **v32 (Adendo 27):** mesclada no PR #27 (`5b3bcc2`) e publicada
-  (`autos-do-estudo-v32`); a pasta principal está em `5b3bcc2`.
+### v34 — semana 12 (16/11 a 21/11), publicar até 14/11 — PRONTA em 26/10/2026, esperando o commit
+
+O usuário mandou seguir ("Prossiga com os próximos passos", 26/10). Todas as
+etapas foram feitas; o `index.html` e o `sw.js` do worktree são a v34 (iguais
+ao ensaio, `cmp`), e o Adendo 29 está escrito. Falta só o commit e o PR do
+usuário. A v35 não começou. Pasta da versão: `scratchpad/v34/`.
+
+**Etapa 1 — levantamento: FEITA (26/10).**
+- Linhas da grade (`v31/semanas.js`): `s12-civ` (CIV1 seg 75 min + CIV2 qua
+  60 min; CE-CIV-07 a 13), `s12-da` (ADM2 sex 50 min; CE-ADM-25, 26, 31,
+  43), `s12-dh` (DH ter 45 min; CG-DH-09, 10), `s12-info` (INFO qui 45 min;
+  CG-INFO-02, 03, 04 — o 02 também pede Office 365, que é da semana 13:
+  fica "em parte" até lá). A sexta da semana 13 (`s13-da2`) já é "revisão
+  por questões" de LINDB, abuso, 13.019, PPP e LAI.
+- Tópicos decididos (ids novos, só por acréscimo):
+  - `civ-negocio` (CC arts. 104 a 184: disposições gerais, representação,
+    condição/termo/encargo, defeitos, invalidade) e `civ-prescricao` (CC
+    arts. 189 a 232: prescrição, decadência e prova), antes de `mat-dh`;
+    DONO `[['CC',104,188]]` e `[['CC',189,232]]`;
+  - `adm-parcerias` (convênios; Lei 13.019/2014; Lei 11.079/2004) e
+    `adm-lai` (Lei 12.527/2011), no fim de `mat-dadm` (depois de
+    `adm-controle-servicos`, antes de `mat-dpt`);
+  - `dh-pactos` (PIDCP, PIDESC e protocolos), depois de `dh-onu`;
+  - `info-workspace` (Google Workspace), depois de `info-windows`, antes de
+    `info-seguranca`.
+- Carga de leitura da lei a 55 palavras/min: CC 104–184 = 3.023 palavras
+  (55 min); CC 189–211 = 1.152 (21 min); CC 212–232 = 1.004 (18 min);
+  Lei 13.019 inteira 266 min, Lei 11.079 119 min, Lei 12.527 118 min,
+  PIDCP 127 min, PIDESC 71 min (páginas inteiras). Os blocos de Adm. e DH
+  vão precisar de nota dizendo o que ler (quadro só com os artigos
+  escolhidos; o resto para consulta).
+- Selos "FCC recente" (`incidencia.md`, formato `[provas, questões]`):
+  "Negócio Jurídico [4/3]" → `civ-negocio: [3, 4]` (e "Defeitos do Negócio
+  Jurídico [2/2]" só citado no texto); "Prescrição e Decadência [3/3]" →
+  `civ-prescricao: [3, 3]`.
+- Fontes de DH lidas no navegador em 26/10 (sem salvar cópia; os trechos
+  usados vão para `v34/fontes_web.json`):
+  - **Decreto 11.777, de 9/11/2023** (planalto.gov.br/ccivil_03/_ato2023-2026/2023/decreto/D11777.htm):
+    promulga o Protocolo Facultativo ao PIDCP e o Segundo Protocolo (abolição
+    da pena de morte), aprovados pelo Decreto Legislativo 311/2009, "com
+    reserva ao Artigo 2º" (pena de morte em tempo de guerra);
+  - **ONU, Treaty Collection** (status em 26-10-2026): o Brasil aderiu aos dois
+    protocolos do PIDCP em 25 Sep 2009 (IV-5 e IV-12; reserva ao art. 2 no
+    segundo); o **Protocolo Facultativo ao PIDESC** (IV-3-a, Nova York,
+    10/12/2008, em vigor desde 5/5/2013; 46 signatários, 31 partes) **não
+    tem o Brasil** entre os participantes.
+
+**Etapa 2 — base de leis: FEITA (26/10).** `v34/patch_pipeline_v34.js`
+aplicado uma vez (não está no `montar.sh`; cópias de antes em `bak_2610/`):
+`leis/L13019.json` (90 artigos, já corrigida), `leis/L11079.json` (32),
+`leis/L12527.json` (49); `CORRECOES.json` com 18 registros; chaves L13019 e
+L11079 nos scripts; nome, endereço e data de cópia (22/10/2026) no gerador;
+DONO das quatro donas novas. **Prova de que nada mudou:** `bash
+v33/montar.sh` refeito depois do patch dá `index.html` e `sw.js` iguais
+(`cmp`) aos commitados.
+- Extraídas para `v34/base/` (do Planalto, `fontes_2210/`, baixadas em
+  22/10): `L13019` (92 chaves), `L11079` (32), `L12527` (49; não existia na
+  base, embora os scripts já tivessem a chave). `leitor_b.js`: iguais nas
+  três. `v33/tachados_curtos.js`: 0 nas três; no CC compilado, só o do art.
+  66 (já corrigido) — arts. 104 a 232 sem nada.
+- **Defeito achado na L13019:** o art. 86 acrescenta os arts. 15-A e 15-B à
+  Lei 9.790 (texto entre aspas), e o extrator os gravou como chaves `15-A` e
+  `15-B` da 13.019; e o art. 1º da Lei 9.790 citado no art. 85 foi descartado
+  como "número repetido", de modo que os arts. 85 e 86 ficaram sem o texto
+  citado. Correção a fazer no patch da v34 (com registro em
+  `CORRECOES.json`): apagar as chaves `15-A` e `15-B` e refazer os arts. 85
+  e 86 com o trecho do `.txt` entre "Art. 85." e "Art. 85-A." e entre "Art.
+  86." e "Art. 87.". Os artigos revogados inteiros (4, 9, 25, 43, 44, 47,
+  54, 56, 75 e 76) somem da base, como deve ser (rótulo tachado; a nota
+  "(Revogado pela Lei nº 13.204, de 2015)" fica no fim do artigo anterior e
+  o formatador a tira).
+- `v34/varrer_v34.js` (novo: percorre as chaves, inclusive as com letra) nas
+  três leis e no CC 104–232: 303 artigos, 8 avisos, todos conferidos e
+  aceitos (alíneas "b", "c" e "in loco" lidas como palavra partida; "27 a
+  39" como ordinal; caput vetado nos arts. 19 e 35 da 12.527 e revogado no
+  227 do CC).
+- `v34/olhar.js` (novo): mostra o HTML bruto em volta de um rótulo de artigo.
+
+**Etapa 3 — texto e provas: FEITA (26/10).**
+- `v34/conteudo.js`: W1 `civ-negocio` (2.379 palavras, 43 min), W2
+  `civ-prescricao` (1.401, 25 min), W3 `adm-parcerias` (1.778, 32 min), W4
+  `adm-lai` (949, 17 min), W5 `dh-pactos` (1.677, 30 min), W6
+  `info-workspace` (1.154, 21 min); trocas P1 a P3 nos planos de Civil, DH e
+  Informática ("no material (semana 12)"). Âncoras: civ antes de `mat-dh`;
+  adm antes de `mat-dpt`; dh antes de `mat-info`; info antes de
+  `info-seguranca`.
+- `v34/provas.js`: **433 afirmações, 0 falha** (`node v34/provas.js`);
+  `--estragar N` acusa (testado em 5, 120, 300, 345, 400, 430). Calculadas:
+  `calc:ausente:FONTE:TEXTO` (o PIDESC não tem "Comitê"; o Brasil não está na
+  lista do Protocolo do PIDESC; `~` no lugar de `:` dentro da fonte).
+- `v34/fontes.js`: cópia da v33 com L13019, L11079, L12527, L14133,
+  `html:l13019|l11079|l12527` e `web:` lendo `v33/fontes_web.json` +
+  `v34/fontes_web.json`; `juris:` lê `bak_2210/index_v33.html`.
+- **Notas dos cartões decididas (carga a 55 palavras/min):** segunda (75
+  min): o tópico e, no quadro, os arts. 138 a 165 (20 min) → 63 min;
+  quarta (60 min): o tópico e os arts. 189 a 211 (21 min) → 46 min; sexta
+  (50 min): os dois tópicos (49 min), quadros para consulta (a sexta da
+  semana 13 é revisão por questões); terça DH 30/45; quinta Informática
+  21/45 (sem lei: páginas do Google).
+- **Arts. das linhas** (para o `patch_semanas_v34.js`): `s12-civ` = "Código
+  Civil, arts. 104 a 184 · Código Civil, arts. 189 a 232"; `s12-da` = "Lei
+  13.019/2014, arts. 1º a 3º, 16, 17, 24, 26 a 33, 35, 39, 40, 42, 73, 84 e
+  84-A · Lei 11.079/2004, arts. 1º a 12, 22 e 28 · Lei 12.527/2011, arts. 1º
+  a 34" (a Lei 14.133, arts. 184 e 189, fica só citada: já tem quadro em
+  `leg-14133`); `s12-dh` e `s12-info` sem arts.
+
+Registro das fontes e ferramentas desta etapa:
+- `v34/fontes_web.json` pronto (26/10), com os trechos lidos no navegador,
+  sem salvar cópia: `d11777`, `untc_op1`, `untc_op2`, `untc_opesc` (lista
+  inteira de participantes, sem o Brasil), `g_drive_compartilhar`
+  (answer/7166529: Leitor, **Comentador**, Editor; acesso geral Restrito /
+  Qualquer pessoa com o link), `g_drive_upload`, `g_drive_excluir` (lixeira
+  30 dias), `g_docs`, `g_agenda_criar`, `g_agenda_convidar` (até 200
+  convidados), `g_agenda_anexos`, `g_tarefas`, `g_meet` (acesso Aberto,
+  Confiável, Restrito), `g_gmail_marcadores`, `g_gmail_caixa` (configurações
+  rápidas, painel de leitura).
+- Ferramentas novas: `v34/mostrar.js LEI INI FIM` (dispositivos como no
+  quadro) e `v34/tratado.js pidcp|pidesc N…` (artigos dos Decretos 592 e
+  591). Atenção: no Decreto 592, o art. 28 diz "Comitê de Diretores Humanos"
+  (erro do texto oficial); o nome certo se prova pelo D11777. O Decreto 591
+  diz que o PIDESC foi adotado "em 19 de dezembro de 1966" — não usar a data.
+
+**Etapa 4 — questões: FEITA (26/10).** `v34/questoes.js`: 22 questões
+(CV15–CV22, DA105–DA110, DH11–DH14, IF09–IF12), ano 2026, gabaritos A5 B4
+C5 D4 E4 (redistribuídos por `v34/_gab.js`; a versão de antes da troca de
+letras está em `v34/questoes_antes_gab.js`). `node v34/conferir_questoes.js
+bak_2210/index_v33.html v34/questoes.js`: todas as provas passam; os 22
+avisos são só "âncora inexistente" (os tópicos entram na fase A). Teste
+negativo (`--estragar 16 2`) acusa. Assuntos: "Negócio jurídico",
+"Prescrição, decadência e prova", "Parcerias com o terceiro setor e PPP",
+"Acesso à informação", "Pactos internacionais de 1966", "Google Workspace".
+**Armadilha:** heredoc do Bash come a barra invertida (`\\` vira `\`):
+scripts com regex ou escape vão por Write.
+
+**Etapa 5 — montagem: FEITA (26/10).** `bash v34/montar.sh` (a partir de
+`bak_2210/index_v33.html`) → `v34/ensaio.html` + `v34/ensaio_sw.js`
+(autos-do-estudo-v34). Aplicados uma vez (fora do `montar.sh`):
+`v34/patch_semanas_v34.js` (4 linhas da semana 12; cópia em
+`bak_2610/semanas_v34_antes.js`), `v34/patch_matriz_v34.js` (8 trocas;
+`bak_2610/matriz_v34_antes.js`) e `v34/patch_pipeline_v34b.js`
+(`gerar_lei_seca.js`: caput **revogado** com parágrafo vigente, CC art. 227,
+abre com "Art. N — (Revogado pela …)"). `v31/gerar_p02.js`: `SITUACAO` vem
+de `process.env.SITUACAO` (padrão 23/10/2026, para refazer a v33); o
+`montar.sh` da v34 passa 26/10/2026. Também: `v34/aplicar_v34.js` (fase A:
+6 tópicos, 22 questões, selos `civ-negocio [3, 4]` e `civ-prescricao [3,
+3]`, QC_TOPICO dos 6 tópicos — endereços conferidos no site em 26/10 com o
+filtro da FCC, status 200; fase B: grade, cartões, p02 e aviso),
+`v34/aviso.js` (aviso de 26/10), `v34/cartao.js` (mostra um cartão em
+texto). A âncora de `adm-*` é `'  </div>\n  <div class="materia"
+id="mat-dpt">'` (sem linha em branco).
+- Resultado: 64 tópicos com quadro, 3.150 artigos (eram 60 e 2.954; +196 =
+  as listas das linhas); matriz 192 coberto, 29 parcial, 101 ausente; página
+  02: 16 itens mudam (15 a "No material"; CG-INFO-02 a "Em parte — completa
+  até 21/11").
+- `bash v34/conferir_tudo.sh`: provas 444, 0 falha; questões 22 e 120
+  trechos; matriz confere; sintaxe ok; lei seca 3.150 artigos, 0 falha (17
+  linhas não contíguas, como na v33); nada perdido ok; auditor 217 "basta",
+  0 ausente, 0 incompleto; independente 18 "NÃO LIDO" (igual à v33);
+  rótulos 39 (v33: 38; a nova é falso positivo: Lei 11.079, art. 6º, o
+  Planalto põe "Vigência" solto entre a nota e o rótulo, e o conferidor só
+  aceita rótulo depois de . ; : ou ")"; o quadro traz os §§ 1º a 12, que
+  são os vigentes); grudados 6; manifestos 0 linha diferente; selos 23 (os
+  17 da v33 + os 6 tópicos novos, sem questão no Raio-X); `checar2` ok.
+
+**Etapa 6 — testes: FEITA (26/10).** `node v34/teste_v34.js
+bak_2210/index_v33.html v34/ensaio.html`: **38 de 38** (marcação feita na
+v33 em civ-pj continua pintada na v34; chaves trt4: iguais; 22 questões;
+seis tópicos no lugar, com selos, atalho, barra e quadros; cabeçalhos do art.
+227 do CC e do art. 19 da LAI; QConcursos; marca-texto em civ-prescricao;
+cartão da semana 12; aviso e "Avisos anteriores (23)"; página 02; busca de
+seis termos; 375 e 820 px; console). Negativo (`node v34/neg_tela.js` e o
+teste sobre `v34/neg_tela.html`): 3 falhas, todas dos 2 estragos plantados.
+`busca_2110/teste_busca.js bak_2210/index_v33.html v34/ensaio.html`: TUDO
+CERTO (82 tópicos no índice).
+
+**Etapa 7 — aplicação no real: FEITA (26/10).** `v34/ensaio.html` →
+`index.html` e `v34/ensaio_sw.js` → `sw.js` do worktree (`cmp` iguais; o
+real antes era a v33 commitada, `cmp` com `bak_2210/index_v33.html`).
+`node versao.js`: autos-do-estudo-v34. `bash v34/conferir_tudo.sh
+<worktree>/index.html`: os mesmos números do ensaio. Cópias para a v35:
+`bak_2210/index_v34.html`, `sw_v34.js`, `lei_seca_manifesto_v34.json`,
+`lei_seca_blocos_v34.json`. Adendo 29 e Retomada atualizados; memória e
+`robocopy` feitos ao fechar.
+
+**Próximas etapas:** 3 texto e provas (`v34/conteudo.js`, `v34/provas.js`,
+`v34/fontes.js`, `v34/fontes_web.json`, páginas de ajuda do Google lidas no
+navegador); 4 questões (~20); 5 montagem (`v34/aplicar_v34.js`,
+`montar.sh` a partir de `bak_2210/index_v33.html`, grade, matriz, p02 com
+`SITUACAO`, aviso); 6 testes; 7 aplicação no real.
+
+**Decisão que espera o usuário:** a mesma de antes (modo P17 no bloco de
+controle da Administração da terça da semana 11).
+
+### Modelo do registro
+
+- Ao começar uma versão, registrar aqui, e manter atualizado a cada etapa:
+  - versão, semana e prazo;
+  - etapas feitas e o resultado de cada uma (com números: afirmações
+    provadas, questões, conferidores);
+  - arquivos do scratchpad dessa versão (`v34/…`) e patches já aplicados
+    (que o `montar.sh` não repete);
+  - downloads feitos, com a autorização;
+  - a próxima etapa;
+  - as decisões que esperam o usuário.
+
+## ESTADO EM 26/10/2026, À NOITE — v34 pronta (Adendo 29), esperando o commit
+
+- **v34 (Adendo 29):** `index.html`, `sw.js` e este arquivo modificados no
+  worktree, sem commit. Material da semana 12: seis tópicos, 22 questões,
+  444 afirmações provadas, 38 de 38 no teste de tela. Tem de ser publicada
+  antes de 16/11.
+- **Decisão que espera o usuário:** a mesma de antes (modo P17 no bloco de
+  controle da Administração da terça da semana 11).
+
+## ESTADO EM 26/10/2026 — v33 publicada (PR #28); nada pendente de commit além deste arquivo (registro)
+
+- **v33 (Adendo 28):** mesclada no PR #28 (`48aaa80`) e publicada
+  (`autos-do-estudo-v33`); a pasta principal está em `48aaa80`. O
+  scratchpad estava inteiro em 26/10 (1.097 arquivos, igual à cópia em
+  `ferramentas-scratchpad`).
+- **v32 (Adendo 27):** PR #27 (`5b3bcc2`).
 - **Decisão que espera o usuário:** o bloco de controle da Administração da
   terça da semana 11 (90 min) tem cerca de 168 min de leitura. Já passava do
   tempo antes da v33. Passar ao modo P17 (questões primeiro) é decisão dele.
@@ -4036,6 +4410,16 @@ para a busca de lá).
 
 ## Regras do usuário (valem sempre)
 
+- **HANDOFF sempre pronto para compactar** (pedido de 26/10/2026). O usuário
+  quer poder compactar a conversa a qualquer momento, sem pedir que se salve
+  nada. Por isso:
+  - ao fim de **cada etapa** (levantamento, base de leis, texto e provas,
+    questões, montagem, testes, aplicação no real), atualizar a seção
+    "TRABALHO EM ANDAMENTO" da Retomada: o que está feito, onde estão os
+    arquivos, o que falta e as decisões pendentes;
+  - no mesmo momento, o `robocopy` do scratchpad para `ferramentas-scratchpad`;
+  - ao fechar a versão, o adendo e a Retomada completos, como sempre;
+  - nunca deixar informação necessária só na conversa.
 - Responder em português.
 - O usuário commita e publica.
 - Downloads pedem autorização. Os do plano já foram autorizados: Regimento,
@@ -4045,7 +4429,8 @@ para a busca de lá).
   em 21/10, as RAs TRT4 35/2025, 24/2022 e 23/2024; **em 22/10, toda a lista
   do plano do edital de 2026** (leis, decretos dos tratados de DH, CNJ 351 e
   492, CSJT 360 e 368, Protocolos da JT, Código de Conduta e Regimento do
-  TRT4), mais o Código Civil compilado e o Manual de Redação da Presidência.
+  TRT4), mais o Código Civil compilado e o Manual de Redação da Presidência;
+  em 22/10, os três PDFs do CERT.br; em 23/10, a Lei 13.460/2017.
   Páginas de ajuda da Microsoft e do Google são lidas no navegador; salvar
   cópia pede autorização.
 - **Nunca apagar dado salvo:** ids de bloco e de questão, nomes de disciplina,
