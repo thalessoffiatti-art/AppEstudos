@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="versao-app" content="autos-do-estudo-v34">
+<meta name="versao-app" content="autos-do-estudo-v35">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <!-- Web app da tela de início (iPadOS/iOS). A partir do iPadOS 26, qualquer
@@ -565,7 +565,7 @@ select:focus,input:focus,button:focus-visible,summary:focus-visible,a:focus-visi
 
 /* Janela de confirmação do "Zerar progresso". */
 dialog:not([open]){display:none}
-html:has(dialog.modal[open]){overflow:hidden}
+html.modal-aberta{overflow:hidden}
 .modal{padding:0; margin:auto; border:1px solid var(--linha-forte); border-radius:var(--raio); background:var(--superficie); color:var(--tinta);
   width:min(560px, calc(100vw - 32px)); max-width:none; max-height:calc(100vh - 32px); overflow:hidden;
   box-shadow:0 22px 60px -24px rgba(23,36,46,.7)}
@@ -2225,6 +2225,20 @@ body{
   </details>
 
   <div class="op-aviso op-nota op-mudanca">
+    <b class="op-rot">Atualização de 27/10/2026 — marca-texto mais rápido — vale desde já</b>
+    Correção pedida em 27/10: o marca-texto demorava a marcar, e o botão ficava parado na tela.
+    O que muda:
+    <ul>
+      <li><b>Botões “Marcar” e “Tirar marcação”</b> (página 04): somem no instante do toque, e a marcação aparece logo em seguida. Antes, nos tópicos grandes, o botão ficava na tela até o fim do trabalho: no tópico da Lei 14.133, 0,37 s num computador e cerca de 3 s num aparelho 4 vezes mais lento (simulado). Agora, 0,06 s e 0,45 s.</li>
+      <li><b>A causa</b>: a cada toque, o app achava a posição do trecho selecionado comparando-o com cada letra do tópico, uma por uma (o tópico da Lei 14.133 tem 258 mil). Agora ele faz essa conta em cerca de 20 passos. Também saiu uma regra de aparência que obrigava o navegador a recalcular a página inteira a cada marcação; ela só servia para deixar a página parada atrás das janelas de confirmação, e isso continua igual.</li>
+    </ul>
+    O que não muda: onde cada marcação fica, o que é guardado e as marcações que você já fez; “Esconder marcações”, “Tirar marcação” com “Desfazer” e “Apagar as marcações deste tópico”. O progresso, as respostas, o cronograma e os horários não foram tocados. O lote da semana 13 continua com o prazo de sábado, 21/11.
+  </div>
+
+  <details class="op-avisos-ant">
+    <summary>Avisos anteriores (24), do mais novo para o mais antigo</summary>
+
+  <div class="op-aviso op-nota op-mudanca">
     <b class="op-rot">Atualização de 26/10/2026 — material da semana 12 — vale desde já</b>
     Terceiro lote de conteúdo do edital de 2026, para a semana que começa na segunda, 16/11.
     O que muda:
@@ -2239,9 +2253,6 @@ body{
     </ul>
     O que não muda: os horários, a carga de 23h25 por semana e tudo o que você já marcou, respondeu ou grifou com o marca-texto. Os tópicos novos entraram no fim de cada matéria ou entre dois tópicos que já existiam, sem mudar nenhum deles.
   </div>
-
-  <details class="op-avisos-ant">
-    <summary>Avisos anteriores (23), do mais novo para o mais antigo</summary>
 
   <div class="op-aviso op-nota op-mudanca">
     <b class="op-rot">Atualização de 23/10/2026 — material da semana 11 — vale desde já</b>
@@ -23490,6 +23501,18 @@ function renderHistorico(){
     '<tbody>' + linhas + '</tbody></table></div>';
 }
 
+/* ---------- Página parada atrás de uma janela modal (27/10/2026) ----------
+   Com uma janela de confirmação aberta (dialog.modal), a página atrás não rola: o html ganha a classe
+   modal-aberta. Antes era a regra CSS html:has(dialog.modal[open]), mas com ela cada elemento com classe inserido
+   em qualquer lugar da página fazia o navegador rever o estilo do documento inteiro (o "Marcar" do marca-texto
+   ficava bem mais lento num aparelho lento). O observador vê o atributo open de todas as janelas. */
+(function travaDaModal(){
+  const raiz = document.documentElement;
+  const ver = () => raiz.classList.toggle('modal-aberta', !!document.querySelector('dialog.modal[open]'));
+  new MutationObserver(ver).observe(document.body, { subtree: true, attributes: true, attributeFilter: ['open'] });
+  ver();
+})();
+
 /* ---------- Zerar progresso (confirmação em janela modal) ----------
    O botão abre uma janela que explica o que será apagado, com as contagens
    do momento. Só o botão Confirmar apaga; Cancelar, Esc e clique fora da
@@ -24806,47 +24829,64 @@ document.addEventListener('click', function(ev){
   const conteudoDe = det => det.querySelector('.conteudo');
   const nomeDe = det => { const s = det.querySelector('summary'); return s && s.firstChild ? s.firstChild.textContent.trim() : det.id; };
   const novoId = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  /* el.matches(lista) para uma lista só de nomes de elemento e de classes, olhando o nome e as classes direto */
+  function testador(lista){
+    const itens = lista.split(',').map(x => x.trim());
+    if(!itens.every(x => /^\.?[a-z][a-z0-9-]*$/i.test(x))) return el => el.matches(lista);
+    const nomes = new Set(itens.filter(x => x[0] !== '.')), classes = itens.filter(x => x[0] === '.').map(x => x.slice(1));
+    return function(el){
+      if(nomes.has(el.localName)) return true;
+      for(let i = 0; i < classes.length; i++) if(el.classList.contains(classes[i])) return true;
+      return false;
+    };
+  }
+  const ehFora = testador(FORA), ehBloco = testador(BLOCO);
 
   /* texto do tópico com os espaços colapsados; para cada caractere, o nó de texto e a posição de origem.
-     Entre dois blocos (parágrafo, item, célula) entra um espaço, como na leitura. */
+     Entre dois blocos (parágrafo, item, célula) entra um espaço, como na leitura. Desde 27/10/2026 cada elemento é
+     olhado uma vez só, na descida (antes eram dois closest() por nó de texto), e o texto vai por trechos. */
   function indice(raiz){
-    const nos = [], pos = [];
-    let txt = '', esp = true, blocoAnt = null;
-    const w = document.createTreeWalker(raiz, NodeFilter.SHOW_TEXT, { acceptNode: function(n){
-      const p = n.parentElement;
-      return (!p || p.closest(FORA)) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
-    } });
-    for(let n = w.nextNode(); n; n = w.nextNode()){
+    const nos = [], pos = [], partes = [];
+    let esp = true, blocoAnt = null;
+    function texto(n, bl){
       const s = n.nodeValue;
-      const bl = n.parentElement.closest(BLOCO);
-      if(bl !== blocoAnt && !esp && txt){ txt += ' '; nos.push(n); pos.push(0); esp = true; }
+      if(bl !== blocoAnt && !esp){ partes.push(' '); nos.push(n); pos.push(0); esp = true; }
       blocoAnt = bl;
+      let ini = -1;
       for(let i = 0; i < s.length; i++){
         const c = s.charCodeAt(i);
-        if(c === 32 || c === 10 || c === 13 || c === 9 || c === 160){ if(esp) continue; txt += ' '; esp = true; }
-        else { txt += s[i]; esp = false; }
+        if(c === 32 || c === 10 || c === 13 || c === 9 || c === 160){
+          if(ini >= 0){ partes.push(s.slice(ini, i)); ini = -1; }
+          if(esp) continue;
+          partes.push(' '); esp = true;
+        } else { if(ini < 0) ini = i; esp = false; }
         nos.push(n); pos.push(i);
       }
+      if(ini >= 0) partes.push(s.slice(ini));
     }
-    return { txt, nos, pos };
+    function descer(el, bl){
+      for(let c = el.firstChild; c; c = c.nextSibling){
+        if(c.nodeType === 3) texto(c, bl);
+        else if(c.nodeType === 1 && !ehFora(c)) descer(c, ehBloco(c) ? c : bl);
+      }
+    }
+    if(!raiz.closest(FORA)) descer(raiz, raiz.closest(BLOCO));
+    return { txt: partes.join(''), nos, pos };
   }
-  /* ponto (nó, deslocamento) de uma seleção → posição no texto do índice */
+  /* ponto (nó, deslocamento) de uma seleção → posição no texto do índice: a primeira posição cujo ponto não fica
+     antes do da seleção. Os pontos do índice seguem a ordem do documento, então a busca é binária. Até 27/10/2026
+     ela comparava caractere por caractere: no tópico da Lei 14.133 (258 mil caracteres), o "Marcar" demorava quase
+     3 s num aparelho mais lento. */
   function posicao(ix, cont, off, fim){
     const R = document.createRange();
     try { R.setStart(cont, off); } catch(e){ return fim ? 0 : ix.nos.length; }
     R.collapse(true);
-    if(!fim){
-      for(let k = 0; k < ix.nos.length; k++){
-        const n = ix.nos[k];
-        if(n === cont ? ix.pos[k] >= off : R.comparePoint(n, ix.pos[k]) >= 0) return k;
-      }
-      return ix.nos.length;
+    let lo = 0, hi = ix.nos.length;
+    while(lo < hi){
+      const k = (lo + hi) >> 1, n = ix.nos[k];
+      if(n === cont ? ix.pos[k] >= off : R.comparePoint(n, ix.pos[k]) >= 0) hi = k; else lo = k + 1;
     }
-    for(let k = ix.nos.length - 1; k >= 0; k--){
-      const n = ix.nos[k];
-      if(n === cont ? ix.pos[k] < off : R.comparePoint(n, ix.pos[k]) < 0) return k + 1;
-    }
-    return 0;
+    return lo;
   }
   /* onde está o trecho guardado: a ocorrência cujo contexto (antes e depois) mais se parece com o guardado;
      no empate, a mais perto da posição guardada (marcação de antes de 12/10/2026 não tem posição: fica na primeira) */
@@ -25038,14 +25078,20 @@ document.addEventListener('click', function(ev){
   document.addEventListener('selectionchange', function(){ clearTimeout(tSel); tSel = setTimeout(avaliarSelecao, 180); });
   flut.addEventListener('pointerdown', function(e){ apertando = true; e.preventDefault(); });
   flut.addEventListener('mousedown', function(e){ e.preventDefault(); });
+  /* desde 27/10/2026 o botão some no toque, e o trabalho vem logo depois de a tela mostrar isso: num tópico grande,
+     num aparelho lento, ele ainda leva uma fração de segundo. A seleção sai antes de o texto mudar e some na mesma
+     pintura em que a marcação aparece (tirada depois, ela obrigava o navegador a recalcular a página na hora). */
   flut.addEventListener('click', function(){
     apertando = false;
-    if(acao === 'marcar' && selDet && selRange) criar(selDet, selRange);
-    else if(acao === 'tirar' && tirarDet && tirarIds) tirar(tirarDet, tirarIds);
-    const s = window.getSelection();
-    if(s) s.removeAllRanges();
+    const qual = acao, det = qual === 'marcar' ? selDet : tirarDet, r = selRange, ids = tirarIds;
     selDet = null; selRange = null;
     esconder();
+    requestAnimationFrame(function(){ setTimeout(function(){
+      const s = window.getSelection();
+      if(s) s.removeAllRanges();
+      if(qual === 'marcar' && det && r) criar(det, r);
+      else if(qual === 'tirar' && det && ids) tirar(det, ids);
+    }, 0); });
   });
   document.addEventListener('click', function(e){
     if(flut.hidden || flut.contains(e.target)) return;
