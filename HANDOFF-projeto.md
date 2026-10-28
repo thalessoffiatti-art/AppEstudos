@@ -3826,11 +3826,148 @@ webmail e Google Meet). `QC_BLOCO` sem mudança.
 
 ---
 
-# Retomada — estado em 2026-10-26 (ler primeiro depois de compactar a conversa)
+# Adendo 30 — 2026-10-27 (marca-texto mais rápido, v35)
+
+## O pedido
+
+Depois de publicar a v34 (PR #29, `8b6a372`), em 27/10: "A ferramenta
+marca-texto está bem lenta, com um delay muito grande entre clicar em
+'marcar' e realmente marcar e sair o botão. Analise isso com calma, então
+corrija. Depois que estiver corrigido, podemos prosseguir com o plano."
+
+**Numeração:** a correção é a v35. O lote da semana 13 passa a ser a
+**v36** (prazo igual: sábado, 21/11), e os seguintes andam um número: v37
+até 28/11, v38 até 05/12, v39 até 12/12 (semana 16 e cartões do recesso). O
+plano de 22/10 (`woolly-finding-squid.md`) usa os números antigos; vale
+esta tabela.
+
+## Diagnóstico (medido, não suposto)
+
+Ferramentas em `scratchpad/marca_lenta/`, no Edge sem interface, com
+seleção de verdade com o mouse e clique em "Marcar":
+`medir_clique.js ARQ [cpu]` (do clique à pintura com o botão escondido e à
+pintura com a marcação), `perfil_clique.js` (Profiler do protocolo),
+`trace_clique.js` (Tracing: script, estilo, layout, pintura; `cdp.js`
+ganhou `ouvir(f)` para eventos do protocolo), `exp_layout.js` e
+`exp_layout2.js` (custo de estilo e layout de uma mudança mínima).
+
+Na v34, do clique à marcação na tela: leg-14133 (258 mil caracteres)
+0,37 s com a CPU normal e **3,1 s com a CPU 4× mais lenta** (aproxima um
+iPad mais lento); const-estado 2,7 s; leg-trt4 0,84 s; dpc-execucao
+0,89 s (4×). O botão só sumia no fim de tudo. Quatro causas:
+1. **`posicao()`** (ponto da seleção → posição no índice do tópico)
+   comparava o ponto com cada caractere do tópico, de um em um
+   (`Range.comparePoint`): 307 dos 365 ms no leg-14133 (CPU normal).
+2. **O índice** é montado duas vezes por clique (em `criar` e de novo em
+   `pintar`, depois de desembrulhar as marcações), e cada montagem fazia dois
+   `closest()` por nó de texto; depois de tirar o `closest`, o `matches()`
+   por elemento ainda custava mais que o resto.
+3. **`removeAllRanges`** chamado depois de mexer no texto forçava o
+   recálculo da página na hora (76 a 146 ms, 4×).
+4. **A regra CSS `html:has(dialog.modal[open])`** (página parada atrás das
+   janelas modais) fazia o navegador rever o estilo do documento inteiro a
+   cada elemento **com classe** inserido em qualquer lugar: inserir um
+   `mark.mt` custava ~90 ms de estilo (4×); sem a regra, 2 ms. `span` e
+   `mark` sem classe e `i` não custam; `span.mt` custa. Inserir `b` custa por
+   outra regra (`.lei-txt p:has(> b:first-child):has(> b:last-child)`), que
+   não pesa no marca-texto e ficou.
+
+## O que entrou no `index.html` (v35)
+
+`bash v35/montar.sh` refaz do zero a partir de `bak_2210/index_v34.html`:
+`marca_lenta/aplicar_marca.js` (âncoras únicas, CRLF), `v35/aplicar_v35.js`
+(aviso e conferência de linhas) e `versao.js … 35`.
+- `posicao`: **busca binária** (a primeira posição cujo ponto não fica antes
+  do da seleção). Os pontos do índice não decrescem na ordem do documento,
+  então o resultado é o mesmo das duas buscas antigas (a do início e a do
+  fim davam esse mesmo número); ~18 comparações em vez de 258 mil.
+- `indice`: descida própria pelos filhos (cada elemento olhado uma vez),
+  `testador(FORA)` e `testador(BLOCO)` (nome do elemento e classes, olhados
+  direto; lista com outro tipo de seletor cai no `matches`), texto por
+  trechos (`partes.join`). Mesmo texto, mesmo nó e mesma posição por
+  caractere.
+- Clique no botão flutuante: **o botão some no toque**; o trabalho vem
+  depois da pintura (`requestAnimationFrame` + `setTimeout`), com a seleção
+  tirada **antes** de o texto mudar (some na mesma pintura em que a
+  marcação aparece, sem piscar).
+- `html:has(dialog.modal[open]){overflow:hidden}` →
+  `html.modal-aberta{overflow:hidden}`, com a função `travaDaModal` (antes
+  do "Zerar progresso"): `MutationObserver` do atributo `open` no `body`
+  inteiro, que põe ou tira a classe conforme haja `dialog.modal[open]`.
+- Aviso de 27/10 no 03.1 (2 itens); o da v34 foi para "Avisos anteriores
+  (24)". Nada de conteúdo, grade, chaves ou formato de `trt4:marcas` mudou:
+  só saíram da v34 as 29 linhas das funções trocadas, da regra CSS e do
+  contador de avisos (`aplicar_v35.js` confere; CRONOGRAMA e CHAVES iguais).
+
+Ficou de fora, de propósito: o segundo índice por clique. Tirá-lo exigiria
+remendar o índice depois de desembrulhar e normalizar as marcações — risco
+maior que o ganho.
+
+## Resultado (medido)
+
+| Tópico | CPU | v34 | v35 |
+|---|---|---|---|
+| leg-14133 | normal | 365 ms | 59 ms |
+| leg-14133 | 4× | 3.063 ms | 447 ms |
+| const-estado | 4× | 2,7 s | 0,24–0,33 s |
+| leg-trt4 | 4× | 839 ms | 382 ms |
+| dpc-execucao | 4× | 885 ms | 328 ms |
+| info-workspace | 4× | 161 ms | 162 ms |
+
+O botão some em 5–20 ms (4×: 20–50 ms) em qualquer tópico. No teste de
+tela: "Marcar" em leg-14133, botão 18 ms e marcação 83 ms; "Tirar
+marcação", 14 e 59 ms; toque a 375 px, 21 e 57 ms.
+
+## Conferidores e testes (no ensaio; o real é igual, `cmp`)
+
+- `marca_lenta/equivale.js v34 v35`: índice e posição antigos × novos em
+  todos os 82 tópicos (2,8 milhões de caracteres, ~51 mil pontos, com 293
+  marcações pintadas e sem nenhuma): **tudo igual**. Negativo (`NEG=1`): 16
+  falhas.
+- `marca_lenta/fluxo.js v34 v35`: o mesmo roteiro com o mouse (palavra;
+  meio de palavra a meio de palavra atravessando nós; por cima de uma
+  marcação; célula de tabela; tirar; desfazer; recarregar): marcações e DOM
+  iguais nos 7 passos.
+- `marca_lenta/modal.js v34 v35`: as 4 janelas modais com a página parada
+  igual nas duas.
+- `juris_1210/teste_marca_1210.js` (varredura de 215.281 palavras, 0
+  erradas com posição) e `teste_modo_2010.js` (34 linhas, `erros: []`):
+  saídas iguais nas duas. A extração das funções nesses scripts e em
+  `backup_2010/medir_marcas.js` agora inclui `testador`.
+- `bash v35/conferir_tudo.sh ARQ ROTULO` na v34 e na v35: as 10 saídas
+  idênticas (`diff -r v35/conf/v34 v35/conf/v35` vazio): provas 444,
+  questões 22, matriz confere, sintaxe ok, lei seca 0 falha, nada perdido,
+  auditor 0 ausente, independente 18 "NÃO LIDO", selos 23, `checar2` ok.
+- **`node v35/teste_v35.js bak_2210/index_v34.html v35/ensaio.html`: 22 de
+  22.** Negativo (`v35/neg_tela.js`: sem `esconder()` no clique e sem o
+  observador): 5 falhas, só dos 2 estragos.
+- `busca_2110/teste_busca.js v34 v35`: TUDO CERTO.
+- A limpeza de temporários do Windows apagou de novo parte do scratchpad em
+  27/10 (sobraram 207 entradas); restaurado da cópia (`robocopy … /E /XO`,
+  1.210 arquivos, nenhum faltando) e provado: `bash v34/montar.sh` refez a
+  v34 igual ao `index.html` commitado.
+
+## Armadilhas novas
+
+- `:has()` com o `html` (ou outro ancestral alto) como sujeito torna caro
+  inserir elemento com classe em qualquer lugar da página: medir antes de
+  usar.
+- `removeAllRanges` depois de mexer no DOM força o recálculo na hora;
+  antes, não custa.
+- Medidor com CPU 4×: seleção feita antes de a rolagem suave do menu
+  terminar às vezes não dá botão; é do teste.
+- `teste_modo_2010.js`, passo "marcação 2 (dois parágrafos)": varia de uma
+  rodada para outra nas duas versões (tempo da rolagem depois da
+  atualização).
+
+---
+
+# Retomada — estado em 2026-10-27 (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira, o **Adendo 29** (v34, semana 12, logo acima), o
+1. Ler esta seção inteira, o **Adendo 30** (v35, marca-texto mais rápido,
+   logo acima), o **Adendo 29** (v34, semana 12), o
    **Adendo 28** (v33, semana 11), o **Adendo 27** (v32, semana 10) e o
    **Adendo 26** (edital de 2026). Se o
    scratchpad tiver perdido arquivos, restaurar antes (memória
@@ -3840,27 +3977,30 @@ webmail e Google Meet). `QC_BLOCO` sem mudança.
    parecer, Adendo 21, terminou na v30). O levantamento do edital está em
    `scratchpad/edital2026/PLANO.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
-   - `git status --short` e `git log --oneline -3` no worktree (em 26/10, à
-     noite: `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v34
-     pronta, esperando o commit do usuário; último commit `492bdd0`, Adendo
-     28, v33. Depois do commit, o último será o do Adendo 29);
-   - `git fetch origin` e `git log --oneline -3 origin/main` (em 26/10 o
-     `main` estava no PR #28, `48aaa80`, v33, publicada);
+   - `git status --short` e `git log --oneline -3` no worktree (em 27/10:
+     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v35 pronta,
+     esperando o commit do usuário; último commit `b9a9ab4`, Adendo 29, v34.
+     Depois do commit, o último será o do Adendo 30);
+   - `git fetch origin` e `git log --oneline -3 origin/main` (em 27/10 o
+     `main` estava no PR #29, `8b6a372`, v34, publicada; a pasta principal
+     já está em ff nele);
    - pasta principal: `git -C <raiz> merge --ff-only origin/main` depois de
      cada PR (a raiz não tem mais cópia solta do HANDOFF);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (esperado: `autos-do-estudo-v33` ou maior; a v34 tem de estar publicada
-     antes de segunda, 16/11);
+     (em 27/10: `autos-do-estudo-v34`; a v35 pode sair já, e a v36 tem de
+     estar publicada antes de segunda, 23/11);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo). Não aplicar
    nenhuma delas sem a resposta.
-4. **Próximo passo: esperar o commit e o PR da v34 (Adendo 29).** A v34
-   está pronta no worktree (`index.html` = `bak_2210/index_v34.html`, `sw.js`
-   = `bak_2210/sw_v34.js`, conferidos com `cmp`); tem de ser publicada antes
-   de segunda, 16/11. **Não mexer no `index.html` antes do commit.** Depois
-   do commit e do PR: `--ff-only` na pasta principal e começar a **v35,
-   conteúdo da semana 13 (23/11 a 28/11), publicar até sábado, 21/11.**
-   Antes, ler a seção "TRABALHO EM ANDAMENTO": se ela registrar uma v35 já
+4. **Próximo passo: esperar o commit e o PR da v35 (Adendo 30, marca-texto
+   mais rápido).** A v35 está pronta no worktree (`index.html` =
+   `bak_2210/index_v35.html` = `v35/ensaio.html`, `sw.js` =
+   `bak_2210/sw_v35.js`, conferidos com `cmp`). **Não mexer no `index.html`
+   antes do commit.** Depois do commit e do PR: `--ff-only` na pasta
+   principal e começar a **v36, conteúdo da semana 13 (23/11 a 28/11),
+   publicar até sábado, 21/11** (era a "v35" do plano: a numeração andou um
+   número, ver o Adendo 30).
+   Antes, ler a seção "TRABALHO EM ANDAMENTO": se ela registrar uma v36 já
    começada, continuar dela. A semana 13 é a maior até aqui: nove linhas em
    "Material em preparo — chega até 21/11" (`v31/semanas.js`, linhas 100 a
    110):
@@ -3895,16 +4035,21 @@ webmail e Google Meet). `QC_BLOCO` sem mudança.
      `varrer_v34.js`, `olhar.js`, `_gab.js`, `sintaxe.js`, `texto_html.js`,
      `texto_certbr.js`, `dif_p02.js`) e trocar `conteudo.js`, `provas.js`,
      `questoes.js`, `aviso.js`, `fontes_web.json` e os patches;
-   - `montar.sh` a partir de `bak_2210/index_v34.html` e `sw_v34.js`, com
+   - `montar.sh` a partir de `bak_2210/index_v35.html` e `sw_v35.js`, com
      `SITUACAO=<data>`; `conferir_tudo.sh` comparando manifestos com
-     `bak_2210/lei_seca_manifesto_v34.json`;
+     `bak_2210/lei_seca_manifesto_v34.json` (a v35 não mexeu na lei seca);
    - na fase B do `aplicar`, o aviso aberto esperado passa a ser o de
-     "26/10/2026 — material da semana 12";
+     "27/10/2026 — marca-texto mais rápido", e "Avisos anteriores" fica com
+     25;
+   - o teste de tela da v36 parte da v35 (`teste_v36.js
+     bak_2210/index_v35.html …`); a marcação feita na versão velha pode ir
+     em leg-14133, como no `teste_v35.js`;
    - lei nova: `extrair3.js` + `leitor_b.js` + `v34/varrer_v34.js` (chaves) +
      `v33/tachados_curtos.js`; conferir chaves que não deveriam existir
      (lei citada entre aspas); `escopos.js` quando a linha pedir parte de
      um artigo;
-   - `teste_v35.js` no molde do `teste_v34.js`, com teste negativo;
+   - `teste_v36.js` no molde do `teste_v34.js` (e do `teste_v35.js` na
+     parte da atualização), com teste negativo; pasta `scratchpad/v36/`;
    - carga de leitura a 55 palavras por minuto, com nota no cartão quando
      passar do bloco;
    - QConcursos por assunto, com os endereços abertos no site (fetch dentro
@@ -3915,12 +4060,15 @@ webmail e Google Meet). `QC_BLOCO` sem mudança.
    gerador agora acusa um item "em parte" ou "ausente" sem bloco "em
    preparo".
 
-   Os pontos que a v32 acrescentou aos lotes v35 e v36 estão na tabela
-   "Lotes futuros" do Adendo 27.
+   Os pontos que a v32 acrescentou aos lotes "v35 e v36" estão na tabela
+   "Lotes futuros" do Adendo 27; com a numeração nova, são os lotes da
+   semana 13 (v36) e da semana 14 (v37).
 
-   **Calendário dos lotes:**
-   - v34 até 14/11, v35 até 21/11, v36 até 28/11, v37 até 05/12;
-   - v38 até 12/12: semana 16 e cartões finais do recesso;
+   **Calendário dos lotes (numeração nova desde 27/10, Adendo 30):**
+   - v34 (semana 12) publicada; v35 = correção do marca-texto;
+   - v36 (semana 13) até 21/11, v37 (semana 14) até 28/11, v38 (semana 15)
+     até 05/12;
+   - v39 (semana 16) até 12/12, com os cartões finais do recesso;
    - Civil: obrigações e contratos até 19/12; responsabilidade civil e
      empresa até 26/12.
 
@@ -3933,7 +4081,90 @@ webmail e Google Meet). `QC_BLOCO` sem mudança.
 
 ## TRABALHO EM ANDAMENTO (atualizar ao fim de cada etapa)
 
-### v34 — semana 12 (16/11 a 21/11), publicar até 14/11 — PRONTA em 26/10/2026, esperando o commit
+### v35 — marca-texto mais rápido (pedido de 27/10/2026) — PRONTA em 27/10/2026, esperando o commit
+
+Pedido do usuário (27/10, depois de publicar a v34 pelo PR #29, `8b6a372`):
+"A ferramenta marca-texto está bem lenta, com um delay muito grande entre
+clicar em 'marcar' e realmente marcar e sair o botão. Analise isso com calma,
+então corrija. Depois que estiver corrigido, podemos prosseguir com o plano."
+**Numeração:** esta correção é a v35; o lote da semana 13 passa a ser a
+**v36** (prazo igual, 21/11), e os seguintes andam um número (v37 até 28/11,
+v38 até 05/12, v39 até 12/12 com os cartões do recesso). Pasta:
+`scratchpad/marca_lenta/`.
+
+**Etapa 1 — diagnóstico: FEITA (27/10).** Medido no Edge sem interface,
+seleção com o mouse e clique em "Marcar" (`marca_lenta/medir_clique.js ARQ
+[cpu]`, `perfil_clique.js`, `trace_clique.js`, `exp_layout.js`,
+`exp_layout2.js`). Na v34, do clique à marcação na tela: leg-14133 (258 mil
+caracteres) 0,37 s com CPU normal e **3,1 s com CPU 4× mais lenta**;
+const-estado 1,5 s; leg-trt4 0,8 s; info-workspace 0,16 s (4×). Causas:
+1. `posicao()` (seleção → posição no índice) comparava o ponto com cada
+   caractere do tópico (`Range.comparePoint`, de um em um): 307 ms dos
+   365 ms no leg-14133 (CPU normal);
+2. o índice é montado duas vezes por clique (em `criar` e de novo em
+   `pintar`), e cada montagem fazia dois `closest()` por nó de texto;
+3. `removeAllRanges` depois de mexer no texto forçava o recálculo da página;
+4. a regra CSS `html:has(dialog.modal[open])` (trava da página atrás das
+   janelas modais) fazia o navegador rever o estilo do documento inteiro a
+   cada elemento **com classe** inserido em qualquer lugar: o `mark.mt`
+   custava ~90 ms de estilo (4×); sem a regra, 2 ms. `span`/`mark` sem
+   classe e `i` não custam; `b` custa por outra regra
+   (`.lei-txt p:has(> b…)`), que não pesa no marca-texto.
+
+**Etapa 2 — correção no ensaio: FEITA (27/10).**
+`marca_lenta/aplicar_marca.js ENTRADA SAIDA` (âncoras únicas, CRLF):
+`posicao` por busca binária; `indice` com descida própria (elemento olhado
+uma vez, `testador(FORA/BLOCO)` por nome e classe, texto por trechos);
+clique: o botão some no toque, e o trabalho vem depois da pintura
+(`requestAnimationFrame` + `setTimeout`), com a seleção tirada antes de o
+texto mudar; `html:has(...)` → `html.modal-aberta`, posta por um
+`MutationObserver` do atributo `open` (função `travaDaModal`, antes do
+"Zerar progresso"). Ensaio: `marca_lenta/ensaio_1.html` (de
+`bak_2210/index_v34.html`).
+
+**Etapa 3 — provas: FEITA (27/10).** Todas com a v34
+(`bak_2210/index_v34.html`) × o ensaio:
+- `marca_lenta/equivale.js ANTIGO NOVO`: índice e posição antigos × novos
+  em todos os 82 tópicos (2,8 milhões de caracteres; ~51 mil pontos de
+  seleção; com 293 marcações pintadas e sem nenhuma): **TUDO IGUAL**
+  (3 min 49 s). Teste negativo (`NEG=1`: o espaço duro deixa de ser espaço
+  e a posição erra o fim de vez em quando): 16 falhas, saída 1.
+- `marca_lenta/fluxo.js ANTIGO NOVO`: o mesmo roteiro com o mouse (palavra;
+  meio de palavra a meio de palavra atravessando nós; por cima de uma
+  marcação, que vira uma só; célula de tabela; tirar; desfazer;
+  recarregar): marcações gravadas e DOM pintado iguais nos 7 passos.
+- `marca_lenta/modal.js ANTIGO NOVO`: as 4 janelas (`dlgZerar`,
+  `dlgMarcas`, `dlgBackup`, `dlgRemoverSim`): overflow do html
+  visible → hidden → visible e a roda do mouse parada com a janela aberta,
+  igual nas duas; Cancelar não apaga marcação.
+- `juris_1210/teste_marca_1210.js` e `backup_2010/medir_marcas.js`: a
+  extração das funções agora inclui `testador` quando existe. O
+  `teste_marca_1210` dá o mesmo nas duas (varredura de 215.281 palavras, 0
+  erradas com posição). `teste_modo_2010.js`: saída completa igual (34
+  linhas, `erros: []`). O passo "marcação 2 (dois parágrafos)" dele varia
+  de uma rodada para outra **nas duas versões** (tempo da rolagem logo
+  depois da atualização); rodado de novo, igual.
+- Medida nova (`medir_clique.js`): CPU normal, do clique à marcação na
+  tela, 32 a 59 ms (leg-14133: 365 → 59); CPU 4×: leg-14133 3.063 → 447 ms,
+  const-estado 2,7 s → 0,24–0,33 s, leg-trt4 839 → 382, dpc-execucao
+  885 → 328; o botão some em 5–10 ms (4×: 20–50 ms). O que sobra é o índice
+  montado duas vezes (em `criar` e em `pintar`) e a pintura do navegador;
+  tirar o segundo índice exigiria remendar o índice depois de desembrulhar
+  as marcações — risco maior que o ganho, não feito.
+- Armadilha do medidor: com CPU 4×, a seleção feita antes de a rolagem
+  suave do menu terminar às vezes não dá botão ("sem botão Marcar"); é do
+  teste, e repetido sai certo.
+
+**Etapa 4 — versão 35: FEITA (27/10).** `scratchpad/v35/`: `aviso.js`,
+`aplicar_v35.js` (aviso + conferência de linhas: só saíram as 29 linhas
+declaradas; CRONOGRAMA e CHAVES iguais), `montar.sh`, `conferir_tudo.sh`
+(v34 × v35, saídas idênticas), `teste_v35.js` (22 de 22) e `neg_tela.js`
+(5 falhas, só dos 2 estragos). `index.html` e `sw.js` do worktree = v35
+(`cmp` com o ensaio); cópias em `bak_2210/index_v35.html` e `sw_v35.js`.
+Adendo 30 escrito; Retomada e memória atualizadas. **Falta só o commit e o
+PR do usuário.**
+
+### v34 — semana 12 (16/11 a 21/11), publicar até 14/11 — PUBLICADA (PR #29, `8b6a372`, 27/10/2026)
 
 O usuário mandou seguir ("Prossiga com os próximos passos", 26/10). Todas as
 etapas foram feitas; o `index.html` e o `sw.js` do worktree são a v34 (iguais
@@ -4138,7 +4369,20 @@ controle da Administração da terça da semana 11).
   - a próxima etapa;
   - as decisões que esperam o usuário.
 
-## ESTADO EM 26/10/2026, À NOITE — v34 pronta (Adendo 29), esperando o commit
+## ESTADO EM 27/10/2026 — v35 pronta (Adendo 30, marca-texto mais rápido), esperando o commit
+
+- **v35 (Adendo 30):** `index.html`, `sw.js` e este arquivo modificados no
+  worktree, sem commit. Só a correção do marca-texto (busca binária,
+  índice mais leve, botão que some no toque) e a troca da regra
+  `html:has(...)` pela classe `html.modal-aberta`; nenhum conteúdo, grade
+  ou dado gravado mudou. 22 de 22 no teste de tela. Pode ser publicada já.
+- **v34 (Adendo 29):** publicada pelo PR #29 (`8b6a372`); pasta principal
+  em ff nele.
+- **Depois do commit da v35:** v36 = semana 13, até 21/11.
+- **Decisão que espera o usuário:** a mesma de antes (modo P17 no bloco de
+  controle da Administração da terça da semana 11).
+
+## ESTADO EM 26/10/2026, À NOITE — v34 pronta (Adendo 29), esperando o commit (registro)
 
 - **v34 (Adendo 29):** `index.html`, `sw.js` e este arquivo modificados no
   worktree, sem commit. Material da semana 12: seis tópicos, 22 questões,
