@@ -3962,12 +3962,180 @@ marcação", 14 e 59 ms; toque a 375 px, 21 e 57 ms.
 
 ---
 
-# Retomada — estado em 2026-10-27 (ler primeiro depois de compactar a conversa)
+# Adendo 31 — 2026-10-29 (opção A: núcleo nos blocos que não cabem, v36)
+
+## O pedido
+
+- **28/10:** "Acabei de terminar a parte de Processo Civil da semana 9,
+  quarta-feira, porém, dos artigos listados no bloco da semana, ficaram
+  faltando (por falta de tempo) os arts. 774 a 835 (li o 833 por conta do
+  comentário no material), 910 a 925 e o art. 100 da CF. O que posso fazer
+  para não ficar para trás assim, mas não deixar de estudar o que o edital
+  cobra também?"
+- **29/10, correção:** "As questões do banco foram criadas por você. Não
+  podem servir de parâmetro." Régua = prova real (memória
+  `regua-incidencia-provas-reais`).
+- **29/10, aprovação:** "Sim, pode aplicar a partir de segunda" (02/11).
+
+**Numeração:** v36 = opção A. O lote da semana 13 passa a **v37** (prazo
+igual, sábado, 21/11); v38 (semana 14) até 28/11, v39 (semana 15) até 05/12,
+v40 (semana 16, com os cartões do recesso) até 12/12.
+
+## A regra (mecânica; `scratchpad/v36/nucleo.js`)
+
+Vale para o horário das semanas 10 a 13 em que texto do tópico + artigos
+pedidos que estão no quadro Lei seca passam do tempo do bloco, a 55
+palavras/min (`v36/carga.js` mede as semanas 10 a 22).
+1. Núcleo = **(a)** artigo que o texto do tópico transcreve numa caixa ou
+   cita avulso (a faixa "arts. X a Y" não conta) ∪ **(b)** artigo que decidiu
+   questão de prova real da FCC para o cargo (16 provas de AJAJ 2022–2025 +
+   TRT4 2006, 2011, 2015 e 2022).
+2. Se texto + núcleo ainda passa do bloco, o núcleo fica só com (b): o que
+   o texto explica já está lido pelo texto.
+3. Só conta artigo que está no quadro: o transcrito inteiro numa caixa do
+   texto não está no quadro e já entra no tempo do texto (ex.: CLT 878).
+4. Se sobrar tempo, segue-se pelo resto do quadro, na ordem. Se faltar, os
+   artigos do núcleo que ficaram (anotados no caderno) abrem o bloco de
+   revisão da disciplina indicado no cartão (P2, regra de parada nova).
+
+**(a)** vem de `v36/aud_nucleo.js`, gerado por `v36/gerar_aud_nucleo.js` a
+partir do `auditar_manual.js`: sem o quadro, prosa só com citação avulsa, lei
+padrão dos tópicos novos e CC/LC/LINDB/LGPD/LAI reconhecidos na prosa. O
+auditor dá à citação "(art. 5º)" a lei padrão do tópico (CLT, CPC ou CF)
+quando o nome da lei está no título da seção. Por isso há `extraA`, lido no
+texto, em três blocos (execução, controle e serviços, procedimentos
+especiais; comentário em `nucleo.js`).
+
+**(b)** está em `v36/reais.js`, por bloco. Esse mapa diz qual prova cobrou
+qual artigo, então é **PISTA DE SIMULADO**: fica só no scratchpad. No app vai
+só a contagem de provas distintas.
+
+As 990 questões das 16 provas foram relidas no navegador embutido
+(`window.__todas` na aba do QConcursos; não estão salvas em disco). As do
+TRT4 vêm de `v36/raiox.js`, sobre o `RAIOX` do app.
+
+## Resultado (14 blocos; minutos de leitura com núcleo / bloco)
+
+| Bloco | Tópico | Hoje | Núcleo | Passo |
+|---|---|---|---|---|
+| s10-dpt | execução trabalhista | 231 | 65 / 150 | 1 |
+| s10-const | direitos sociais, nacionalidade, políticos | 47 | 41 / 45 | 2 |
+| s10-dpc | recursos no CPC | 134 | 22 / 90 | 1 |
+| s10-leg | LGPD | 137 | 41 / 45 | 1 |
+| s10-da2 (terça da s11) | controle, serviços públicos e bens | 162 | 77 / 90 | 1 |
+| s11-dpc | precedentes, rescisória | 102 | 50 / 90 | 1 |
+| s11-leg2 | Código de Conduta | 80 | 43 / 45 | 1 |
+| s11-da | LINDB + abuso de autoridade | 84 | 35 / 50 | 2 |
+| s10-da3 (terça da s12) | Lei 14.133, 112–194 | 195 | 24 / 90 | 1 |
+| s12-const | Executivo, STF, STJ | 67 | 43 / 45 | 2 |
+| s12-dpc | procedimentos especiais | 186 | 46 / 90 | 1 |
+| s12-civ | negócio jurídico + prescrição | 161 | 84 / 135 | 2 |
+| s12-dpt2 | organização da JT | 126 | 14 / 45 | núcleo vazio |
+| s12-da | parcerias + LAI | 287 | 119 / 50 | 2 |
+
+- No s12-da, o texto sozinho já dá 48 min: o cartão diz isso, e o núcleo abre
+  a revisão de sexta, 27/11 (semana 13).
+- const-estado da semana 13 cabe (45/45, contando só a seção do texto) e não
+  ganhou núcleo.
+- O quadro de dpc-execucao (semana 9) ganhou a faixa com a lista dada ao
+  usuário em 29/10 (a sobra; leitura opcional no sábado, 31/10, das 20h às
+  21h). O cartão da semana 9 não mudou.
+
+## O que entrou no `index.html` (v36; `bash v36/montar.sh` refaz do zero a partir de `bak_2210/index_v35.html`)
+
+- **Cartões:** 14 linhas `op-modo` "**Núcleo deste bloco** (desde 02/11): …",
+  geradas por `v36/montar_dados.js` (`v36/notas.json`) e gravadas por
+  `v36/patch_semanas.js` no campo `nota` de `v31/semanas.js`; depois,
+  `gerar.js`.
+  - As notas antigas de leitura de s11-leg2, s11-da, s12-civ e s12-da saíram;
+    a de s10-da2 ("Novo nesta semana…") ficou, com o núcleo depois.
+  - A cópia anterior está em `v36/base/semanas_v35.js`. Sem as notas, o
+    `gerar.js` reproduz os cartões da v35 byte a byte; com elas, só essas 14
+    linhas mudam, e o CRONOGRAMA fica igual.
+- **CSS:** `.lei-seca > .lei > .lei-txt > p.nuc` (borda azul e fundo) e
+  `p.nuc-ini::before{content:attr(data-nuc)}`, a faixa "NÚCLEO · caiu em N
+  provas reais". Também `.nuc-caixa`, `.nuc-chips` e `.nuc-prox`.
+- **JS:** a constante `NUCLEO` (17 quadros, 143 artigos) e
+  `marcarNucleo()`, logo antes do marca-texto.
+  - Ela lê cada caixa do quadro pelo rótulo (`chave`), acha os parágrafos de
+    cada artigo e põe as classes, o `id` e a `data-nuc`. CF 100 vai em
+    parte: só o caput e os §§ 1º a 5º e 8º.
+  - No fim de cada artigo entra o botão "Próximo do núcleo: …", e no alto do
+    quadro a caixa `.como-estudar.nuc-caixa` com os atalhos.
+  - O texto do quadro não muda. O marca-texto e a busca não leem
+    `.como-estudar` nem `button`.
+- **P2 (seção 4):** nota nova sobre o núcleo e regra de parada nova. Saíram os
+  exemplos de dia da regra antiga ("na quinta, no caso de Direito
+  Administrativo"), que eram da grade de 2022.
+- **Aviso** de 30/10 no 03.1, com 5 itens; o da v35 foi para "Avisos
+  anteriores (25)".
+- **Versão 36.** Nenhuma chave, id, questão ou lei mudou.
+
+## Conferidores e testes (o real é igual ao ensaio, `cmp`)
+
+- **`bash v36/conferir_tudo.sh`**:
+  - matriz confere; sintaxe ok;
+  - lei seca 0 falha; manifestos iguais aos da v34;
+  - nada perdido; auditor 0 ausente e 0 incompleto;
+  - independente 18/21 "NÃO LIDO" (igual à v35); rótulos 39; grudados 6;
+    selos 23 (igual à v35);
+  - `checar2`: CHAVES iguais.
+- **`node v36/teste_v36.js bak_2210/index_v35.html v36/ensaio.html`: 21 de
+  21.** Cobre:
+  - a atualização com marcação feita na v35 no CLT 884 § 6º, que continua
+    pintada dentro da faixa;
+  - os 17 quadros: faixa = lista = atalhos = botões;
+  - a faixa e a borda do art. 884;
+  - atalho, "próximo" e "fim", medidos na tela;
+  - CF 100 em parte; os cartões; o aviso e o P2;
+  - a busca: acha o trecho, leva até ele e não lê os botões;
+  - o marca-texto no CPC 1.030, depois de recarregar;
+  - 375 e 820 px; o console.
+- **Negativo** (`v36/neg_tela.html`: sem `nuc-ini` e com o CSS fraco): falham
+  só o 2 e o 3.
+- `busca_2110/teste_busca.js v35 v36`: TUDO CERTO.
+- `juris_1210/teste_marca_1210.js`: igual à v35 (0 erradas com posição).
+
+## Armadilhas novas
+
+- A regra `.lei-txt p:has(> b:first-child):has(> b:last-child)` tem
+  especificidade (0,3,3). Estilo novo de parágrafo do quadro precisa de
+  (0,4,1) ou mais.
+- Abreviar lista de artigos com "X a Y" engole o artigo com letra que está
+  no meio (882 a 884 inclui o 883-A). `montar_dados.js` só abrevia número
+  seguido E contíguo na lista de artigos da linha.
+- O `auditar_manual.js` liga "(art. 5º)" à lei padrão do tópico quando a lei
+  está no título da seção. Para medir "o texto explica", conferir os tópicos
+  com várias leis.
+- `versao.js` não sobe a versão se o `sw.js` do ensaio já estiver na nova:
+  copiar o `sw` da versão anterior antes.
+
+## Pendências desta versão
+
+- **Achados fora dos quadros** (questão real decidida por artigo que a linha
+  não pede):
+  - CLT 11-A (prescrição intercorrente): 4 questões; está em DT, não no
+    tópico de execução;
+  - CF 17: 2; CF 87: 1; CF 103-B (CNJ): 4;
+  - Lei 13.460, art. 23: 1;
+  - Lei 14.133, arts. 16, 25, 32, 72, 94 e 111: 1 cada.
+
+  Decidir com o usuário se entram nos quadros ou nas revisões.
+- **Lotes de conteúdo (v37 em diante):** medir a carga de cada linha nova e
+  aplicar a mesma regra, com o (b) lido nas 16 provas, antes de publicar. O
+  pipeline é `v36/nucleo.js`, `montar_dados.js` e `patch_semanas.js` (pôr o
+  bloco em `BLOCOS` e em `reais.js`).
+
+---
+
+# Retomada — estado em 2026-10-29 (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira, o **Adendo 30** (v35, marca-texto mais rápido,
-   logo acima), o **Adendo 29** (v34, semana 12), o
+1. Ler esta seção inteira, o **Adendo 31** (v36, opção A: núcleo nos blocos
+   que não cabem, logo acima; regra que vale também para os lotes seguintes),
+   o **Adendo 30** (v35, marca-texto mais rápido), o **Adendo 29** (v34,
+   semana 12), o
    **Adendo 28** (v33, semana 11), o **Adendo 27** (v32, semana 10) e o
    **Adendo 26** (edital de 2026). Se o
    scratchpad tiver perdido arquivos, restaurar antes (memória
@@ -3977,13 +4145,13 @@ marcação", 14 e 59 ms; toque a 375 px, 21 e 57 ms.
    parecer, Adendo 21, terminou na v30). O levantamento do edital está em
    `scratchpad/edital2026/PLANO.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
-   - `git status --short` e `git log --oneline -3` no worktree (em 27/10:
-     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v35 pronta,
-     esperando o commit do usuário; último commit `b9a9ab4`, Adendo 29, v34.
-     Depois do commit, o último será o do Adendo 30);
-   - `git fetch origin` e `git log --oneline -3 origin/main` (em 27/10 o
-     `main` estava no PR #29, `8b6a372`, v34, publicada; a pasta principal
-     já está em ff nele);
+   - `git status --short` e `git log --oneline -3` no worktree (em 29/10:
+     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v36 pronta,
+     esperando o commit do usuário; último commit `365f5c7`, Adendo 30, v35.
+     Depois do commit, o último será o do Adendo 31);
+   - `git fetch origin` e `git log --oneline -3 origin/main` (em 29/10 o
+     `main` estava no PR #30, `5b012ba`, v35; a pasta principal já está em ff
+     nele, desde 29/10);
    - pasta principal: `git -C <raiz> merge --ff-only origin/main` depois de
      cada PR (a raiz não tem mais cópia solta do HANDOFF);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
@@ -3992,16 +4160,22 @@ marcação", 14 e 59 ms; toque a 375 px, 21 e 57 ms.
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo). Não aplicar
    nenhuma delas sem a resposta.
-4. **Próximo passo: esperar o commit e o PR da v35 (Adendo 30, marca-texto
-   mais rápido).** A v35 está pronta no worktree (`index.html` =
-   `bak_2210/index_v35.html` = `v35/ensaio.html`, `sw.js` =
-   `bak_2210/sw_v35.js`, conferidos com `cmp`). **Não mexer no `index.html`
-   antes do commit.** Depois do commit e do PR: `--ff-only` na pasta
-   principal e começar a **v36, conteúdo da semana 13 (23/11 a 28/11),
-   publicar até sábado, 21/11** (era a "v35" do plano: a numeração andou um
-   número, ver o Adendo 30).
-   Antes, ler a seção "TRABALHO EM ANDAMENTO": se ela registrar uma v36 já
-   começada, continuar dela. A semana 13 é a maior até aqui: nove linhas em
+4. **Próximo passo: esperar o commit e o PR da v36 (Adendo 31, opção A).**
+   A v36 está pronta no worktree (`index.html` = `bak_2210/index_v36.html` =
+   `v36/ensaio.html`, `sw.js` = `bak_2210/sw_v36.js`, conferidos com `cmp`).
+   Ela precisa estar publicada antes de segunda, 02/11. **Não mexer no
+   `index.html` antes do commit.** Depois do commit e do PR: `--ff-only` na
+   pasta principal e começar a **v37, conteúdo da semana 13 (23/11 a 28/11),
+   publicar até sábado, 21/11** (era a "v35" do plano: a numeração andou dois
+   números, ver os Adendos 30 e 31).
+   Antes, ler a seção "TRABALHO EM ANDAMENTO": se ela registrar uma v37 já
+   começada, continuar dela. **Toda linha nova do lote passa pela regra do
+   núcleo** (Adendo 31): medir a carga; se passar do bloco, ler as questões
+   reais do assunto nas 16 provas e no RAIOX, gravar em `v36/reais.js`, pôr o
+   bloco em `BLOCOS` de `v36/nucleo.js` e rodar `nucleo.js`,
+   `montar_dados.js` e `patch_semanas.js` (sobre o `semanas.js` do lote, não
+   o da v35). A faixa no quadro sai da constante `NUCLEO`, que é refeita
+   inteira pelo `montar_dados.js`. A semana 13 é a maior até aqui: nove linhas em
    "Material em preparo — chega até 21/11" (`v31/semanas.js`, linhas 100 a
    110):
    - `s13-dpt`: uniformização de jurisprudência e precedentes no processo do
@@ -4028,7 +4202,12 @@ marcação", 14 e 59 ms; toque a 375 px, 21 e 57 ms.
    - `s13-info`: Microsoft Office 365 (CG-INFO-02 completa): páginas da
      Microsoft lidas no navegador.
 
-   **Como fazer**, pelo modelo da v34 (Adendo 29, `scratchpad/v34/`):
+   **Como fazer**, pelo modelo da v34 (Adendo 29, `scratchpad/v34/`). Nos
+   itens abaixo, ler "v37" onde está "v36" e "index_v36/sw_v36" onde está
+   "index_v35/sw_v35"; o aviso aberto esperado na fase B passa a ser o de
+   "30/10/2026 — leitura pelo núcleo", com "Avisos anteriores" em 26; o
+   `patch_semanas.js` da v36 parte de `v36/base/semanas_v35.js`, então, para
+   o lote, adaptar para partir do `semanas.js` atual:
    - copiar de `v34/` os scripts (`aplicar_v34.js`, `montar.sh`,
      `conferir_tudo.sh`, `fontes.js`, `conferir_questoes.js`,
      `teste_v34.js`, `neg_tela.js`, `cartao.js`, `mostrar.js`,
@@ -4064,11 +4243,12 @@ marcação", 14 e 59 ms; toque a 375 px, 21 e 57 ms.
    "Lotes futuros" do Adendo 27; com a numeração nova, são os lotes da
    semana 13 (v36) e da semana 14 (v37).
 
-   **Calendário dos lotes (numeração nova desde 27/10, Adendo 30):**
-   - v34 (semana 12) publicada; v35 = correção do marca-texto;
-   - v36 (semana 13) até 21/11, v37 (semana 14) até 28/11, v38 (semana 15)
+   **Calendário dos lotes (numeração nova desde 29/10, Adendo 31):**
+   - v34 (semana 12) publicada; v35 = correção do marca-texto (PR #30);
+     v36 = opção A (núcleo);
+   - v37 (semana 13) até 21/11, v38 (semana 14) até 28/11, v39 (semana 15)
      até 05/12;
-   - v39 (semana 16) até 12/12, com os cartões finais do recesso;
+   - v40 (semana 16) até 12/12, com os cartões finais do recesso;
    - Civil: obrigações e contratos até 19/12; responsabilidade civil e
      empresa até 26/12.
 
@@ -4080,6 +4260,66 @@ marcação", 14 e 59 ms; toque a 375 px, 21 e 57 ms.
    principal.
 
 ## TRABALHO EM ANDAMENTO (atualizar ao fim de cada etapa)
+
+### v36 — opção A (núcleo × consulta) nos blocos que não cabem — PRONTA em 29/10/2026, esperando o commit
+
+**Tudo feito** (Adendo 31): `index.html` = `bak_2210/index_v36.html` =
+`v36/ensaio.html` e `sw.js` = `bak_2210/sw_v36.js` (`cmp`); `bash
+v36/montar.sh` refaz igual; conferidores, `teste_v36.js` (21/21), negativo,
+busca e marca-texto conferidos. **Falta só o commit e o PR do usuário**, antes
+de segunda, 02/11. Depois: `--ff-only` na pasta principal e v37 (semana 13).
+Registro das etapas, abaixo.
+
+**Aprovada pelo usuário em 29/10:** "Sim, pode aplicar a partir de segunda" (02/11). Numeração: v36 = opção A;
+o lote da semana 13 passa a **v37** (prazo igual, 21/11), e os seguintes andam um número (v38 até 28/11, v39
+até 05/12, v40 até 12/12 com os cartões do recesso). A v35 foi mesclada (PR #30, `5b012ba`), e a pasta
+principal está em ff nele desde 29/10. Pasta: `scratchpad/v36/`.
+
+**Regra (a mesma dada ao usuário, com o desempate):** num bloco das semanas 10 a 13 em que texto do tópico +
+artigos pedidos do quadro passam do tempo do bloco (55 palavras/min), núcleo = (a) artigo que o texto
+transcreve numa caixa ou cita avulso (faixa "arts. X a Y" não conta) ∪ (b) artigo que decide questão de prova
+real (16 provas + TRT4 2006/2011/2015/2022). **Passo 2:** se texto + (a) ∪ (b) ainda não cabe, o núcleo fica só
+com (b) (o que o texto explica já está lido pelo texto). Só conta artigo que está no quadro (artigo transcrito
+inteiro numa caixa do texto já entra no tempo do texto). Se sobrar tempo, segue-se pelo resto do quadro, na
+ordem; se faltar, o resto do núcleo abre o bloco de revisão da disciplina (mapa em `v36/nucleo.js`, `rev`).
+
+**Etapas:**
+1. **Levantamento — FEITO (29/10).** `v36/gerar_aud_nucleo.js` (gera `v36/aud_nucleo.js`, o auditor sem quadro
+   e só com citação avulsa; lei padrão dos tópicos novos e CC/LC/LINDB/LGPD/LAI na prosa), `v36/carga.js`
+   (carga por horário, semanas 10 a 22), `v36/resumo.js`, `v36/raiox.js` (questões do TRT4 por tópico).
+   Questões das 16 provas relidas no navegador embutido (`window.__todas` na aba do QConcursos; não salvas
+   em disco). Artigo decisivo de cada uma em **`v36/reais.js`** (PISTA DE SIMULADO: só no scratchpad).
+2. **Núcleo por bloco — FEITO (29/10).** `node v36/nucleo.js INDEX --json v36/nucleo.json` →
+   `node v36/montar_dados.js INDEX` (gera `v36/notas.json`, a linha do cartão, e `v36/nucleo_app.js`, a
+   constante `NUCLEO` do app, só com contagem de provas). 14 blocos estouram; resultado (leitura com núcleo /
+   bloco, min): dpt-execucao 59/150; const-direitos 41/45 (passo 2); dpc-recursos 22/90; leg-lgpd 41/45;
+   controle e serviços 56/90; precedentes 50/90; Código de Conduta 43/45; LINDB + abuso 35/50 (passo 2);
+   Lei 14.133 (112–194) 24/90; const-estado (s12) 43/45 (passo 2); procedimentos especiais 34/90; Civil
+   negócio + prescrição 84/135 (passo 2); organização da JT 14/45 (núcleo vazio); parcerias + LAI 119/50
+   (passo 2; o texto sozinho já dá 48). const-estado da semana 13 cabe (45/45, só a seção do texto).
+   Mais o quadro de dpc-execucao (semana 9, a sobra: lista de 29/10), que não reescreve o cartão da semana 9.
+3. **Aplicação, testes e registro — FEITOS (29/10).** Números finais no Adendo 31 (com `extraA` em três
+   blocos, o núcleo da execução trabalhista ficou em 65 min, controle e serviços em 77 e procedimentos
+   especiais em 46).
+
+**Achados fora dos quadros (pendência, não entram na v36):** CLT 11-A (prescrição intercorrente) decidiu 4
+questões reais e não está no tópico de execução trabalhista (está em DT); CF 17 (2), CF 87 (1), CF 103-B (4),
+Lei 13.460 art. 23 (1) e Lei 14.133 arts. 16, 25, 32, 72, 94 e 111 (1 cada) estão fora das linhas que as pediriam.
+
+### 28–29/10/2026 — sobra da quarta da semana 9 e opção A (registro; aprovada em 29/10)
+
+Nada mexido no `index.html` até a aprovação (a v35 foi commitada pelo usuário: `365f5c7`).
+
+- **28/10:** proposta dada com o banco autoral como régua.
+- **29/10:** o usuário corrigiu, e a régua passou a ser a prova real.
+- **Proposta refeita** (ver "Decisões que esperam o usuário", item 2,
+  sub-bullet de 29/10, e `scratchpad/atraso_s9/provas_reais.md`):
+  - **(a)** os ~40 min do núcleo da sobra entram na janela livre de sábado
+    (20h–21h), opcional;
+  - **(b)** a opção A com o núcleo = texto + questão real, valendo da
+    segunda seguinte à resposta.
+- **Se aprovada:** uma versão própria (v36), antes do lote da semana 13, que
+  passa a v37. Se ela sair até 01/11, vale de 02/11.
 
 ### v35 — marca-texto mais rápido (pedido de 27/10/2026) — PRONTA em 27/10/2026, esperando o commit
 
@@ -4470,12 +4710,14 @@ Calendário da v30 (registro):
      redação; (b) esperar a republicação oficial;
    - **até lá:** a linha da sexta da semana 10 fica "Material + leitura da
      norma", com a Res. CSJT 415/2025 no quadro (17 artigos).
-2. **Opção A — núcleo × consulta** (o usuário não entendeu; pediu uma imagem,
+2. **Opção A — núcleo × consulta: APROVADA em 29/10 e APLICADA na v36 (Adendo 31).
+   Registro da discussão abaixo.** (Em 08/10 o usuário não entendeu; pediu uma imagem,
    que foi enviada: `scratchpad/opcao_a/opcao_A_ilustracao.png`, fonte
    `opcao_a/opcao_a.html`):
    - a linha e o quadro separariam "leia no bloco (núcleo)" de "consulta";
    - núcleo = artigo que o texto do tópico explica ou transcreve, ou que é
-     `fund` de questão do app;
+     `fund` de questão do app (**critério antigo, trocado em 29/10**: o banco
+     é autoral; vale questão de prova real, ver abaixo);
    - nenhum artigo sai do quadro; a linha continua citando a faixa inteira;
    - **exemplo:** quarta 14/10, CPC 312 a 368: 56 artigos, 113 min →
      núcleo de 15 artigos, 61 min, para 85 min de teoria;
@@ -4485,6 +4727,73 @@ Calendário da v30 (registro):
      Constitucional 200 × 698 → 593 (A não resolve Constitucional);
    - medição: `carga_leitura.js` e `carga_nucleo.js` (rodar o auditor antes
      para gerar `aud.json` e `aud_normal.json`).
+   - **28/10/2026 — o problema voltou, com números (proposta reapresentada,
+     esperando resposta).** O usuário terminou o Processo Civil da quarta da
+     semana 9 sem ler CPC 774 a 835 (leu o 833), 910 a 925 e CF art. 100, e
+     perguntou como não ficar para trás sem deixar de estudar o edital.
+     Medição (`scratchpad/atraso_s9/carga.js`, `questoes.js`, `temas.js`,
+     `proximos.js`, a 55 palavras/min): o bloco pedia **281 min** (texto 25 +
+     quadro 257) para **165 min**; faltam **164 min** (774–835 sem o 833:
+     87; 910–925: 33; CF 100: 44). Nas 16 questões FCC do banco ligadas a
+     dpc-execucao (2006–2022), dos artigos que faltam só aparecem embargos à
+     execução 914–919 (3 questões), ordem de penhora 835 (2) e fraude à
+     execução 790/792 (1); precatório/RPV só em 2 questões de Administrativo
+     (AD22, DA89). Semana 10 vai estourar igual: dpt-execucao 244 min para
+     150; dpc-recursos 134 min para 90. A grade já volta à execução na
+     quarta da semana 16 (revisão por incidência, questões primeiro) e na
+     semana 19 (segunda passada). **Proposta dada:** (a) agora — não empurrar
+     a sobra para a quarta da semana 10; ler 914–920, 789–796 e 831–835 (38
+     min) na janela livre de sábado 20h–21h, opcional; o resto vai para as
+     semanas 16 e 19; (b) daqui para a frente — aplicar a opção A nos blocos
+     que estouram, a partir da segunda seguinte à resposta, com o exemplo
+     real da quarta da semana 9 (núcleo de ~150 min: texto, 513–538, 771–773,
+     833, 914–920, 789–796, 831–835; consulta: o resto → semanas 16 e 19) e
+     a regra de parada mudando para "o que faltou do núcleo vai para a
+     revisão da disciplina, não para o próximo bloco". Se aprovada, é uma
+     versão própria antes do lote da semana 13 (que andaria para v37).
+   - **29/10/2026 — CORREÇÃO DO USUÁRIO: o banco do app é autoral e NÃO é
+     régua.** "As questões do banco foram criadas por você. Não podem servir
+     de parâmetro." O cabeçalho do `QUESTOES` já dizia "autoral, no formato
+     FCC"; o campo `ano` não é questão de prova. A resposta de 28/10 errou
+     ao chamá-las de "16 questões da FCC de provas de 2006 a 2022". Memória:
+     `regua-incidencia-provas-reais`. **Régua
+     válida:** as provas do TRT4 (pasta `Provas/`, `RAIOX`), as 16 provas de
+     AJAJ da FCC em TRTs de 2022 a 2025 e as questões da FCC no QConcursos.
+     **Refeito** em `scratchpad/atraso_s9/provas_reais.md` (tabela com o
+     link de cada questão) e `nucleo_real.js`: as 990 questões das 16 provas
+     foram lidas no navegador embutido, e cada artigo decisivo foi conferido
+     no quadro da v35.
+     - **PISTA DE SIMULADO:** a maioria dessas provas está na fila dos
+       simulados de sábado (TRT-5 2022 em 31/10, TRT-20 2024 em 07/11 etc.)
+       ou na reserva. **Nunca escrever, em texto que o usuário lê (resposta,
+       aviso, cartão, este HANDOFF), qual prova futura cobrou qual artigo.**
+       Só os nomes das provas já feitas (TRT-14 2022, TRT-18 2023, TRT-22
+       2022, TRT-12 2023 e TRT4 2022) e das provas antigas do TRT4 (2006,
+       2011 e 2015, que estão no Raio-X). O mapa prova → artigo fica só em
+       `scratchpad/atraso_s9/provas_reais.md`.
+     - **O que decide questão real na faixa que faltou** (contagem):
+       - 914 a 917, embargos: 2 (uma é TRT4 2015/53);
+       - 825, expropriação: 2;
+       - 775: 1 (TRT4 2015/52);
+       - 778, 782, § 3º (via IN 39, em DPT), 792, I e 798, II, a: 1 cada;
+       - CF 100: 1, só pela Res. CSJT 314/2021, em DPT.
+     - **O 835 não decidiu nenhuma questão**, e 783–788, 806–823, 910–913 e
+       921–925 também não. O "835 em 2 questões" de 28/10 era do banco.
+     - **Núcleo novo** = artigo citado um a um no texto do tópico (faixa
+       "arts. X a Y" não conta) + artigo que decide questão real.
+       - Quarta da semana 9: texto 25 + CPC 73 + CF 100 (caput e §§ 1º a 5º
+         e 8º, que o texto explica) 7 = **105 min** para 165. O resto do CPC
+         é consulta: 134 min.
+       - Do que faltou, o núcleo dá **~40 min**: 775, 778, 782, 783, 789,
+         792, 797, 798, 805, 825, 835, 910, 914, 915 e 917 (33 min), mais
+         o CF 100 em parte (7 min). É a proposta nova para a janela de
+         sábado, e o resto (~124 min) vai para as semanas 16 e 19.
+     - **Se o usuário aprovar a opção A:** medir o núcleo de cada bloco que
+       estoura com essa régua. Para as semanas 10 a 16:
+       - ler as questões da disciplina nas 16 provas e no RAIOX e marcar o
+         artigo decisivo;
+       - o cartão marca o artigo como núcleo e pode dizer "caiu em N provas
+         reais", mas **sem nomear prova que ainda é simulado ou reserva**.
 3. **Opção D — remanejar minutos: superada pela grade de 2026 (v31).** Era
    sobre a grade das semanas 4 a 9 (RLM 15 min de teoria → Constitucional;
    sexta: Processo do Trabalho 75 → 60 e ponto do edital 15 → 30).
