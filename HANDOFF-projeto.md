@@ -4261,6 +4261,70 @@ TRT4 vêm de `v36/raiox.js`, sobre o `RAIOX` do app.
 
 ## TRABALHO EM ANDAMENTO (atualizar ao fim de cada etapa)
 
+### v37 — material da semana 13 — EM ANDAMENTO (começada em 03/11/2026)
+
+- **v36:** publicada pelo PR #31 (`0158b57`, site em `autos-do-estudo-v36`); a raiz está em ff nele.
+- **Scratchpad:** apagado de novo antes de 03/11 (as pastas de `fontes_2210/` estavam vazias). Foi
+  restaurado da cópia (1.323 arquivos) e provado: `bash v36/montar.sh` refaz a v36 igual à commitada.
+- **Plano, linhas e etapas:** `scratchpad/v37/PLANO.md`.
+- **Etapa 1 — incidência: FEITA (03/11).** Está em `scratchpad/v37/incidencia_s13.md` (é PISTA DE SIMULADO:
+  usar só a contagem).
+  - Civil direitos reais: 12 questões em 10 provas, das quais posse 1, propriedade 4 e o rol 1; o resto é da
+    semana 14.
+  - Convenções e Declaração de DH: 6 questões em 3 provas (a Declaração dos povos indígenas teve 2).
+  - Juizados: 3. Estatística: 2. Frações: 5. CSJT 360: 1.
+  - Office 365: Word 2, Outlook 1, Excel 1.
+  - Atos administrativos: 8, nenhuma sobre cassação ou caducidade. Emprego público: 0.
+  - Coletivo: 10, nenhuma sobre categoria diferenciada.
+  - Repetitivos ou uniformização: 3.
+- **Etapa 2 — base de leis: começada.**
+  - Lei 9.099 extraída em `v37/base/L9099.json` (99 artigos; `leitor_b`: iguais); ainda não está em `leis/`.
+  - **O shell não alcança o Planalto** (DNS não resolve `planalto.gov.br`, nem por fora do sandbox): baixar
+    pelo navegador embutido.
+  - **Res. CSJT 360/2023 baixada** (`fontes_0311/csjt360/res360_rep01_2026.pdf`, JusLaboris handle
+    220465): é a **republicação de 08/09/2026**, que já traz as alterações da Res. CSJT 455/2026 (28/08/2026).
+    Texto pelo pdftotext em `res360_raw.txt` e `res360_layout.txt`. Nenhum trecho tachado.
+  - **CNJ 351**: o PDF compilado de 2026 (`fontes_2210/cnj351`) traz a redação das Res. 413, 450, 518, 538 e
+    671/2026, com notas "(redação dada…)" e "(incluído…)" para tirar. Nenhum tachado no texto da norma (o
+    único achado é falso, no questionário do anexo, p. 31).
+  - Detector de tachado em PDF: `v37/tachado_pdf.py` (PyMuPDF, `python -E -P`), com negativo em
+    `v37/neg_tachado.pdf`, que acha o riscado e ignora o sublinhado.
+  - **Autorizações de 03/11/2026:**
+    - Lei 9.962/2000, de site oficial;
+    - com o Planalto fora do ar, os Decretos 5.006/2004, 5.007/2004 e 80.978/1977 podem vir da Câmara
+      (Legislação Informatizada), com a origem anotada no material.
+  - **Baixados da Câmara em 03/11** (`fontes_0311/d5006`, `d5007`, `d80978` e `l9962`): `norma.html` (ficha)
+    e `original.html` (publicação original).
+    - Nas quatro fichas: "Não consta revogação expressa".
+    - Lei 9.962: "Vide Lei 10.225/2001 (Aplicação)", que não altera.
+    - 5.006 e 5.007: o texto inteiro dos protocolos.
+    - 80.978: **só o decreto** (709 palavras). A ficha diz que a Convenção saiu no DOU de 14/12/1977, p. 17108,
+      com retificação no DOU de 20/12/1977, p. 17506. Achar o texto da Convenção em fonte oficial (IPHAN no
+      gov.br, que abre daqui, ou o Planalto quando voltar).
+  - **Lei 9.962 extraída** em `v37/base/L9962.json` (`extrair3.js` sobre o `original.html` da Câmara: 5
+    artigos; `leitor_b`: iguais). O art. 5º leva junto o fecho, as assinaturas e "Este texto não substitui o
+    original…": cortar (CORRECOES ou extrator) antes de pôr no quadro. Os decretos 5.006 e 5.007 ainda não
+    foram extraídos.
+  - **RES360 e CNJ351 extraídas (03/11)** com `v37/res360_extrair.js` e `v37/res351_extrair.js` (modelo
+    `res415_extrair.js`). As duas dão PyMuPDF = pdftotext e leitor B igual.
+    - **RES360:** 25 artigos (1 a 24 e o 17-A, incluído pela Res. 455/2026), 10 títulos, 14 cabeçalhos de página
+      tirados, 7 notas "(Incluído pela…)".
+    - **CNJ351:** 25 artigos (1 a 23, 18-A e 18-B), 11 títulos, sem os Anexos I a V (orientativos, art. 22), e
+      87 notas em minúscula "(redação dada pela Resolução n. …)". **O gerador do quadro tem de tirar essas
+      notas**: conferir o `limpar` de `lei.js` e o `lei_seca_texto.js`.
+    - Saídas em `v37/base/`.
+    - **ARMADILHA:** o `pdftotext` padrão (xpdf 4.06) **perdeu uma palavra visível** no CNJ 351 (art. 3º, III,
+      "sustentabilidade como pressupostos"). `-raw`, `-simple` e PyMuPDF a têm. A conferência passou a usar
+      `pdftotext -simple`. As extrações antigas (res415, in41, ra05) tiraram o texto do PyMuPDF e exigiram
+      igualdade com o pdftotext padrão. Como passaram, nenhuma palavra se perdeu nelas.
+  - **Próximo passo da etapa 2:** extrair os protocolos (5.006 e 5.007; HTML da Câmara); achar a Convenção do Patrimônio (texto) e a Declaração dos povos
+    indígenas; pôr L9099, L9962, RES360 e CNJ351 em `leis/` e no pipeline (chaves e donas, modelo
+    `v34/patch_pipeline_v34.js`; `varrer` e `tachados_curtos`).
+  - **Ainda falta:** a Declaração da ONU sobre os povos indígenas. O PDF da ONU (`DRIPS_pt.pdf`) abriu uma janela
+    de salvar no navegador do usuário: não repetir esse endereço.
+  - **Atenção (edital):** o CG-DH-15 chama a Convenção do Patrimônio Mundial (UNESCO, Paris, 1972) de
+    "Declaração de Estocolmo", que é outro documento de 1972. O texto tem de dizer isso com fonte.
+
 ### v36 — opção A (núcleo × consulta) nos blocos que não cabem — PRONTA em 29/10/2026, esperando o commit
 
 **Tudo feito** (Adendo 31): `index.html` = `bak_2210/index_v36.html` =
@@ -4983,7 +5047,9 @@ para a busca de lá).
   do plano do edital de 2026** (leis, decretos dos tratados de DH, CNJ 351 e
   492, CSJT 360 e 368, Protocolos da JT, Código de Conduta e Regimento do
   TRT4), mais o Código Civil compilado e o Manual de Redação da Presidência;
-  em 22/10, os três PDFs do CERT.br; em 23/10, a Lei 13.460/2017.
+  em 22/10, os três PDFs do CERT.br; em 23/10, a Lei 13.460/2017; em 03/11, a
+  Lei 9.962/2000 e, com o Planalto fora do ar, os Decretos 5.006/2004,
+  5.007/2004 e 80.978/1977 pela Câmara.
   Páginas de ajuda da Microsoft e do Google são lidas no navegador; salvar
   cópia pede autorização.
 - **Nunca apagar dado salvo:** ids de bloco e de questão, nomes de disciplina,
