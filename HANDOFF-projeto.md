@@ -4277,7 +4277,11 @@ TRT4 vêm de `v36/raiox.js`, sobre o `RAIOX` do app.
   - Atos administrativos: 8, nenhuma sobre cassação ou caducidade. Emprego público: 0.
   - Coletivo: 10, nenhuma sobre categoria diferenciada.
   - Repetitivos ou uniformização: 3.
-- **Etapa 2 — base de leis: começada.**
+- **Scratchpad apagado de novo antes de 05/11** (214 arquivos, entre eles as fontes de `fontes_2210/`): restaurado da
+  cópia (`robocopy F S /E /XO`) e provado (`bash v36/montar.sh` refaz `index.html` e `sw.js` iguais aos commitados).
+  Em 05/11 o app passou a indicar outro scratchpad (`…\Temp\claude\05b0a1e0dabcee69\…`), vazio; o trabalho seguiu no
+  antigo, que continua inteiro. Numa sessão nova: restaurar a cópia no scratchpad que a sessão indicar.
+- **Etapa 2 — base de leis: FEITA (05/11/2026).** Registro abaixo; o fechamento está no fim desta lista.
   - Lei 9.099 extraída em `v37/base/L9099.json` (99 artigos; `leitor_b`: iguais); ainda não está em `leis/`.
   - **O shell não alcança o Planalto** (DNS não resolve `planalto.gov.br`, nem por fora do sandbox): baixar
     pelo navegador embutido.
@@ -4317,11 +4321,224 @@ TRT4 vêm de `v36/raiox.js`, sobre o `RAIOX` do app.
       "sustentabilidade como pressupostos"). `-raw`, `-simple` e PyMuPDF a têm. A conferência passou a usar
       `pdftotext -simple`. As extrações antigas (res415, in41, ra05) tiraram o texto do PyMuPDF e exigiram
       igualdade com o pdftotext padrão. Como passaram, nenhuma palavra se perdeu nelas.
-  - **Próximo passo da etapa 2:** extrair os protocolos (5.006 e 5.007; HTML da Câmara); achar a Convenção do Patrimônio (texto) e a Declaração dos povos
-    indígenas; pôr L9099, L9962, RES360 e CNJ351 em `leis/` e no pipeline (chaves e donas, modelo
-    `v34/patch_pipeline_v34.js`; `varrer` e `tachados_curtos`).
-  - **Ainda falta:** a Declaração da ONU sobre os povos indígenas. O PDF da ONU (`DRIPS_pt.pdf`) abriu uma janela
-    de salvar no navegador do usuário: não repetir esse endereço.
+  - O PDF da ONU (`DRIPS_pt.pdf`) abriu uma janela de salvar no navegador do usuário: não repetir esse endereço.
+  - **05/11 — o Planalto abre pelo navegador embutido** (o terminal ainda não alcança: o nome resolve, a conexão
+    expira). Leitura por `fetch` dentro de uma página do próprio Planalto, decodificando em windows-1252.
+    - **Protocolos da criança (5.006 e 5.007):** o texto da Câmara (`fontes_0311/d5006`, `d5007`) foi comparado
+      com o do Planalto (`/ccivil_03/_ato2004-2006/2004/decreto/d5006.htm` e `d5007.htm`), por hash de frases
+      (`v37/dif_hash.js`) e depois por hash do texto inteiro. O texto dos protocolos é igual. As diferenças estão só
+      no decreto que promulga: "1º" e "nº" na Câmara, "1o" e "n" no Planalto, e a frase "Este texto não substitui o
+      publicado no D.O.U. de 9.3.2004" do Planalto. Fonte de prova: `html:` sobre os arquivos da Câmara (leitor
+      `v37/olhar_html.js`).
+    - **Terceiro protocolo da criança** (procedimento de comunicações, Nova York, 19/12/2011): promulgado pelo
+      **Decreto 12.313, de 16/12/2024** (DOU 17/12/2024), aprovado pelo Decreto Legislativo 85/2017; ratificação em
+      29/09/2017. É decreto de tratado de DH (lista autorizada do plano). Endereço no Planalto a confirmar
+      (`_ato2023-2026/2024/decreto/D12313.htm`). Provas por trechos `web:` lidos no navegador e conferidos dentro
+      da página (sem baixar).
+    - **Decreto 80.978/1977 (Patrimônio Mundial):** o Planalto não tem a página (404 em `d80978.htm` e
+      `D80978.htm`). O Senado (`legis.senado.leg.br/norma/503618`) só tem o decreto e a **retificação** (DOU
+      20/12/1977): o Decreto Legislativo 74 é **de 30/06/1977**, não de 1974 (a página da Câmara traz o erro de
+      1974); "nefatso" → "nefasto" no preâmbulo da Convenção; "Natiral" → "Natural" no título II. **O texto da
+      Convenção está na publicação original do Decreto Legislativo 74/1977 na Câmara**
+      (`decretolegislativo-74-30-junho-1977-364249-publicacaooriginal-1-pl.html`, 38 artigos). A OMPI tem o
+      decreto com o anexo em PDF (133 KB, `br143pt.pdf`), mas não foi baixado (a OMPI não está entre as fontes
+      autorizadas). Provas por trechos `web:` da página da Câmara, conferidos dentro da página.
+  - **Declaração dos povos indígenas — FEITA (05/11):** PDF da FUNAI no gov.br
+    (`/funai/pt-br/arquivos/conteudo/ascom/2016/doc/declaracao.pdf/@@display-file/file`, 142 KB), que é a edição do
+    Centro de Informação das Nações Unidas no Rio (UNIC/Rio/023, mar. 2008), em `fontes_0511/dh_indigenas/`.
+    `v37/decl_extrair.js` → `v37/base/DECL_IND.json` e `.txt`: 46 artigos, preâmbulo e resolução; PyMuPDF =
+    `pdftotext -raw` (o `-simple` mistura as duas páginas do livreto em cada folha); cabeçalhos com sombra tirados
+    (55 títulos, todos em grupos de cinco); quatro chamadas de nota grudadas tiradas, uma a uma ("Culturais1",
+    "Políticos1", "Viena2", "Humanos3"). A capa traz "13 de setembo de 2007" (erro do original).
+  - **Lei 9.962 conferida com o Planalto (05/11):** palavra a palavra (`v37/dif_palavras.js`; texto do Planalto em
+    `fontes_0511/l9962_planalto/texto_planalto.txt`). Só uma palavra difere: "obrigatóriamente" (Câmara) ×
+    "obrigatoriamente" (Planalto), art. 3º, IV. A base segue o Planalto.
+  - **Código Civil (posse e propriedade):** `extrair3.js` sobre o compilado do Planalto de 22/10
+    (`fontes_2210/cc/l10406compilada.htm`) dá a base igual em 2.082 dos 2.083 artigos (sem espaço); a diferença é
+    o art. 66, correção já registrada. `varrer` em 1.196 a 1.276: só falsos (o "começo" não reconhece "1.196").
+  - **Pipeline — `v37/patch_pipeline_v37.js` aplicado (05/11):** `leis/L9099`, `L9962`, `RES360` e `CNJ351` (.json,
+    .txt e, nas resoluções, `_titulos.txt`); chaves em `gerar_lei_seca`, `auditar_manual`, `verif_independente`,
+    `conferir_lei_seca`, `conferir_rotulos` e `triagem_rot`; rótulos "Resolução CSJT 360/2023" e "Resolução CNJ
+    351/2020" no auditor e no verificador; nome, endereço (JusLaboris 220465; CNJ `atos/detalhar/3557`), fonte e nota
+    de fonte no gerador; datas de cópia (L9962 05/11, RES360 03/11, L9099 e CNJ351 22/10). `CORRECOES.json`: 20
+    registros (L9962 arts. 5 e 3). Cópias de antes em `bak_0511/`. **As donas (DONO) entram na etapa 5**, com os
+    ids dos tópicos novos.
+    - Prova: `auditar_manual --sem-lei-seca` + `gerar_lei_seca` + `aplicar_lei_seca4` sobre o `index.html` da v36
+      dão o arquivo **igual** (`cmp`); `conferir_lei_seca` (3.150 artigos, 0 falha) e `conferir_rotulos` (39
+      diferenças conhecidas) iguais aos da v34.
+  - **Teste negativo dos extratores:** `node v37/neg_extratores.js` → **23/23** (palavra trocada ou perdida no
+    conferente, artigo a mais ou sumido num leitor e nos dois, cabeçalho a menos, assinatura no corpo; controle sem
+    estrago grava igual à base). Os extratores aceitam `V37_FONTE` e `V37_SAIDA` só para esse teste.
+  - **Correção do gerador — `v37/patch_parenteses_v37.js` aplicado (05/11):** em `lei_seca_texto.js` (semNotas), a
+    nota retirada deixa uma marca, e o ")" logo depois dela sai quando o artigo fica com ")" a mais (sem contar "a)").
+    Achado no art. 69 da Lei 9.099 ("…com a vítima.)", nota com "))"). Nos quadros publicados até a v36, **três
+    defeitos**: Lei 8.429, art. 16 ("…desta Lei.)"); CLT, art. 394 ("…à gestação.)"); CLT, art. 16 (linha
+    "Parágrafo único. a); b).)", de dispositivos revogados). Fora dos quadros, também CLT 544 (o inciso V vinha grudado
+    no IV por um ")"), 556, 628 e Lei 8.213, arts. 17 e 73. Prova: lei seca refeita sobre a v36 difere só nessas três
+    linhas; `conferir_lei_seca` 13.631 linhas, 0 falha; `conferir_rotulos` 38 (era 39); `verif_independente` 18
+    "NÃO LIDO", como antes. **O aviso da v37 tem de contar essas três correções.** Cópia de antes:
+    `bak_0511/lei_seca_texto.js`.
+- **Etapa 3 — texto dos tópicos: começada (05/11).** Arquivos: `v37/fontes.js` (leitor de fontes, extensão do da
+  v34: L9099, L9962, RES360, CNJ351, clt, L6019, L12023; `html:` racial, cedaw, cedaw_prot, crianca, d5006, d5007, cdpd,
+  biodiv, d80978, l9099, l9962c; `decl:N|pre|res`; `incid37` = `v37/incidencia_s13.md`, PISTA: só contagens no texto),
+  `v37/conteudo.js` (itens no formato da v34) e `v37/provas.js` (pares [fonte, trecho na fonte, trecho no texto];
+  `--estragar N` para o negativo; INDEX = `bak_2210/index_v36.html`).
+  - **J1 `dpc-juizados` — FEITO:** tópico novo antes de `mat-dconst`; 1.355 palavras (25 min); quadro = a lei
+    inteira, com núcleo na etapa 5 (a lei toda dá ~6.000 palavras).
+  - **L1 `leg-assedio` — FEITO:** tópico novo antes de `leg-outros`; 1.069 palavras (19 min); quadros = as duas
+    resoluções (CSJT 360 ~3.800 palavras, CNJ 351 ~4.600): o núcleo vai cair no passo 2 (só artigo de prova real).
+  - **C1 `civ-posse` — FEITO:** tópico novo antes de `mat-dh` (ANTES_DH; o C2 entra depois dele, com a mesma
+    âncora); 1.418 palavras (26 min); quadro = CC 1.196 a 1.224 (959 palavras). Doutrina das teorias e da função
+    social provada por fontes oficiais lidas no navegador, em `v37/fontes_web.json` (formato da v34, conferidas
+    trecho a trecho dentro da página): `epm_posse` (curso da Escola Paulista da Magistratura, TJSP, notícia 58788:
+    Ihering × Savigny, detenção, precariedade; 11 trechos) e `cjf_posse`/`cjf_propriedade` (Jornadas de Direito
+    Civil, CJF: Enunciados 76, 77, 79, 236, 237, 301, 303, 492, 597 e 49, 82, 84, 86, 242, 306, 315, 595). No site
+    do CJF o número no endereço é código interno: buscar por POST em `/enunciados/pesquisa/resultado` (campos do
+    formulário de `/enunciados`, norma 1 = CC). O `scon` do STJ pede verificação de robô: não serve para
+    **acórdãos**. **Súmulas do STJ vêm do arquivo do usuário, `Jurisprudência/sumulas_stj.md`** (ver abaixo).
+  - **C2 `civ-propriedade` — FEITO:** depois do C1 (mesma âncora); 1.307 palavras (24 min); quadro = CC 1.225 a 1.276
+    (2.971 palavras). Traz também a propriedade resolúvel (arts. 1.359 e 1.360, tema de questão real) e a função social
+    pela CF (arts. 5º, XXII e XXIII; 182, § 2º; 186). Civil na semana: textos 50 min + quadros ~71 min ≈ 121 de 135.
+  - **D1 `dt-coletivo` (categoria diferenciada), D2 `dt-relacao` (trabalho eventual) e P1 `dpt-recursos`
+    (uniformização: CPC 926 a 928, CLT 896-C, §§ 3º a 6º do art. 896 revogados pela Lei 13.467/2017, lista das SVs
+    com cartão na 04.2: 4, 10, 22, 23, 25, 40, 53) — FEITOS** (seções novas; âncoras conferidas: uma vez em cada tópico).
+    - D1 usa a **Súmula 374 do TST** do portal (`jurisprudencia.tst.jus.br/?tipoJuris=SUM&orgao=TST&pesquisar=1`,
+      `web:tst_sum374`, conferida na página): redação original, **reafirmada no IRR 258** (Tribunal Pleno, publicado
+      em 02/09/2025, RR-0020184-87.2023.5.04.0016).
+    - D2: o `dt-relacao` já tinha "Eventual" na tabela lato sensu; a seção nova traz a CLT, art. 3º, e a Lei 8.213,
+      art. 11, I, "a", e V, "g" (o eventual é contribuinte individual). `L8213` entrou no `v37/fontes.js`.
+  - **R1 `rlm-estatistica` — FEITO:** tópico novo antes de `mat-dpc` (ANTES_DPC); 681 palavras (12 min, bloco de
+    20); frações (quatro operações, fração de quantidade, fração do resto), média, mediana, moda, ponderada (com os
+    pesos do edital: "média aritmética ponderada", peso 1 e peso 2), amplitude, desvio médio, variância (populacional;
+    amostra divide por n − 1), desvio padrão, setores, histograma, percentuais. **Toda conta é refeita pelo
+    `provas.js`** (`calc:est:OP:dados`, OP = soma, media, mediana, moda, amplitude, dm, var, dp, ordem, pond, frac,
+    prod; resultado em número brasileiro).
+  - **H1 `dh-convencoes` — FEITO (05/11), as sete partes; 1.564 palavras (28 min, bloco de 45).** Parte 2:
+    Patrimônio Mundial pelo texto da Convenção na publicação original do Decreto Legislativo 74/1977 na Câmara
+    (`web:dl74_patrimonio`, 11 trechos conferidos) e pelo `html:d80978`; Diversidade Biológica pelo texto da
+    publicação original do Decreto 2.519/1998 na Câmara (`web:d2519_biodiv`, 7 trechos; no Planalto o anexo é PDF
+    escaneado, sem texto). O "Declaração de Estocolmo" do edital está dito como nome que o edital usa.
+    Registro da parte 1, abaixo. Parte 1: tópico novo antes de `mat-info` (ANTES_INFO); 1.185 palavras (22 min);
+    quadro geral + racial, CEDAW e protocolo, criança e os três protocolos (o terceiro, procedimento de comunicações,
+    pelo Decreto 12.313/2024, `web:d12313` conferido no Planalto), pessoa com deficiência (aprovada pelo rito do § 3º
+    do art. 5º da CF) e Declaração dos povos indígenas. **Faltam no H1:** Patrimônio Mundial (o título já cita) e
+    Diversidade Biológica. O título do tópico já menciona as duas, então elas TÊM de entrar antes da montagem.
+    - **Leitor de HTML:** `v33/texto_html.js` lê como latin1 as páginas windows-1252 do Planalto, e as aspas curvas,
+      travessões e reticências viravam controles invisíveis (U+0093 no lugar de “). O `v37/fontes.js` mapeia 0x80 a
+      0x9F para o windows-1252 (nenhum controle sobra). Trechos com aspas na fonte levam as aspas curvas.
+    - Convenção da Criança, art. 43: o texto de 1990 diz "dez especialistas"; não citar o número sem conferir a
+      emenda posterior. A página da CDPD no Planalto não traz o texto do protocolo.
+  - Provas: **417/417** (J1 82, L1 50, C1 73, C2 56, D1 8, D2 4, P1 17, R1 29, H1 84, súmulas 14); negativos
+    `--estragar 21`, `300` (conta), `340` (DH), `403`, `405`, `409` e `413` (súmulas) acusam. Texto novo: 8.132
+    palavras (contagem do `sp`; J1 26 min, C1 28, C2 25: Civil na semana ≈ 124 de 135 min).
+  - **Súmulas do STJ e do STF — FEITO (05/11), depois do aviso do usuário** ("As súmulas do STJ eu já havia baixado e
+    salvo na pasta Jurisprudência do projeto. É o arquivo sumulas_stj.md"). A memória já dizia isso; eu tinha tentado o
+    `scon` (acórdão sobre Ihering) e escrito os textos sem procurar súmula no arquivo local.
+    - **Leitor `v37/stj.js`** (`node v37/stj.js 619 637`): título "SÚMULA N" em maiúsculas, com ou sem "##", às vezes com
+      "(SÚMULA ALTERADA)" ou "(SÚMULA CANCELADA)"; "Súmula N" em caixa normal é cabeçalho de página. O arquivo é **CRLF**.
+      Enunciado partido em dois parágrafos é juntado (650); a notícia de alteração ou cancelamento vai em `nota` (203,
+      348). Artefato do PDF: **"máfé"** na 375 (hífen de fim de linha perdido). `v37/stj_busca.js "regex"…` lista as
+      súmulas cujo enunciado casa (676 no arquivo). `v37/stj_onde.js N` mostra as linhas que citam a súmula.
+    - `v37/fontes.js`: `stj:N` (enunciado) e `stjsit:N` (situação marcada ou "sem marca de alteração ou cancelamento").
+    - **Texto:** J1 (Recurso…): Súmula 203 do STJ (alterada em 2002; vale a redação atual) + Súmula 640 do STF (RE cabe
+      contra turma recursal; `web:stf_sum640`, portal do STF por `fetch`, lista base=30, id interno 2787) + Súmula 376
+      do STJ. C1 (Detenção): Súmula 619; C1 (Proteção): Súmula 637. C2 (usucapião): CC 102 e CF 183, § 3º, e 191,
+      parágrafo único, com remissão à 619.
+    - **Cartões da 04.2 para a etapa 5:** `v37/juris_novos.js` (STJ-619, STJ-637, STJ-203, STJ-376, STF-S-640;
+      **prioridade 2**, porque nenhuma prova real cobrou: prioridade 1 é "cai sempre"; `cobrada: []`). Conferidor
+      `node v37/conferir_juris_novos.js` (formato igual ao do STJ-375, id novo, texto = fonte, cada frase da nota
+      provada; `--estragar 0..4` texto, `100+N` prova, `200` frase sem prova: todos acusam). Ele pegou dois trechos
+      meus escritos de memória ("§ 2º" × "§ 2o" no CC 1.210; "O recurso referido neste artigo" na Lei 9.099, art. 41),
+      já corrigidos.
+    - **`node v37/conferir_stj_todos.js [INDEX]`**: as 13 súmulas do STJ do app + as 4 novas contra o arquivo: 17/17.
+      Substitui `juris_1210/stj_conferir.js`, que dava falso alarme na 650 e na 665. Exceção declarada só na 375
+      ("má-fé" no app × "máfé" no arquivo). `--estragar ID` acusa.
+    - `node v37/neg_stj.js`: 5/5 (palavra trocada na 619, 376 marcada cancelada, 203 sem título acusam; 637 partida em
+      dois parágrafos e o controle passam).
+    - **Para o A1 (Administrativo):** Súmula 633 do STJ (Lei 9.784, prazo decadencial de revisão dos atos, subsidiária
+      para estados e municípios sem norma própria) e 466 (FGTS do contrato nulo por falta de concurso, se o texto do
+      emprego público tratar de contrato nulo). Considerada e deixada de fora: 84 (embargos de terceiro do
+      compromissário), que é de processo e do promitente comprador (semana 14).
+  - **06/11 — scratchpad apagado de novo** (sobravam 111 de 1.413 arquivos; `fontes_2210/` sumiu): restaurado com
+    `robocopy F S /E /XO` e provado (`bash v36/montar.sh` → `index.html` e `sw.js` iguais aos commitados; provas,
+    STJ e cartões iguais). O commit do usuário de 05/11 é o PR #32 (`bd835d6`, só o HANDOFF); a pasta principal
+    ainda está em `0158b57` (fazer `--ff-only` quando o usuário quiser).
+  - **A1 `adm-atos-poderes` — FEITO (06/11):** seção nova antes de `ls-adm-atos-poderes`; 1.226 palavras (23 min,
+    426 na caixa da Lei 9.962), bloco ADM1 de terça (15h45–17h15, 90 min). Três partes:
+    - **Formação e efeitos** (perfeito, válido, eficaz e as quatro combinações) e **extinção** (cumprimento, desaparecimento,
+      retirada — revogação, invalidação, **cassação, caducidade, contraposição** — e renúncia, com os exemplos do autor):
+      Celso Antônio Bandeira de Mello transcrito nas notas 56 e 57 do verbete "Ato Administrativo Ambiental" (Rita Maria
+      Borges Franco) da **Enciclopédia Jurídica da PUC-SP** (`web:pucsp_ato_ambiental`, 14 trechos) e o verbete
+      "Decaimento ou caducidade" (Fábio Mauro de Medeiros; `web:pucsp_caducidade`, 3). HTML, lido sem baixar.
+      **Fontes tentadas e descartadas:** BDJur do STJ (Cadernos Jurídicos da EPM, Dallari) está atrás da mesma
+      verificação de robô; o PDF do artigo do Dallari está no TJSP (`www.tjsp.jus.br/download/EPM/Publicacoes/
+      CadernosJuridicos/cj_n58_01_…pdf`, 230.287 bytes), mas seria download e não foi preciso. Nenhuma página de
+      tribunal em HTML define cassação/caducidade/contraposição.
+    - Lembretes: caducidade do ato × caducidade da concessão (Lei 8.987, arts. 35, III, e 38); anular e revogar
+      (Lei 9.784, arts. 53 e 54) e **Súmula 633 do STJ** (prazo da 9.784 subsidiário em estados e municípios).
+    - **Emprego público:** EC 19/1998 e **ADI 2.135** pela notícia oficial do STF de 06/11/2024 (`web:stf_adi2135`, 7
+      trechos; bate com a nota do art. 39 que o app já tem); CF 37, II, e § 2º; Súmula 363 do TST (já na 04.2) e
+      **Súmula 466 do STJ** (FGTS do contrato nulo); dispensa só nas quatro hipóteses do art. 3º da Lei 9.962;
+      **Súmula 390 do TST** pelo portal (`web:tst_sum390`; "REDAÇÃO ORIGINAL", sem nota de IRR); **caixa com a Lei
+      9.962 inteira**, gerada da base pelas linhas oficiais (a alínea "a" vetada do art. 1º, § 2º, I, sai da caixa,
+      como no quadro; a nota da caixa diz isso).
+    - Conferência das páginas: `curl -sL URL | node v37/conferir_web_pagina.js CHAVE` (HTML em memória, nada gravado;
+      mesma normalização do `sp`; `--estragar N`): 24/24 nas três páginas; os 3 do TST conferidos no navegador.
+    - Cartões novos para a 04.2 (`v37/juris_novos.js`): **STJ-633, STJ-466 e TST-S-390** (prioridade 2), além dos
+      cinco de 05/11. `conferir_juris_novos.js` passou a aceitar cartão do TST (itens = trechos do portal): 8 cartões,
+      18 provas de nota, 0 falha; negativos acusam. `conferir_stj_todos.js`: 19/19. O TST-S-390 também tem de passar
+      no `juris_1210/conferir_juris_tst.js` na etapa 6.
+    - Provas: **500/500** (A1 = 83, das quais 13 são as linhas da caixa da 9.962, geradas da base); negativos em 12
+      pares do A1, todos acusam. Texto novo da semana: 9.358 palavras.
+  - **I1 `info-office` — FEITO (06/11): ETAPA 3 FECHADA.** Tópico novo antes de `info-seguranca` (depois do
+    `info-workspace`); 1.069 palavras (20 min, bloco de quinta de 45 min). Coautoria (Word e Excel; a Pasta de Trabalho
+    Compartilhada foi substituída pela coautoria), Salvamento Automático e histórico de versões, Controlar Alterações e
+    as quatro marcações, aceitar/rejeitar, referências relativa/absoluta/mista com a tabela da Microsoft e o F4, Modo de
+    Exibição do Apresentador, reunião no Outlook na Web e o Assistente de Agendamento; pegadinha no fim. Introdução com
+    as contagens das provas (4 questões: 2 Word, 1 Outlook, 1 Excel; PISTA: só contagem).
+    - **Fontes:** 10 páginas de ajuda da Microsoft em pt-br (`web:ms_word_coautoria`, `ms_word_compartilhar`,
+      `ms_word_controlar`, `ms_word_aceitar`, `ms_excel_coautoria`, `ms_excel_referencias`, `ms_salvamento`,
+      `ms_ppt_apresentador`, `ms_outlook_agendar`, `ms_outlook_assistente`; 72 trechos, todos conferidos na página por
+      `curl … | node v37/conferir_web_pagina.js CHAVE`). O terminal alcança `support.microsoft.com`. Leitor do corpo do
+      artigo: `curl -sL -A "Mozilla/5.0" URL | node v37/ler_ms.js [max]`. Endereços: o `/pt-br/topic/<guid>` funciona;
+      links relativos da página só resolvem pelo navegador (ex.: `/pt-br/word/training/share-a-document`).
+    - **Armadilha:** as páginas misturam português do Brasil e de Portugal ("Partilhar", "livro", "predefinição") e
+      têm caminhos de menu embaralhados pela tradução ("Controle de > Alterações > de Bloqueio de Controle"). O texto
+      cita literalmente só frases em português do Brasil; o resto é descrito, com par de prova.
+    - `conferir_web_pagina.js` corrigido: a normalização de espaço antes de pontuação vale para a página **e** para o
+      trecho (antes, ".xlsx" com espaço antes falhava).
+    - Provas: **584/584** (I1 = 84); negativos em 11 pares, todos acusam. Texto novo da semana: **10.427 palavras**.
+  - **Etapa 4 — questões: FEITA (06/11).** `v37/questoes.js`: **22 questões** autorais (ano 2026): CV23–CV26 (posse
+    e propriedade), PC75–PC77 (Juizados cível e criminal), LG35–LG36 (CSJT 360 e CNJ 351), DH15–DH17 (convenções e
+    Declaração), RL32–RL34 (mediana/moda/amplitude, fração do resto, média ponderada com os pesos do edital),
+    DA111–DA112 (cassação; Lei 9.962), IF13–IF15 (coautoria no Word, referência mista no Excel, Outlook na Web), DT91
+    (Súmula 374), PT_T95 (CPC 926 a 928 e CLT 896 revogado). O banco passa de 606 para 628.
+    - `node v37/conferir_questoes.js v37/textos_ensaio.html v37/questoes.js` → "ok: 22 questões, 137 trechos
+      provados". É o da v34 com as fontes da v37, as contas de `v37/calc.js` (as contas saíram do `provas.js`, sem
+      mudança: 584/584 depois) e os cartões de `v37/juris_novos.js` aceitos em `jur`. `--estragar Q P` acusa em 16
+      casos testados; o estrago troca um algarismo quando o trecho não tem vogal (antes, "150" passava intacto).
+    - `v37/textos_ensaio.html` = v36 + os 11 textos, por `node v37/aplicar_textos.js ENTRADA SAIDA` (âncoras únicas,
+      prova por subtração, CRLF preservado). Serve à etapa 5.
+    - **Pista de tamanho:** a alternativa certa era a mais longa em 16 das 22 (no banco atual, 414 de 606, 68%).
+      Alonguei distratores com detalhes plausíveis e errados e encurtei certas sem perder exatidão: agora 9 de 22, e
+      em 3 delas a diferença é de poucas letras. Posição da certa: A 3, B 6, C 6, D 4, E 3.
+    - Cartão novo **TST-S-374** (prioridade 2, `vinc: 'IRR 258'`, como os cartões reafirmados do app) em
+      `juris_novos.js`: o texto do D1 cita a súmula, que não tinha cartão. `conferir_juris_novos.js`: 9 cartões, 23
+      provas de nota; aceita `vinc` (provado no portal) e item de súmula do TST contido nos trechos.
+  - **Próximo: etapa 5 (montagem).** Ver a lista do PLANO (semanas.js, DONO, matriz/página 02, lei seca, núcleo,
+    aviso, versão 37) e o modelo `v34/aplicar_v34.js` + `v34/montar.sh`; os textos entram por `v37/aplicar_textos.js`,
+    as questões e os cartões por um `aplicar_v37.js` a escrever.
+  - (registro) **Falta na etapa 3, já feito:**
+    - `info-office`: Word, Excel, PowerPoint, Outlook (páginas de ajuda da Microsoft lidas no navegador, trechos `web:`
+      conferidos na página; salvar cópia pede autorização).
+  - **"ocaso" na CSJT 360, art. 11** (erro de digitação do PDF oficial, uma palavra só nos glifos):
+    `v37/patch_pipeline_v37b.js` corrige a base para "o caso", registra em CORRECOES (21 registros) e põe
+    NOTA_ARTIGO 'RES360:11'. Achado pela busca de palavras que não existem em nenhuma outra norma da base (os outros
+    suspeitos eram falsos: "eqüitativo" e "freqüentar" partidos no "ü").
+  - O compilado da CNJ 351 pula do Capítulo IX para o XI (é assim no PDF oficial).
+  - **Próximo passo da etapa 3**, na ordem: Juizados (Lei 9.099), assédio (CSJT 360 e
+    CNJ 351), posse e propriedade, convenções de DH e Declaração, estatística e frações, Office 365, e os acréscimos
+    em dpt-recursos, adm-atos-poderes, dt-coletivo e dt-relacao.
   - **Atenção (edital):** o CG-DH-15 chama a Convenção do Patrimônio Mundial (UNESCO, Paris, 1972) de
     "Declaração de Estocolmo", que é outro documento de 1972. O texto tem de dizer isso com fonte.
 
