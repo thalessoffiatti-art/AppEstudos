@@ -4128,132 +4128,168 @@ TRT4 vêm de `v36/raiox.js`, sobre o `RAIOX` do app.
 
 ---
 
-# Retomada — estado em 2026-10-29 (ler primeiro depois de compactar a conversa)
+# Adendo 32 — 2026-11-06 (material da semana 13 do edital de 2026, v37)
+
+O registro passo a passo (fontes, decisões, números de cada etapa) está em
+"TRABALHO EM ANDAMENTO", seção v37, na Retomada. Aqui, o resumo.
+
+## O que entrou no `index.html` (v37; `bash v37/montar.sh` refaz do zero a partir de `bak_2210/index_v36.html`)
+
+- **Sete tópicos novos**, com o selo "Novo no edital de 2026": `civ-posse` e
+  `civ-propriedade` (selos "FCC recente" 1/16 e 5/16; quadros CC 1.196 a
+  1.224 e 1.225 a 1.276), `dpc-juizados` (Lei 9.099 inteira no quadro),
+  `leg-assedio` (Res. CSJT 360 e CNJ 351 inteiras), `dh-convencoes`,
+  `rlm-estatistica`, `info-office`.
+- **Seções novas** em `adm-atos-poderes` (formação e efeitos; cassação,
+  caducidade e contraposição; emprego público, com a Lei 9.962 inteira numa
+  caixa), `dt-coletivo` (categoria diferenciada, Súmula 374), `dt-relacao`
+  (trabalho eventual) e `dpt-recursos` (uniformização, CPC 926 a 928, lista
+  das súmulas vinculantes trabalhistas).
+- **22 questões** (CV23–26, PC75–77, LG35–36, DH15–17, RL32–34, DA111–112,
+  IF13–15, DT91, PT_T95): banco 606 → 628. **9 cartões** na 04.2, todos de
+  prioridade 2 (STJ 203, 376, 466, 619, 633, 637; STF 640; TST 374 com
+  `vinc: 'IRR 258'` e 390).
+- **Núcleo (opção A)** nos dois blocos que estouram: Juizados (36 artigos,
+  1 h 12 min de 1 h 30 min) e assédio (só RES360 art. 2º, 31 de 45 min). O
+  `chave()` do `marcarNucleo` passou a ler "Resolução CSJT N" → `RES`+N e
+  "Resolução CNJ N" → `CNJ`+N (sem isso a faixa não aparecia no quadro de
+  assédio).
+- **Grade:** as nove linhas da semana 13 em "O material basta"; CE-CIV-27
+  (função socioambiental da posse) passou para a linha s14-civ, ainda "em
+  preparo". Página 02: 192 → 224 "No material", 21 em parte, 77 a entrar.
+- **QConcursos:** disciplinas novas no mapa (`mat`, `jt`) e os assuntos dos
+  sete tópicos (20 endereços, título "… para fcc" conferido em 06/11).
+- **Correções da lei seca** que já estavam publicadas: o ")" sobrando na Lei
+  8.429, art. 16, e na CLT, art. 394; a linha "Parágrafo único. a); b).)" na
+  CLT, art. 16; e "ocaso" → "o caso" na Res. CSJT 360, art. 11, com nota.
+- Aviso no 03.1 (9 itens); o da v36 foi para "Avisos anteriores" (26).
+  Versão 37 (`autos-do-estudo-v37`).
+
+## Fontes (todas lidas sem salvar cópia, salvo as autorizadas)
+
+- Leis da base (Lei 9.099, Lei 9.962, Res. CSJT 360 republicada em 08/09/2026,
+  Res. CNJ 351 compilada, Código Civil), decretos dos tratados (Planalto e
+  Câmara), Declaração dos povos indígenas (FUNAI/UNIC Rio).
+- **Súmulas do STJ: o arquivo do usuário `Jurisprudência/sumulas_stj.md`**
+  (leitor `v37/stj.js`; conferidor `v37/conferir_stj_todos.js`, 19/19).
+- Doutrina: EPM/TJSP e CJF (posse), Enciclopédia Jurídica da PUC-SP (atos
+  administrativos, caducidade, teorias da função social da posse); STF
+  (notícia da ADI 2.135; Súmula 640) e TST (Súmulas 374 e 390) pelos portais;
+  10 páginas de ajuda da Microsoft (Office 365).
+
+## Conferidores e testes (o real é igual ao ensaio, `cmp`)
+
+- Provas do texto 589/589; questões 22 (137 trechos); cartões 9 (23 provas
+  de nota); aviso 41/41; matriz do edital confere; lei seca 3.380 artigos, 0
+  falha; nada perdido 0; auditor 0 ausente/incompleto; independente 18 "NÃO
+  LIDO" (como antes); rótulos 38; grudados 6; manifestos 3 (as correções);
+  selos 30 (+7 = os tópicos novos); `CHAVES` iguais.
+- `node v37/teste_v37.js bak_2210/index_v36.html v37/ensaio.html` → 43/43;
+  negativo (`node v37/neg_tela.js`) acusa os três estragos (4 falhas);
+  `busca_2110/teste_busca.js` TUDO CERTO (número de "reconvenção" atualizado
+  para 31 trechos em 8 tópicos: +2 nos Juizados); `teste_marca_1210.js`
+  "erradasComPosicao" 0 (v36 também 0); `teste_atualiza_1210.js` sem erro.
+
+## Armadilhas novas
+
+- **O scratchpad foi apagado quatro vezes entre 05 e 06/11.** Só sobram os
+  arquivos mexidos no dia. Restaurar com `robocopy F S /E /XO` e conferir
+  com `cmp` contra a cópia; fazer a cópia a cada passo, não só ao fim de
+  cada etapa.
+- As páginas de ajuda da Microsoft misturam português do Brasil e de
+  Portugal: citar literalmente só as frases do Brasil.
+- `v37/conferir_web_pagina.js`: a normalização de espaço antes de pontuação
+  tem de valer para a página **e** para o trecho.
+- Bash e `node -e` comem a barra invertida de regex (de novo, no estrago
+  numérico do conferidor de questões): usar a ferramenta de edição.
+- `v36/carga.js` e `v36/nucleo.js` leem um levantamento (`aud_nucleo.json`)
+  feito sobre a versão anterior: para um lote novo, refazer o levantamento
+  sobre o ensaio (cópias `v37/carga.js`, `v37/nucleo.js`) e pôr em `extraA`
+  a citação avulsa que o auditor dá à lei padrão do tópico.
+- O teste de busca tem números fixos: texto novo pode mudá-los.
+
+## Pendências desta versão
+
+- **CE-CIV-27 (função socioambiental da posse):** sem fonte sobre a posse em
+  si; procurar no lote da v38 (semana 14).
+- **CE-CIV-32 a 51 (direitos reais II):** tópico planejado `civ-reais`
+  (semana 14).
+- PDF do artigo do Dallari (EPM/TJSP, 230 KB) não baixado: só com
+  autorização, se o usuário quiser fonte de tribunal para a doutrina dos
+  atos.
+- Selos "FCC recente" só nos tópicos de Civil, como na v34; os outros
+  tópicos novos têm só o selo do edital.
+
+---
+
+# Retomada — estado em 2026-11-06 (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira, o **Adendo 31** (v36, opção A: núcleo nos blocos
-   que não cabem, logo acima; regra que vale também para os lotes seguintes),
-   o **Adendo 30** (v35, marca-texto mais rápido), o **Adendo 29** (v34,
-   semana 12), o
-   **Adendo 28** (v33, semana 11), o **Adendo 27** (v32, semana 10) e o
-   **Adendo 26** (edital de 2026). Se o
-   scratchpad tiver perdido arquivos, restaurar antes (memória
-   appestudos-retomada: `robocopy … /E /XO` e refazer a última versão para
-   provar). O plano aprovado em 22/10 está em
-   `C:\Users\thale\.claude\plans\woolly-finding-squid.md` (o plano em ondas do
-   parecer, Adendo 21, terminou na v30). O levantamento do edital está em
-   `scratchpad/edital2026/PLANO.md`.
+1. Ler esta seção inteira, o **Adendo 32** (v37, semana 13, logo acima), o
+   **Adendo 31** (v36, opção A: núcleo nos blocos que não cabem; a regra vale
+   para todo lote), o **Adendo 30** (v35, marca-texto), o **Adendo 29** (v34,
+   semana 12) e o **Adendo 26** (edital de 2026). Se o scratchpad tiver
+   perdido arquivos (aconteceu quatro vezes entre 05 e 06/11), restaurar antes
+   (`robocopy <ferramentas-scratchpad> <scratchpad> /E /XO`) e provar com
+   `bash v37/montar.sh` + `cmp v37/ensaio.html <worktree>/index.html`. O
+   plano aprovado em 22/10 está em
+   `C:\Users\thale\.claude\plans\woolly-finding-squid.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
-   - `git status --short` e `git log --oneline -3` no worktree (em 29/10:
-     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v36 pronta,
-     esperando o commit do usuário; último commit `365f5c7`, Adendo 30, v35.
-     Depois do commit, o último será o do Adendo 31);
-   - `git fetch origin` e `git log --oneline -3 origin/main` (em 29/10 o
-     `main` estava no PR #30, `5b012ba`, v35; a pasta principal já está em ff
-     nele, desde 29/10);
-   - pasta principal: `git -C <raiz> merge --ff-only origin/main` depois de
-     cada PR (a raiz não tem mais cópia solta do HANDOFF);
+   - `git status --short` e `git log --oneline -3` no worktree (em 06/11:
+     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v37 pronta,
+     esperando o commit do usuário; último commit `02cf95f`, "v37 — EM
+     ANDAMENTO");
+   - `git fetch origin` e `git log --oneline -3 origin/main` (em 06/11 o
+     `main` estava no PR #32, `bd835d6`; a pasta principal ainda em
+     `0158b57`: fazer `git -C <raiz> merge --ff-only origin/main`);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (em 27/10: `autos-do-estudo-v34`; a v35 pode sair já, e a v36 tem de
-     estar publicada antes de segunda, 23/11);
+     (a v37 tem de estar publicada antes de segunda, 23/11);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
-3. Ver se o usuário já respondeu às decisões pendentes (abaixo). Não aplicar
-   nenhuma delas sem a resposta.
-4. **Próximo passo: esperar o commit e o PR da v36 (Adendo 31, opção A).**
-   A v36 está pronta no worktree (`index.html` = `bak_2210/index_v36.html` =
-   `v36/ensaio.html`, `sw.js` = `bak_2210/sw_v36.js`, conferidos com `cmp`).
-   Ela precisa estar publicada antes de segunda, 02/11. **Não mexer no
-   `index.html` antes do commit.** Depois do commit e do PR: `--ff-only` na
-   pasta principal e começar a **v37, conteúdo da semana 13 (23/11 a 28/11),
-   publicar até sábado, 21/11** (era a "v35" do plano: a numeração andou dois
-   números, ver os Adendos 30 e 31).
-   Antes, ler a seção "TRABALHO EM ANDAMENTO": se ela registrar uma v37 já
-   começada, continuar dela. **Toda linha nova do lote passa pela regra do
-   núcleo** (Adendo 31): medir a carga; se passar do bloco, ler as questões
-   reais do assunto nas 16 provas e no RAIOX, gravar em `v36/reais.js`, pôr o
-   bloco em `BLOCOS` de `v36/nucleo.js` e rodar `nucleo.js`,
-   `montar_dados.js` e `patch_semanas.js` (sobre o `semanas.js` do lote, não
-   o da v35). A faixa no quadro sai da constante `NUCLEO`, que é refeita
-   inteira pelo `montar_dados.js`. A semana 13 é a maior até aqui: nove linhas em
-   "Material em preparo — chega até 21/11" (`v31/semanas.js`, linhas 100 a
-   110):
-   - `s13-dpt`: uniformização de jurisprudência e precedentes no processo do
-     trabalho; súmulas vinculantes e teses de repercussão geral (já tem
-     `arts` com as SVs; obrigação da tabela "Lotes futuros" do Adendo 27);
-   - `s13-civ`: direitos reais I — posse e propriedade (CE-CIV-20 a 31; CC,
-     arts. 1.196 e seguintes);
-   - `s13-da`: atos administrativos (formação e efeitos, cassação e
-     caducidade), agentes públicos e regime de emprego público (CE-ADM-14,
-     16, 32 e 37) — em `adm-atos-poderes`, tópico que já existe;
-   - `s13-dh`: convenções da ONU (racial, mulher, criança, pessoa com
-     deficiência, patrimônio mundial, diversidade biológica) e Declaração
-     sobre os povos indígenas (CG-DH-11 a 17); os decretos estão em
-     `fontes_2210/dh_*` (a pasta `dh_patrimonio` está vazia, e a Declaração
-     dos povos indígenas ainda falta: ler no navegador ou pedir download);
-   - `s13-rlm`: Noções de Estatística e frações (CG-MAT-05 e 07);
-   - `s13-dpc`: Lei 9.099/1995 (CE-DPC-35; `fontes_2210/l9099`);
-   - `s13-dt`: direito coletivo, Convenção 87, categoria diferenciada,
-     convenções e acordos, greve (linha reusada; a categoria diferenciada é
-     obrigação do Adendo 27);
-   - `s13-leg`: Res. CSJT 360/2023 e Res. CNJ 351/2020 (CG-LEG-04 e 05; a
-     351 está em `fontes_2210/cnj351`; a **CSJT 360 ainda falta**, está na
-     lista autorizada do plano);
-   - `s13-info`: Microsoft Office 365 (CG-INFO-02 completa): páginas da
-     Microsoft lidas no navegador.
+3. Ver se o usuário já respondeu às decisões pendentes (abaixo e no Adendo
+   32). Não aplicar nenhuma delas sem a resposta.
+4. **Próximo passo: esperar o commit e o PR da v37 (Adendo 32).** A v37 está
+   pronta no worktree (`index.html` = `v37/ensaio.html`, `sw.js` =
+   `v37/ensaio_sw.js`, conferidos com `cmp`). **Não mexer no `index.html`
+   antes do commit.** Depois do commit e do PR: `--ff-only` na pasta
+   principal, guardar `bak_2210/index_v37.html` e `sw_v37.js` (cópias do
+   commitado) e começar a **v38, conteúdo da semana 14 (30/11 a 05/12),
+   publicar até sábado, 28/11**. O que a semana pede está em
+   `v31/semanas.js` (linhas `s14-*` com `nova:true` e `marca`) e na página
+   02; já se sabe que entram: direitos reais II (CE-CIV-32 a 51, tópico
+   planejado `civ-reais`) e a função socioambiental da posse (CE-CIV-27,
+   ficou "em parte" na v37).
 
-   **Como fazer**, pelo modelo da v34 (Adendo 29, `scratchpad/v34/`). Nos
-   itens abaixo, ler "v37" onde está "v36" e "index_v36/sw_v36" onde está
-   "index_v35/sw_v35"; o aviso aberto esperado na fase B passa a ser o de
-   "30/10/2026 — leitura pelo núcleo", com "Avisos anteriores" em 26; o
-   `patch_semanas.js` da v36 parte de `v36/base/semanas_v35.js`, então, para
-   o lote, adaptar para partir do `semanas.js` atual:
-   - copiar de `v34/` os scripts (`aplicar_v34.js`, `montar.sh`,
-     `conferir_tudo.sh`, `fontes.js`, `conferir_questoes.js`,
-     `teste_v34.js`, `neg_tela.js`, `cartao.js`, `mostrar.js`,
-     `varrer_v34.js`, `olhar.js`, `_gab.js`, `sintaxe.js`, `texto_html.js`,
-     `texto_certbr.js`, `dif_p02.js`) e trocar `conteudo.js`, `provas.js`,
-     `questoes.js`, `aviso.js`, `fontes_web.json` e os patches;
-   - `montar.sh` a partir de `bak_2210/index_v35.html` e `sw_v35.js`, com
-     `SITUACAO=<data>`; `conferir_tudo.sh` comparando manifestos com
-     `bak_2210/lei_seca_manifesto_v34.json` (a v35 não mexeu na lei seca);
-   - na fase B do `aplicar`, o aviso aberto esperado passa a ser o de
-     "27/10/2026 — marca-texto mais rápido", e "Avisos anteriores" fica com
-     25;
-   - o teste de tela da v36 parte da v35 (`teste_v36.js
-     bak_2210/index_v35.html …`); a marcação feita na versão velha pode ir
-     em leg-14133, como no `teste_v35.js`;
-   - lei nova: `extrair3.js` + `leitor_b.js` + `v34/varrer_v34.js` (chaves) +
-     `v33/tachados_curtos.js`; conferir chaves que não deveriam existir
-     (lei citada entre aspas); `escopos.js` quando a linha pedir parte de
-     um artigo;
-   - `teste_v36.js` no molde do `teste_v34.js` (e do `teste_v35.js` na
-     parte da atualização), com teste negativo; pasta `scratchpad/v36/`;
-   - carga de leitura a 55 palavras por minuto, com nota no cartão quando
-     passar do bloco;
-   - QConcursos por assunto, com os endereços abertos no site (fetch dentro
-     da página do QConcursos, status 200 e título do assunto).
+   **Como fazer o lote** (modelo: `scratchpad/v37/`, que copiou e estendeu a
+   v34 e a v36; ler "v38" onde está "v37" e "index_v37/sw_v37" onde está
+   "index_v36/sw_v36"):
+   - incidência das 16 provas no QConcursos (navegador; PISTA: só contagem
+     no app), base de leis pelo pipeline (extratores com dois leitores e
+     teste negativo), texto em `conteudo.js` com `provas.js` (fontes em
+     `fontes.js`, `fontes_web.json` com trechos conferidos na página por
+     `conferir_web_pagina.js`; súmula do STJ pelo `stj.js`), questões em
+     `questoes.js` com `conferir_questoes.js` (cuidar da pista de tamanho),
+     cartões em `juris_novos.js` com `conferir_juris_novos.js`;
+   - montagem: `patch_semanas_v3X.js` (parte de uma cópia de antes),
+     `patch_matriz_v3X.js`, DONO no `gerar_lei_seca.js` quando a linha ligar
+     dois tópicos, `aplicar_v3X.js A|B`, `montar.sh`, `aviso.js` com
+     `conferir_aviso.js`; o aviso aberto esperado na fase B passa a ser o de
+     "06/11/2026 — material da semana 13", com "Avisos anteriores" em 27;
+   - **núcleo:** `node v37/carga.js ENSAIO` (refazer antes o levantamento:
+     `node v36/gerar_aud_nucleo.js` e `node v36/aud_nucleo.js ENSAIO --json
+     v3X/aud_nucleo.json`); para cada bloco que estoura, provas reais em
+     `reais_s1X.js`, bloco e `extraA` em `fazer_nucleo_v3X.js`, depois
+     `nucleo.js` e `montar_dados.js`, e montar de novo;
+   - conferidores (`conferir_tudo.sh`), teste de tela (`teste_v3X.js` a
+     partir da versão anterior, com marcação feita na velha), negativo
+     (`neg_tela.js`), `busca_2110/teste_busca.js` (números fixos podem
+     mudar com texto novo), `juris_1210/teste_marca_1210.js` e
+     `teste_atualiza_1210.js`;
+   - cópia de segurança a cada passo, não só ao fim de cada etapa.
 
-   Depois do lote, a marca da linha volta a "O material basta"
-   (`v31/semanas.js`), a matriz é atualizada e `gerar_p02.js` é refeito. O
-   gerador agora acusa um item "em parte" ou "ausente" sem bloco "em
-   preparo".
-
-   Os pontos que a v32 acrescentou aos lotes "v35 e v36" estão na tabela
-   "Lotes futuros" do Adendo 27; com a numeração nova, são os lotes da
-   semana 13 (v36) e da semana 14 (v37).
-
-   **Calendário dos lotes (numeração nova desde 29/10, Adendo 31):**
-   - v34 (semana 12) publicada; v35 = correção do marca-texto (PR #30);
-     v36 = opção A (núcleo);
-   - v37 (semana 13) até 21/11, v38 (semana 14) até 28/11, v39 (semana 15)
-     até 05/12;
-   - v40 (semana 16) até 12/12, com os cartões finais do recesso;
-   - Civil: obrigações e contratos até 19/12; responsabilidade civil e
-     empresa até 26/12.
-
-   O que cada semana pede está em `v31/semanas.js` (blocos com `nova:true`
-   e `marca`) e na página 02.
+   **Calendário dos lotes:** v37 (semana 13) pronta em 06/11; v38 (semana 14)
+   até 28/11, v39 (semana 15) até 05/12, v40 (semana 16) até 12/12, com os
+   cartões finais do recesso.
 
    **Ao terminar qualquer versão:** HANDOFF (adendo e Retomada), memória,
    `robocopy` da cópia dos scripts e, depois do PR, `--ff-only` na pasta
@@ -4261,7 +4297,7 @@ TRT4 vêm de `v36/raiox.js`, sobre o `RAIOX` do app.
 
 ## TRABALHO EM ANDAMENTO (atualizar ao fim de cada etapa)
 
-### v37 — material da semana 13 — EM ANDAMENTO (começada em 03/11/2026)
+### v37 — material da semana 13 — PRONTA em 06/11/2026, esperando o commit (Adendo 32; começada em 03/11)
 
 - **v36:** publicada pelo PR #31 (`0158b57`, site em `autos-do-estudo-v36`); a raiz está em ff nele.
 - **Scratchpad:** apagado de novo antes de 03/11 (as pastas de `fontes_2210/` estavam vazias). Foi
@@ -4525,9 +4561,59 @@ TRT4 vêm de `v36/raiox.js`, sobre o `RAIOX` do app.
     - Cartão novo **TST-S-374** (prioridade 2, `vinc: 'IRR 258'`, como os cartões reafirmados do app) em
       `juris_novos.js`: o texto do D1 cita a súmula, que não tinha cartão. `conferir_juris_novos.js`: 9 cartões, 23
       provas de nota; aceita `vinc` (provado no portal) e item de súmula do TST contido nos trechos.
-  - **Próximo: etapa 5 (montagem).** Ver a lista do PLANO (semanas.js, DONO, matriz/página 02, lei seca, núcleo,
-    aviso, versão 37) e o modelo `v34/aplicar_v34.js` + `v34/montar.sh`; os textos entram por `v37/aplicar_textos.js`,
-    as questões e os cartões por um `aplicar_v37.js` a escrever.
+  - **06/11, de novo:** a limpeza apagou o scratchpad no meio da etapa 5 (sobraram 125 arquivos, os mexidos no dia);
+    `robocopy F S /E /XO` restaurou sem perder os mais novos. Cópia agora a cada passo.
+  - **C1 ganhou "Teorias da função social da posse" (CE-CIV-25):** parágrafo com as teorias sociológicas (Perozzi,
+    Saleilles, Hernández Gil; posse-trabalho), do verbete "Constituto Possessório" da Enciclopédia Jurídica da PUC-SP
+    (`web:pucsp_posse_teorias`, 5 trechos conferidos na página; o verbete troca os artigos da usucapião especial
+    urbana e rural — esse trecho não é usado). Provas: **589/589**.
+  - **Etapa 5 — montagem: FEITA no ensaio (06/11).** `bash v37/montar.sh` refaz tudo a partir de `bak_2210/index_v36.html`
+    e `sw_v36.js` → `v37/ensaio.html` e `v37/ensaio_sw.js` (CRLF; versão 37, cache `autos-do-estudo-v37`).
+    - `v37/patch_semanas_v37.js` (parte de `bak_0611/semanas_v37_antes.js`): as 9 linhas da semana 13 com âncora,
+      `arts` (s13-civ: CC 1.196 a 1.224 · 1.225 a 1.276; s13-dpc: "Lei 9.099/1995", inteira; s13-leg: as duas
+      resoluções, inteiras) e nota; fim do "Material em preparo"; **CE-CIV-27** passa para a linha s14-civ (continua
+      "Material em preparo — chega até 28/11"); as notas de núcleo de `v37/notas.json`.
+    - `v37/patch_matriz_v37.js` (parte de `bak_0611/matriz_v37_antes.js`): 32 itens passam a coberto (23 de ausente, 9 de
+      parcial); CE-CIV-27 (função socioambiental da posse) fica **parcial**, sem fonte sobre a posse em si (CJF por
+      palavra não achou; procurar no lote da v38); CE-CIV-32 a 51 (direitos reais II) passam do planejado
+      `novo:civ-propriedade` para `novo:civ-reais`. Página 02: 192 → 224 "No material".
+    - `v37/patch_pipeline_v37c.js`: DONO `civ-posse` [CC 1196–1224] e `civ-propriedade` [CC 1225–1368, CC 102, CF 5,
+      182–183, 186, 191] (cópia de antes `bak_0611/gerar_lei_seca_antes_v37c.js`). Quadros novos: posse (CC 1.196 a
+      1.224), propriedade (CC 1.225 a 1.276 e 1.240-A), Juizados (98 de 99 chaves: o art. 47 é vetado), assédio (as
+      duas resoluções inteiras, 25 + 25). 3.380 artigos no total.
+    - `v37/aplicar_v37.js A|B`: fase A = 11 textos, 22 questões, 9 cartões, selos FCC recente (`civ-posse` [1, 1],
+      `civ-propriedade` [5, 5], pela leitura de cada questão), `QC_DISCIPLINA` + `mat` (matematica-matematica) e `jt`
+      (legislação dos tribunais do trabalho), `QC_TOPICO` dos 7 tópicos novos (20 endereços abertos no navegador, título
+      "… para fcc" conferido), **chave() do marcarNucleo lê "Resolução CSJT N" → RES+N e "Resolução CNJ N" → CNJ+N**, e
+      os 2 registros novos do `NUCLEO`; fase B = grade, cartões, página 02 e aviso (o da v36, de 30/10, vai para
+      "Avisos anteriores", agora 26).
+    - **Núcleo (opção A) da semana 13:** só Juizados e assédio estouram (a linha de Constitucional da semana 13 cabe pelas
+      seções, como a v36 já tinha medido). Cópias v37 da máquina da v36 geradas por `node v37/fazer_nucleo_v37.js`
+      (`v37/quadro.js`, `nucleo.js`, `montar_dados.js`); provas reais em `v37/reais_s13.js` (4 questões relidas no
+      QConcursos em 06/11: TRT-12 2023, TRT-7 2024, TRT-6 2025 e TRT-1 2025; PISTA: só contagem no app); citação avulsa
+      (`extraA`) lida no texto. Resultado: **s13-dpc** passo 1, 36 artigos da Lei 9.099, 1 h 12 min de 1 h 30 min;
+      **s13-leg** passo 2, só RES360 art. 2º, 31 de 45 min. Ordem: `bash v37/montar.sh`; `node v36/gerar_aud_nucleo.js`;
+      `node v36/aud_nucleo.js v37/ensaio.html --json v37/aud_nucleo.json`; `node v37/nucleo.js v37/ensaio.html --json
+      v37/nucleo.json`; `node v37/montar_dados.js v37/ensaio.html`; `bash v37/montar.sh` de novo.
+    - Carga medida com `node v37/carga.js v37/ensaio.html` (cópia da v36 com as leis novas e o levantamento v37).
+    - **Conferidores** (`bash v37/conferir_tudo.sh`): edital MATRIZ CONFERE; sintaxe ok; lei seca 3.380 artigos, 0
+      falha; nada perdido 0; auditor 226 "basta", 0 ausente/incompleto; independente 18 "NÃO LIDO" (com leitura 21, como
+      na v36); rótulos 38; grudados 6; manifestos 3 (as três correções do ")"); selos 30 (+7 = os tópicos novos, selo
+      descritivo); `CHAVES` iguais às do HEAD. `node v37/conferir_aviso.js` → 41/41 (negativo acusa).
+  - **Etapa 6 — testes: quase toda FEITA (06/11).** CE-CIV-27 saiu também da linha s13-civ (ficou só na s14-civ).
+    - `node v37/teste_v37.js bak_2210/index_v36.html v37/ensaio.html` → **43/43 TUDO CERTO** (atualização sem perda
+      com marcação em adm-atos-poderes, 22 questões, 7 tópicos no lugar, selos, quadros, Lei 9.962, art. 11 da CSJT
+      360, QConcursos, marca-texto, faixa NÚCLEO 36 + 1 com atalho, cartão s13, aviso e 26 anteriores, página 02
+      224/21/77, busca de 8 termos, 375 e 820 px, console). Telas em `v37/telas/`.
+    - `juris_1210/teste_atualiza_1210.js` sem erro; `teste_marca_1210.js`: "erradasComPosicao 0" (comparar o
+      "erradasSemPosicao 7591" com a v36 antes de dar por certo).
+    - `busca_2110/teste_busca.js`: a única falha era o número fixo de "reconvenção" (29/7 → 31/8: +2 trechos no
+      tópico novo dos Juizados, conferido); o teste foi atualizado e **falta rodar de novo**.
+  - **Fechamento (06/11): FEITO.** `teste_busca.js` TUDO CERTO; varredura do marca-texto: "erradasComPosicao" 0 na
+    v36 e na v37 ("sem posição" 6.407/215.281 e 7.591/229.514, ~3%, cresce com o texto); negativo de tela
+    (`node v37/neg_tela.js` + `teste_v37.js … v37/neg_tela.html`) acusa os três estragos (4 falhas); `index.html` e
+    `sw.js` do worktree = `v37/ensaio.html` e `v37/ensaio_sw.js` (`cmp`; antes, conferido que eram a v36 commitada);
+    Adendo 32 e Retomada escritos. **Falta só o commit e o PR do usuário.**
   - (registro) **Falta na etapa 3, já feito:**
     - `info-office`: Word, Excel, PowerPoint, Outlook (páginas de ajuda da Microsoft lidas no navegador, trechos `web:`
       conferidos na página; salvar cópia pede autorização).
