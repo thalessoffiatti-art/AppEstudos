@@ -4222,47 +4222,140 @@ O registro passo a passo (fontes, decisões, números de cada etapa) está em
 
 ---
 
-# Retomada — estado em 2026-11-06 (ler primeiro depois de compactar a conversa)
+# Adendo 33 — 2026-11-11 (correções da auditoria do Codex, v38)
+
+**Origem.** O usuário pediu ao Codex uma auditoria (`AUDITORIA-CODEX-2026-11-06.md`, na pasta principal, fora do
+git). Em 07/11 o parecer conferiu os 7 achados na v37 publicada: todos procedem. Em 11/11 o usuário decidiu:
+
+1. versão só de correções (v38) até sexta, 13/11, valendo da segunda, 16/11. A numeração anda um: semana 14 = v39
+   até 28/11, semana 15 = v40 até 05/12, semana 16 + recesso = v41 até 12/12;
+2. carga pelas regras do item A (abaixo);
+3. achado 7: primeiro o painel; as alternativas, aos poucos;
+4. semana 11 segue como está, com a regra manual de parar no fim da teoria.
+
+**O que entrou na v38**
+
+- **Achado 4:** no resumo de `const-estado`, "XXV, segunda parte" → "XXV, primeira parte" (CF, art. 84, parágrafo
+  único). Era a única ocorrência no material e nas questões. Quem tinha grifado o trecho antigo vê a marcação na lista
+  "não foi achada" da barra amarela, e ela continua guardada; o aviso diz isso.
+- **Achado 5:**
+  - seções "Partidos políticos — art. 17" (const-direitos) e "Ministros de Estado — arts. 87 e 88" (const-estado,
+    logo depois do Poder Executivo), provadas por `v38/provas_v38.js` (29 afirmações, 20 citações);
+  - CF 17, 87 e 88 entraram no quadro Lei seca, pelos cartões (`artsMais` da terça da semana 12; `arts` da terça da
+    semana 15);
+  - matriz: evidência do assunto ("caráter nacional"; "Ministros de Estado serão escolhidos") e a **regra soLei**
+    no conferidor. Uma evidência que só aparece no quadro (fora do texto, das caixas e dos rótulos) precisa de
+    artigo declarado, e o artigo tem de estar no quadro e conter a evidência. Ela achou mais um caso:
+    CE-DPT-16, em que "litisconsórcio" só aparecia num artigo da Lei de Falências. Agora o item aponta para a CLT,
+    art. 842, e para a OJ 310. As 20 entradas com soLei foram lidas uma a uma em 11/11;
+  - `edital2026/artigos_topico.js` faz a separação texto × quadro; `v38/neg_matriz.js` acusa 3 de 3 estragos;
+  - a página 02 continua em 224 / 21 / 77.
+- **Achado 3:** `LS.gravarPersistente(chave, texto|null)` grava direto no armazenamento do navegador, mesmo depois
+  de uma falha que passou o app para a memória, e confere a gravação.
+  - Restaurar: a cópia de antes tem de gravar, senão nada muda. Se uma parte falhar, desfaz tudo e confere antes de
+    dizer "Nada mudou"; se nem desfazer der, avisa e deixa a cópia para "Desfazer".
+  - "Desfazer" também volta ao estado de agora se falhar no meio.
+- **Achado 6:** "Zerar respostas" no meio de um simuladão religa `estado.simulado` com as mesmas 60. Depois de
+  concluído, não religa, e o resultado entra uma vez só. A nota do placar diz isso.
+- **Achado 7a:** quadro "Provas reais contra a meta" no alto do "Meu desempenho". Ele mostra as três provas
+  externas mais recentes, cada uma contra a meta da fase dela, e a média contra a meta de hoje. É uma lista, e não
+  tabela, porque no celular a tabela escondia a barra. O placar do banco vira "treino", e o histórico rotula
+  "simuladão do aplicativo (treino)". O texto do app não fala do viés de tamanho, para não ensinar o atalho.
+- **Achados 1 e 2 — a carga nova (regra para todo lote daqui em diante):**
+  - **leitura contra os minutos de teoria** do horário (`TEORIA` em `v38/nucleo_v38.js`): DPT1 50, DPT2 25 (quando
+    a sexta tem tópico próprio), CIV1 45, CIV2 30, ADM1 50, ADM2 25, CONST 25, DH 25, DPC 50, LEG 45, INFO 25;
+  - texto **só das seções que o bloco pede** (`secoes`);
+  - núcleo como na v36: passo 1 = (a) ∪ (b), passo 2 = (b); o que passa da teoria é sobra;
+  - a sobra vai para destinos em ordem (`rev` pode ser lista). O último destino tem de ser da segunda passada do
+    recesso;
+  - **capacidade = metade do bloco de destino**, contando também as sobras estimadas dos cartões que não mudam
+    (`FIXAS`: semanas 9 a 11, leitura anunciada − teoria) e a leitura nova posta em bloco de revisão (CF 17). Se
+    passar, o script falha;
+  - na v38: 13 notas (semanas 12 e 13), 19 linhas "Tempo reservado" e 13 registros NUCLEO com o campo `teoria`;
+  - a caixa do quadro desses registros diz para parar quando a teoria acabar;
+  - a grade declara a divisão de Informática, Português e das sextas; P2 e a regra de parada falam da teoria;
+  - a semana 9 entra pela lista que o app diz que ficou (sem os arts. 513 a 538 e 833): cerca de 40 min, na quarta,
+    16/12;
+  - a sobra das parcerias e da LAI (20/11) vai, nesta ordem, para 27/11 (até 15 min), 18/12 (até 25 min) e a semana 20.
+- **Levantamento novo de provas reais** (`v38/reais_v38.js`, QConcursos relido no navegador em 11/11, com enunciado e
+  alternativas): PJe (L11419:4; CLT 764, 767, 815; IN41:12) e posse/propriedade (CC 1.200, 1.225, 1.228, 1.275).
+  PISTA DE SIMULADO: no app, só a contagem.
+
+**Conferências (11/11)**
+
+- `bash v38/conferir_tudo.sh`: matriz confere; sintaxe; lei seca com 3.383 artigos e 0 falhas; nada perdido 0;
+  auditor sem ausentes; independente 18 "NÃO LIDO" (como na v37); rótulos 38; grudados 6; manifestos 3; selos 30;
+  CHAVES iguais; provas 29/29; capacidade confere; negativo da matriz 3/3; aviso 74/74.
+- `v38/teste_v38.js`: 28/28, a 375 e 820 px. Inclui a falha de gravação injetada (`QuotaExceededError` na segunda
+  parte; e em todas daí em diante, com "Desfazer" depois) e o simuladão zerado e concluído.
+- `v38/neg_tela.js`: três estragos (painel, simuladão, desfazer), todos acusados.
+- Busca TUDO CERTO; marca-texto `erradasComPosicao` 0; atualização sem perda.
+
+**Pendências**
+
+- **Achado 7b:** reequilibrar as alternativas aos poucos, em cada lote, começando por Processo Civil (72 de 77) e
+  Constitucional (39 de 45). A medida é `auditoria_0711/vies.js`. Questões novas: abaixo de 30% de "certa mais
+  longa".
+- CE-CIV-27 e direitos reais II continuam para a semana 14 (agora v39).
+
+**Lições**
+
+- O NUCLEO da v36 tem vários registros numa linha só: trocar registros pelo conteúdo, não por linha.
+- `node -e` com aspas e barras escapadas falhou várias vezes. Para trocar trecho de script: arquivo com o texto e
+  marcas simples, ou a ferramenta de edição.
+- O teste de tela que procura texto num tópico tem de tirar a lista de marcações não achadas.
+
+---
+
+# Retomada — estado em 2026-11-11 (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira, o **Adendo 32** (v37, semana 13, logo acima), o
-   **Adendo 31** (v36, opção A: núcleo nos blocos que não cabem; a regra vale
-   para todo lote), o **Adendo 30** (v35, marca-texto), o **Adendo 29** (v34,
-   semana 12) e o **Adendo 26** (edital de 2026). Se o scratchpad tiver
-   perdido arquivos (aconteceu quatro vezes entre 05 e 06/11), restaurar antes
-   (`robocopy <ferramentas-scratchpad> <scratchpad> /E /XO`) e provar com
-   `bash v37/montar.sh` + `cmp v37/ensaio.html <worktree>/index.html`. O
-   plano aprovado em 22/10 está em
+1. Ler esta seção inteira, o **Adendo 33** (v38, correções da auditoria;
+   traz a **regra nova de carga**, que vale para todo lote), o **Adendo 32**
+   (v37, semana 13), o **Adendo 31** (v36, opção A: núcleo nos blocos que não
+   cabem), o **Adendo 30** (v35, marca-texto), o **Adendo 29** (v34, semana
+   12) e o **Adendo 26** (edital de 2026). Se o scratchpad tiver perdido
+   arquivos (aconteceu de novo antes de 11/11; o app também troca o caminho do
+   scratchpad entre sessões), restaurar antes (`robocopy
+   <ferramentas-scratchpad> <scratchpad> /E /XO`) e provar com `bash
+   v38/montar.sh` + `cmp v38/ensaio.html <worktree>/index.html`. O plano
+   aprovado em 22/10 está em
    `C:\Users\thale\.claude\plans\woolly-finding-squid.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
-   - `git status --short` e `git log --oneline -3` no worktree (em 06/11:
-     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v37 pronta,
-     esperando o commit do usuário; último commit `02cf95f`, "v37 — EM
-     ANDAMENTO");
-   - `git fetch origin` e `git log --oneline -3 origin/main` (em 06/11 o
-     `main` estava no PR #32, `bd835d6`; a pasta principal ainda em
-     `0158b57`: fazer `git -C <raiz> merge --ff-only origin/main`);
+   - `git status --short` e `git log --oneline -3` no worktree (em 11/11:
+     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v38 pronta,
+     esperando o commit do usuário; último commit `87a2905`, Adendo 32);
+   - `git fetch origin` e `git log --oneline -3 origin/main` (em 11/11 o
+     `main` estava no PR #34, `706d39e`, e a pasta principal também);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (a v37 tem de estar publicada antes de segunda, 23/11);
+     (a v38 tem de estar publicada até sexta, 13/11, para valer da segunda,
+     16/11);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo e no Adendo
    32). Não aplicar nenhuma delas sem a resposta.
-4. **Próximo passo: esperar o commit e o PR da v37 (Adendo 32).** A v37 está
-   pronta no worktree (`index.html` = `v37/ensaio.html`, `sw.js` =
-   `v37/ensaio_sw.js`, conferidos com `cmp`). **Não mexer no `index.html`
-   antes do commit.** Depois do commit e do PR: `--ff-only` na pasta
-   principal, guardar `bak_2210/index_v37.html` e `sw_v37.js` (cópias do
-   commitado) e começar a **v38, conteúdo da semana 14 (30/11 a 05/12),
-   publicar até sábado, 28/11**. O que a semana pede está em
-   `v31/semanas.js` (linhas `s14-*` com `nova:true` e `marca`) e na página
-   02; já se sabe que entram: direitos reais II (CE-CIV-32 a 51, tópico
-   planejado `civ-reais`) e a função socioambiental da posse (CE-CIV-27,
-   ficou "em parte" na v37).
+4. **Próximo passo: esperar o commit e o PR da v38 (Adendo 33, correções
+   da auditoria).** A v38 está pronta no worktree (`index.html` =
+   `v38/ensaio.html`, `sw.js` = `v38/ensaio_sw.js`, conferidos com `cmp`).
+   **Não mexer no `index.html` antes do commit.** Depois do commit e do PR:
+   `--ff-only` na pasta principal, guardar `bak_2210/index_v38.html` e
+   `sw_v38.js` (cópias do commitado) e começar a **v39, conteúdo da semana
+   14 (30/11 a 05/12), publicar até sábado, 28/11**. O que a semana pede está
+   em `v31/semanas.js` (linhas `s14-*` com `nova:true` e `marca`) e na
+   página 02; já se sabe que entram: direitos reais II (CE-CIV-32 a 51,
+   tópico planejado `civ-reais`) e a função socioambiental da posse
+   (CE-CIV-27, "em parte" desde a v37). **A semana 14 já usa a carga nova:**
+   cada bloco de leitura com núcleo e sobra pela teoria do horário
+   (`v38/nucleo_v38.js` como modelo: `BLOCOS`, `TEORIA`, `FIXAS` com as
+   sobras que já chegam aos destinos, e capacidade = metade do bloco de
+   destino), e as questões novas abaixo de 30% de "certa mais longa"
+   (`auditoria_0711/vies.js`), com o reequilíbrio das antigas aos poucos,
+   começando por Processo Civil e Constitucional.
 
-   **Como fazer o lote** (modelo: `scratchpad/v37/`, que copiou e estendeu a
-   v34 e a v36; ler "v38" onde está "v37" e "index_v37/sw_v37" onde está
-   "index_v36/sw_v36"):
+   **Como fazer o lote** (modelo de conteúdo: `scratchpad/v37/`, que copiou e
+   estendeu a v34 e a v36; modelo de núcleo, montagem em duas passadas e
+   testes: `scratchpad/v38/`; ler "v39" onde está "v37"/"v38" e
+   "index_v38/sw_v38" onde está "index_v36/sw_v36"):
    - incidência das 16 provas no QConcursos (navegador; PISTA: só contagem
      no app), base de leis pelo pipeline (extratores com dois leitores e
      teste negativo), texto em `conteudo.js` com `provas.js` (fontes em
@@ -4274,12 +4367,20 @@ O registro passo a passo (fontes, decisões, números de cada etapa) está em
      `patch_matriz_v3X.js`, DONO no `gerar_lei_seca.js` quando a linha ligar
      dois tópicos, `aplicar_v3X.js A|B`, `montar.sh`, `aviso.js` com
      `conferir_aviso.js`; o aviso aberto esperado na fase B passa a ser o de
-     "06/11/2026 — material da semana 13", com "Avisos anteriores" em 27;
-   - **núcleo:** `node v37/carga.js ENSAIO` (refazer antes o levantamento:
-     `node v36/gerar_aud_nucleo.js` e `node v36/aud_nucleo.js ENSAIO --json
-     v3X/aud_nucleo.json`); para cada bloco que estoura, provas reais em
-     `reais_s1X.js`, bloco e `extraA` em `fazer_nucleo_v3X.js`, depois
-     `nucleo.js` e `montar_dados.js`, e montar de novo;
+     "13/11/2026 — correções da auditoria", com "Avisos anteriores" em 28;
+   - **núcleo (regra da v38, Adendo 33):** refazer o levantamento sobre o
+     ensaio (`node v36/gerar_aud_nucleo.js` e `node v36/aud_nucleo.js ENSAIO
+     --json v3X/aud_nucleo.json`); em `nucleo_v3X.js` (cópia de
+     `v38/nucleo_v38.js`), um `BLOCOS` por bloco de leitura da semana, com os
+     dias, o horário (a teoria sai de `TEORIA`), as seções pedidas, o
+     `extraA` e os destinos (`rev`, o último no recesso); as provas reais de
+     cada bloco em `reais_v3X.js` (QConcursos no navegador, enunciado e
+     alternativas); `FIXAS` com as sobras dos cartões que já não mudam;
+     rodar até `CAPACIDADE CONFERE`; depois `montar_dados_v3X.js` (notas,
+     reservas e NUCLEO), montar de novo e repetir até o ponto fixo (`cmp` das
+     três saídas);
+   - **matriz:** a regra soLei vale (`edital2026/conferir_edital_2026.js`):
+     evidência que só aparece no quadro precisa de artigo declarado;
    - conferidores (`conferir_tudo.sh`), teste de tela (`teste_v3X.js` a
      partir da versão anterior, com marcação feita na velha), negativo
      (`neg_tela.js`), `busca_2110/teste_busca.js` (números fixos podem
@@ -4287,15 +4388,67 @@ O registro passo a passo (fontes, decisões, números de cada etapa) está em
      `teste_atualiza_1210.js`;
    - cópia de segurança a cada passo, não só ao fim de cada etapa.
 
-   **Calendário dos lotes:** v37 (semana 13) pronta em 06/11; v38 (semana 14)
-   até 28/11, v39 (semana 15) até 05/12, v40 (semana 16) até 12/12, com os
-   cartões finais do recesso.
+   **Calendário dos lotes (desde 11/11, com a v38 de correções no meio):**
+   v37 (semana 13) publicada em 07/11; v38 (correções da auditoria) até
+   13/11; v39 (semana 14) até 28/11, v40 (semana 15) até 05/12, v41 (semana
+   16) até 12/12, com os cartões finais do recesso.
 
    **Ao terminar qualquer versão:** HANDOFF (adendo e Retomada), memória,
    `robocopy` da cópia dos scripts e, depois do PR, `--ff-only` na pasta
    principal.
 
 ## TRABALHO EM ANDAMENTO (atualizar ao fim de cada etapa)
+
+### v38 — correções da auditoria — PRONTA em 11/11/2026, esperando o commit (Adendo 33; publicar até sexta, 13/11; vale da segunda, 16/11)
+
+- **Decisões do usuário (11/11):** (1) versão só de correções até 13/11, e a numeração anda um (semana 14 = v39 até
+  28/11, semana 15 = v40 até 05/12, semana 16 + recesso = v41 até 12/12); (2) carga pelas regras do item A: minutos
+  de teoria, a leitura nunca entra nas questões, a sobra vai de preferência à segunda passada do recesso e cada
+  destino tem capacidade conferida; (3) achado 7: primeiro o painel, depois reequilibrar as alternativas aos poucos;
+  (4) semana 11 segue como está, com a regra manual de parar no fim da teoria.
+- **Scratchpad desta sessão:** `C:\Users\thale\AppData\Local\Temp\claude\05b0a1e0dabcee69\987bfdd2-305d-4b53-8bfb-e15c943f2553\scratchpad`
+  (o antigo foi apagado de novo; restaurado da cópia em 11/11 e provado com `bash v37/montar.sh` + `cmp` = v37 publicada).
+- **Feito no ensaio (`v38/montar.sh`, duas passadas, núcleo em ponto fixo):** achado 4 (art. 84, XXV, primeira
+  parte, provado); achado 5 (seções "Partidos políticos — art. 17" em const-direitos e "Ministros de Estado — arts.
+  87 e 88" em const-estado, 29 afirmações em `v38/provas_v38.js`; CF 17, 87 e 88 no quadro; matriz com evidência
+  do assunto e regra soLei no conferidor, que achou também CE-DPT-16, litisconsórcio só na Lei de Falências, agora
+  apontado para a CLT, art. 842, e a OJ 310; `v38/neg_matriz.js` 3/3); achado 3 (`LS.gravarPersistente`, restaurar e
+  desfazer com reversão conferida); achado 6 (zerar recomeça o simuladão); achado 7a (quadro "Provas reais contra a
+  meta"); achados 1 e 2 (`v38/nucleo_v38.js`: teoria por horário, texto por seção, capacidade = metade do bloco de
+  destino, contando as sobras das semanas 9 a 11; `v38/montar_dados_v38.js`: 13 notas, 19 linhas "Tempo
+  reservado", 13 registros NUCLEO; a grade declara teoria e questões de Informática, Português e das sextas; P2 com a
+  regra). Levantamento novo de provas reais: `v38/reais_v38.js` (PJe; posse e propriedade), lido no QConcursos em
+  11/11 (PISTA: só contagem no app). `bash v38/conferir_tudo.sh`: tudo passa.
+- **Feito também (11/11):** teste de tela 28/28 (375 e 820 px, com falha de gravação injetada), negativo com os 3
+  estragos acusados, busca, marca-texto e atualização; aviso 74/74; o quadro das provas reais virou lista, porque a
+  tabela escondia a barra no celular. **A v38 está PRONTA e aplicada no worktree** (`index.html` = `v38/ensaio.html`,
+  `sw.js` = `v38/ensaio_sw.js`, `cmp` ok; cache `autos-do-estudo-v38`). Adendo 33, Retomada e memória atualizados;
+  robocopy feito. **Esperando o commit e o PR do usuário.**
+
+### 07/11/2026 — auditoria do Codex (`AUDITORIA-CODEX-2026-11-06.md`, na pasta principal, fora do git): parecer dado; decidido em 11/11 (ver v38, acima)
+
+- **Estado:** v37 commitada (`87a2905`) e mesclada pelo PR #34 (`706d39e`); o site serve `autos-do-estudo-v37`; a raiz está
+  em `706d39e`. `bak_2210/index_v37.html` e `sw_v37.js` guardados (iguais ao ensaio, `cmp`).
+- **Os 7 achados foram conferidos na v37 publicada e todos procedem:**
+  1. a carga compara a leitura com o bloco inteiro, que inclui as questões (`v37/carga.js`: `total > o.min`; as
+     notas dizem "num bloco de 1 h 30 min" quando a teoria é de 50 min). Além disso, um tópico usado por vários
+     blocos (`const-estado` nas semanas 11, 12, 13 e 16) conta o texto inteiro em cada um;
+  2. a sobra de 20/11 (1 h 59 min de leitura em 50 min) vai para a sexta 27/11, que tem 50 min e já recebe a
+     revisão das leis novas e a sobra de 13/11. Nenhum destino de sobra tem conta de capacidade;
+  3. `LS.gravarCru` desliga o `localStorage` (`base = null`) na primeira exceção; o desfazer da restauração
+     grava só na memória e o aviso diz "O progresso ficou como estava" (confirmado pela leitura do código);
+  4. o resumo de `const-estado` traz "XXV, segunda parte"; o certo é "primeira parte" (CF, art. 84, parágrafo
+     único). É a única ocorrência: varri o material e as questões;
+  5. a matriz dá "No material" a partidos (CF, art. 17) e a Ministros de Estado (CF, arts. 87 e 88), que não
+     estão no material. `auditoria_0711/matriz_sem_quadro.js` lista 20 itens "coberto" cuja evidência só aparece
+     na lei transcrita, para revisão;
+  6. "Zerar respostas" durante um simuladão apaga `estado.simulado` e mantém `estado.ordem`, e o resultado
+     não é registrado;
+  7. a alternativa correta é a mais longa em 423 de 628 questões (67,4%; `auditoria_0711/vies.js`). Por
+     disciplina: Processo Civil 72/77, Constitucional 39/45, Direito do Trabalho 70/91 e Processo do Trabalho
+     66/88. O painel "Meu desempenho" compara a meta com o placar do banco autoral.
+- **Decidido em 11/11** (Adendo 33): tudo entrou na v38, menos o reequilíbrio das alternativas, que vai aos poucos. Texto de 07/11: esperar a resposta do usuário sobre o que implantar e em que versão. Não mexer no `index.html`
+  antes disso.
 
 ### v37 — material da semana 13 — PRONTA em 06/11/2026, esperando o commit (Adendo 32; começada em 03/11)
 
