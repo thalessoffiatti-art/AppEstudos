@@ -4323,28 +4323,34 @@ git). Em 07/11 o parecer conferiu os 7 achados na v37 publicada: todos procedem.
    aprovado em 22/10 está em
    `C:\Users\thale\.claude\plans\woolly-finding-squid.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
-   - `git status --short` e `git log --oneline -3` no worktree (em 11/11:
-     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v38 pronta,
-     esperando o commit do usuário; último commit `87a2905`, Adendo 32);
+   - `git status --short` e `git log --oneline -3` no worktree (em 11/11,
+     depois do commit: só `M HANDOFF-projeto.md`; último commit `c747695`,
+     Adendo 33 = v38);
    - `git fetch origin` e `git log --oneline -3 origin/main` (em 11/11 o
-     `main` estava no PR #34, `706d39e`, e a pasta principal também);
+     `main` estava no PR #35, `92fb943`, e a pasta principal também). **O
+     `--ff-only` do usuário só anda depois de um `git fetch`:** os worktrees
+     dividem as referências com a pasta principal, e sem o fetch o
+     `origin/main` local ainda aponta para o PR anterior. Fazer o fetch antes
+     (ou indicar `git -C <raiz> pull --ff-only origin main`);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (a v38 tem de estar publicada até sexta, 13/11, para valer da segunda,
-     16/11);
+     (em 11/11: `autos-do-estudo-v38`, publicada; vale da segunda, 16/11);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo e no Adendo
    32). Não aplicar nenhuma delas sem a resposta.
-4. **Próximo passo: esperar o commit e o PR da v38 (Adendo 33, correções
-   da auditoria).** A v38 está pronta no worktree (`index.html` =
-   `v38/ensaio.html`, `sw.js` = `v38/ensaio_sw.js`, conferidos com `cmp`).
-   **Não mexer no `index.html` antes do commit.** Depois do commit e do PR:
-   `--ff-only` na pasta principal, guardar `bak_2210/index_v38.html` e
-   `sw_v38.js` (cópias do commitado) e começar a **v39, conteúdo da semana
-   14 (30/11 a 05/12), publicar até sábado, 28/11**. O que a semana pede está
+4. **Próximo passo: a v39, conteúdo da semana 14 (30/11 a 05/12), publicar
+   até sábado, 28/11 — COMEÇADA em 11/11** (plano em
+   `scratchpad/v39/PLANO.md`; a etapa em que está fica em "TRABALHO EM
+   ANDAMENTO", abaixo). A v38 foi publicada pelo PR #35 (`92fb943`), a raiz
+   está em ff nele e `bak_2210/index_v38.html` e `sw_v38.js` estão guardados
+   (iguais ao commitado). O que a semana pede está
    em `v31/semanas.js` (linhas `s14-*` com `nova:true` e `marca`) e na
-   página 02; já se sabe que entram: direitos reais II (CE-CIV-32 a 51,
-   tópico planejado `civ-reais`) e a função socioambiental da posse
-   (CE-CIV-27, "em parte" desde a v37). **A semana 14 já usa a carga nova:**
+   página 02: protocolos da JT e embargos de terceiro (s14-dpt), direitos
+   reais II (CE-CIV-32 a 51, tópico planejado `civ-reais`) e a função
+   socioambiental da posse (CE-CIV-27), sistema interamericano (CG-DH-18 a
+   22), lógica de argumentação (CG-MAT-03), mediação e possessórias, o que
+   os Assentos de 2026 mudaram no Regimento, redes e navegadores, Redação
+   Oficial, e os estudos de caso **C14 e C14b** (as caixas prometem
+   enunciado e espelho até 28/11). **A semana 14 já usa a carga nova:**
    cada bloco de leitura com núcleo e sobra pela teoria do horário
    (`v38/nucleo_v38.js` como modelo: `BLOCOS`, `TEORIA`, `FIXAS` com as
    sobras que já chegam aos destinos, e capacidade = metade do bloco de
@@ -4399,7 +4405,150 @@ git). Em 07/11 o parecer conferiu os 7 achados na v37 publicada: todos procedem.
 
 ## TRABALHO EM ANDAMENTO (atualizar ao fim de cada etapa)
 
-### v38 — correções da auditoria — PRONTA em 11/11/2026, esperando o commit (Adendo 33; publicar até sexta, 13/11; vale da segunda, 16/11)
+### v39 — material da semana 14 — COMEÇADA em 11/11/2026 (publicar até sábado, 28/11)
+
+- **Plano, linhas e etapas:** `scratchpad/v39/PLANO.md` (oito linhas de conteúdo, os casos C14 e C14b, cerca de 25
+  questões novas abaixo de 30% de "certa mais longa" e o começo do reequilíbrio das antigas por Processo Civil e
+  Constitucional, sem mudar o índice da correta).
+- **Antes de começar (11/11):** v38 publicada (PR #35, `92fb943`, site `autos-do-estudo-v38`); `git fetch` + ff da
+  raiz; `bak_2210/index_v38.html` e `sw_v38.js` guardados e testados (`teste_v38.js` 28/28 sobre eles).
+- **Disco cheio em 11/11 (7,9 MB livres):** os testes de tela deixaram 90 processos do Edge e 10 perfis
+  (`perfil-headless-*`, 3,5 GB) no scratchpad. Com a autorização do usuário, fechei esses processos e apaguei esses
+  perfis (3,46 GB livres depois). **`cdp.js` corrigido:** `proc.kill()` fechava só o processo lançado, e o
+  msedge.exe lançado passa o navegador a outro processo e sai. Agora `fechar()` faz `taskkill /T`, derruba todo
+  msedge.exe com a pasta do perfil na linha de comando, apaga o perfil, limpa na saída do node e varre perfis com
+  mais de 3 h. Provado: depois do `teste_v38.js`, 0 processos e 0 perfis.
+- **Etapa 1 — levantamento: em andamento (11/11).**
+  - **Incidência: FEITA** (`v39/incidencia_s14.md`, PISTA: só contagem no app; `v39/reais_v39.js` com o artigo
+    decisivo). Direitos reais II 7 questões em 7 provas; CADH 2 (Declaração, San Salvador, Comissão e Corte: 0);
+    embargos de terceiro 3, seguro-garantia 2, isenção de custas 1; Protocolos 0; mediação 0; possessória só a do JEC;
+    navegadores 2, busca 2, redes 0; Redação Oficial 1; lógica 1.
+  - **Fontes** (`fontes_1111/ORIGEM.md`): Protocolos da JT (CSJT, 4,26 MB, autorizado em 22/10), Declaração Americana
+    (OEA, abre pelo terminal), Regimento até a RA 41/2026 e MP 2.220/2001 (os dois **autorizados pelo usuário em
+    11/11**; a MP foi salva do navegador e o hash confere). Manual de Redação lido no navegador com pdf.js (o
+    terminal não alcança o Planalto): conferir as citações no navegador, contra o PDF.
+  - **Achado: Assento Regimental 06/2026 (RA 41/2026, 29/10/2026)** mudou os arts. 94 (parágrafo único → §§ 1º e 2º,
+    preferência na sustentação oral) e 96 (§§ 1º-D, 1º-E, 1º-F e § 2º). Esses artigos estão no quadro do Regimento, e
+    a base `leis/RITRT4.json` é da RA 38/2026: **atualizar a base pela RA 41/2026** na v39, com a ressalva de que os
+    Assentos 05 e 06/2026 são posteriores ao edital (RA 31/2026). Mudanças de 2026: 01/2026 (art. 192 e inciso XV do
+    Vice-Presidente?), 02/2026 (agravos internos, inciso I e alínea b), 03/2026 (relatório de gestão, XXVII), 04/2026
+    (art. 213, comissões, e inciso V da Comissão de Uniformização), 05/2026 (art. 203: "oito dias úteis"; a RA 38 só
+    traz a redação nova) e 06/2026. A redação anterior do art. 203 não foi achada: o Regimento anterior não está
+    guardado.
+  - **Diferença RA 38 × RA 41: FEITA.** `v39/ri_extrair_v39.js` (gerado de `ri_extrair.js` por `v39/_gera_ri.js`, com
+    entrada e saída por argumento) sobre o texto PyMuPDF (`v33/pdf_texto.py`): a RA 38 refeita dá `leis/RITRT4.json`
+    **idêntico** (prova do método); a RA 41 (`v39/ri41/ra41/RITRT4.json`, 282 artigos) muda só os arts. 94, 96 e 116
+    (no 116, só uma nota entre parênteses, que o quadro tira). Na montagem da v39: copiar a RA 41 para
+    `leis/RITRT4.json` e mostrar no material a redação anterior do art. 94, parágrafo único (está na RA 38).
+- **Etapa 3 — texto: começada (11/11).** Modelo: `v39/conteudo.js` (itens como na v37), `v39/provas.js` (triplas
+  [fonte, trecho na fonte, trecho no texto] + "CITAÇÃO SEM PROVA"), `v39/fontes.js` (estende `v37/fontes.js`: 'web:' da
+  v39, 'incid39', 'txt:mp2220', 'ri41:N', 'ri38:N').
+  - **R1 `pt-redacao-oficial`: FEITO.** 1.243 palavras (23 min para 25 de teoria); provas 115/115, 49 citações, negativo
+    acusa. Os trechos do Manual ficam em `v39/fontes_web.json` (`manual_redacao`, 124 trechos) e foram conferidos no PDF
+    oficial pelo navegador (`v39/conferir_manual_navegador.js`, registro em `v39/conferir_manual.log`: 0 fora do PDF;
+    negativo ok). **Mudou um trecho? Rodar de novo no navegador.**
+  - **C1 `civ-reais`: FEITO** (entra antes de `mat-dh`, depois de civ-propriedade). 2.079 palavras (38 min de 75 de
+    teoria; o quadro CC 1.277–1.510-E tem 268 artigos, 16.808 palavras, 306 min: núcleo obrigatório). Inclui a função
+    socioambiental da posse (CC 1.228, § 1º + Súmula 623 do STJ → para fechar CE-CIV-27), Súmulas 84, 239, 260, 308 e
+    478 do STJ (pelo `stj.js`) e a MP 2.220 (`txt:mp2220`). Provas: o runner passa `INDEX` (v38) às fontes ('texto:');
+    a checagem de citação ignora maiúsculas (a prova principal não). Total até aqui: 244 afirmações, 97 citações, 0
+    falhas; negativo acusa.
+  - **D1 `dh-interamericano`: FEITO** (entra antes de `mat-info`, depois de dh-convencoes; tratados não vão ao quadro,
+    só ao texto, como nos outros tópicos de DH). 1.099 palavras (20 min de 25). Fontes: 'html:cadh' (v37), 'html39:
+    sansalvador' e 'html39:declam' (v39/fontes.js; a Declaração vem de `fontes_1111/decl_americana`), e 'web:cnj_corteidh'
+    (página UMF/CNJ "Casos Contenciosos Brasileiros", lida no navegador, 21 trechos conferidos em innerText; traz o
+    Decreto 4.463/2002, fatos posteriores a 10/12/1998, e 19 casos; a contagem "19" é calculada no provas.js). **Não
+    usar curl com User-Agent trocado** (o modo automático bloqueou como contorno de bot): ler pelo navegador. Total:
+    312 afirmações, 134 citações, 0 falhas; negativo acusa.
+  - **P1 (possessórias, seção em dpc-especiais, antes de `ls-dpc-especiais`), E1 (embargos de terceiro no processo do
+    trabalho, seção em dpt-execucao, antes de `ls-dpt-execucao`; Súmula 419 e OJ 54 SDI-2 por 'juris:'), M1
+    (`dpc-mediacao`, tópico novo antes de `mat-dconst`): FEITOS.** 333, 313 e 569 palavras. A Lei 13.140 está em
+    `v39/base/L13140.json` (extrair3.js; leitor_b: 48 iguais; tachados curtos 0) e é lida por 'L13140:N' até o pipeline;
+    **atenção ao pôr no quadro:** os títulos de seção quebrados no HTML ("Disposições C / omuns" no art. 3º, "Da Mediaçã
+    / o Judicial" no art. 23) podem deixar resíduo — corrigir na base (CORRECOES) e varrer. Total: 375 afirmações, 152
+    citações, 0 falhas.
+  - **T1 `dpt-protocolos` (tópico novo antes de `mat-dt`; fonte 'txt:protocolos' = `v39/protocolos_raw.txt`, pdftotext
+    do PDF do CSJT) e L1 (seção em leg-trt4 antes de `ls-leg-trt4`: tabela dos Assentos 01 a 06/2026, art. 94 antigo
+    pela RA 38 e novo pela RA 41, art. 96 § 1º-D; fontes 'ri41:', 'ri38:', 'bruto41:', 'edital'): FEITOS.** Total: 408
+    afirmações, 167 citações, 0 falhas; negativo acusa.
+  - **I1 `info-redes` (tópico novo antes de `info-seguranca`; fontes web: chrome_anonima, firefox_privativa,
+    edge_inprivate, google_operadores, bing_operadores, nist_intranet, nist_extranet, todas conferidas em innerText; e
+    'cert:livro' = glossário do CERT.br) e G1 (validade de argumentos em rlm-proposicoes, item com `depois:` = entra
+    DEPOIS da âncora do quadro "Negação da condicional"; provas por tabela-verdade 'calc:forma:PREMISSAS=>CONCLUSÃO',
+    com igualdade exata — o negativo mostrou que "inválida" contém "válida"): FEITOS.**
+  - **ETAPA 3 FEITA (11/11):** R1, C1, D1, P1, E1, M1, T1, L1, I1, G1 = 464 afirmações, 186 citações, 0 falhas; negativo
+    acusa. Palavras: R1 1.243, C1 2.079, D1 1.099, P1 333, E1 313, M1 569, T1 306, L1 532, I1 620, G1 ~400.
+  - **ETAPA 4 — questões: FEITA (11/11).** `v39/questoes.js`: 25 (CV27–CV32, DH18–DH21, PC78–PC81, PT_T96–PT_T97,
+    LG37–LG38, IF16–IF18, PT84–PT85, RL35–RL36), `node v39/conferir_questoes.js v39/textos_ensaio.html v39/questoes.js`:
+    116 trechos, 0 problemas; negativo acusa. Certa mais longa 5/25 (20%); posições A–E 5 6 5 4 5 (`v39/_vies.js` alongou
+    distratores de 8 questões e moveu B→E em CV30, DH18, PT_T96; cópia de antes `v39/_questoes_antes_vies.js`). **A RL35
+    tinha duas conclusões válidas** (a E era verdadeira por vacuidade): trocada; o conferidor agora exige uma só forma
+    válida nas questões de lógica e compara 'calc:forma:' por igualdade. `v39/textos_ensaio.html` = v38 + os 10 textos
+    (`v39/aplicar_textos.js`, com `depois:`; subtração devolve a entrada). Cartões novos da 04.2: `v39/juris_novos.js`
+    (STJ 623, 260, 478, 239, 84, 308; prio 2; `v39/conferir_juris_novos.js`: 6 cartões, 12 provas, 0 falhas).
+  - **ETAPA 5 — casos: FEITA (11/11).** `v39/casos.js` (TROCAS: o parágrafo `op-como` das caixas `op-caso-s14` e
+    `op-caso2-s14` vira enunciado + espelho fechados): C14 = embargos de terceiro do compromissário sem registro (CPC
+    674–676, Súmula 84 STJ, Súmula 419 TST, CLT 896 § 2º); C14b = possessória coletiva de força velha (CPC 558, 565,
+    554 §§ 1º e 2º). `node v39/conferir_casos.js v39/textos_ensaio.html`: 13 provas, 13 textos para conferir, 0 falhas;
+    negativo acusa.
+  - **ETAPA 6 (próxima): montagem.** Modelo `v38/montar.sh` + `v37/montar.sh` + `v37/aplicar_v37.js` (lido em 11/11).
+    **Passo 1 FEITO (11/11): `node v39/patch_pipeline_v39.js`** — leis/L13140 (48), leis/RITRT4 = RA 41 (confere que só
+    94, 96, 116 mudam), chave L13140 em 6 scripts, nome/URL/data no gerador, nota do Regimento "41/2026 (Assento 06/2026)".
+    **Atenção:** com isso, `bash v38/montar.sh` já não refaz a v38 publicada; para refazê-la, restaurar `bak_1211/`
+    (os .js e os `RITRT4.*.ra38`) e apagar `leis/L13140.*`.
+    **Passos 2 e 3 FEITOS (11/11):** `node v39/patch_semanas_v39.js` (8 linhas s14 com anc/anc2/arts/nota; o IIFE v39 de
+    notas e reservas entra quando existirem `v39/notas.json` e `reservas.json`; parte de `bak_1211/semanas_v39_antes.js`)
+    e `node v39/patch_matriz_v39.js` (37 itens; parte de `bak_1211/matriz_v39_antes.js`): `conferir_edital_2026.js
+    v39/textos_ensaio.html` → MATRIZ CONFERE, 259 cobertos / 15 parciais / 48 ausentes (CE-DPT-39 continua parcial: teses
+    de RG sem lista; CG-DH-28 aponta dpt-protocolos e fica parcial até a semana 15).
+    **Passos 4 e 5 FEITOS (11/11): montagem e núcleo em ponto fixo.** `bash v39/montar.sh` (entrada `bak_2210/index_v38.html`;
+    `v39/aplicar_v39.js A|B`; `v39/patch_dono_v39.js` antes do gerar_lei_seca: dpc-mediacao ← L13140, dpc-especiais ← CPC
+    554–568; CE-DPT-39 foi para a linha s15-dt, que já traz as teses de RG trabalhistas). Lei seca: 70 tópicos, 3.724
+    artigos, 2 quadros novos (civ-reais, dpc-mediacao). Núcleo (`v39/_gera_nucleo.js` → `nucleo_v39.js`, BLOCOS da semana
+    14 com `faixa` por dia e `semQuadro`; FIXAS = as da v38 + 8 sobras das semanas 12–13 de `v38/nucleo.json`): todos os
+    blocos cabem; civ-reais passo 2 (só os artigos de prova real: 8 na segunda, 23 min de 45; 7 na quarta, 29 de 30);
+    dpc 30 de 50 (CPC 554–567 pelo texto); sem sobra; CAPACIDADE CONFERE. `v39/_gera_dados.js` → `montar_dados_v39.js`
+    (origens das reservas = fixas + semanas 12–13 + 14; mudam só s19-civ e s19-dpc, que ganham a semana 14): 2 notas
+    (s14-civ e s14-dpc, modo troca), 19 reservas, 3 registros NUCLEO. Segunda passada: `nucleo.json` e os três JSON iguais
+    (ponto fixo). `v39/aviso.js` tem DATA = '12/11/2026' (trocar pela data da entrega).
+    **`node v39/conferir_aviso.js` → 58/58 (11/11).** **Falta (parou aqui por limite de uso em 11/11):** conferir_tudo v39
+    (copiar `v38/conferir_tudo.sh` trocando v38→v39 e somando `v39/provas.js`, `v39/conferir_questoes.js
+    v39/textos_ensaio.html v39/questoes.js`, `v39/conferir_juris_novos.js`, `v39/conferir_casos.js`, `v39/nucleo_v39.js`), teste de tela v39, negativo, busca/marca/atualiza, cmp e cópia ao
+    worktree, Adendo 34, memória.
+    Roteiro decidido:
+    1. `v39/patch_pipeline_v39.js` (uma vez; cópias de antes em `bak_1211/`): `leis/L13140.json` e `.txt` de
+       `v39/base` (corrigir antes os títulos quebrados nos arts. 3, 10, 20 e 23, registrar em CORRECOES e varrer com
+       `v34/varrer_v34.js`); `leis/RITRT4.json` e `.txt` = `v39/ri41/ra41` (guardar a velha); chave L13140 nos scripts que
+       leem `leis/` como o `v37/patch_pipeline_v37.js` fez com a L9099 (gerar_lei_seca.js: ARQ, nome, endereço, fonte,
+       data; auditar_manual.js; verif_independente.js; conferir_lei_seca.js; conferir_rotulos.js; triagem_rot.js); data
+       da cópia do Regimento = RA 41/2026; DONO das linhas novas no gerar_lei_seca.js.
+    2. `v39/patch_semanas_v39.js`: parte da `v31/semanas.js` atual (estado da v38, com o IIFE de notas da v38; copiar
+       para `bak_1211/semanas_v39_antes.js`); linhas s14-*: `anc` nos tópicos novos (s14-civ → civ-reais; s14-dh →
+       dh-interamericano; s14-dpc → dpc-mediacao e dpc-especiais; s14-dpt → dpt-execucao e dpt-protocolos; s14-leg →
+       leg-trt4; s14-info → info-redes; s14-pt → pt-redacao-oficial; s14-rlm → rlm-proposicoes), tirar `marca: P +
+       '28/11'`, `arts` e `nota`; depois as notas e reservas do núcleo v39.
+    3. `v39/patch_matriz_v39.js`: CE-CIV-27 e 32–51 → civ-reais (coberto, evidência do texto); CG-DH-18–22 →
+       dh-interamericano; CE-DPC-32 (possessórias) e 36 (dpc-mediacao); CE-DPT-31 (seção em dpt-execucao); CE-DPT-39
+       (dpt-protocolos; as teses de RG continuam sem lista: decidir se fica parcial); CG-LEG-03 (obs: RA 41/2026);
+       CG-INFO-05–07 → info-redes; CG-LP-01 → pt-redacao-oficial; CG-MAT-03 → rlm-proposicoes (validade).
+    4. `v39/aplicar_v39.js A|B`: A = textos (com `depois:`), 25 questões, 6 cartões, FCC_RECENTE dos tópicos novos
+       (civ-reais 7/7, dh-interamericano 2/2, info-redes 4/4, pt-redacao-oficial 1/1), QC_TOPICO (pegar os endereços dos
+       assuntos nos links do breadcrumb das questões no QConcursos), NUCLEO novos; B = crono, cartões, p02, **casos
+       (`v39/casos.js` TROCAS, depois dos cartões regenerados)**, aviso (o aberto esperado é o de 13/11/2026; anteriores
+       28), conferências (semanas 1 a 13 iguais, nenhum id some).
+    5. Núcleo: `v39/nucleo_v39.js` (cópia do v38: BLOCOS = blocos de leitura da semana 14; FIXAS = as sobras das
+       semanas 9 a 13 já publicadas, tiradas de `v38/nucleo.json`), `montar_dados_v39.js`, montar duas vezes até o ponto
+       fixo. 6. `v39/aviso.js` + `conferir_aviso.js`; versão 39; `conferir_tudo.sh` (+ provas, questões, juris, casos,
+       manual no navegador já feito); `teste_v39.js` a partir do v38; `neg_tela.js`.
+  - **Antigo plano da etapa 4:** questões novas (~25; modelo `v37/questoes.js` + `conferir_questoes.js`; ≤ 30% com a certa mais
+    longa, `auditoria_0711/vies.js`), depois os casos C14 e C14b, a montagem (patch_semanas, patch_matriz, patch_pipeline
+    com L13140 e RITRT4 RA 41, aplicar A|B com suporte a `depois:`, núcleo, aviso, versão 39) e os testes.
+  - **Próximos (antigo):** dpc-mediacao + possessórias, embargos de terceiro e protocolos
+    (s14-dpt), Regimento 2026 (s14-leg), info-redes, lógica de argumentação (s14-rlm).
+  - **Falta da etapa 1:** páginas de Informática (Chrome, Edge, Firefox, busca do Google e do
+    Bing, no navegador), casos da Corte IDH contra o Brasil, protocolos (texto), e a lista de artigos de cada bloco.
+
+### v38 — correções da auditoria — PUBLICADA em 11/11/2026 pelo PR #35 (`92fb943`) (Adendo 33; vale da segunda, 16/11)
 
 - **Decisões do usuário (11/11):** (1) versão só de correções até 13/11, e a numeração anda um (semana 14 = v39 até
   28/11, semana 15 = v40 até 05/12, semana 16 + recesso = v41 até 12/12); (2) carga pelas regras do item A: minutos
