@@ -4406,12 +4406,101 @@ desenhados (241 de 241). O aviso diz isso ao usuário.
 
 ---
 
-# Retomada — estado em 2026-11-12 (ler primeiro depois de compactar a conversa)
+# Adendo 35 — 2026-11-13 (material da semana 15 do edital de 2026 e rolagem da 04.2, v40)
+
+**Origem.** Depois do PR #36 (v39, `84378b9`), o usuário respondeu às perguntas de 12/11 (13/11): (1) o reequilíbrio
+das alternativas das questões antigas fica para **uma versão separada, depois, sem prioridade** ("Estudo mais pelas
+questões da FCC"); (2) **a página 04.2 pode rolar até o cartão**. Depois: "prossiga". A v40 traz o que as linhas da
+semana 15 (07/12 a 12/12) pediam e a rolagem; sai 22 dias antes do prazo (sábado, 05/12).
+
+**O que entrou**
+
+- **Quatro tópicos novos:** `civ-familia` (Família: casamento, impedimentos e causas suspensivas, invalidade, eficácia,
+  dissolução, guarda, parentesco, filiação, poder familiar, regimes de bens, pacto antenupcial, meação e sucessão do
+  cônjuge, bens dos filhos, bem de família, união estável e concubinato; 3.089 palavras; depois de `civ-reais`),
+  `dh-grupos` (grupos vulneráveis, Res. CNJ 492/2023, Res. CSJT 368/2023, TPI; 1.256 palavras; depois de
+  `dh-interamericano`), `dt-solucoes` (arbitragem, CCP, precedentes, instruções normativas do TST, teses de
+  repercussão geral; 1.159 palavras; no fim de Direito do Trabalho) e `pt-semantica` (semântica e morfologia; 790
+  palavras; depois de `pt-redacao-oficial`).
+- **Três seções em `dpc-terceiros`:** "O juiz" (CPC 139, 140, 143), "Impedimento e suspeição" (144–148) e "Sucessão das
+  partes e dos procuradores" (108–112) — 815 palavras; o quadro do tópico já tinha esses artigos e a nota da ADI 5.953.
+- **Lei seca:** 2 quadros novos — CC 1.511 a 1.727 (208 artigos) e CLT 507-A, 625-A a 625-H e 896-C; 72 quadros, 3.942
+  artigos. dh-grupos e pt-semantica não têm quadro (as normas estão transcritas no texto).
+- **24 questões** (CV33–CV40, DH22–DH25, DT92–DT96, PT_T98, PC82–PC84, PT86–PT88): 122 trechos provados; a correta é a
+  mais longa em 4 de 24 (17%); posições A–E 5, 5, 5, 5, 4. O banco passa a 677. As de gramática têm como prova o
+  próprio tópico (`texto:pt-semantica`), porque gramática não tem fonte oficial.
+- **44 cartões na 04.2** (285 no total): 13 de prioridade 2 na semana 15 (Temas 809/498, 529, 1.053, 1.236, 622;
+  Súmulas 332 e 655 do STJ; Temas 383, 638, 1.143, 1.232, 497, 542) e 31 de prioridade 3 (consulta, bloco null: as
+  demais teses trabalhistas e de competência e 4 de família). Teses **transcritas** da lista oficial do STF (sem a
+  chave `literal`); os antigos RG-725, 246, 1118 e 1046 continuam em síntese.
+- **Casos C15** (sexta: Comissão de Conciliação Prévia; ADI 2.139; CLT 625-D, 625-E, 625-G, 876, 877-A) **e C15b**
+  (sábado: execução contra empresa do grupo econômico que não participou da fase de conhecimento; Tema 1.232; CLT 2º,
+  448-A, 855-A).
+- **Rolagem da 04.2** (pedido de 13/11): chegada por link (`irParaJuris`) rola até a faixa do filtro (`#jurChip`) ou,
+  sem faixa, até a contagem, 20 px abaixo do alto; respeita `prefers-reduced-motion`; pelo menu, a página abre no alto;
+  Voltar devolve ao ponto de origem.
+- **Grade e página 02:** as 5 linhas da semana 15 dizem "O material basta"; matriz 300 cobertos, 3 parciais, 19
+  ausentes (eram 259/15/48); CE-DT-03 deixou de apontar para dt-solucoes (engano de planejamento: o assunto está em
+  dt-relacao).
+- **Núcleo (regra da v38):** Família passo 2 (segunda 38 de 45 min, 4 artigos; quarta 28 de 30, 5 artigos); DH 22 de 25;
+  DPC passo 1, 42 de 50; DT passo 2, 37 de 30 — **sobra de 7 min para s20-dt** (capacidade 60); PT 14 de 25.
+- **Aviso** de 13/11/2026 no alto do 03.1; o de 12/11 passou a ser o primeiro dos 29 anteriores.
+
+**Fontes novas (`fontes_1311/ORIGEM.md`, `v40/fontes_web.json`, `v40/stf_rg.json`)**
+
+- Res. CNJ 492/2023 (340.833 bytes, atos.cnj.jus.br) e Res. CSJT 368/2023 (288.889 bytes, juslaboris.tst.jus.br):
+  downloads da lista autorizada em 22/10.
+- Res. CNJ 175/2013: página do ato (texto original em HTML; o PDF não tem camada de texto), lida no navegador.
+- **Teses de repercussão geral do STF:** a página oficial `portal.stf.jus.br/repercussaogeral/teses.asp` carrega a lista
+  por `POST /repercussaogeral/retornartesesrepercussaogeral.asp` (`tipo=com`; 819 teses). 46 teses em `stf_rg.json`,
+  **46 de 46 iguais à oficial por SHA-256 no navegador** (`node v40/conferir_stf_navegador.js` imprime o script; a 191
+  tem dois U+00A0). A página `tst.jus.br/repercussao-geral` é um painel do Power BI.
+- STF, ADI 2.139 (01/08/2018: CCP "meio legítimo, mas não obrigatório") e ADI 5.953 (22/08/2023: CPC 144, VIII,
+  inconstitucional): aba Decisões do processo, lida por `fetch` dentro do portal.
+- TST, instruções normativas: lista oficial do juslaboris (41 INs; a mais recente é a Transitória 41-A, de 2024),
+  14 trechos conferidos.
+- QConcursos: as 990 questões das 16 provas relidas em 13/11 (`v40/incidencia_s15.md`, PISTA). O site devolveu 429
+  depois de ~80 requisições seguidas; com 3 s entre elas, voltou.
+
+**Verificação (13/11)**
+
+- `bash v40/conferir_tudo.sh`: **20 conferidores, todos com saída 0** — MATRIZ CONFERE; lei seca 3.942 artigos, 0
+  falhas; nada perdido 0; auditor 0 ausente e 0 incompleto; independente 18 "NÃO LIDO" (os mesmos da v39; leitura
+  21); CHAVES iguais; provas 435 afirmações e 181 citações, 0 falhas; questões 122 trechos; cartões 70 provas de nota;
+  casos 13 provas; capacidade confere; negativo da matriz 3/3; aviso 55/55.
+- Contadores que subiram, explicados: rótulos 40 (o novo é o CC 1.526: o quadro traz o parágrafo único, como o
+  compilado e a base; o leitor independente se perde no link "Vigência" antes dele, como no CC 1.336 da v39); selos 40
+  (quatro tópicos novos com "Novo no edital de 2026").
+- `v40/teste_v40.js` (Edge, data em 07/12): **27 de 27**, em 375 e 820 px, com atualização v39 → v40 (chaves `trt4:`
+  idênticas; três marcações feitas na v39 continuam no lugar). `v40/teste_rolagem.js`: **17 de 17** (na v39 sem a
+  mudança, 12 falhas). `v40/neg_tela.js`: os quatro estragos são acusados; o 1 (rolagem) e o 3 (linha do quadro)
+  também sozinhos.
+- `busca_2110/teste_busca.js`: TUDO CERTO; `juris_1210/teste_marca_1210.js`: 0 erradas com posição;
+  `teste_atualiza_1210.js`: dados preservados.
+- `index.html` e `sw.js` do worktree = `v40/ensaio.html` e `v40/ensaio_sw.js` (`cmp`); cache `autos-do-estudo-v40`.
+
+**Lições**
+
+- **O gerador da grade (`v31/gerar.js`) só recupera do arquivo de entrada os casos das semanas 10 a 13.** O C14, que a
+  v39 pôs por troca depois da geração, sumia ao regenerar; a fase B da v40 reaplica as trocas da v39 antes das suas. A
+  v41 terá de reaplicar as da v39 e as da v40 (ou o gerador passa a ler os casos de 14 em diante).
+- **Contagem de ausência por palavra inteira:** "esponsa" aparece 77 vezes no Código Civil, dentro de
+  "responsabilidade"; a prova de que "esponsais" não aparece usa limite de palavra e igualdade.
+- **Simulado da semana é prova real:** questões autorais da mesma semana não podem repetir armadilhas das questões
+  dessa prova (DH24 e DH25 refeitas).
+- **Conferidores com artigo de letra:** "art. 625-E" e o rótulo "Art. 625-D." precisavam de `(?:-[A-Z])?` nas
+  expressões do conferidor de casos.
+- **`node -e` com aspas e barras quebrou de novo** (gerador do conferidor de cartões): script em arquivo.
+- A tese 1.191 do STF (correção dos débitos trabalhistas) ficou fora de `stf_rg.json`; o assunto está no cartão ADC 58.
+
+---
+
+# Retomada — estado em 2026-11-13 (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira, o **Adendo 34** (v39, semana 14; é o modelo de
-   lote mais novo), o **Adendo 33** (v38, correções da auditoria;
+1. Ler esta seção inteira, o **Adendo 35** (v40, semana 15 e rolagem da
+   04.2; é o modelo de lote mais novo), o **Adendo 34** (v39, semana 14), o **Adendo 33** (v38, correções da auditoria;
    traz a **regra nova de carga**, que vale para todo lote), o **Adendo 32**
    (v37, semana 13), o **Adendo 31** (v36, opção A: núcleo nos blocos que não
    cabem), o **Adendo 30** (v35, marca-texto), o **Adendo 29** (v34, semana
@@ -4419,38 +4508,38 @@ desenhados (241 de 241). O aviso diz isso ao usuário.
    arquivos (aconteceu de novo entre 11 e 12/11; o app também troca o caminho do
    scratchpad entre sessões), restaurar antes (`robocopy
    <ferramentas-scratchpad> <scratchpad> /E /XO`) e provar com `bash
-   v39/montar.sh` + `cmp v39/ensaio.html <worktree>/index.html`. O plano
+   v40/montar.sh` + `cmp v40/ensaio.html <worktree>/index.html`. O plano
    aprovado em 22/10 está em
    `C:\Users\thale\.claude\plans\woolly-finding-squid.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
-   - `git status --short` e `git log --oneline -3` no worktree (em 12/11:
-     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v39 pronta,
-     esperando o commit do usuário; último commit `494b327`, "Update
-     HANDOFF-projeto.md", sobre o `c747695`, Adendo 33 = v38);
-   - `git fetch origin` e `git log --oneline -3 origin/main` (em 11/11 o
-     `main` estava no PR #35, `92fb943`, e a pasta principal também). **O
+   - `git status --short` e `git log --oneline -3` no worktree (em 13/11:
+     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v40 pronta,
+     esperando o commit do usuário; último commit `da7307e`, Adendo 34 = v39);
+   - `git fetch origin` e `git log --oneline -3 origin/main` (em 12/11 o
+     `main` estava no PR #36, `84378b9`, e a pasta principal também). **O
      `--ff-only` do usuário só anda depois de um `git fetch`:** os worktrees
      dividem as referências com a pasta principal, e sem o fetch o
      `origin/main` local ainda aponta para o PR anterior. Fazer o fetch antes
      (ou indicar `git -C <raiz> pull --ff-only origin main`);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (em 12/11: `autos-do-estudo-v38`, publicada; a v39 pode sair até sábado,
-     28/11);
+     (em 13/11: `autos-do-estudo-v39`, publicada pelo PR #36; a v40 pode sair
+     até sábado, 05/12);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo e no Adendo
    32). Não aplicar nenhuma delas sem a resposta.
-4. **Próximo passo: esperar o commit e o PR da v39 (Adendo 34, material da
-   semana 14).** A v39 está pronta no worktree (`index.html` =
-   `v39/ensaio.html`, `sw.js` = `v39/ensaio_sw.js`, conferidos com `cmp`).
+4. **Próximo passo: esperar o commit e o PR da v40 (Adendo 35, semana 15 e
+   rolagem da 04.2).** A v40 está pronta no worktree (`index.html` =
+   `v40/ensaio.html`, `sw.js` = `v40/ensaio_sw.js`, conferidos com `cmp`).
    **Não mexer no `index.html` antes do commit.** Depois do commit e do PR:
    `git fetch` e `--ff-only` na pasta principal, guardar
-   `bak_2210/index_v39.html` e `sw_v39.js` (cópias do commitado) e começar a
-   **v40, conteúdo da semana 15 (07/12 a 12/12), publicar até sábado,
-   05/12**. O que a semana pede está em `v31/semanas.js` (linhas `s15-*` com
-   `nova:true` e `marca: P + '05/12'`) e na página 02; já se sabe que entram
-   as teses de repercussão geral trabalhistas e processuais (CE-DPT-39 foi
-   para a linha `s15-dt`), os grupos vulneráveis e a Res. CNJ 492 e a CSJT
-   368 (DH), e os Protocolos pelo lado de Direitos Humanos (CG-DH-28).
+   `bak_2210/index_v40.html` e `sw_v40.js` e começar a **v41: semana 16
+   (14/12 a 19/12) e os cartões finais do recesso, publicar até sábado,
+   12/12**. As linhas da semana 16 estão em `v31/semanas.js` (`marca: P +
+   '12/12'`); Sucessões é a linha `s16-civ`. **Atenção (lição da v40):** o
+   gerador da grade só recupera os casos das semanas 10 a 13 do arquivo de
+   entrada; a fase B da v41 tem de reaplicar as trocas de casos da v39 (C14)
+   e da v40 (C15) antes das suas. O reequilíbrio das alternativas antigas
+   fica para uma versão separada, depois, sem prioridade (decisão de 13/11).
    **Todo lote usa a carga nova:**
    cada bloco de leitura com núcleo e sobra pela teoria do horário
    (`v38/nucleo_v38.js` como modelo: `BLOCOS`, `TEORIA`, `FIXAS` com as
@@ -4459,7 +4548,8 @@ desenhados (241 de 241). O aviso diz isso ao usuário.
    (`auditoria_0711/vies.js`), com o reequilíbrio das antigas aos poucos,
    começando por Processo Civil e Constitucional.
 
-   **Como fazer o lote** (modelo completo e mais novo: `scratchpad/v39/` —
+   **Como fazer o lote** (modelo completo e mais novo: `scratchpad/v40/`, que segue
+   a v39 com geradores `_gera_*.js` para os scripts copiados; modelo anterior: `scratchpad/v39/` —
    `PLANO.md`, `incidencia_s14.md`, `reais_v39.js`, `conteudo.js` (itens com
    `antes:` ou `depois:`), `fontes.js`, `fontes_web.json`, `provas.js`,
    `questoes.js` + `conferir_questoes.js`, `juris_novos.js` +
@@ -4482,7 +4572,7 @@ desenhados (241 de 241). O aviso diz isso ao usuário.
      `patch_matriz_v3X.js`, DONO no `gerar_lei_seca.js` quando a linha ligar
      dois tópicos, `aplicar_v3X.js A|B`, `montar.sh`, `aviso.js` com
      `conferir_aviso.js`; o aviso aberto esperado na fase B passa a ser o de
-     "12/11/2026 — material da semana 14", com "Avisos anteriores" em 29;
+     "13/11/2026 — material da semana 15", com "Avisos anteriores" em 29;
    - **núcleo (regra da v38, Adendo 33):** refazer o levantamento sobre o
      ensaio (`node v36/gerar_aud_nucleo.js` e `node v36/aud_nucleo.js ENSAIO
      --json v3X/aud_nucleo.json`); em `nucleo_v3X.js` (cópia de
@@ -4505,8 +4595,9 @@ desenhados (241 de 241). O aviso diz isso ao usuário.
 
    **Calendário dos lotes:** v37 (semana 13) publicada em 07/11; v38
    (correções da auditoria) publicada em 11/11; v39 (semana 14) pronta em
-   12/11, para publicar até 28/11; v40 (semana 15) até 05/12; v41 (semana 16)
-   até 12/12, com os cartões finais do recesso.
+   12/11 (PR #36); v40 (semana 15 e rolagem da 04.2) pronta em 13/11, para
+   publicar até 05/12; v41 (semana 16) até 12/12, com os cartões finais do
+   recesso.
 
    **Ao terminar qualquer versão:** HANDOFF (adendo e Retomada), memória,
    `robocopy` da cópia dos scripts e, depois do PR, `--ff-only` na pasta
@@ -4514,10 +4605,28 @@ desenhados (241 de 241). O aviso diz isso ao usuário.
 
 ## TRABALHO EM ANDAMENTO (atualizar ao fim de cada etapa)
 
-### v39 — material da semana 14 — PRONTA em 12/11/2026, esperando o commit (Adendo 34; publicar até sábado, 28/11)
+### v40 — material da semana 15 e rolagem da 04.2 — PRONTA em 13/11/2026, esperando o commit (Adendo 35; publicar até sábado, 05/12)
 
-- **Estado:** `index.html` e `sw.js` do worktree = `v39/ensaio.html` e `v39/ensaio_sw.js` (`cmp`); cache
-  `autos-do-estudo-v39`. Tudo o que entrou, as fontes, a verificação e as lições estão no **Adendo 34**. O passo a
+- **Estado:** `index.html` e `sw.js` do worktree = `v40/ensaio.html` e `v40/ensaio_sw.js` (`cmp`); cache
+  `autos-do-estudo-v40`. O que entrou, as fontes, a verificação e as lições estão no **Adendo 35**; o roteiro está em
+  `scratchpad/v40/PLANO.md`.
+- **Decisões do usuário em 13/11:** reequilíbrio das alternativas antigas numa versão separada, depois, sem
+  prioridade; a 04.2 rola até o cartão (feito na v40).
+- **Estado do scratchpad:** `v31/semanas.js` e `edital2026/matriz.js` estão no estado da v40 (cópias de antes em
+  `bak_1311/`); `bak_1211/` guarda o estado da v38 para refazer a v39. Cópia em `ferramentas-scratchpad` atualizada
+  em 13/11.
+- **Ordem para remontar:** `bash v40/montar.sh`; `node v36/gerar_aud_nucleo.js`; `node v36/aud_nucleo.js
+  v40/ensaio.html --json v40/aud_nucleo.json`; `node v40/nucleo_v40.js v40/ensaio.html --json v40/nucleo.json`;
+  `node v40/montar_dados_v40.js v40/ensaio.html`; `bash v40/montar.sh` de novo (ponto fixo); `bash
+  v40/conferir_tudo.sh`; `node v40/teste_v40.js bak_2210/index_v39.html v40/ensaio.html`; `node v40/teste_rolagem.js
+  v40/ensaio.html`.
+- **Depois do commit e do PR:** `git fetch` + `--ff-only` na raiz; guardar `bak_2210/index_v40.html` e `sw_v40.js`;
+  começar a v41.
+
+### v39 — material da semana 14 — PUBLICADA em 12/11/2026 pelo PR #36 (`84378b9`) (Adendo 34)
+
+- **Estado:** commit `da7307e`; `index.html` e `sw.js` = `v39/ensaio.html` e `v39/ensaio_sw.js` (`cmp`); o site serve
+  `autos-do-estudo-v39`; raiz em ff no PR #36; `bak_2210/index_v39.html` e `sw_v39.js` guardados. Tudo o que entrou, as fontes, a verificação e as lições estão no **Adendo 34**. O passo a
   passo do trabalho (11 e 12/11) ficou no commit `494b327` deste arquivo e no `scratchpad/v39/PLANO.md`.
 - **Scratchpad desta sessão:** `C:\Users\thale\AppData\Local\Temp\claude\05b0a1e0dabcee69\987bfdd2-305d-4b53-8bfb-e15c943f2553\scratchpad`
   (apagado de novo entre 11 e 12/11; restaurado da cópia e provado remontando a v39). Cópia em
@@ -4527,11 +4636,8 @@ desenhados (241 de 241). O aviso diz isso ao usuário.
   `conferir_lei_seca.js` (chave L13140; `incisos` e `alineas` como começo de nota do Regimento), `conferir_rotulos.js`,
   `triagem_rot.js`, `cdp.js` (fecha o Edge e apaga o perfil), `leis/RITRT4.*` (RA 41/2026), `leis/L13140.*`,
   `v31/semanas.js` e `edital2026/matriz.js` (refeitos pelos patches a cada montagem).
-- **Perguntas ao usuário (não aplicar sem resposta):** (1) quer que a página 04.2 role até o cartão quando se chega
-  por um link? Hoje ela abre no alto, e o cartão fica abaixo dos filtros; (2) o reequilíbrio das alternativas das
-  questões antigas (achado 7 da auditoria) ainda não começou: a v39 só cuidou das 25 novas.
-- **Depois do commit e do PR:** `git fetch` + `--ff-only` na raiz; guardar `bak_2210/index_v39.html` e `sw_v39.js`;
-  começar a v40 (semana 15, até 05/12).
+- **Perguntas de 12/11, respondidas em 13/11** (decisões na seção da v40): (1) a 04.2 passa a rolar até o cartão;
+  (2) o reequilíbrio das alternativas antigas fica para uma versão separada, depois, sem prioridade.
 
 ### v38 — correções da auditoria — PUBLICADA em 11/11/2026 pelo PR #35 (`92fb943`) (Adendo 33; vale da segunda, 16/11)
 
