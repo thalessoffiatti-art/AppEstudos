@@ -4581,12 +4581,117 @@ estão na grade desde a v31, e o que falta neles tem datas próprias já publica
 
 ---
 
-# Retomada — estado em 2026-11-13, noite (ler primeiro depois de compactar a conversa)
+# Adendo 37 — 2026-11-14 (Civil da semana 17 e estudos de caso das semanas 17 e 18 do edital de 2026, v42)
+
+**Origem.** O usuário commitou a v41 (`b9e12a7`, Adendo 36) e a publicou pelo PR #38 (`84a74ce`; o site serve
+`autos-do-estudo-v41`; a pasta principal está em ff no PR #38). Depois: "Prossiga". A v42 traz o que o app prometia para
+19/12 — a linha `s17-civ` ("Material em preparo — chega até 19/12"), os casos das semanas 17 e 18 (caixas `op-caso-s17` e
+`op-caso-s18`, "entram nesta caixa até 19/12") e os itens CE-CIV-14 a 16 da página 02 — e sai 35 dias antes do prazo.
+
+**O que entrou**
+
+- **Tópico novo `civ-obrigacoes`** (depois de `civ-sucessoes`; 1.661 palavras, 8 seções, 3 tabelas): obrigações de dar,
+  fazer e não fazer (tabela); alternativas, divisíveis e indivisíveis; solidariedade (não se presume; ativa e passiva);
+  cessão de crédito e assunção de dívida; pagamento (tabela: quem paga, a quem, objeto, prova, lugar, tempo); outras
+  formas de extinção (consignação, sub-rogação, imputação, dação, novação, compensação, confusão, remissão);
+  inadimplemento e mora (perdas e danos; art. 389 com o IPCA e art. 406 com a Selic, pela Lei 14.905/2024); cláusula
+  penal × arras (tabela).
+- **Tópico novo `civ-contratos`** (depois de `civ-obrigacoes`, último de Direito Civil; 1.015 palavras, 6 seções, 2
+  tabelas): princípios e regras gerais (função social, intervenção mínima, 421-A, boa-fé, adesão, atípicos, herança de
+  pessoa viva); formação (proposta e aceitação, entre presentes e ausentes); estipulação em favor de terceiro e promessa
+  de fato de terceiro; vícios redibitórios × evicção (tabela); aleatórios, contrato preliminar e pessoa a declarar;
+  extinção (tabela: distrato, resilição, cláusula resolutiva, exceção de contrato não cumprido, onerosidade excessiva).
+  A introdução diz que os contratos em espécie chegam até 26/12 (semana 18).
+- **Quadros Lei seca novos:** CC 233 a 420 (187 artigos) no tópico de obrigações e CC 421 a 480 (60 artigos, com o
+  421-A) no de contratos — donos na linha de dois tópicos pelo DONO do `gerar_lei_seca.js` (75 quadros, 4.501 artigos).
+- **14 questões** (CV55–CV68: 8 de obrigações, 6 de contratos): 65 trechos provados; posições A–E 3, 2, 3, 3, 3; "certa
+  mais longa" 2 de 14 (14%). Nenhuma cobra o que as provas que ainda serão simulado cobram nesses assuntos (CC 233, 252,
+  263, 266, 313, 356, novação 360 a 367, arras 417 a 420, 441 a 449, 474; `v42/incidencia_s17.md`). O banco passa a 705.
+- **2 cartões na 04.2:** Súmulas 76 e 380 do STJ, sobre a mora (prioridade 2, `s17-civ`, âncora `civ-obrigacoes`),
+  pelo arquivo local `Jurisprudência/sumulas_stj.md`. A 04.2 passa a 288.
+- **Oito casos** (quatro por semana, cada um com enunciado e espelho, fechados até a hora; horários: segunda e quarta
+  17h45/18h35; sexta de meio período 13h35/14h25; o "de sábado" às 16h40, nos últimos 50 minutos da prova completa, e o
+  espelho às 19h15, na autocorreção):
+  - semana 17: C17a (segunda, 21/12) transferência — CLT 469 e 470, Súmula 43 e OJ 113 da SDI-1; C17b (quarta, 23/12)
+    execução contra a Fazenda — CF 100, caput e §§ 1º, 2º, 3º e 8º, ADCT 87, II e parágrafo único (30 salários mínimos =
+    R$ 45.000, valor do enunciado); C17c (sexta, 25/12, meio período) intervenção federal — CF 34, VI, 35, caput e II, 36,
+    II e §§ 1º e 3º, 84, X; C17d (sábado, 26/12) solidariedade, mora e cláusula penal — CC 265, 275, 283, 397, 412, 413 e
+    416;
+  - semana 18: C18a (segunda, 28/12) estabilidade acidentária — Lei 8.213, art. 118, e Súmula 378, I a III; C18b (quarta,
+    30/12) coisa julgada — CPC 503 a 508; C18c (sexta, 01/01, meio período) responsabilidade do Estado — CF 37, § 6º, e
+    Temas 130 e 940; C18d (sábado, 02/01) terceirização — Súmula 331, IV a VI, e Temas 725, 246 e 1.118 (itens 1 e 2).
+  - Cada caso só evita as provas que vêm depois da data dele (os simulados de AJAJ de 2025 acontecem antes de 21/12; as
+    provas de Oficial de Justiça das semanas 18 a 21 foram lidas). A sexta de meio período cai em 25/12 e 01/01, como a
+    grade de 22/10 (feriados em meio período) manda.
+- **Linha `s17-civ`:** tópicos `civ-obrigacoes` e `civ-contratos` (anc + anc2), leitura "Código Civil, arts. 233 a 420 ·
+  Código Civil, arts. 421 a 480" e a divisão do horário que a grade do recesso não fazia: segunda 50 min de teoria e 30
+  de questões (CIV1, 80 min); quarta 45 e 30 (CIV2, 75 min).
+- **Núcleo (regra da v38):** segunda 30 min de texto para 50 de teoria, passo 2 com 5 artigos (34 min, sem sobra); quarta
+  18 de texto para 45, passo 2 com 5 artigos (21 min, sem sobra). Os dois dias estouram a teoria com o quadro inteiro
+  (145 e 58 min), então a linha s19-civ ("Tempo reservado" da semana 19) passa a listar também a semana 17 — a única
+  reserva que muda (comparada com `v41/reservas.json`). O aviso conta isso.
+- **Matriz:** CE-CIV-14 e 16 cobertos; CE-CIV-15 "Em parte — completa até 26/12" (contratos em espécie na semana 18);
+  315 cobertos, 4 parciais, 3 ausentes (Civil da semana 18).
+- **Aviso** de 14/11/2026 (semana 17 e casos das semanas 17 e 18) no alto do 03.1; o da v41 passou a ser o primeiro dos
+  31 anteriores.
+
+**Fontes novas**
+
+- Planalto, Código Civil compilado (já na base, `leis/CC.json`): arts. 389, 395, 404 e 406 conferidos com a Lei
+  14.905/2024 (parágrafo único do 389 e §§ 1º a 3º do 406).
+- STF, lista oficial de teses de repercussão geral (POST `retornartesesrepercussaogeral.asp`, `tipo=com`), lida no
+  navegador: Temas 130, 246, 725, 940 e 1.118, com SHA-256 calculado no navegador (`v42/stf_rg.json`,
+  `v42/conferir_stf.js`).
+- STJ, Súmulas 76 e 380 pelo arquivo local `Jurisprudência/sumulas_stj.md`.
+- QConcursos: as 990 questões das 16 provas e as 240 das 4 provas de Oficial de Justiça relidas em 13–14/11
+  (`v42/incidencia_s17.md`, PISTA): 7 questões em 7 provas (4 de obrigações, 3 de contratos em geral); assuntos do
+  QConcursos dos tópicos novos (QC_TOPICO) pelos links do breadcrumb das questões da FCC.
+
+**Verificação (14/11)**
+
+- `bash v42/conferir_tudo.sh`: **21 conferidores, todos com saída 0** — MATRIZ CONFERE; lei seca 4.501 artigos, 0
+  falhas; auditor 0 ausente; independente 18 "NÃO LIDO" (os mesmos da v41); rótulos 44 (+4: CC 389, 395, 404 e 406,
+  alarme falso — ver lições); grudados 9; selos 43 (+2, os selos dos tópicos novos); CHAVES iguais; provas 158
+  afirmações e 94 citações, 0 falhas; questões 65 trechos; cartões 3 provas de nota; casos 53 provas, 53 textos, 50
+  linhas do espelho; capacidade confere; aviso 58/58; STF 5 teses pelo SHA.
+- Ponto fixo da montagem: a terceira volta deu `nucleo.json`, `notas.json`, `reservas.json`, `nucleo_app_v42.json` e
+  `ensaio.html` iguais (`cmp`).
+- `v42/teste_v42.js` (Edge, data em 21/12): **28 de 28**, em 375 e 820 px, com atualização v41 → v42 (chaves `trt4:`
+  idênticas; três marcações feitas na v41 continuam no lugar). `v42/neg_tela.js`: os quatro estragos são acusados, cada
+  um sozinho (espelho do C17d aberto, parágrafo único do 389 fora do quadro, NUCLEO da quarta, semana 17 fora da reserva
+  da semana 19).
+- `v40/teste_rolagem.js` 17/17; `busca_2110/teste_busca.js` TUDO CERTO (102 tópicos); `teste_marca_1210.js` 0 erradas
+  com posição; `teste_atualiza_1210.js` dados preservados. Nenhum Edge sem interface sobrou (o perfil temporário que o
+  teste do marca-texto deixou, 50 MB, foi apagado).
+- `index.html` e `sw.js` do worktree = `v42/ensaio.html` e `v42/ensaio_sw.js` (`cmp`); cache `autos-do-estudo-v42`.
+
+**Lições**
+
+- **Rótulos com "Produção de efeitos":** no Código Civil compilado, o Planalto põe o link "Produção de efeitos" depois da
+  nota "(Redação dada pela Lei nº 14.905, de 2024)", e o rótulo seguinte ("Parágrafo único", "§ 1º") não vem depois de
+  pontuação; o `conferir_rotulos.js` não o vê e acusa diferença onde o quadro está certo (CC 389, 395, 404 e 406; o
+  mesmo tipo do CC 1.526). O teste de tela confere esses parágrafos no quadro.
+- **Teoria do recesso:** `TEORIA` tem os minutos da fase 1; no recesso a linha divide o horário ela mesma, e a entrada do
+  dia em `BLOCOS` leva `teoria` (`nucleo_v42.js`: `D.teoria`).
+- **Linha de dois tópicos com divisão por dia:** a nota de base (a divisão do horário e o quadro) fica, e a nota do
+  núcleo entra depois (modo 'soma' do `montar_dados`).
+- **Casos que o gerador não recupera:** a fase B já reaplica as trocas de quatro versões (v39 a v42). A v43 terá cinco;
+  melhor fazer o `v31/gerar.js` ler do arquivo de entrada os casos das semanas 14 em diante.
+- **Teste de busca:** termo comum ("evicção": 24 trechos em 6 tópicos) põe o tópico novo longe do começo do resultado;
+  o teste lê o resultado inteiro.
+- Heredoc com barras quebrou de novo um script de troca; o `Edit` resolveu.
+
+**Pendências que continuam:** incisos grudados (CPC 627, II e III; CPC 513, § 2º, III e IV; Lei 8.987, art. 6º, § 3º,
+I e II) e reequilíbrio das alternativas antigas, em versões separadas.
+
+---
+
+# Retomada — estado em 2026-11-14 (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira, o **Adendo 36** (v41, semana 16 e correção da semana 19; é o modelo de lote mais novo),
-   o **Adendo 35** (v40, semana 15 e rolagem da 04.2), o **Adendo 34** (v39, semana 14), o **Adendo 33** (v38, correções da auditoria;
+1. Ler esta seção inteira, o **Adendo 37** (v42, Civil da semana 17 e casos das semanas 17 e 18; é o modelo de lote
+   mais novo), o **Adendo 36** (v41, semana 16 e correção da semana 19), o **Adendo 35** (v40, semana 15 e rolagem da 04.2), o **Adendo 34** (v39, semana 14), o **Adendo 33** (v38, correções da auditoria;
    traz a **regra nova de carga**, que vale para todo lote), o **Adendo 32**
    (v37, semana 13), o **Adendo 31** (v36, opção A: núcleo nos blocos que não
    cabem), o **Adendo 30** (v35, marca-texto), o **Adendo 29** (v34, semana
@@ -4594,40 +4699,39 @@ estão na grade desde a v31, e o que falta neles tem datas próprias já publica
    arquivos (aconteceu de novo entre 11 e 12/11; o app também troca o caminho do
    scratchpad entre sessões), restaurar antes (`robocopy
    <ferramentas-scratchpad> <scratchpad> /E /XO`) e provar com `bash
-   v41/montar.sh` + `cmp v41/ensaio.html <worktree>/index.html`. O plano
+   v42/montar.sh` + `cmp v42/ensaio.html <worktree>/index.html`. O plano
    aprovado em 22/10 está em
    `C:\Users\thale\.claude\plans\woolly-finding-squid.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
-   - `git status --short` e `git log --oneline -3` no worktree (em 13/11, noite:
-     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v41 pronta,
-     esperando o commit do usuário; último commit `f4d70fa`, Adendo 35 = v40, publicada pelo PR #37, `ca85fc0`);
-   - `git fetch origin` e `git log --oneline -3 origin/main` (em 12/11 o
-     `main` estava no PR #36, `84378b9`, e a pasta principal também). **O
+   - `git status --short` e `git log --oneline -3` no worktree (em 14/11:
+     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v42 pronta,
+     esperando o commit do usuário; último commit `b9e12a7`, Adendo 36 = v41, publicada pelo PR #38, `84a74ce`);
+   - `git fetch origin` e `git log --oneline -3 origin/main` (em 14/11 o
+     `main` estava no PR #38, `84a74ce`, e a pasta principal também). **O
      `--ff-only` do usuário só anda depois de um `git fetch`:** os worktrees
      dividem as referências com a pasta principal, e sem o fetch o
      `origin/main` local ainda aponta para o PR anterior. Fazer o fetch antes
      (ou indicar `git -C <raiz> pull --ff-only origin main`);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (em 13/11, noite: `autos-do-estudo-v40`, publicada pelo PR #37; a v41 pode sair
-     até sábado, 12/12);
+     (em 14/11: `autos-do-estudo-v41`, publicada pelo PR #38; a v42 pode sair
+     até sábado, 19/12);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo e no Adendo
    32). Não aplicar nenhuma delas sem a resposta.
-4. **Próximo passo: esperar o commit e o PR da v41 (Adendo 36, semana 16 e correção da semana 19).**
-   A v41 está pronta no worktree (`index.html` = `v41/ensaio.html`, `sw.js` = `v41/ensaio_sw.js`, conferidos com
+4. **Próximo passo: esperar o commit e o PR da v42 (Adendo 37, Civil da semana 17 e casos das semanas 17 e 18).**
+   A v42 está pronta no worktree (`index.html` = `v42/ensaio.html`, `sw.js` = `v42/ensaio_sw.js`, conferidos com
    `cmp`). **Não mexer no `index.html` antes do commit.** Depois do commit e do PR: `git fetch` e `--ff-only` na
-   pasta principal, guardar `bak_2210/index_v41.html` e `sw_v41.js` e começar a **v42, até sábado, 19/12**: Civil da
-   semana 17 (linha `s17-civ`: obrigações — modalidades, transmissão, adimplemento e inadimplemento — e contratos em
-   geral — formação, vícios redibitórios, evicção e extinção; `marca: P + '19/12'`) e **os casos das semanas 17 e 18**
-   (caixa `op-caso-s17` e `op-caso-s18`, "Os enunciados e os espelhos dos casos desta semana entram nesta caixa até
-   19/12": três por semana, segunda, quarta e sexta, mais o "de sábado" do simulado completo). Depois: v43 até 26/12
-   (Civil da semana 18 — contratos em espécie, responsabilidade civil e empresa — e casos da semana 19), v44 até 02/01
-   (casos da semana 20) e v45 até 09/01 (casos das semanas 21 e 22). **Atenção:** o gerador da grade só recupera os
-   casos das semanas 10 a 13; a fase B da v42 tem de reaplicar as trocas da v39 (C14), da v40 (C15) e da v41 (C16) — ou
-   o `v31/gerar.js` passa a ler do arquivo de entrada os casos das semanas 14 em diante (melhor, antes que a lista
-   cresça). **Antes de escrever caso ou questão, ler as provas que ainda serão simulado** (AJAJ e as quatro de Oficial
-   de Justiça das semanas 18 a 21: `v41/incidencia_s16.md`). O reequilíbrio das alternativas antigas e os incisos
-   grudados (Adendo 36) ficam para versões separadas, depois.
+   pasta principal, guardar `bak_2210/index_v42.html` e `sw_v42.js` e começar a **v43, até sábado, 26/12**: Civil da
+   semana 18 (linha `s18-civ`: "Contratos em espécie; responsabilidade civil; direito de empresa e nome empresarial",
+   CE-CIV-15, 17, 18 e 19; `marca: P + '26/12'`; semana 18 tem meio período em 31/12 e 01/01) e **os casos da semana
+   19** (caixa `op-caso-s19`, "entram nesta caixa até 26/12"). CE-CIV-15 passa a "coberto" quando os contratos em
+   espécie entrarem. Depois: v44 até 02/01 (casos da semana 20) e v45 até 09/01 (casos das semanas 21 e 22).
+   **Atenção:** a fase B da v43 teria de reaplicar as trocas de casos da v39 à v42 — melhor fazer antes o
+   `v31/gerar.js` ler do arquivo de entrada os casos das semanas 14 em diante. **Antes de escrever caso ou questão,
+   ler as provas que ainda serão simulado:** as questões entram no banco na publicação e evitam todas as que ainda vêm;
+   o caso só as que vêm depois da data dele (semana 19: as provas de Oficial de Justiça das semanas 19 a 21; modelo em
+   `v42/incidencia_s17.md`). O reequilíbrio das alternativas antigas e os incisos grudados (Adendo 36) ficam para
+   versões separadas, depois.
    **Todo lote usa a carga nova:**
    cada bloco de leitura com núcleo e sobra pela teoria do horário
    (`v38/nucleo_v38.js` como modelo: `BLOCOS`, `TEORIA`, `FIXAS` com as
@@ -4636,9 +4740,11 @@ estão na grade desde a v31, e o que falta neles tem datas próprias já publica
    (`auditoria_0711/vies.js`), com o reequilíbrio das antigas aos poucos,
    começando por Processo Civil e Constitucional.
 
-   **Como fazer o lote** (modelo completo e mais novo: `scratchpad/v41/`, que segue a v40 com geradores
-   `_gera_*.js` — `_gera_aplicar.js`, `_gera_patches.js`, `_gera_nucleo.js` (núcleo e dados), `_gera_conf.js`,
-   `_gera_teste.js` + `_teste_corpo.js`; antes, `scratchpad/v40/`, que seguia
+   **Como fazer o lote** (modelo completo e mais novo: `scratchpad/v42/`, que segue a v41 com geradores
+   `_gera_*.js` — `_gera_aplicar.js`, `_gera_nucleo.js` (núcleo e dados, com `teoria` por dia no recesso),
+   `_gera_conf.js`, `_gera_teste.js` + `_teste_corpo.js` — e `patch_semanas_v42.js`, `patch_matriz_dono_v42.js`
+   (matriz e DONO da linha de dois tópicos), `conferir_stf.js`, `_handoff.js`; antes, `scratchpad/v41/`, que seguia a
+   v40 com geradores `_gera_*.js` — `_gera_patches.js` entre eles; antes, `scratchpad/v40/`, que seguia
    a v39 com geradores `_gera_*.js` para os scripts copiados; modelo anterior: `scratchpad/v39/` —
    `PLANO.md`, `incidencia_s14.md`, `reais_v39.js`, `conteudo.js` (itens com
    `antes:` ou `depois:`), `fontes.js`, `fontes_web.json`, `provas.js`,
@@ -4662,7 +4768,7 @@ estão na grade desde a v31, e o que falta neles tem datas próprias já publica
      `patch_matriz_v3X.js`, DONO no `gerar_lei_seca.js` quando a linha ligar
      dois tópicos, `aplicar_v3X.js A|B`, `montar.sh`, `aviso.js` com
      `conferir_aviso.js`; o aviso aberto esperado na fase B passa a ser o de
-     "13/11/2026 — material da semana 15", com "Avisos anteriores" em 29;
+     "14/11/2026 — material da semana 17", com "Avisos anteriores" em 31;
    - **núcleo (regra da v38, Adendo 33):** refazer o levantamento sobre o
      ensaio (`node v36/gerar_aud_nucleo.js` e `node v36/aud_nucleo.js ENSAIO
      --json v3X/aud_nucleo.json`); em `nucleo_v3X.js` (cópia de
@@ -4686,8 +4792,9 @@ estão na grade desde a v31, e o que falta neles tem datas próprias já publica
    **Calendário dos lotes:** v37 (semana 13) publicada em 07/11; v38
    (correções da auditoria) publicada em 11/11; v39 (semana 14) pronta em
    12/11 (PR #36); v40 (semana 15 e rolagem da 04.2) publicada em 13/11 (PR #37);
-   v41 (semana 16 e correção da semana 19) pronta em 13/11, para publicar até 12/12;
-   v42 (Civil da semana 17 e casos das semanas 17 e 18) até 19/12; v43 até 26/12; v44 até 02/01; v45 até 09/01.
+   v41 (semana 16 e correção da semana 19) publicada em 13/11 (PR #38);
+   v42 (Civil da semana 17 e casos das semanas 17 e 18) pronta em 14/11, para publicar até 19/12; v43 (Civil da
+   semana 18 e casos da semana 19) até 26/12; v44 (casos da semana 20) até 02/01; v45 (casos das semanas 21 e 22) até 09/01.
 
    **Ao terminar qualquer versão:** HANDOFF (adendo e Retomada), memória,
    `robocopy` da cópia dos scripts e, depois do PR, `--ff-only` na pasta
@@ -4695,10 +4802,26 @@ estão na grade desde a v31, e o que falta neles tem datas próprias já publica
 
 ## TRABALHO EM ANDAMENTO (atualizar ao fim de cada etapa)
 
-### v41 — material da semana 16 e correção da semana 19 — PRONTA em 13/11/2026, esperando o commit (Adendo 36; publicar até sábado, 12/12)
+### v42 — Civil da semana 17 e estudos de caso das semanas 17 e 18 — PRONTA em 14/11/2026, esperando o commit (Adendo 37; publicar até sábado, 19/12)
 
-- **Estado:** `index.html` e `sw.js` do worktree = `v41/ensaio.html` e `v41/ensaio_sw.js` (`cmp`); cache
-  `autos-do-estudo-v41`. O que entrou, as fontes, a verificação e as lições estão no **Adendo 36**; o roteiro está em
+- **Estado:** `index.html` e `sw.js` do worktree = `v42/ensaio.html` e `v42/ensaio_sw.js` (`cmp`); cache
+  `autos-do-estudo-v42`. O que entrou, as fontes, a verificação e as lições estão no **Adendo 37**; o roteiro está em
+  `scratchpad/v42/PLANO.md`.
+- **Estado do scratchpad:** `v31/semanas.js`, `edital2026/matriz.js` e `gerar_lei_seca.js` estão no estado da v42
+  (cópias de antes, estado da v41, em `bak_v42/`); `bak_2210/index_v41.html` e `sw_v41.js` guardados (entrada da
+  v42). Cópia em `ferramentas-scratchpad` atualizada em 14/11.
+- **Ordem para remontar:** `bash v42/montar.sh`; `node v36/gerar_aud_nucleo.js`; `node v36/aud_nucleo.js
+  v42/ensaio.html --json v42/aud_nucleo.json`; `node v42/nucleo_v42.js v42/ensaio.html --json v42/nucleo.json`;
+  `node v42/montar_dados_v42.js v42/ensaio.html`; `bash v42/montar.sh` de novo (ponto fixo); `bash
+  v42/conferir_tudo.sh`; `node v42/teste_v42.js bak_2210/index_v41.html v42/ensaio.html`; `node v42/neg_tela.js N`
+  (N de 1 a 4) e o teste de novo sobre `v42/neg_tela.html`.
+- **Depois do commit e do PR:** `git fetch` + `--ff-only` na raiz; guardar `bak_2210/index_v42.html` e `sw_v42.js`;
+  começar a v43.
+
+### v41 — material da semana 16 e correção da semana 19 — PUBLICADA em 13/11/2026 pelo PR #38 (`84a74ce`) (Adendo 36)
+
+- **Estado:** commit `b9e12a7`; `index.html` e `sw.js` = `v41/ensaio.html` e `v41/ensaio_sw.js` (`cmp`); o site serve
+  `autos-do-estudo-v41`; raiz em ff no PR #38; `bak_2210/index_v41.html` e `sw_v41.js` guardados. O que entrou, as fontes, a verificação e as lições estão no **Adendo 36**; o roteiro está em
   `scratchpad/v41/PLANO.md`.
 - **Estado do scratchpad:** `v31/semanas.js` e `edital2026/matriz.js` estão no estado da v41 (cópias de antes, estado
   da v40, em `bak_v41/`); `bak_2210/index_v40.html` e `sw_v40.js` guardados (entrada da v41). Cópia em
@@ -4707,8 +4830,8 @@ estão na grade desde a v31, e o que falta neles tem datas próprias já publica
   v41/ensaio.html --json v41/aud_nucleo.json`; `node v41/nucleo_v41.js v41/ensaio.html --json v41/nucleo.json`;
   `node v41/montar_dados_v41.js v41/ensaio.html`; `bash v41/montar.sh` de novo (ponto fixo); `bash
   v41/conferir_tudo.sh`; `node v41/teste_v41.js bak_2210/index_v40.html v41/ensaio.html`.
-- **Depois do commit e do PR:** `git fetch` + `--ff-only` na raiz; guardar `bak_2210/index_v41.html` e `sw_v41.js`;
-  começar a v42.
+- **Depois do commit e do PR (feito em 13–14/11):** `git fetch` + `--ff-only` na raiz; `bak_2210/index_v41.html` e
+  `sw_v41.js` guardados; a v42 começou.
 
 ### v40 — material da semana 15 e rolagem da 04.2 — PUBLICADA em 13/11/2026 pelo PR #37 (`ca85fc0`) (Adendo 35)
 
