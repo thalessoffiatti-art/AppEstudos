@@ -4887,12 +4887,115 @@ o portal do TST pelo `conferir_juris_tst.js` nas versões em que entraram). Nenh
 
 ---
 
-# Retomada — estado em 2026-11-16, v44 pronta (ler primeiro depois de compactar a conversa)
+# Adendo 40 — 2026-11-16 (Emendas Constitucionais 140 e 141/2026, v45)
+
+**Origem.** Depois da v44, o usuário perguntou: "Foi promulgada a Emenda Constitucional 141/2026 em 16 de outubro deste
+ano. O material está atualizado quanto a isso?". Não estava. As EC 140 e 141 são de 16/10/2026 (DOU de 16/10, edição
+extra); a base `leis/cf.json` tinha só até a EC 139 (a data de 21/10 do arquivo é a da correção pontual do
+`lote3/corrigir_base_2110.js`), e os lotes seguintes não conferiram o quadro de emendas do Planalto. O usuário commitou a
+v44 (`dbc7323`, PR #41, `a30a7c3`; o site serve `autos-do-estudo-v44`) e mandou: "Pode seguir a recomendação inicial (fazer
+a v45 só com as EC 140 e 141)". Os casos das semanas 21 e 22 passam para a v46 (até 09/01).
+
+**O que as emendas mudam**
+
+- **EC 141/2026** — art. 7º da CF: XIII "8 (oito) horas diárias e 40 (quarenta) horas semanais"; XV "repouso semanal
+  remunerado de 2 (dois) dias, um dos quais preferencialmente aos domingos" (em vigor dois meses depois da publicação,
+  art. 10, I: 16/12/2026); parágrafo único numerado como § 1º; § 2º (regime compensatório por norma coletiva: média de 2
+  dias no mês-calendário, 1 dentro de cada semana); § 3º (lei pode prever regimes diferenciados, respeitados XIII, XIV e
+  XV). Transitórias: sem redução salarial, inclusive pisos (art. 2º); cláusulas coletivas incompatíveis sem efeito em 2
+  meses (art. 3º); jornadas de até 40 horas não reduzem, mas ganham o XV (art. 4º); lei complementar para MEI, ME e EPP
+  (art. 5º); redução progressiva — 42 horas dois meses depois da publicação (16/12/2026), 40 horas um ano depois disso
+  (16/12/2027) (art. 6º); norma coletiva pode ampliar a duração diária na transição (art. 7º); diploma de nível superior e
+  remuneração de pelo menos 2,5 vezes o teto do RGPS: sem regras de duração e controle de jornada, salvo liberalidade ou
+  norma coletiva, respeitados XV e § 2º; não vale para empregados públicos; competência da Justiça do Trabalho (art. 8º);
+  contratos da Administração com mão de obra: aditamento em até 1 ano (art. 9º).
+- **EC 140/2026** — CF 40, § 4º (ressalva também o § 5º-A) e § 5º-A (idade de 57/60 anos para agentes comunitários de
+  saúde e de combate às endemias com 25 anos de contribuição e exercício); 198 e 201 (fora dos quadros e do texto).
+- **Edital (22/10):** a legislação vale "com as alterações e atualizações vigentes até a data da publicação do Edital", e
+  a posterior "poderão ser utilizados, quando supervenientes ou complementares a algum tópico já previsto"; o art. 7º e o
+  descanso semanal remunerado estão no programa de Direito do Trabalho.
+
+**O que entrou**
+
+- **Base** (`v45/patch_v45.js`, sempre a partir de `bak_v45/`): troca cirúrgica em `leis/cf.json` (art. 7º: XIII, XV,
+  parágrafo único → § 1º, §§ 2º e 3º; art. 40: § 4º e § 5º-A) — todo texto novo **recortado** de `ec141/emendas.json`, nunca
+  digitado; 6 registros em `leis/CORRECOES.json`; `NOTA_ARTIGO` de CF:7 (diz a redação anterior do XV, que vale antes de
+  16/12/2026, e a transição das 40 horas) e de CF:40 no `gerar_lei_seca.js`; data de cópia "16/11/2026" nos quadros com
+  esses artigos. O Planalto compilado já traz a EC 140 e o § 1º, XIII, §§ 2º e 3º da EC 141; o XV novo ainda não aparece
+  (mostra o anterior com "Vide Emenda Constitucional nº 141" até a vigência) — por isso o quadro traz o texto da emenda e a
+  nota explica. Trocar o artigo inteiro pela página de hoje traria resíduos (a página mudou de formatação: travessão
+  virou hífen, sumiu ponto final, sobram "-" e ";" soltos).
+- **Quadros Lei seca:** mudaram 6 de 78 (`dt-principios` e `const-direitos`: art. 7º inteiro; `adm-principios` e
+  `const-adm`: art. 40; `dt-relacao` e `dt-remuneracao`: só a nota e a data); 5.135 artigos, 17.763 linhas (+6).
+- **Seção nova** em `dt-jornada`, "EC 141/2026: 40 horas semanais e dois dias de repouso", entre "Jornada e tempo à
+  disposição" e "Horas extras e compensação": tabela antes × depois (5 linhas), "Quando vale" (16/12/2026, 42 horas,
+  16/12/2027; questão de letra do inciso = 40; limite em vigor numa data = art. 6º), as outras regras (arts. 2º a 5º, 8º e
+  9º; o 2,5× da emenda × o 2× do art. 444, parágrafo único, da CLT) e a caixa "EC 141/2026 — arts. 2º, caput, 3º, 6º, 8º,
+  caput, e 10" (9 parágrafos, link do Planalto), com a nota de que a emenda não alterou a CLT (art. 67).
+- **Trocas:** a nota da jornada em `dt-jornada` (40 semanais, com a transição) e a linha "Semanal" da tabela dos
+  descansos (os 2 dias da Constituição); a frase do art. 7º em `const-direitos` (XIII e XV novos).
+- **4 questões** (DT97 a DT100, em `dt-jornada`): letra do XIII e do XV; transição; art. 8º; § 2º. "Certa mais longa": 0
+  de 4; posições B, D, C, E. Banco: 725.
+- **Ajustes declarados** (`v45/ajustes.js`): explicação C da DT18 (tempo parcial: duração normal de 40 semanais, com a
+  transição); explicação correta da DT27 (a pergunta é sobre a CLT; a Constituição garante 2 dias); nota da **Tese
+  vinculante 19** do TST, sobre o acordo de compensação ("até o limite semanal", e não "até 44 horas" — a nota é dessa
+  tese, não da Súmula 85, como eu tinha dito ao usuário); fundamento do Raio-X 2022/45 ("CF, art. 7º, § 1º (parágrafo
+  único até a EC 141/2026)").
+- **Aviso** de 16/11/2026 (Emendas 140 e 141) no alto do 03.1; o da v44 passou a ser o primeiro dos 34 anteriores. O aviso
+  diz os dias em que o aluno volta à jornada: semana 16, quarta, 16/12 (`s16-dt`), e semana 18, segunda, 28/12, e quarta,
+  30/12 (`s18-dt`).
+- Nada mais muda: grade, cartões das semanas, casos, simulados (nenhum gabarito das provas futuras muda; a TRT-21 2023/48,
+  semana 17, traz o XV antigo só nas alternativas C e D, erradas por outro motivo), núcleo, os outros 292 cartões da
+  04.2.
+
+**Fontes.** Planalto, no navegador embutido, em 16/11/2026: quadro de emendas (`quadro_emc.htm`), `emc141.htm`,
+`emc140.htm` e a Constituição compilada (`constituicao.htm`, conferência do § 4º e do § 5º-A do art. 40 e do § 1º do art.
+7º). Nenhum arquivo baixado: o texto foi lido na página, com as mesmas regras do `extrair3.js` aplicadas no navegador, e
+gravado à mão em `ec141/emendas.json` e `ec141/datas.json`, conferidos por SHA-256 calculado no navegador
+(`b1beb46b…` e `57311d55…`). O receptor local (`ec141/receber.js`) não serviu: o navegador embutido não alcança
+127.0.0.1 a partir da página do Planalto.
+
+**Verificação (16/11)**
+
+- `v45/provas.js`: 60 afirmações, 9 linhas da caixa e 13 citações, 0 falhas (estragos acusados).
+  `v45/conferir_questoes.js` (cópia da v43 com aspas e `calc:mais:`): 4 questões, 24 trechos; estragos acusados (trecho,
+  data calculada e uma citação trocada).
+- `bash v45/conferir_tudo.sh`: **23 conferidores, todos com saída 0**. Iguais à v44: edital, nada perdido, auditor,
+  rótulos (45), grudados (9), selos (46), CHAVES, capacidade. Diferenças esperadas: lei seca 17.757 → 17.763 linhas;
+  independente 18.110 → 18.116 dispositivos (os mesmos 18 "NÃO LIDO"); manifestos 5 → 9 (CF 7 em 2 tópicos, CF 40 em 2);
+  `diff_quadros` só os 6 esperados; aviso 33/33 (sobre a v44, 16 falhas).
+- `v45/teste_v45.js` (Edge, data em 16/12/2026): **21 de 21**, em 375 e 820 px — atualização v44 → v45 com as chaves
+  `trt4:` idênticas; marcações em texto que não mudou continuam pintadas e a de "preferencialmente aos domingos (XV)"
+  aparece como "não foi achada no texto atual" e continua guardada; seção, trocas, quadros, questões, 04.2, busca, aviso,
+  geometria, console. `v45/neg_tela.js`: os seis estragos acusados, cada um sozinho.
+- `v40/teste_rolagem.js` 17/17; `busca_2110/teste_busca.js` TUDO CERTO; `teste_marca_1210.js` 0 erradas com posição;
+  `teste_atualiza_1210.js` sem erros. Nenhum Edge sem interface nem perfil temporário sobrou.
+- `index.html` e `sw.js` do worktree = `v45/ensaio.html` e `v45/ensaio_sw.js` (`cmp`); cache `autos-do-estudo-v45`.
+
+**Lições**
+
+- **Antes de cada lote, abrir o quadro de emendas do Planalto e as leis novas** e comparar com a data da base; a
+  compilação demora, e a data de um arquivo da base pode ser a de uma correção, não a da cópia.
+- **Vigência adiada:** o Planalto compilado mantém o texto antigo com "Vide" até a vigência; o quadro traz o texto que vale
+  na prova e diz na nota o anterior e a data.
+- **Atualização de lei na base:** troca cirúrgica com recorte do texto oficial e registro em `CORRECOES.json`, nunca o
+  artigo inteiro de uma página que mudou de formato.
+- **Marcação de teste:** "44 semanais" não serviu para testar marcação perdida, porque continua no tópico, na tabela
+  "Antes da EC 141", e o marca-texto a reencontra; o alvo tem de sumir do tópico.
+- **Conferir a que cartão pertence a nota** antes de citá-la (era a Tese vinculante 19, não a Súmula 85).
+
+**Pendências que continuam:** casos das semanas 21 e 22 (v46, até 09/01, com a correção do "No sábado" da caixa da semana
+22); incisos grudados e reequilíbrio das alternativas antigas, em versões separadas.
+
+---
+
+# Retomada — estado em 2026-11-16, v45 pronta (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira, o **Adendo 39** (v44, casos da semana 20; montagem simples, só casos, direto sobre a versão
-   publicada — é o modelo da v45), o **Adendo 38** (v43, Civil da semana 18 e casos da semana 19; o modelo de lote
+1. Ler esta seção inteira, o **Adendo 40** (v45, EC 140 e 141/2026: atualização da base da CF, quadros, seção nova,
+   questões e ajustes declarados — modelo para lei nova no meio do caminho), o **Adendo 39** (v44, casos da semana 20;
+   montagem simples, só casos, direto sobre a versão publicada — é o modelo da v46), o **Adendo 38** (v43, Civil da semana 18 e casos da semana 19; o modelo de lote
    completo mais novo), o **Adendo 37** (v42, Civil da semana 17 e casos das semanas 17 e 18), o **Adendo 36** (v41, semana 16 e correção da semana 19), o **Adendo 35** (v40, semana 15 e rolagem da 04.2), o **Adendo 34** (v39, semana 14), o **Adendo 33** (v38, correções da auditoria;
    traz a **regra nova de carga**, que vale para todo lote), o **Adendo 32**
    (v37, semana 13), o **Adendo 31** (v36, opção A: núcleo nos blocos que não
@@ -4901,41 +5004,43 @@ o portal do TST pelo `conferir_juris_tst.js` nas versões em que entraram). Nenh
    arquivos (aconteceu de novo entre 11 e 12/11; o app também troca o caminho do
    scratchpad entre sessões), restaurar antes (`robocopy
    <ferramentas-scratchpad> <scratchpad> /E /XO`) e provar com `bash
-   v44/montar.sh` + `cmp v44/ensaio.html <worktree>/index.html`. O plano
+   v45/montar.sh` + `cmp v45/ensaio.html <worktree>/index.html`. O plano
    aprovado em 22/10 está em
    `C:\Users\thale\.claude\plans\woolly-finding-squid.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
    - `git status --short` e `git log --oneline -3` no worktree (em 16/11:
-     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v44 pronta,
-     esperando o commit do usuário; último commit `ee8fe30`, Adendo 38 = v43, publicada pelo PR #40, `d11851a`);
+     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v45 pronta,
+     esperando o commit do usuário; último commit `dbc7323`, Adendo 39 = v44, publicada pelo PR #41, `a30a7c3`);
    - `git fetch origin` e `git log --oneline -3 origin/main` (em 16/11 o
-     `main` estava no PR #40, `d11851a`, e a pasta principal também). **O
+     `main` estava no PR #41, `a30a7c3`, e a pasta principal também). **O
      `--ff-only` do usuário só anda depois de um `git fetch`:** os worktrees
      dividem as referências com a pasta principal, e sem o fetch o
      `origin/main` local ainda aponta para o PR anterior. Fazer o fetch antes
      (ou indicar `git -C <raiz> pull --ff-only origin main`);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (em 16/11: `autos-do-estudo-v43`, publicada pelo PR #40; a v44 pode sair
-     até sábado, 02/01);
+     (em 16/11: `autos-do-estudo-v44`, publicada pelo PR #41; a v45 tem de sair
+     até sábado, 05/12, antes de o aluno voltar ao art. 7º e à jornada);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo e no Adendo
    32). Não aplicar nenhuma delas sem a resposta.
-4. **Próximo passo: esperar o commit e o PR da v44 (Adendo 39, casos da semana 20).**
-   A v44 está pronta no worktree (`index.html` = `v44/ensaio.html`, `sw.js` = `v44/ensaio_sw.js`, conferidos com
-   `cmp`). **Não mexer no `index.html` antes do commit.** Depois do commit e do PR: `git fetch` e `--ff-only` na
-   pasta principal, guardar `bak_2210/index_v44.html` (cópia do worktree, CRLF; não `git show`, que sai em LF) e
-   `sw_v44.js` e começar a **v45, até sábado, 09/01**: os **casos das semanas 21 e 22**. Semana 21 (caixa
-   `op-caso-s21`, "entram nesta caixa até 09/01"): segunda 18/01 e quarta 20/01 às 17h45, sexta 22/01 às 15h50, o "de
-   sábado" 23/01 às 16h40, com a prova completa TRT-2 2025 de Oficial de Justiça. Semana 22 (caixa `op-caso-s22`):
-   segunda 25/01 e quarta 27/01 às 17h45 (2 × 1 h 35 min) e o caso da prova completa de **quinta, 28/01** (simuladão do
-   app, 13h30–17h30). **Corrigir na mesma troca** a frase da caixa da semana 22 "No sábado, o simulado completo traz mais
-   um." (vem da v31): na semana 22 a prova completa é na quinta, 28/01. **Antes de escrever caso, ler as provas que vêm
-   depois da data dele:** para a semana 21, a TRT-2 2025 OJ (23/01, o próprio sábado) e a reserva TRT-7 2024; para a
-   semana 22, nenhuma prova real (o simuladão sai do banco do app) — o que cada uma cobra está em
-   `v44/incidencia_s20.md`; temas já usados (C5 a C20d) no `v44/PLANO.md` e no Adendo 39. **Montar como a v44:**
-   `aplicar_v45.js` com as trocas das duas caixas e o aviso direto sobre `bak_2210/index_v44.html`, sem regenerar a
-   grade e sem reaplicar casos antigos. O reequilíbrio das alternativas antigas e os incisos grudados (Adendo 36) ficam
-   para versões separadas, depois.
+4. **Próximo passo: esperar o commit e o PR da v45 (Adendo 40, EC 140 e 141/2026).**
+   A v45 está pronta no worktree (`index.html` = `v45/ensaio.html`, `sw.js` = `v45/ensaio_sw.js`, conferidos com
+   `cmp`); tem de ser publicada até 05/12 (o aluno volta ao art. 7º na semana 15 e à jornada na quarta, 16/12, e na semana
+   18). **Não mexer no `index.html` antes do commit.** Depois do commit e do PR: `git fetch` e `--ff-only` na pasta
+   principal, guardar `bak_2210/index_v45.html` (cópia do worktree, CRLF; não `git show`, que sai em LF) e `sw_v45.js`
+   e começar a **v46, até sábado, 09/01**: os **casos das semanas 21 e 22**. Semana 21 (caixa `op-caso-s21`, "entram
+   nesta caixa até 09/01"): segunda 18/01 e quarta 20/01 às 17h45, sexta 22/01 às 15h50, o "de sábado" 23/01 às 16h40, com
+   a prova completa TRT-2 2025 de Oficial de Justiça. Semana 22 (caixa `op-caso-s22`): segunda 25/01 e quarta 27/01 às
+   17h45 (2 × 1 h 35 min) e o caso da prova completa de **quinta, 28/01** (simuladão do app, 13h30–17h30). **Corrigir na
+   mesma troca** a frase da caixa da semana 22 "No sábado, o simulado completo traz mais um." (vem da v31): na semana 22 a
+   prova completa é na quinta, 28/01. **Antes de escrever caso, ler as provas que vêm depois da data dele:** para a semana
+   21, a TRT-2 2025 OJ (23/01, o próprio sábado) e a reserva TRT-7 2024; para a semana 22, nenhuma prova real (o simuladão
+   sai do banco do app) — o que cada uma cobra está em `v44/incidencia_s20.md`; temas já usados (C5 a C20d) no
+   `v44/PLANO.md` e no Adendo 39. Caso de jornada ou repouso já tem de seguir a EC 141 (40 horas com transição; 2 dias
+   de repouso desde 16/12/2026). **Montar como a v44:** `aplicar_v46.js` com as trocas das duas caixas e o aviso direto
+   sobre `bak_2210/index_v45.html`, sem regenerar a grade e sem reaplicar casos antigos; antes, **abrir o quadro de
+   emendas do Planalto** (`constituicao/emendas/emc/quadro_emc.htm`) e ver se saiu norma nova (lição do Adendo 40). O
+   reequilíbrio das alternativas antigas e os incisos grudados (Adendo 36) ficam para versões separadas, depois.
    **Todo lote usa a carga nova:**
    cada bloco de leitura com núcleo e sobra pela teoria do horário
    (`v38/nucleo_v38.js` como modelo: `BLOCOS`, `TEORIA`, `FIXAS` com as
@@ -4944,7 +5049,12 @@ o portal do TST pelo `conferir_juris_tst.js` nas versões em que entraram). Nenh
    (`auditoria_0711/vies.js`), com o reequilíbrio das antigas aos poucos,
    começando por Processo Civil e Constitucional.
 
-   **Como fazer o lote** (lote só de casos: `scratchpad/v44/` — `PLANO.md`, `incidencia_s20.md`, `casos.js` +
+   **Como fazer o lote** (lei nova no meio do caminho: `scratchpad/v45/` — `patch_v45.js` (troca cirúrgica na base com
+   recorte do texto oficial, `CORRECOES.json`, `NOTA_ARTIGO` e data de cópia no gerador, sempre a partir de `bak_v45/`),
+   `fontes.js` (`ec141`, `datas:`, `cfantes:`, `calc:mais:`), `conteudo.js` + `provas.js`, `questoes.js` +
+   `conferir_questoes.js` (com aspas), `ajustes.js` (trocas declaradas em questões, cartões e Raio-X), `aplicar_v45.js`,
+   `diff_quadros.js` (quadros que mudaram, com lista esperada), `montar.sh`, `conferir_tudo.sh`, teste e negativo; o
+   texto das emendas em `ec141/`; lote só de casos: `scratchpad/v44/` — `PLANO.md`, `incidencia_s20.md`, `casos.js` +
    `conferir_casos.js` (gerado por `_gera_conf.js`), `aviso.js` + `conferir_aviso.js` (com a diferença de linhas contra a
    versão publicada), `aplicar_v44.js` (uma fase, sem regenerar a grade), `montar.sh` (exige que o pipeline da lei seca
    saia igual), `conferir_tudo.sh`, `_gera_teste.js` + `_teste_corpo.js` → `teste_v44.js`, `neg_tela.js`, `_handoff.js`,
@@ -4981,7 +5091,7 @@ o portal do TST pelo `conferir_juris_tst.js` nas versões em que entraram). Nenh
      `patch_matriz_v3X.js`, DONO no `gerar_lei_seca.js` quando a linha ligar
      dois tópicos, `aplicar_v3X.js A|B`, `montar.sh`, `aviso.js` com
      `conferir_aviso.js`; o aviso aberto esperado passa a ser o de
-     "16/11/2026 — estudos de caso da semana 20", com "Avisos anteriores" em 33;
+     "16/11/2026 — Emendas Constitucionais 140 e 141", com "Avisos anteriores" em 34;
    - **núcleo (regra da v38, Adendo 33):** refazer o levantamento sobre o
      ensaio (`node v36/gerar_aud_nucleo.js` e `node v36/aud_nucleo.js ENSAIO
      --json v3X/aud_nucleo.json`); em `nucleo_v3X.js` (cópia de
@@ -5007,8 +5117,8 @@ o portal do TST pelo `conferir_juris_tst.js` nas versões em que entraram). Nenh
    12/11 (PR #36); v40 (semana 15 e rolagem da 04.2) publicada em 13/11 (PR #37);
    v41 (semana 16 e correção da semana 19) publicada em 13/11 (PR #38);
    v42 (Civil da semana 17 e casos das semanas 17 e 18) publicada em 14/11 (PR #39); v43 (Civil da semana 18 e
-   casos da semana 19) publicada em 16/11 (PR #40); v44 (casos da semana 20) pronta em 16/11, para publicar até 02/01;
-   v45 (casos das semanas 21 e 22) até 09/01.
+   casos da semana 19) publicada em 16/11 (PR #40); v44 (casos da semana 20) publicada em 16/11 (PR #41); v45 (EC 140 e
+   141/2026) pronta em 16/11, para publicar até 05/12; v46 (casos das semanas 21 e 22) até 09/01.
 
    **Ao terminar qualquer versão:** HANDOFF (adendo e Retomada), memória,
    `robocopy` da cópia dos scripts e, depois do PR, `--ff-only` na pasta
@@ -5016,18 +5126,24 @@ o portal do TST pelo `conferir_juris_tst.js` nas versões em que entraram). Nenh
 
 ## TRABALHO EM ANDAMENTO (atualizar ao fim de cada etapa)
 
-### v44 — estudos de caso da semana 20 — PRONTA em 16/11/2026, esperando o commit (Adendo 39; publicar até sábado, 02/01)
+### v45 — Emendas Constitucionais 140 e 141/2026 — PRONTA em 16/11/2026, esperando o commit (Adendo 40; publicar até sábado, 05/12)
 
-- **Estado:** `index.html` e `sw.js` do worktree = `v44/ensaio.html` e `v44/ensaio_sw.js` (`cmp`); cache
-  `autos-do-estudo-v44`. O que entrou, a verificação e as lições estão no **Adendo 39**; o roteiro está em
-  `scratchpad/v44/PLANO.md`.
-- **Estado do scratchpad:** nenhum gerador compartilhado mudou (os da v43 continuam); `bak_2210/index_v43.html` e
-  `sw_v43.js` guardados (entrada da v44). Cópia em `ferramentas-scratchpad` atualizada em 16/11.
-- **Ordem para remontar:** `bash v44/montar.sh`; `bash v44/conferir_tudo.sh`; `node v44/teste_v44.js
-  bak_2210/index_v43.html v44/ensaio.html`; `node v44/neg_tela.js N` (N de 1 a 6) e o teste de novo sobre
-  `v44/neg_tela.html`.
-- **Depois do commit e do PR:** `git fetch` + `--ff-only` na raiz; guardar `bak_2210/index_v44.html` e `sw_v44.js`;
-  começar a v45.
+- **Estado:** `index.html` e `sw.js` do worktree = `v45/ensaio.html` e `v45/ensaio_sw.js` (`cmp`); cache
+  `autos-do-estudo-v45`. O que entrou, as fontes, a verificação e as lições estão no **Adendo 40**.
+- **Estado do scratchpad:** `leis/cf.json`, `leis/CORRECOES.json` e `gerar_lei_seca.js` estão no estado da v45 (cópias
+  de antes, estado da v44, em `bak_v45/`; o `patch_v45.js` sempre parte delas). `bak_2210/index_v44.html` e
+  `sw_v44.js` guardados (entrada da v45). Texto das emendas em `ec141/emendas.json` e `ec141/datas.json`. Cópia em
+  `ferramentas-scratchpad` atualizada em 16/11.
+- **Ordem para remontar:** `bash v45/montar.sh` (patch da base, aplicar, versão, pipeline, comparação dos quadros);
+  `bash v45/conferir_tudo.sh`; `node v45/teste_v45.js bak_2210/index_v44.html v45/ensaio.html`; `node v45/neg_tela.js
+  N` (N de 1 a 6) e o teste de novo sobre `v45/neg_tela.html`.
+- **Depois do commit e do PR:** `git fetch` + `--ff-only` na raiz; guardar `bak_2210/index_v45.html` e `sw_v45.js`;
+  começar a v46.
+
+### v44 — estudos de caso da semana 20 — PUBLICADA em 16/11/2026 pelo PR #41 (`a30a7c3`) (Adendo 39)
+
+- **Estado:** commit `dbc7323`; `index.html` e `sw.js` = `v44/ensaio.html` e `v44/ensaio_sw.js` (`cmp`); o site serve
+  `autos-do-estudo-v44`; raiz em ff no PR #41; `bak_2210/index_v44.html` e `sw_v44.js` guardados.
 
 ### v43 — Civil da semana 18 e estudos de caso da semana 19 — PUBLICADA em 16/11/2026 pelo PR #40 (`d11851a`) (Adendo 38)
 
