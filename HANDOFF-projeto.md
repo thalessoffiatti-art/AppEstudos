@@ -4686,12 +4686,129 @@ I e II) e reequilíbrio das alternativas antigas, em versões separadas.
 
 ---
 
-# Retomada — estado em 2026-11-14 (ler primeiro depois de compactar a conversa)
+# Adendo 38 — 2026-11-14 (Civil da semana 18 e estudos de caso da semana 19 do edital de 2026, v43)
+
+**Origem.** O usuário commitou a v42 (`ce4298e`, Adendo 37) e a publicou pelo PR #39 (`76e2682`; o site serve
+`autos-do-estudo-v42`; a pasta principal está em ff no PR #39). Depois: "Commit, push, pull e merge concluídos. Pode
+prosseguir". A v43 traz o que o app prometia para 26/12 — a linha `s18-civ` ("Material em preparo — chega até 26/12"), a
+caixa `op-caso-s19` ("entram nesta caixa até 26/12"), os itens CE-CIV-15 (em parte), 17, 18 e 19 da página 02, a frase do
+tópico de contratos em geral ("entram neste tópico até 26/12") e a lista do plano de Direito Civil ("até 26/12, semana
+18") — e sai 42 dias antes do prazo.
+
+**O que entrou**
+
+- **Tópico novo `civ-contratos-especie`** (depois de `civ-contratos`; 10 seções, 3 tabelas; 33 min de leitura): compra e
+  venda (riscos, preço, ascendente a descendente; tabela das cláusulas especiais), doação, troca e estimatório, locação de
+  coisas (com o art. 2.036), comodato × mútuo (tabela), prestação de serviço e empreitada, depósito (Súmula Vinculante 25)
+  e mandato, comissão, agência, corretagem e transporte, jogo e fiança (Súmula 332 do STJ), transação e o agente de
+  garantia do art. 853-A (Lei 14.711/2023), atos unilaterais (tabela: promessa de recompensa, gestão de negócios,
+  pagamento indevido, enriquecimento sem causa). Diz que os artigos do seguro foram revogados pela Lei 15.040/2024 e que
+  os títulos de crédito (nenhuma questão nas 16) não entram.
+- **Tópicos novos `civ-responsabilidade`** (5 seções, 1 tabela: ato ilícito, culpa e risco, fato de outrem, coisas e
+  animais, solidariedade, indenização com as Súmulas 37, 387, 227, 54 e 362 do STJ, preferências e privilégios
+  creditórios) **e `civ-empresa`** (6 seções, 2 tabelas: empresário, sociedades e responsabilidade dos sócios, sociedade
+  limitada, estabelecimento e registro, nome empresarial, prepostos e escrituração). Quarta: 29 min de leitura.
+- **`civ-contratos`:** a frase "entram neste tópico até 26/12" passou a "estão no tópico seguinte (Contratos em espécie e
+  atos unilaterais)". **Plano de Direito Civil** (introdução da matéria): os itens 4 a 9 diziam "até DD/MM" desde a v37,
+  mesmo depois de o texto entrar; agora os 9 dizem "no material (semana N)".
+- **Quadros Lei seca novos:** CC 481 a 886 (361 artigos, com o 853-A, sem os 757 a 802 revogados), CC 186 a 188 e 927 a
+  965 (42) e CC 966 a 1.195 (231), pelo DONO do `gerar_lei_seca.js` (78 quadros, 5.135 artigos).
+- **16 questões** (CV69–CV84: 7 de contratos em espécie, 5 de responsabilidade civil, 4 de empresa): 75 trechos provados;
+  posições A–E 3, 4, 3, 3, 3; "certa mais longa" 2 de 16 (13%) — o primeiro rascunho tinha 13 de 16 e foi reequilibrado
+  antes de entrar (`v43/_vies.js`, `_vies_troca.js`). Nenhuma cobra o que as provas que ainda serão simulado cobram nesses
+  assuntos (`v43/incidencia_s18.md`). O banco passa a 721.
+- **6 cartões na 04.2:** Súmulas 37, 54, 227, 362 e 387 do STJ (prioridade 2, `s18-civ`, âncora `civ-responsabilidade`) e
+  o **Tema 841 do STF** (comum acordo no dissídio coletivo; `s19-dpt`, âncora `dpt-especiais`; o caso C19b se apoia nele).
+  A 04.2 passa a 294.
+- **Quatro casos da semana 19** (enunciado e espelho, fechados até a hora; segunda e quarta 17h45/18h35; sexta 15h50/16h40,
+  semana inteira; o "de sábado" às 16h40 e o espelho às 19h15): C19a (04/01) alteração do contrato — CLT 468, caput e §§ 1º
+  e 2º, e 73, Súmula 265; C19b (06/01) dissídio coletivo econômico e ação de cumprimento — CF 114, § 2º, Tema 841, CLT 678,
+  I, a, 856, 868, parágrafo único, e 872, parágrafo único, Súmula 246; C19c (08/01) responsabilidade civil por ato do
+  empregado — CC 186, 927, 932, III, 933, 934, 942, parágrafo único, 944 e 949, Súmulas 37 e 387 do STJ; C19d (09/01, de
+  sábado) trabalho noturno — CLT 73, caput e §§ 1º, 2º e 5º, 59, § 1º, Súmula 60, I e II, e OJ 97 da SDI-1. Cada caso só
+  evita as provas que vêm depois da data dele (a TRT-6 2025 de Oficial de Justiça, do próprio sábado 09/01, cobra greve e
+  inquérito para apuração de falta grave, que por isso ficaram de fora; a TRT-7 2024, reserva, cobra banco de horas e
+  competência).
+- **Linha `s18-civ`:** três tópicos (anc + anc2 + anc3 — o `v31/gerar.js` passou a aceitar `anc3`), leitura "Código
+  Civil, arts. 481 a 886 · 186 a 188 · 927 a 965 · 966 a 1.195" e a divisão do horário: segunda 50 min de teoria e 30 de
+  questões; quarta 45 e 30.
+- **Núcleo (regra da v38):** segunda 34 min de texto, passo 2 com 6 artigos (38 min de 50); quarta 29 de texto, passo 2
+  com 3 artigos de responsabilidade e 1 de empresa (34 min de 45); nenhuma sobra. O quadro inteiro estoura a teoria (298
+  e 299 min), então a linha s20-civ ("Tempo reservado" da semana 20) passa a listar também a semana 18 — a única reserva
+  que muda. A nota do dia de dois tópicos diz "nos quadros Lei seca deles".
+- **Simulado da semana 19 (TRT-6 2025, Oficial de Justiça):** a questão 54 cobra os arts. 789, 793 e 798 do Código Civil
+  ("de acordo com a normativa ainda vigente"), revogados pela Lei 15.040/2024; passa ao "pule" (valem 56 das 60; bloco
+  crítico 14, com 4 de Direito Civil), em `v31/simulados.js` e no `SIM_REAL`.
+- **QConcursos:** `QC_DISCIPLINA` ganhou `emp` (Direito Empresarial, onde o QConcursos põe nome empresarial); `QC_TOPICO`
+  dos três tópicos novos pelos links do breadcrumb das questões da FCC.
+- **Matriz:** 319 cobertos, 3 parciais (raciocínio e matemática, "o resto é por questões"), 0 ausentes. A página 02 diz
+  "Nenhum item a entrar" e só explica o rótulo "Chega até" quando há item a entrar (`v31/gerar_p02.js`).
+- **Aviso** de 14/11/2026 (semana 18 e casos da semana 19) no alto do 03.1; o da v42 passou a ser o primeiro dos 32
+  anteriores.
+
+**Correção no extrator (`lei_seca_texto.js`).** O teste de tela achou "Art. 777 — Seção II Do Seguro de Dano" e "Art. 788
+— Seção III Do Seguro de Pessoa" no quadro: os dois artigos revogados terminam no link "Vigência" seguido do título da
+seção em caixa baixa, e o corte em título de estrutura só valia depois de fim de frase. Agora "Vigência", "Vigência
+encerrada", "Produção de efeito(s)" e "Mensagem de veto" sozinhos na linha também valem como fim de frase
+(`v43/patch_v43.js`, bloco 3b). Impacto medido em toda a base (`v43/_impacto_corte.js`): 2 de 7.621 artigos mudam, os
+dois de seguro; no ensaio, só a linha do quadro e a legenda da página 02 mudaram.
+
+**Fontes novas**
+
+- Planalto, Código Civil compilado (base de 23/10, `leis/CC.json`): art. 853-A (Lei 14.711/2023), arts. 757 a 802 revogados
+  pela Lei 15.040/2024, art. 591 com o parágrafo único da Lei 14.905/2024; CLT 59, 73, 468, 678, 856, 868 e 872 e CF 114
+  pela base.
+- STF, lista oficial de teses de repercussão geral (POST `retornartesesrepercussaogeral.asp`, `tipo=com`, 819 teses), lida
+  no navegador: Tema 841 (RE 1002295), com SHA-256 calculado no navegador (`v43/stf_rg.json`, `v43/conferir_stf.js`).
+- STJ, Súmulas 37, 43, 54, 227, 332, 362 e 387 pelo arquivo local `Jurisprudência/sumulas_stj.md`; Súmula Vinculante 25 e
+  Súmulas 60, 246 e 265 e OJ 97 do TST pelos cartões do app.
+- QConcursos: as 990 questões das 16 provas e as 240 das 4 de Oficial de Justiça relidas em 14/11 (`v43/incidencia_s18.md`,
+  PISTA): 10 questões em 10 provas nos assuntos da semana 18; links do breadcrumb de 8 questões para o `QC_TOPICO`.
+
+**Verificação (14/11)**
+
+- `bash v43/conferir_tudo.sh`: **21 conferidores, todos com saída 0** — MATRIZ CONFERE; lei seca 5.135 artigos, 0 falhas
+  (linhas não contíguas 16, eram 18: as duas de seguro); auditor 0 ausente; independente 18 "NÃO LIDO" (os mesmos da v42);
+  rótulos 45 (+1: CC 591, o mesmo alarme falso de "Produção de efeitos" dos arts. 389 e 406); grudados 9; selos 46 (+3, os
+  selos dos tópicos novos); CHAVES iguais; provas 217 afirmações e 111 citações, 0 falhas; questões 75 trechos; cartões 10
+  provas de nota; casos 29 provas, 31 textos; capacidade confere; aviso 79/79; STF 1 tese pelo SHA.
+- Ponto fixo da montagem: a terceira volta deu `nucleo.json`, `notas.json`, `reservas.json`, `nucleo_app_v43.json` e
+  `ensaio.html` iguais (`cmp`), antes e depois da correção do extrator.
+- `v43/teste_v43.js` (Edge, data em 28/12): **31 de 31**, em 375 e 820 px, com atualização v42 → v43 (chaves `trt4:`
+  idênticas; três marcações feitas na v42 em sucessões, obrigações e contratos em geral continuam no lugar).
+  `v43/neg_tela.js`: os cinco estragos são acusados, cada um sozinho (espelho do C19d aberto, parágrafo único do 591 fora
+  do quadro, NUCLEO de empresa, semana 18 fora da reserva da semana 20, simulado da semana 19 com 57 válidas).
+- `v40/teste_rolagem.js` 17/17; `busca_2110/teste_busca.js` TUDO CERTO; `teste_marca_1210.js` 0 erradas com posição;
+  `teste_atualiza_1210.js` dados preservados. Nenhum Edge sem interface nem perfil temporário sobrou.
+- `index.html` e `sw.js` do worktree = `v43/ensaio.html` e `v43/ensaio_sw.js` (`cmp`); cache `autos-do-estudo-v43`.
+
+**Lições**
+
+- **Título de seção depois do link "Vigência":** artigo revogado com título de seção logo depois virava "caput" no quadro.
+  Antes de pôr lei no quadro, procurar resíduo no começo e no fim de cada artigo (o teste de tela procura `Seção [IVX]+`,
+  `TÍTULO`, `Revogado`).
+- **Prova futura com lei revogada:** ao reler as provas, conferir as questões dos simulados que ainda vêm contra a base (a
+  TRT-6 2025 de Oficial de Justiça cobra seguro pelo Código Civil revogado).
+- **Linha de três tópicos:** `anc3` no `gerar.js`; o auditor pega os três pelos `data-ir` da linha; DONO para cada faixa;
+  a nota do núcleo trata o dia de dois tópicos no plural.
+- **Viés de tamanho:** medir com `v43/_vies.js` assim que as questões ficam prontas; o primeiro rascunho quase sempre põe a
+  certa como a mais longa.
+- **Empresa no QConcursos** é outra disciplina (Direito Empresarial): nova chave no `QC_DISCIPLINA`, por acréscimo.
+- A fase B reaplica as trocas de casos de cinco versões (v39 a v43). Continua mais simples do que mudar o `v31/gerar.js`;
+  a v44 acrescenta uma linha.
+
+**Pendências que continuam:** casos da semana 20 (v44, até 02/01) e das semanas 21 e 22 (v45, até 09/01); incisos grudados
+(CPC 627, II e III; CPC 513, § 2º, III e IV; Lei 8.987, art. 6º, § 3º, I e II) e reequilíbrio das alternativas antigas,
+em versões separadas.
+
+---
+
+# Retomada — estado em 2026-11-14, v43 pronta (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira, o **Adendo 37** (v42, Civil da semana 17 e casos das semanas 17 e 18; é o modelo de lote
-   mais novo), o **Adendo 36** (v41, semana 16 e correção da semana 19), o **Adendo 35** (v40, semana 15 e rolagem da 04.2), o **Adendo 34** (v39, semana 14), o **Adendo 33** (v38, correções da auditoria;
+1. Ler esta seção inteira, o **Adendo 38** (v43, Civil da semana 18 e casos da semana 19; é o modelo de lote mais
+   novo), o **Adendo 37** (v42, Civil da semana 17 e casos das semanas 17 e 18), o **Adendo 36** (v41, semana 16 e correção da semana 19), o **Adendo 35** (v40, semana 15 e rolagem da 04.2), o **Adendo 34** (v39, semana 14), o **Adendo 33** (v38, correções da auditoria;
    traz a **regra nova de carga**, que vale para todo lote), o **Adendo 32**
    (v37, semana 13), o **Adendo 31** (v36, opção A: núcleo nos blocos que não
    cabem), o **Adendo 30** (v35, marca-texto), o **Adendo 29** (v34, semana
@@ -4699,39 +4816,38 @@ I e II) e reequilíbrio das alternativas antigas, em versões separadas.
    arquivos (aconteceu de novo entre 11 e 12/11; o app também troca o caminho do
    scratchpad entre sessões), restaurar antes (`robocopy
    <ferramentas-scratchpad> <scratchpad> /E /XO`) e provar com `bash
-   v42/montar.sh` + `cmp v42/ensaio.html <worktree>/index.html`. O plano
+   v43/montar.sh` + `cmp v43/ensaio.html <worktree>/index.html`. O plano
    aprovado em 22/10 está em
    `C:\Users\thale\.claude\plans\woolly-finding-squid.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
    - `git status --short` e `git log --oneline -3` no worktree (em 14/11:
-     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v42 pronta,
-     esperando o commit do usuário; último commit `b9e12a7`, Adendo 36 = v41, publicada pelo PR #38, `84a74ce`);
+     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v43 pronta,
+     esperando o commit do usuário; último commit `ce4298e`, Adendo 37 = v42, publicada pelo PR #39, `76e2682`);
    - `git fetch origin` e `git log --oneline -3 origin/main` (em 14/11 o
-     `main` estava no PR #38, `84a74ce`, e a pasta principal também). **O
+     `main` estava no PR #39, `76e2682`, e a pasta principal também). **O
      `--ff-only` do usuário só anda depois de um `git fetch`:** os worktrees
      dividem as referências com a pasta principal, e sem o fetch o
      `origin/main` local ainda aponta para o PR anterior. Fazer o fetch antes
      (ou indicar `git -C <raiz> pull --ff-only origin main`);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (em 14/11: `autos-do-estudo-v41`, publicada pelo PR #38; a v42 pode sair
-     até sábado, 19/12);
+     (em 14/11: `autos-do-estudo-v42`, publicada pelo PR #39; a v43 pode sair
+     até sábado, 26/12);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo e no Adendo
    32). Não aplicar nenhuma delas sem a resposta.
-4. **Próximo passo: esperar o commit e o PR da v42 (Adendo 37, Civil da semana 17 e casos das semanas 17 e 18).**
-   A v42 está pronta no worktree (`index.html` = `v42/ensaio.html`, `sw.js` = `v42/ensaio_sw.js`, conferidos com
+4. **Próximo passo: esperar o commit e o PR da v43 (Adendo 38, Civil da semana 18 e casos da semana 19).**
+   A v43 está pronta no worktree (`index.html` = `v43/ensaio.html`, `sw.js` = `v43/ensaio_sw.js`, conferidos com
    `cmp`). **Não mexer no `index.html` antes do commit.** Depois do commit e do PR: `git fetch` e `--ff-only` na
-   pasta principal, guardar `bak_2210/index_v42.html` e `sw_v42.js` e começar a **v43, até sábado, 26/12**: Civil da
-   semana 18 (linha `s18-civ`: "Contratos em espécie; responsabilidade civil; direito de empresa e nome empresarial",
-   CE-CIV-15, 17, 18 e 19; `marca: P + '26/12'`; semana 18 tem meio período em 31/12 e 01/01) e **os casos da semana
-   19** (caixa `op-caso-s19`, "entram nesta caixa até 26/12"). CE-CIV-15 passa a "coberto" quando os contratos em
-   espécie entrarem. Depois: v44 até 02/01 (casos da semana 20) e v45 até 09/01 (casos das semanas 21 e 22).
-   **Atenção:** a fase B da v43 teria de reaplicar as trocas de casos da v39 à v42 — melhor fazer antes o
-   `v31/gerar.js` ler do arquivo de entrada os casos das semanas 14 em diante. **Antes de escrever caso ou questão,
-   ler as provas que ainda serão simulado:** as questões entram no banco na publicação e evitam todas as que ainda vêm;
-   o caso só as que vêm depois da data dele (semana 19: as provas de Oficial de Justiça das semanas 19 a 21; modelo em
-   `v42/incidencia_s17.md`). O reequilíbrio das alternativas antigas e os incisos grudados (Adendo 36) ficam para
-   versões separadas, depois.
+   pasta principal, guardar `bak_2210/index_v43.html` (cópia do worktree, CRLF; não `git show`, que sai em LF) e
+   `sw_v43.js` e começar a **v44, até sábado, 02/01**: os **casos da semana 20** (caixa `op-caso-s20`, "entram nesta
+   caixa até 02/01"; segunda 11/01 e quarta 13/01 às 17h45, sexta 15/01 às 15h50, o "de sábado" 16/01 às 16h40, com a
+   prova completa TRT-1 2025 de Oficial de Justiça). **Antes de escrever caso, ler as provas que vêm depois da data
+   dele:** TRT-1 2025 OJ (16/01, o próprio sábado), TRT-2 2025 OJ (23/01) e a reserva TRT-7 2024 — o que cada uma cobra
+   está em `v43/incidencia_s18.md` (seção dos casos); temas já usados nos casos C5 a C19d no `v43/PLANO.md` e no Adendo 38.
+   A fase B da v44 reaplica as trocas de casos da v39 à v43 (uma linha a mais no `_gera_aplicar.js`). Depois: v45 até
+   09/01 (casos das semanas 21 e 22; a caixa da semana 22 tem segunda e quarta e o caso "simulado final" do simuladão de
+   quinta, 28/01). O reequilíbrio das alternativas antigas e os incisos grudados (Adendo 36) ficam para versões
+   separadas, depois.
    **Todo lote usa a carga nova:**
    cada bloco de leitura com núcleo e sobra pela teoria do horário
    (`v38/nucleo_v38.js` como modelo: `BLOCOS`, `TEORIA`, `FIXAS` com as
@@ -4740,10 +4856,14 @@ I e II) e reequilíbrio das alternativas antigas, em versões separadas.
    (`auditoria_0711/vies.js`), com o reequilíbrio das antigas aos poucos,
    começando por Processo Civil e Constitucional.
 
-   **Como fazer o lote** (modelo completo e mais novo: `scratchpad/v42/`, que segue a v41 com geradores
-   `_gera_*.js` — `_gera_aplicar.js`, `_gera_nucleo.js` (núcleo e dados, com `teoria` por dia no recesso),
-   `_gera_conf.js`, `_gera_teste.js` + `_teste_corpo.js` — e `patch_semanas_v42.js`, `patch_matriz_dono_v42.js`
-   (matriz e DONO da linha de dois tópicos), `conferir_stf.js`, `_handoff.js`; antes, `scratchpad/v41/`, que seguia a
+   **Como fazer o lote** (modelo completo e mais novo: `scratchpad/v43/`, que segue a v42 com geradores
+   `_gera_*.js` — `_gera_aplicar.js`, `_gera_nucleo.js`, `_gera_conf.js`, `_gera_teste.js` + `_teste_corpo.js` — e um
+   só `patch_v43.js` para os geradores compartilhados (grade, `gerar.js` com `anc3`, `gerar_p02.js`, `simulados.js`,
+   matriz, DONO e o corte do `lei_seca_texto.js`), `_vies.js` (viés de tamanho das questões), `_impacto_corte.js`,
+   `conferir_stf.js`, `_handoff.js`; para a v44, que só tem casos, bastam `casos.js` + `conferir_casos.js`, `aviso.js` +
+   `conferir_aviso.js`, `aplicar_v44.js` (fase B reaplicando a v43), `montar.sh`, `conferir_tudo.sh`, teste e negativo;
+   antes, `scratchpad/v42/`, que seguia a v41 com `patch_semanas_v42.js` e `patch_matriz_dono_v42.js`; antes,
+   `scratchpad/v41/`, que seguia a
    v40 com geradores `_gera_*.js` — `_gera_patches.js` entre eles; antes, `scratchpad/v40/`, que seguia
    a v39 com geradores `_gera_*.js` para os scripts copiados; modelo anterior: `scratchpad/v39/` —
    `PLANO.md`, `incidencia_s14.md`, `reais_v39.js`, `conteudo.js` (itens com
@@ -4768,7 +4888,7 @@ I e II) e reequilíbrio das alternativas antigas, em versões separadas.
      `patch_matriz_v3X.js`, DONO no `gerar_lei_seca.js` quando a linha ligar
      dois tópicos, `aplicar_v3X.js A|B`, `montar.sh`, `aviso.js` com
      `conferir_aviso.js`; o aviso aberto esperado na fase B passa a ser o de
-     "14/11/2026 — material da semana 17", com "Avisos anteriores" em 31;
+     "14/11/2026 — material da semana 18", com "Avisos anteriores" em 32;
    - **núcleo (regra da v38, Adendo 33):** refazer o levantamento sobre o
      ensaio (`node v36/gerar_aud_nucleo.js` e `node v36/aud_nucleo.js ENSAIO
      --json v3X/aud_nucleo.json`); em `nucleo_v3X.js` (cópia de
@@ -4793,8 +4913,9 @@ I e II) e reequilíbrio das alternativas antigas, em versões separadas.
    (correções da auditoria) publicada em 11/11; v39 (semana 14) pronta em
    12/11 (PR #36); v40 (semana 15 e rolagem da 04.2) publicada em 13/11 (PR #37);
    v41 (semana 16 e correção da semana 19) publicada em 13/11 (PR #38);
-   v42 (Civil da semana 17 e casos das semanas 17 e 18) pronta em 14/11, para publicar até 19/12; v43 (Civil da
-   semana 18 e casos da semana 19) até 26/12; v44 (casos da semana 20) até 02/01; v45 (casos das semanas 21 e 22) até 09/01.
+   v42 (Civil da semana 17 e casos das semanas 17 e 18) publicada em 14/11 (PR #39); v43 (Civil da semana 18 e
+   casos da semana 19) pronta em 14/11, para publicar até 26/12; v44 (casos da semana 20) até 02/01; v45 (casos das
+   semanas 21 e 22) até 09/01.
 
    **Ao terminar qualquer versão:** HANDOFF (adendo e Retomada), memória,
    `robocopy` da cópia dos scripts e, depois do PR, `--ff-only` na pasta
@@ -4802,11 +4923,28 @@ I e II) e reequilíbrio das alternativas antigas, em versões separadas.
 
 ## TRABALHO EM ANDAMENTO (atualizar ao fim de cada etapa)
 
-### v42 — Civil da semana 17 e estudos de caso das semanas 17 e 18 — PRONTA em 14/11/2026, esperando o commit (Adendo 37; publicar até sábado, 19/12)
+### v43 — Civil da semana 18 e estudos de caso da semana 19 — PRONTA em 14/11/2026, esperando o commit (Adendo 38; publicar até sábado, 26/12)
 
-- **Estado:** `index.html` e `sw.js` do worktree = `v42/ensaio.html` e `v42/ensaio_sw.js` (`cmp`); cache
-  `autos-do-estudo-v42`. O que entrou, as fontes, a verificação e as lições estão no **Adendo 37**; o roteiro está em
-  `scratchpad/v42/PLANO.md`.
+- **Estado:** `index.html` e `sw.js` do worktree = `v43/ensaio.html` e `v43/ensaio_sw.js` (`cmp`); cache
+  `autos-do-estudo-v43`. O que entrou, as fontes, a verificação e as lições estão no **Adendo 38**; o roteiro está em
+  `scratchpad/v43/PLANO.md`.
+- **Estado do scratchpad:** `v31/semanas.js`, `v31/gerar.js`, `v31/gerar_p02.js`, `v31/simulados.js`,
+  `edital2026/matriz.js`, `gerar_lei_seca.js` e `lei_seca_texto.js` estão no estado da v43 (cópias de antes, estado da
+  v42, em `bak_v43/`); `bak_2210/index_v42.html` e `sw_v42.js` guardados (entrada da v43). Cópia em
+  `ferramentas-scratchpad` atualizada em 14/11.
+- **Ordem para remontar:** `bash v43/montar.sh`; `node v36/gerar_aud_nucleo.js`; `node v36/aud_nucleo.js
+  v43/ensaio.html --json v43/aud_nucleo.json`; `node v43/nucleo_v43.js v43/ensaio.html --json v43/nucleo.json`;
+  `node v43/montar_dados_v43.js v43/ensaio.html`; `bash v43/montar.sh` de novo (ponto fixo); `bash
+  v43/conferir_tudo.sh`; `node v43/teste_v43.js bak_2210/index_v42.html v43/ensaio.html`; `node v43/neg_tela.js N`
+  (N de 1 a 5) e o teste de novo sobre `v43/neg_tela.html`.
+- **Depois do commit e do PR:** `git fetch` + `--ff-only` na raiz; guardar `bak_2210/index_v43.html` e `sw_v43.js`;
+  começar a v44.
+
+### v42 — Civil da semana 17 e estudos de caso das semanas 17 e 18 — PUBLICADA em 14/11/2026 pelo PR #39 (`76e2682`) (Adendo 37)
+
+- **Estado:** commit `ce4298e`; `index.html` e `sw.js` = `v42/ensaio.html` e `v42/ensaio_sw.js` (`cmp`); o site serve
+  `autos-do-estudo-v42`; raiz em ff no PR #39; `bak_2210/index_v42.html` e `sw_v42.js` guardados. O que entrou, as
+  fontes, a verificação e as lições estão no **Adendo 37**; o roteiro está em `scratchpad/v42/PLANO.md`.
 - **Estado do scratchpad:** `v31/semanas.js`, `edital2026/matriz.js` e `gerar_lei_seca.js` estão no estado da v42
   (cópias de antes, estado da v41, em `bak_v42/`); `bak_2210/index_v41.html` e `sw_v41.js` guardados (entrada da
   v42). Cópia em `ferramentas-scratchpad` atualizada em 14/11.
@@ -4815,8 +4953,8 @@ I e II) e reequilíbrio das alternativas antigas, em versões separadas.
   `node v42/montar_dados_v42.js v42/ensaio.html`; `bash v42/montar.sh` de novo (ponto fixo); `bash
   v42/conferir_tudo.sh`; `node v42/teste_v42.js bak_2210/index_v41.html v42/ensaio.html`; `node v42/neg_tela.js N`
   (N de 1 a 4) e o teste de novo sobre `v42/neg_tela.html`.
-- **Depois do commit e do PR:** `git fetch` + `--ff-only` na raiz; guardar `bak_2210/index_v42.html` e `sw_v42.js`;
-  começar a v43.
+- **Depois do commit e do PR (feito em 14/11):** `git fetch` + `--ff-only` na raiz; `bak_2210/index_v42.html` e
+  `sw_v42.js` guardados; a v43 começou.
 
 ### v41 — material da semana 16 e correção da semana 19 — PUBLICADA em 13/11/2026 pelo PR #38 (`84a74ce`) (Adendo 36)
 
