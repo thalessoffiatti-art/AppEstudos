@@ -5065,11 +5065,106 @@ versão.
 
 ---
 
-# Retomada — estado em 2026-11-16, v46 pronta (ler primeiro depois de compactar a conversa)
+# Adendo 42 — 2026-11-17 (incisos grudados: correção de forma em textos de lei, v47)
+
+**Origem.** O usuário commitou e publicou a v46 (`fd5eb3f`, PR #43, `e9769d6`, em 17/11; o site serve
+`autos-do-estudo-v46`, conferido no `sw.js` publicado) e disse: "Tudo pronto. Pode prosseguir
+nessa ordem que recomendaste mesmo" — os incisos grudados primeiro; o reequilíbrio das alternativas antigas fica para a
+versão seguinte, separada. Raiz em ff no PR #43; `bak_2210/index_v46.html` e `sw_v46.js` guardados (`cmp` com
+`v46/ensaio.html` e `v46/ensaio_sw.js`). **O scratchpad foi limpo de novo (a 5ª vez)**: sobravam 840 arquivos; restaurados
+2.301 de `ferramentas-scratchpad` com `robocopy /E /XO` (nada mais novo foi sobrescrito).
+
+**Normas, antes da versão (17/11, navegador embutido):** quadro de emendas (última: EC 141), leis ordinárias de 2026
+(última: 15.529), medidas provisórias (última: 1.400), leis complementares (última: 238) — nada novo desde 16/11.
+
+**Levantamento.** Os três casos do Adendo 36 eram só os que alguém tinha visto. Varredura nova dos 78 quadros
+(`v47/incisos_grudados.js`: rótulo de inciso ou alínea no meio da linha, "em sequência" quando é o seguinte ao do começo
+da linha) e das 349 caixas de lei (`v47/residuo_caixas.js`, `v47/_c1.js`):
+- 20 ocorrências em sequência; 10 são remissões ("incisos I, II e III do caput", "Capítulo IV desta Lei", "item II do
+  artigo anterior"); reais: CPC 627 e 513, § 2º (sem pontuação), Lei 8.112, art. 60-B (sem pontuação), CF 95, parágrafo
+  único ("partidária. IV receber" — a CF compilada não tem travessão no IV e no V), Lei 4.717, art. 4º ("instrumentos., V
+  -"), Lei 8.987, art. 6º, § 3º ("; e, II -"), Regimento do TRT4, art. 34 (alínea d sem pontuação) e Lei 8.112, art. 20
+  (a nota "(vide EMC nº 19)", em minúscula, escapava e ficava entre o ":" e o "I -");
+- **o travessão como U+0096**: a extração leu páginas `windows-1252` do Planalto como Latin-1, e o "–" (0x96) virou o
+  caractere de controle U+0096 — na tela, um quadradinho (captura `v47/telas/v46_clt458.png`); como a quebra procura
+  "-–—", os incisos todos ficavam numa linha só. 35 nos quadros (CLT 458, § 2º, 789, 789-A e 789-B; Lei 8.036, art. 22;
+  Lei 8.429, art. 10; Lei 9.784, art. 2º, parágrafo único) e 4 nas caixas do CPC 927 e 988 (dpc-precedentes). Na base:
+  `clt.json` 36, `L8213.json` 8 (artigos fora dos quadros), `L8036`, `L8429` 2 cada, `L9784` 1. Conferido no Planalto em
+  17/11: nos mesmos pontos, o navegador mostra U+2013, nas seis fontes (CLT, Leis 9.784, 8.429 e 8.036, CPC);
+- **resíduo do Planalto em caixas do material**: notas de alteração dentro do negrito e "Vigência"/"(Vigência)" soltos nas
+  caixas do CPC 231 e 313 (dpc-atos) e 927 e 988 (dpc-precedentes) — vinham do commit `e6f4d45`, anterior ao projeto
+  atual. As notas da Lei 11.416 já estão em `span.lei-alt` (de propósito), e o CC 227 mostra o caput revogado (regra da v34).
+
+**O que mudou**
+- `lei_seca_texto.js` (`v47/patch_texto_v47.md`; cópia de antes em `v47/lei_seca_texto_v46.js`): `cp1252()` em `corpo()`
+  (tabela do HTML5; na base só há o 0x96); `vide` minúsculo em `KW`; `quebraIncisos()` em `dividir()` — quebra só antes do
+  rótulo seguinte ao do começo do trecho, depois de ".,", "; e," ou, sem travessão, de ". ; :", ou sem pontuação, com
+  travessão ou alínea, depois de palavra que não é de remissão (`REM_INC`). Pipeline: **15 artigos em 12 quadros**, 37
+  linhas a mais; o CLT 458, § 2º, perde a linha do VII, que é "(VETADO)" no Planalto (os quadros não trazem vetado).
+- **Caixas do CPC** (`v47/caixas.js`): o travessão; as 7 notas saem do negrito para `span.lei-alt` (como a Lei 11.416); sem
+  "Vigência". O texto da lei, sem as notas, é igual à base (`v47/_caixas_cpc.js`, antes e depois).
+- **Marca-texto**: `achar()` procura o grifo guardado com "–" no lugar do U+0096, no trecho e no contexto (um caractere
+  por outro: o comprimento não muda); a barra de "não achada" mostra o trecho com o travessão novo. O dado não muda.
+- **Aviso** de 17/11 no alto do 03.1, com quatro itens e a frase sobre os grifos; o da v46 é o primeiro dos 36 anteriores,
+  e o novo aponta para ele.
+- Nada mais muda: grade, cartões, casos, questões (725), 04.2 (294), núcleo, simulados, chaves `trt4:`.
+
+**Verificação (17/11)**
+- `v47/diff_artigos.js` (manifesto da v46 × novo): exatamente os 15 artigos; texto juntado igual ao da v46, salvo o "–", a
+  nota e o "VII –"; cada linha velha é a junção de linhas novas seguidas; mesmos artigos e ordem em cada tópico; nenhum
+  grudado em sequência fora das 10 remissões; nenhum C1. Negativo: 6 estragos (`--estragar 1..6`), todos acusados.
+- `v47/teste_quebra.js`: 14 casos (6 que quebram, 8 remissões e fora de sequência que não quebram); com o código da v46,
+  falham os 6 que quebram.
+- `bash v47/conferir_tudo.sh`: **27 conferidores, todos com saída 0**. Diferenças da v46, todas explicadas: lei seca 17.763
+  → 17.801 linhas (+37, e +1 da Lei 8.987, art. 6º, que está em dois quadros); "não contíguas" 16 → 9 (as 7 que saíram eram
+  as linhas grudadas que passavam por cima de uma nota retirada; `v47/costura_v46.txt` × `costura_v47.txt`); leitor
+  independente: 41 dispositivos exigidos a mais (usa o mesmo `dividir`), os mesmos 18 e 21 "NÃO LIDO"; manifestos 9 → 24
+  (comparação com o manifesto da v34). Novos: `quadros_v47` (12 quadros, lista exata), `artigos_v47`, `residuo_caixas` (0
+  fora da nota cinza; na v46, 50) e `caixas_cpc_v47`. Aviso 106/106 (sobre a v46, 10 falhas).
+- `v47/teste_v47.js` (Edge, 18/11/2026): **23 de 23** — seis grifos feitos com o mouse na v46 (um atravessa a quebra nova
+  do CPC 627, um pega o U+0096, um fica num inciso que ganhou linha, três pegam o que saiu); na v47, os três primeiros
+  pintados (o do CPC 627 em dois pedaços), os três outros na barra, com o travessão novo; chaves `trt4:` idênticas; treze
+  incisos na sua linha; travessão com 6,4 px (o U+0096 da v46 era um quadradinho de 9,4 px); caixas do CPC em cinza
+  (--tinta-3), fora do negrito; aviso; 375 e 820 px sem rolagem lateral, medido na tela; console limpo.
+  `v47/neg_tela.js`: os sete estragos acusados, cada um sozinho.
+- `v40/teste_rolagem.js` 17/17; `busca_2110/teste_busca.js` (v46 × v47) TUDO CERTO; `juris_1210/teste_marca_1210.js`
+  com caminho absoluto (com caminho relativo o `localStorage` é negado, a varredura dá exceção e o teste sai com 0 sem
+  medir nada — era o que estava em `v46/_marca.log`; o número da v46 foi refeito em 17/11): 284.763 palavras (v46:
+  284.767; saíram os quatro "Vigência"), **0 erradas com posição**; erradas sem posição 8.381 → 8.421 (+27 em
+  `dpt-custas`, +13 em `dpc-precedentes`: trechos que aparecem duas vezes no tópico, numa caixa e no quadro, ficaram
+  iguais com o travessão certo; só um grifo feito entre 08 e 12/10, sem posição, num desses trechos pode passar para a
+  cópia igual do mesmo tópico); `juris_1210/teste_atualiza_1210.js` (caminhos absolutos) sem erros: dados preservados, 294 cartões, o aviso da v47 no
+  alto, 375 px sem rolagem lateral. O perfil temporário que o teste de tela deixou (do próprio dia) foi apagado; nenhum
+  Edge sem interface sobrou.
+- `index.html` e `sw.js` do worktree = `v47/ensaio.html` e `v47/ensaio_sw.js` (`cmp`); cache `autos-do-estudo-v47`.
+
+**Lições**
+- Lista de defeitos conhecidos não é varredura: os três incisos do Adendo 36 eram 15 artigos, e a causa principal (o
+  U+0096) nem aparecia na lista. Antes de corrigir, varrer o conjunto inteiro com um detector e separar remissão de defeito.
+- Página do Planalto em `windows-1252`: 0x80–0x9F lidos como Latin-1 viram controles C1. Procurar `[\u0080-\u009f]` em
+  toda base nova.
+- Caractere de controle não é invisível: o Edge desenha um quadradinho. Medir na tela antes de escrever no aviso.
+- Grifo guardado com o texto velho: se a correção troca um caractere por outro do mesmo comprimento, o marca-texto pode
+  procurar o velho como novo, sem mexer no dado.
+- Teste de grifo com o mouse: o trecho pode quebrar de linha na tela (soltar no fim do último retângulo), e o próprio grifo
+  divide o nó de texto (medir em outro trecho).
+- `teste_marca_1210.js` também precisa de caminho absoluto e sai com 0 mesmo quebrado: ler a linha da varredura. A
+  varredura copia o texto das funções de `function achar(` a `function desembrulhar(`: o que `achar` usa tem de estar
+  dentro dela (a primeira versão do `TRAV_VELHO`, declarado fora, quebrou a varredura).
+
+**Pendências que continuam:** reequilíbrio das alternativas antigas (questões com a certa mais longa; começar por Processo
+Civil e Constitucional, `auditoria_0711/vies.js`), em versão separada, sem prazo; conferir o quadro de emendas e as leis do
+ano antes de cada versão.
+
+---
+
+# Retomada — estado em 2026-11-17, v47 pronta (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira, o **Adendo 41** (v46, casos das semanas 21 e 22; montagem só de casos, direto sobre a versão
+1. Ler esta seção inteira, o **Adendo 42** (v47, incisos grudados: varredura dos quadros e das caixas, `lei_seca_texto.js`
+   com `cp1252` e `quebraIncisos`, caixas do CPC, marca-texto que acha o grifo velho — modelo para correção de forma em
+   texto de lei), o **Adendo 41** (v46, casos das semanas 21 e 22; montagem só de casos, direto sobre a versão
    publicada — o modelo mais novo de lote só de casos), o **Adendo 40** (v45, EC 140 e 141/2026: atualização da base da CF,
    quadros, seção nova, questões e ajustes declarados — modelo para lei nova no meio do caminho), o **Adendo 39** (v44,
    casos da semana 20), o **Adendo 38** (v43, Civil da semana 18 e casos da semana 19; o modelo de lote
@@ -5079,39 +5174,40 @@ versão.
    cabem), o **Adendo 30** (v35, marca-texto), o **Adendo 29** (v34, semana
    12) e o **Adendo 26** (edital de 2026). Se o scratchpad tiver perdido
    arquivos (aconteceu de novo entre 11 e 12/11; o app também troca o caminho do
-   scratchpad entre sessões), restaurar antes (`robocopy
+   scratchpad entre sessões; e de novo entre 16 e 17/11, a 5ª vez), restaurar antes (`robocopy
    <ferramentas-scratchpad> <scratchpad> /E /XO`) e provar com `bash
-   v46/montar.sh` + `cmp v46/ensaio.html <worktree>/index.html`. O plano
+   v47/montar.sh` + `cmp v47/ensaio.html <worktree>/index.html`. O plano
    aprovado em 22/10 está em
    `C:\Users\thale\.claude\plans\woolly-finding-squid.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
    - `git status --short` e `git log --oneline -3` no worktree (em 16/11:
-     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v46 pronta,
-     esperando o commit do usuário; último commit `ad486de`, Adendo 40 = v45, publicada pelo PR #42, `bfef62a`);
-   - `git fetch origin` e `git log --oneline -3 origin/main` (em 16/11 o
-     `main` estava no PR #42, `bfef62a`, e a pasta principal também). **O
+     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v47 pronta,
+     esperando o commit do usuário; último commit `fd5eb3f`, Adendo 41 = v46, publicada pelo PR #43, `e9769d6`);
+   - `git fetch origin` e `git log --oneline -3 origin/main` (em 17/11 o
+     `main` estava no PR #43, `e9769d6`, e a pasta principal também). **O
      `--ff-only` do usuário só anda depois de um `git fetch`:** os worktrees
      dividem as referências com a pasta principal, e sem o fetch o
      `origin/main` local ainda aponta para o PR anterior. Fazer o fetch antes
      (ou indicar `git -C <raiz> pull --ff-only origin main`);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (em 16/11: `autos-do-estudo-v45`, publicada pelo PR #42; a v46 tem de sair
-     até sábado, 09/01, antes da semana 21);
+     (em 17/11: a v46 publicada pelo PR #43; a v47 não tem prazo, mas é correção
+     de texto de lei: publicar logo);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo e no Adendo
    32). Não aplicar nenhuma delas sem a resposta.
-4. **Próximo passo: esperar o commit e o PR da v46 (Adendo 41, casos das semanas 21 e 22).**
-   A v46 está pronta no worktree (`index.html` = `v46/ensaio.html`, `sw.js` = `v46/ensaio_sw.js`, conferidos com
-   `cmp`); tem de ser publicada até sábado, 09/01 (a semana 21 começa em 18/01). **Não mexer no `index.html` antes do
-   commit.** Depois do commit e do PR: `git fetch` e `--ff-only` na pasta principal, guardar `bak_2210/index_v46.html`
-   (cópia do worktree, CRLF; não `git show`, que sai em LF) e `sw_v46.js`. Com a v46, **as promessas de conteúdo da grade
-   estão todas cumpridas** (casos até a semana 22; nenhuma caixa diz mais "entram nesta caixa até"). O que fica, sem prazo
-   e em versões separadas: os **incisos grudados** (Adendo 36) e o **reequilíbrio das alternativas antigas** (questões com
-   a certa mais longa; começar por Processo Civil e Constitucional, `auditoria_0711/vies.js`). Propor ao usuário a ordem
-   (os incisos grudados primeiro, por serem correção de texto de lei) e esperar a resposta. Antes de cada versão, **abrir o
-   quadro de emendas do Planalto** (`constituicao/emendas/emc/quadro_emc.htm`) e as listas de leis ordinárias, medidas
-   provisórias e leis complementares do ano no portal da legislação (lição do Adendo 40; feito em 16/11 para a v46). Caso
-   ou questão de jornada ou repouso segue a EC 141 (40 horas com transição; 2 dias de repouso desde 16/12/2026).
+4. **Próximo passo: esperar o commit e o PR da v47 (Adendo 42, incisos grudados).**
+   A v47 está pronta no worktree (`index.html` = `v47/ensaio.html`, `sw.js` = `v47/ensaio_sw.js`, conferidos com
+   `cmp`). **Não mexer no `index.html` antes do commit.** Depois do commit e do PR: `git fetch` e `--ff-only` na pasta
+   principal, guardar `bak_2210/index_v47.html` (cópia do worktree, CRLF) e `sw_v47.js`, e guardar
+   `v47/manifesto_v47.json` (cópia de `lei_seca_manifesto.json`: a base da comparação da próxima versão que mexer em
+   quadro). O `lei_seca_texto.js` mudou na v47 (`v47/patch_texto_v47.md`): toda versão daqui em diante gera os quadros com
+   ele. Depois, sem prazo e em versão separada: o **reequilíbrio das alternativas antigas** (questões com a certa mais
+   longa; começar por Processo Civil e Constitucional, `auditoria_0711/vies.js`) — propor o escopo ao usuário antes. Antes
+   de cada versão, **abrir o quadro de emendas do Planalto** (`constituicao/emendas/emc/quadro_emc.htm`) e as listas de
+   leis ordinárias, medidas provisórias e leis complementares do ano no portal da legislação (feito em 17/11 para a v47:
+   EC 141, Lei 15.529, MP 1.400 e LC 238 continuam as últimas). Caso ou questão de jornada ou repouso segue a EC 141 (40
+   horas com transição; 2 dias de repouso desde 16/12/2026). Base nova de lei: procurar `[\u0080-\u009f]` (página
+   `windows-1252` lida como Latin-1; `v47/_mojibake.js`).
    **Todo lote usa a carga nova:**
    cada bloco de leitura com núcleo e sobra pela teoria do horário
    (`v38/nucleo_v38.js` como modelo: `BLOCOS`, `TEORIA`, `FIXAS` com as
@@ -5125,7 +5221,11 @@ versão.
    `fontes.js` (`ec141`, `datas:`, `cfantes:`, `calc:mais:`), `conteudo.js` + `provas.js`, `questoes.js` +
    `conferir_questoes.js` (com aspas), `ajustes.js` (trocas declaradas em questões, cartões e Raio-X), `aplicar_v45.js`,
    `diff_quadros.js` (quadros que mudaram, com lista esperada), `montar.sh`, `conferir_tudo.sh`, teste e negativo; o
-   texto das emendas em `ec141/`; lote só de casos: `scratchpad/v46/` (o mais novo — `PLANO.md`, `incidencia_s21.md`,
+   texto das emendas em `ec141/`; correção de forma em texto de lei: `scratchpad/v47/` (`PLANO.md`, `incisos_grudados.js`, `residuo_caixas.js`, `_c1.js`,
+   `_mojibake.js`, `patch_texto_v47.md`, `diff_artigos.js` com `--estragar`, `teste_quebra.js`, `caixas.js`, `aviso.js` +
+   `conferir_aviso.js`, `aplicar_v47.js`, `montar.sh`, `conferir_tudo.sh`, `_gera_teste.js` + `_teste_corpo.js` →
+   `teste_v47.js` (grifo com o mouse que atravessa linhas: `marcar2`), `neg_tela.js`, `_handoff.js`, `_memoria.js`); lote só
+   de casos: `scratchpad/v46/` (o mais novo — `PLANO.md`, `incidencia_s21.md`,
    `fontes.js` com `ec141:N`, `casos.js` + `conferir_casos.js` escrito direto, com contas, e `_neg_casos.js`, `aviso.js` +
    `conferir_aviso.js`, `aplicar_v46.js`, `montar.sh`, `conferir_tudo.sh`, `_gera_teste.js` + `_teste_corpo.js` →
    `teste_v46.js`, `neg_tela.js`, `_handoff.js`, `_memoria.js`); antes, `scratchpad/v44/` — `PLANO.md`, `incidencia_s20.md`, `casos.js` +
@@ -5165,7 +5265,7 @@ versão.
      `patch_matriz_v3X.js`, DONO no `gerar_lei_seca.js` quando a linha ligar
      dois tópicos, `aplicar_v3X.js A|B`, `montar.sh`, `aviso.js` com
      `conferir_aviso.js`; o aviso aberto esperado passa a ser o de
-     "16/11/2026 — estudos de caso das semanas 21 e 22", com "Avisos anteriores" em 35;
+     "17/11/2026 — incisos que apareciam grudados na linha de cima", com "Avisos anteriores" em 36;
    - **núcleo (regra da v38, Adendo 33):** refazer o levantamento sobre o
      ensaio (`node v36/gerar_aud_nucleo.js` e `node v36/aud_nucleo.js ENSAIO
      --json v3X/aud_nucleo.json`); em `nucleo_v3X.js` (cópia de
@@ -5192,7 +5292,8 @@ versão.
    v41 (semana 16 e correção da semana 19) publicada em 13/11 (PR #38);
    v42 (Civil da semana 17 e casos das semanas 17 e 18) publicada em 14/11 (PR #39); v43 (Civil da semana 18 e
    casos da semana 19) publicada em 16/11 (PR #40); v44 (casos da semana 20) publicada em 16/11 (PR #41); v45 (EC 140 e
-   141/2026) publicada em 16/11 (PR #42); v46 (casos das semanas 21 e 22) pronta em 16/11, para publicar até 09/01.
+   141/2026) publicada em 16/11 (PR #42); v46 (casos das semanas 21 e 22) publicada em 17/11 (PR #43); v47 (incisos grudados)
+   pronta em 17/11.
 
    **Ao terminar qualquer versão:** HANDOFF (adendo e Retomada), memória,
    `robocopy` da cópia dos scripts e, depois do PR, `--ff-only` na pasta
@@ -5200,16 +5301,25 @@ versão.
 
 ## TRABALHO EM ANDAMENTO (atualizar ao fim de cada etapa)
 
-### v46 — estudos de caso das semanas 21 e 22 — PRONTA em 16/11/2026, esperando o commit (Adendo 41; publicar até sábado, 09/01)
+### v47 — incisos grudados (correção de forma em textos de lei) — PRONTA em 17/11/2026, esperando o commit (Adendo 42)
 
-- **Estado:** `index.html` e `sw.js` do worktree = `v46/ensaio.html` e `v46/ensaio_sw.js` (`cmp`); cache
-  `autos-do-estudo-v46`. O que entrou, a verificação e as lições estão no **Adendo 41**.
-- **Estado do scratchpad:** `bak_2210/index_v45.html` e `sw_v45.js` guardados (entrada da v46). A base de leis e o
-  `gerar_lei_seca.js` não mudaram desde a v45. Cópia em `ferramentas-scratchpad` atualizada em 16/11.
-- **Ordem para remontar:** `bash v46/montar.sh` (aplicar, versão, pipeline, que tem de sair igual); `bash
-  v46/conferir_tudo.sh`; `node v46/teste_v46.js bak_2210/index_v45.html v46/ensaio.html`; `node v46/neg_tela.js N` (N
-  de 1 a 6) e o teste de novo sobre `v46/neg_tela.html`; `node v46/_neg_casos.js N bak_2210/index_v45.html` (N de 1 a 8).
-- **Depois do commit e do PR:** `git fetch` + `--ff-only` na raiz; guardar `bak_2210/index_v46.html` e `sw_v46.js`.
+- **Estado:** `index.html` e `sw.js` do worktree = `v47/ensaio.html` e `v47/ensaio_sw.js` (`cmp`); cache
+  `autos-do-estudo-v47`. O que mudou, a verificação e as lições estão no **Adendo 42**.
+- **Estado do scratchpad:** restaurado de `ferramentas-scratchpad` em 17/11 (5ª limpeza); `bak_2210/index_v46.html` e
+  `sw_v46.js` guardados (entrada da v47); `lei_seca_texto.js` com a mudança da v47 (cópia de antes em
+  `v47/lei_seca_texto_v46.js`); `v47/manifesto_v46.json` = manifesto da v46. Cópia em `ferramentas-scratchpad`
+  atualizada em 17/11.
+- **Ordem para remontar:** `bash v47/montar.sh` (aplicar, versão, pipeline: 15 artigos em 12 quadros, com
+  `diff_artigos` e `diff_quadros`); `bash v47/conferir_tudo.sh`; `node v47/teste_quebra.js`; `node v47/teste_v47.js
+  bak_2210/index_v46.html v47/ensaio.html`; `node v47/neg_tela.js N` (N de 1 a 7) e o teste de novo sobre
+  `v47/neg_tela.html`; `node v47/diff_artigos.js --estragar N` (N de 1 a 6).
+- **Depois do commit e do PR:** `git fetch` + `--ff-only` na raiz; guardar `bak_2210/index_v47.html`, `sw_v47.js` e
+  `v47/manifesto_v47.json`.
+
+### v46 — estudos de caso das semanas 21 e 22 — PUBLICADA em 17/11/2026 pelo PR #43 (`e9769d6`) (Adendo 41)
+
+- **Estado:** commit `fd5eb3f`; `index.html` e `sw.js` = `v46/ensaio.html` e `v46/ensaio_sw.js` (`cmp`); raiz em ff
+  no PR #43; `bak_2210/index_v46.html` e `sw_v46.js` guardados.
 
 ### v45 — Emendas Constitucionais 140 e 141/2026 — PUBLICADA em 16/11/2026 pelo PR #42 (`bfef62a`) (Adendo 40)
 
