@@ -5326,11 +5326,64 @@ aparelho, com cópia de segurança, restauração e "Zerar progresso"); URL copi
 
 ---
 
-# Retomada — estado em 2026-11-19, v48 e v49 prontas, juntas (ler primeiro depois de compactar a conversa)
+# Adendo 45 — 2026-11-20 (convênios: a Lei 8.666/1993 está revogada, v50)
+
+**Origem.** O usuário commitou a v48 e a v49 juntas (`48c42ef`, mensagem do Adendo 43, com o `index.html` da v49 e o
+Adendo 44) e publicou pelo PR #45 (`cd842c4`); o site serve `autos-do-estudo-v49`. Raiz em ff no PR #45;
+`bak_2210/index_v49.html`, `sw_v49.js`, `index_v48.html` e `sw_v48.js` guardados. Em 20/11 perguntou: no tópico
+"Convênios, parcerias com organizações da sociedade civil (Lei 13.019/2014) e parcerias público-privadas (Lei
+11.079/2004)", seção Convênios, "há menção à aplicação da Lei 8.666/93. Isso está correto? Esta lei foi substituída pela
+nova lei de licitações (14.133/2021)".
+
+**Resposta (conferida na base `leis/` e no Planalto, no navegador, em 20/11):**
+- a Lei 8.666/1993 foi revogada em 30/12/2023 (Lei 14.133, art. 193, II, "a", na redação da LC 198/2023; os arts. 89 a
+  108, os crimes, já na publicação, art. 193, I);
+- o art. 84 da Lei 13.019 (redação da Lei 13.204/2015) **continua a citar** a Lei 8.666 e o art. 116 dela — o texto nunca
+  foi atualizado; a citação no material era fiel à lei;
+- a Lei 14.133 se aplica às hipóteses da legislação que fazem referência expressa à Lei 8.666 (art. 189) e, no que couber
+  e na ausência de norma específica, aos convênios (art. 184; §§ e art. 184-A pela Lei 14.770/2023);
+- o erro era a forma: "continuam regidos pelo art. 116 da Lei 8.666" dava a lei como em vigor. O item seguinte já trazia
+  os arts. 184 e 189, mas sem dizer que a 8.666 tinha sido revogada.
+- As outras 14 menções à 8.666 no app estão certas: texto literal de lei, súmula ou portaria nos quadros (Súmula 331, Lei
+  8.987 art. 38, Lei 11.079 art. 3º, Lei 14.133 art. 189, Portaria do TRT4), explicações que já dizem "revogada" (três
+  questões de licitação), a nota do tópico de licitações e o cartão do Tema 246, que já aponta o art. 121 da Lei 14.133.
+
+**O que a v50 faz** (`v50/textos.js`, `v50/aplicar_v50.js`): na seção "Convênios" do `adm-parcerias`, item 1:
+"continuam regidos" → "são regidos" (o texto do art. 84, parágrafo único), o resto igual; item novo entre o 1 e o 2: "A
+Lei 8.666/1993 está revogada desde 30/12/2023 (Lei 14.133, art. 193, II, “a”, na redação da Lei Complementar
+198/2023). O texto do art. 84 da Lei 13.019 não foi atualizado e continua a citá-la, e uma questão pode reproduzi-lo
+assim; isso não quer dizer que a Lei 8.666 esteja em vigor. A essa referência se aplica a Lei 14.133, pelo art. 189,
+citado no item seguinte." O quadro Lei seca (art. 84 oficial) não muda. Aviso de 20/11/2026; o da v49 é o primeiro dos 39
+anteriores. Vale na hora (correção de conteúdo; o bloco de Parcerias e LAI é na sexta, 20/11, às 18h25).
+
+**Verificação (20/11)**
+- `v50/aplicar_v50.js`: só a seção "Convênios" muda no material; QUESTOES, CRONOGRAMA, JURIS, NUCLEO, SIM_REAL,
+  QC_TOPICO, COTA_SIMULADO, os 78 quadros e os 22 cartões iguais; nada sumiu fora das trocas. `bash v50/montar.sh`:
+  pipeline da lei seca igual; 4 scripts sem erro de sintaxe.
+- `v50/conferir_v50.js`: 20/20 (cada frase nova provada por substring na base de leis; o aviso; sobre a v49, 8 falhas).
+- `bash v50/conferir_tudo.sh`: **30 conferidores, todos com saída 0**, com as saídas iguais às da v49.
+- `v50/teste_v50.js` (Edge, 20/11/2026): **10 de 10** — dois grifos feitos na v49 (um em "continuam regidos pelo art.
+  116", outro no item que não muda); v49 → v50 com as chaves `trt4:` idênticas; a seção com os 3 itens; o grifo do item
+  que não muda pintado; o outro na barra do tópico, "1 marcação não foi achada no texto atual", guardado; aviso; 375 e
+  820 px; console limpo. `v50/neg_tela.js` 1..3 ("continuam regidos" de volta, item novo sumido, versão v49): os três
+  acusados; nenhum perfil temporário sobrou.
+- Regressões: `v40/teste_rolagem.js` 17/17; `busca_2110/teste_busca.js` (v49 × v50) TUDO CERTO;
+  `juris_1210/teste_marca_1210.js` (caminho absoluto) 284.779 palavras (16 a mais que na v49), 0 erradas com posição;
+  `juris_1210/teste_atualiza_1210.js` sem erros; `v49/teste_v49.js` sobre a v50: 36 de 37, a única falha é a conferência
+  do número da versão (v49).
+
+**Lição:** texto de lei antigo que outra lei ainda cita: transcrever a citação como está ("são regidos") e dizer, ao
+lado, que a lei citada foi revogada e qual dispositivo da lei nova assume a referência (aqui, o art. 189 da Lei 14.133).
+Ao revisar um tópico, procurar "continua", "continuam" e "ainda" junto de lei revogada.
+
+---
+
+# Retomada — estado em 2026-11-20, v50 pronta (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira, o **Adendo 44** (v49, revisões espaçadas com lista fechada de alvos, a partir da proposta do
+1. Ler esta seção inteira, o **Adendo 45** (v50, convênios: a Lei 8.666/1993 está revogada — correção de forma num
+   tópico, com o texto provado na base de leis), o **Adendo 44** (v49, revisões espaçadas com lista fechada de alvos, a partir da proposta do
    Codex de 19/11: `v49/alvos.js` + `gerar_cartoes.js`, `conferir_cartoes.js` — modelo para mexer nos cartões de revisão), o
    **Adendo 43** (v48, reequilíbrio das alternativas de Processo Civil e Constitucional:
    acréscimo provado e reescrita com erro provado, `conferir_reeq.js` — modelo para mexer em questões antigas), o
@@ -5348,13 +5401,13 @@ aparelho, com cópia de segurança, restauração e "Zerar progresso"); URL copi
    arquivos (aconteceu de novo entre 11 e 12/11; o app também troca o caminho do
    scratchpad entre sessões; e de novo entre 16 e 17/11, a 5ª vez), restaurar antes (`robocopy
    <ferramentas-scratchpad> <scratchpad> /E /XO`) e provar com `bash
-   v49/montar.sh` + `cmp v49/ensaio.html <worktree>/index.html` (a v49 parte de `v48/ensaio.html`). O plano
+   v50/montar.sh` + `cmp v50/ensaio.html <worktree>/index.html` (a v50 parte de `bak_2210/index_v49.html`). O plano
    aprovado em 22/10 está em
    `C:\Users\thale\.claude\plans\woolly-finding-squid.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
    - `git status --short` e `git log --oneline -3` no worktree (em 16/11:
-     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v49 pronta, que já contém a v48 — as duas esperam o mesmo
-     commit do usuário; último commit
+     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v50 pronta, esperando o commit do usuário; último commit `48c42ef`
+     (a v48 e a v49 juntas, com a mensagem do Adendo 43), publicado pelo PR #45, `cd842c4`; antes,
      `cd67ddd`, Adendo 42 = v47, publicada pelo PR #44, `b0a1958`);
    - `git fetch origin` e `git log --oneline -3 origin/main` (em 18/11 o
      `main` estava no PR #44, `b0a1958`, e a pasta principal também). **O
@@ -5363,20 +5416,18 @@ aparelho, com cópia de segurança, restauração e "Zerar progresso"); URL copi
      `origin/main` local ainda aponta para o PR anterior. Fazer o fetch antes
      (ou indicar `git -C <raiz> pull --ff-only origin main`);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (em 19/11: `autos-do-estudo-v47`, publicada pelo PR #44; a v48 e a v49 esperam o commit);
+     (em 20/11: `autos-do-estudo-v49`, publicada pelo PR #45; a v50 espera o commit);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo e no Adendo
    32). Não aplicar nenhuma delas sem a resposta.
-4. **Próximo passo: esperar o commit e o PR da v48 e da v49, juntas** (Adendo 43, reequilíbrio das alternativas; Adendo
-   44, revisões espaçadas com lista fechada de alvos). A v49 está no worktree (`index.html` = `v49/ensaio.html`, `sw.js` =
-   `v49/ensaio_sw.js`, conferidos com `cmp`) e contém a v48; o aviso da v49 aponta para o da v48. Se o usuário quiser dois
-   commits, o `index.html` da v48 sozinho é `v48/ensaio.html` (e `v48/ensaio_sw.js`). **Não mexer no `index.html` antes do
-   commit.** Depois do commit e do PR: `git fetch` e `--ff-only` na pasta principal, guardar `bak_2210/index_v49.html`
-   (cópia do worktree, CRLF) e `sw_v49.js` (e `index_v48.html` = `v48/ensaio.html`). Não há promessa de conteúdo
-   pendente. Só se o usuário quiser e sem prioridade: o reequilíbrio das outras disciplinas (Adendo 43); da proposta do
-   Codex, a troca manual de alvos e a fila persistente (chave nova: backup, restauração e "Zerar progresso") e a URL que
-   abre uma revisão depois de recarregar (Adendo 44). Perguntar antes. Antes de cada versão, abrir o quadro de emendas do
-   Planalto e as listas de leis, MPs e LCs do ano (feito em 19/11). Caso ou questão de jornada ou repouso segue a EC 141.
+4. **Próximo passo: esperar o commit e o PR da v50** (Adendo 45, convênios: a Lei 8.666/1993 está revogada). A v50 está
+   no worktree (`index.html` = `v50/ensaio.html`, `sw.js` = `v50/ensaio_sw.js`, conferidos com `cmp`). **Não mexer no
+   `index.html` antes do commit.** Depois do commit e do PR: `git fetch` e `--ff-only` na pasta principal, guardar
+   `bak_2210/index_v50.html` (cópia do worktree, CRLF) e `sw_v50.js`. Não há promessa de conteúdo pendente. Só se o
+   usuário quiser e sem prioridade: o reequilíbrio das outras disciplinas (Adendo 43); da proposta do Codex, a troca manual
+   de alvos, a fila persistente e a URL que abre uma revisão (Adendo 44). Perguntar antes. Antes de cada versão, abrir o
+   quadro de emendas do Planalto e as listas de leis, MPs e LCs do ano (feito em 19/11). Caso ou questão de jornada ou
+   repouso segue a EC 141.
    **Cartões de revisão:** os das semanas 13 a 22 saem de `v49/gerar_cartoes.js` sobre o arquivo de entrada; mexer em
    cartão de semana (tabela, links) muda a lista "Toda a semana": rodar de novo o gerador e `v49/conferir_cartoes.js`.
    **Todo lote usa a carga nova:**
@@ -5443,7 +5494,7 @@ aparelho, com cópia de segurança, restauração e "Zerar progresso"); URL copi
      `patch_matriz_v3X.js`, DONO no `gerar_lei_seca.js` quando a linha ligar
      dois tópicos, `aplicar_v3X.js A|B`, `montar.sh`, `aviso.js` com
      `conferir_aviso.js`; o aviso aberto esperado passa a ser o de
-     "19/11/2026 — revisões espaçadas com lista fechada de alvos, desde segunda, 23/11", com "Avisos anteriores" em 38;
+     "20/11/2026 — convênios: a Lei 8.666/1993 está revogada", com "Avisos anteriores" em 39;
    - **núcleo (regra da v38, Adendo 33):** refazer o levantamento sobre o
      ensaio (`node v36/gerar_aud_nucleo.js` e `node v36/aud_nucleo.js ENSAIO
      --json v3X/aud_nucleo.json`); em `nucleo_v3X.js` (cópia de
@@ -5472,7 +5523,7 @@ aparelho, com cópia de segurança, restauração e "Zerar progresso"); URL copi
    casos da semana 19) publicada em 16/11 (PR #40); v44 (casos da semana 20) publicada em 16/11 (PR #41); v45 (EC 140 e
    141/2026) publicada em 16/11 (PR #42); v46 (casos das semanas 21 e 22) publicada em 17/11 (PR #43); v47 (incisos grudados)
    publicada em 18/11 (PR #44); v48 (reequilíbrio de Processo Civil e Constitucional) e v49 (revisões espaçadas com lista
-   fechada de alvos) prontas em 19/11, para o mesmo commit.
+   fechada de alvos) publicadas juntas em 20/11 (PR #45); v50 (convênios: Lei 8.666 revogada) pronta em 20/11.
 
    **Ao terminar qualquer versão:** HANDOFF (adendo e Retomada), memória,
    `robocopy` da cópia dos scripts e, depois do PR, `--ff-only` na pasta
@@ -5480,7 +5531,15 @@ aparelho, com cópia de segurança, restauração e "Zerar progresso"); URL copi
 
 ## TRABALHO EM ANDAMENTO (atualizar ao fim de cada etapa)
 
-### v49 — revisões espaçadas com lista fechada de alvos — PRONTA em 19/11/2026, esperando o commit junto com a v48 (Adendo 44)
+### v50 — convênios: a Lei 8.666/1993 está revogada — PRONTA em 20/11/2026, esperando o commit (Adendo 45)
+
+- **Estado:** `index.html` e `sw.js` do worktree = `v50/ensaio.html` e `v50/ensaio_sw.js` (`cmp`); cache
+  `autos-do-estudo-v50`. Entrada: `bak_2210/index_v49.html` (a v49 publicada). O que mudou e a verificação: **Adendo 45**.
+- **Ordem para remontar:** `bash v50/montar.sh`; `bash v50/conferir_tudo.sh`; `node v50/_gera_teste.js` e `node
+  v50/teste_v50.js bak_2210/index_v49.html v50/ensaio.html`; `bash v50/final.sh` (3 estragos de tela e as regressões).
+- **Depois do commit e do PR:** `git fetch` + `--ff-only` na raiz; guardar `bak_2210/index_v50.html` e `sw_v50.js`.
+
+### v49 — revisões espaçadas com lista fechada de alvos — PUBLICADA em 20/11/2026 com a v48 pelo PR #45 (`cd842c4`) (Adendo 44)
 
 - **Estado:** `index.html` e `sw.js` do worktree = `v49/ensaio.html` e `v49/ensaio_sw.js` (`cmp`); cache
   `autos-do-estudo-v49`. Entrada: `v48/ensaio.html` (copiada para `v49/entrada_v48.html`). O que mudou, a verificação e as
@@ -5492,7 +5551,7 @@ aparelho, com cópia de segurança, restauração e "Zerar progresso"); URL copi
 - **Depois do commit e do PR:** `git fetch` + `--ff-only` na raiz; guardar `bak_2210/index_v49.html` e `sw_v49.js` (e
   `index_v48.html`/`sw_v48.js` a partir de `v48/ensaio.html`/`v48/ensaio_sw.js`).
 
-### v48 — reequilíbrio das alternativas de Processo Civil e Constitucional — PRONTA em 19/11/2026, vai no mesmo commit da v49 (Adendo 43)
+### v48 — reequilíbrio das alternativas de Processo Civil e Constitucional — PUBLICADA em 20/11/2026 com a v49 pelo PR #45 (Adendo 43)
 
 - **Estado:** `index.html` e `sw.js` do worktree = `v48/ensaio.html` e `v48/ensaio_sw.js` (`cmp`); cache
   `autos-do-estudo-v48`. O que mudou, a verificação e as lições estão no **Adendo 43**.
