@@ -5158,11 +5158,183 @@ ano antes de cada versão.
 
 ---
 
-# Retomada — estado em 2026-11-17, v47 pronta (ler primeiro depois de compactar a conversa)
+# Adendo 43 — 2026-11-19 (reequilíbrio das alternativas de Processo Civil e Constitucional, v48)
+
+**Origem.** O usuário commitou e publicou a v47 (`cd67ddd`, PR #44, `b0a1958`, em 18/11; o site serve
+`autos-do-estudo-v47`) e disse: "Commit efetuado e mergeado. Pode prosseguir". Raiz em ff no PR #44;
+`bak_2210/index_v47.html`, `sw_v47.js` e `v47/manifesto_v47.json` guardados. Proposta de escopo feita em 18/11 (pergunta
+com quatro opções); o usuário escolheu **Processo Civil e Constitucional** (a recomendada). Em 13/11 ele tinha dito que o
+reequilíbrio não tem prioridade ("Estudo mais pelas questões da FCC").
+
+**Normas, antes da versão (19/11):** quadro de emendas (última: EC 141), leis ordinárias de 2026 (15.529), MPs (1.400),
+LCs (238) — nada novo.
+
+**Levantamento** (`v48/_levantamento.js bak_2210/index_v47.html`): a certa é a única mais longa em 429 de 725 (59,2%);
+Processo Civil 73 de 84 (87%), Constitucional 38 de 45 (84%); nas outras: Processo do Trabalho 67/91, Trabalho 70/100,
+Administrativo 76/116, Legislação 28/38, Informática 10/18, DH 13/25, Português 31/88, Raciocínio 7/36, Civil 16/84.
+
+**Método** (`v48/conferir_reeq.js`, dados em `v48/reeq_dpc.js` e `v48/reeq_co.js`; a certa, a ordem, o gabarito, os ids,
+o enunciado e as outras alternativas não mudam; uma alternativa errada por questão):
+- **acréscimo** (`modo: 'ins'`, 36): as palavras da alternativa antiga ficam todas, na mesma ordem (o erro original fica);
+  cada palavra nova está dentro de um trecho literal da lei (`ins: [chave, trecho]`, achado na fonte e na alternativa) ou é
+  um conectivo da lista; o trecho vem do mesmo artigo que a explicação já cita;
+- **reescrita** (`modo: 'nova'`, 45): `erro: [chave, trecho]` = o que a lei diz no ponto em que a alternativa erra, achado
+  na fonte; quando não há texto legal na base (Temas 531 e 784 do STF, doutrina da eficácia das normas, SV 25), a chave
+  `exp` exige o trecho na explicação da própria alternativa, que já estava no app. Muitas são a frase da certa com um
+  detalhe trocado, como a FCC faz, um pouco mais longas que a certa;
+- **explicações** (6): PC75, PC82, CO37 e CO15 acompanham o texto novo; **PC05 e PC10 corrigem um erro antigo** — a
+  explicação da alternativa D dizia "omite … chamamento", e a alternativa traz o chamamento ao processo;
+- `v48/fontes.js`: chaves `L12016:N`, `L9868:N` e `L7347:N` (leis da base que o leitor da v46 não conhecia).
+- **Revisão humana** das 81 (`v48/_revisar.js`): cada nova relida ao lado da certa e da explicação; ajustada a PC07
+  (redundância com o enunciado). Questões de combinação ("I e II") ficaram de fora: o tamanho delas não é pista.
+
+**Resultado:** 81 questões (56 de Processo Civil, 25 de Constitucional); a certa passa a ser a única mais longa em **17 de
+84** (20%) em Processo Civil e **13 de 45** (29%) em Constitucional; única mais curta: 3 e 1. Banco inteiro: 59,2% → 48,0%
+(`auditoria_0711/vies.js`). Aviso de 19/11 no 03.1, só com contagens (PISTA DE SIMULADO: nenhum id nem letra); o da v47
+(incisos grudados) é o primeiro dos 37 anteriores, e o novo aponta para ele.
+
+**Verificação (19/11)**
+- `v48/conferir_reeq.js`: 81 trocas, 0 falhas; negativo `--estragar 1..7` (palavra antiga sumida, trecho fora da fonte,
+  acréscimo sem prova, erro sem prova, troca na certa, nova mais curta que a certa, meta de 30% não alcançada), todos
+  acusados. `v48/aplicar_v48.js` confere que o QUESTOES do arquivo novo é exatamente o calculado pelo conferidor nas 81 e o
+  da v47 nas outras 644.
+- `v48/conferir_aviso.js`: 41/41 (sobre a v47, 7 falhas).
+- `bash v48/conferir_tudo.sh`: **29 conferidores, todos com saída 0**, com os números da v47 (o material não muda;
+  `diff_quadros` sem nenhum quadro mudado; pipeline da lei seca igual).
+- `v48/teste_v48.js` (Edge, 19/11/2026): **17 de 17** — respostas dadas pelo clique na v47 (inclusive numa alternativa
+  que a v48 muda) continuam marcadas na v48, com as chaves `trt4:` idênticas; as 81 alternativas novas nas fichas; a
+  explicação corrigida da PC05; responder alternativas reescritas grava e abre a explicação nova; simuladão com 60; aviso;
+  375 e 820 px sem rolagem lateral, com 30 explicações abertas medidas; console limpo. `v48/neg_tela.js`: os seis estragos
+  (alternativa antiga de volta, explicação antiga de volta, anteriores 36, versão v47, largura de 900 px, simuladão com
+  59) acusados, cada um sozinho; nenhum perfil temporário sobrou.
+- Regressões: `v40/teste_rolagem.js` 17/17; `busca_2110/teste_busca.js` TUDO CERTO; `teste_marca_1210.js` (caminho
+  absoluto) 284.763 palavras, 0 erradas com posição (iguais à v47); `teste_atualiza_1210.js` sem erros.
+- `index.html` e `sw.js` do worktree = `v48/ensaio.html` e `v48/ensaio_sw.js` (`cmp`); cache `autos-do-estudo-v48`.
+
+**Lições**
+- No banco, trocar a disciplina no filtro chama `novaRodada()`, que zera as respostas da rodada (o histórico fica):
+  teste de resposta não troca o filtro entre responder e conferir.
+- A base de temas do STF (`v40/stf_rg.json`) só tem os 46 trabalhistas; para os outros, a prova é a explicação já
+  conferida (chave `exp`).
+- Uma frase de aviso sobre "a explicação da alternativa mudada" estava errada para a PC05 (a explicação trocada era de
+  outra alternativa); o conferidor do aviso classifica cada explicação trocada.
+
+**Pendências que continuam:** reequilíbrio das outras disciplinas (Processo do Trabalho, Trabalho, Administrativo,
+Legislação e as menores), só se o usuário quiser — sem prioridade; conferir o quadro de emendas e as leis do ano antes de
+cada versão.
+
+---
+
+# Adendo 44 — 2026-11-19 (revisões espaçadas com lista fechada de alvos, v49)
+
+**Origem.** Com a v48 pronta no worktree e ainda sem commit, o usuário pôs na pasta principal
+`PROPOSTA-REVISOES-CODEX-2026-11-19.md` (proposta do Codex, feita sobre a v47) e pediu: "Analise-o e implante as
+melhorias, sempre levando em conta o cuidado para não perder nenhum conteúdo já consolidado e pertinente ao edital do
+concurso". A v49 foi montada **sobre a v48** (`v48/ensaio.html`): o commit do usuário leva as duas juntas, e o aviso da
+v49 aponta para o da v48.
+
+**Achados da proposta, conferidos na v48** (todos procedentes):
+- os cartões de R7, R14 e R30 listavam a semana de origem inteira (de 10 a 14 assuntos nas semanas 13 a 22), quando P5,
+  P6 e P7 pediam 4, 3 e 4; a jurisprudência era acrescentada por cima, em tempo de execução (`acrescentarRevisaoOp`);
+- R30: os cartões sempre usaram `n − 4` (semanas 5 a 22), mas o P7 dizia "cinco semanas atrás", a tabela da seção 5
+  "35 dias", o texto "trinta e cinco dias" e a grade antiga das semanas 4 a 9 "cinco semanas atrás";
+- blocos compostos (`anc2`, `anc3` do `v31/semanas.js`) perdiam o segundo e o terceiro link nas revisões
+  (`blocosDaSemana` do `v31/gerar.js` só levava `anc`);
+- o R30 de 18/11 trazia a improbidade (fora do edital de 2026); o R2 de sexta, 20/11 (15h15), trazia Organização da JT
+  (15h45) e Parcerias/LAI (18h25), estudados depois;
+- o P6 pedia as questões erradas, mas o cartão só levava ao material; o P7 mandava dividir 22 min pelo número de entradas
+  (divisão por zero com caderno vazio) e só avançar depois de repetir sem olhar.
+
+**O que a v49 faz** (vale de segunda, 23/11, semana 13; nada novo é gravado no aparelho):
+- **Cartões de sessão nas semanas 13 a 22** (`v49/gerar_cartoes.js` + `v49/alvos.js` → `cartoes.json` e `sessoes.json`):
+  id `op-sN-rev-K` e `data-rot`; data no cabeçalho; "Origem: semana W (datas)"; os tempos do procedimento; lista fechada
+  — R7 4 alvos, R14 3 assuntos com "Refazer meus erros deste assunto", R30 "até 4 entradas do caderno" + perguntas de
+  diagnóstico para completar, R2 4 alvos estudados até quinta; "Acabaram os 30 minutos, pare" com as revisões que a semana
+  ainda tem; e "Toda a semana W: N assuntos — não é tarefa de hoje" (`<details>` fechado) com **todos os itens do cartão
+  antigo e todos os links de cada linha** (inclusive `anc2`/`anc3`), a marca "alvo de hoje" ou "alvo em: R… de dd/mm" e a
+  cobertura ("as revisões dessa semana, a partir de 23/11, trazem K dos N assuntos como alvo") com o destino da disciplina
+  (segunda passada, revisão final ou semana 22).
+- **Alvos** (`v49/alvos.js`, por semana de origem 9 a 21, na ordem de prioridade): seção `<h5>` do material, achada pelo
+  título (o material não ganhou nenhum id: o link `data-alvo-top` + `data-alvo-h5` é resolvido na hora por `irParaSecao`);
+  `ir` para tópico sem seções ou quadro Lei seca (`ls-leg-14133`); `pessoal` = "Seus erros do bloco" para blocos de
+  revisão e de questões (semanas 13 a 21). Ordem: Específicos antes de Gerais; dentro, seção com artigo que caiu em prova
+  real (NUCLEO) ou com pegadinha; nas semanas 16 a 18, o conteúdo novo de Civil alterna com os blocos de revisão.
+  Regras do gerador: R2 = 4 primeiros estudados até quinta; R7 = 3 primeiros (o 3º vira os enunciados, se a semana tiver
+  prioridade 1) + 1 que o R2 não trouxe, de preferência o estudado na sexta; R14 = 3 tópicos distintos com questão no
+  banco; R30 = diagnósticos (só trecho do material) que R2 e R7 não trouxeram primeiro (até a semana 11, R2 e R7 eram do
+  cartão antigo: vale a ordem; na 12, só o R7 de 23/11 é novo) + os enunciados.
+- **Enunciados** (origens 9 a 12): os 4 primeiros de prioridade 1 (ordem de `ordenarIdsJur`) são um alvo do R7 e do R30;
+  os outros, na lista da semana, com "(ler uma vez)" nos de prioridade 2 e o lembrete da P15-F. `acrescentarRevisaoOp`
+  não acrescenta nada a cartão `.op-sessao`.
+- **Semanas 1 a 12:** só id e `data-rot` nos 48 cartões; no R2 de 20/11, a nota "não entra neste ditado: você estuda este
+  assunto hoje à tarde, depois desta revisão" nos 2 itens da sexta. Nada mais.
+- **Navegação:** `abrirAncestrais` (abrirPagina abre todos os `<details>` em volta do destino); `irParaSecao` (abre o
+  tópico, rola até a seção e a contorna, `h5.alvo-rev`, sem animação); `navRev` (clique visto na captura dentro de
+  `.op-rev[id]`) vai no `pushState` e o botão do alto diz "Voltar à revisão · Segunda, 23/11 · R7"; `revisaoDeHoje()` +
+  `botaoRevisaoHoje()` no quadro do dia do 03.1 (com a linha "Revisão espaçada de hoje…" ou "Hoje não há revisão
+  espaçada…") e em `#cgRevHoje` na página 03; em cada semana da página 03, `.sem-revs` com os botões "Seg 23/11 · R7" etc.
+  (não são blocos, não contam no progresso).
+- **R14 — "Refazer meus erros deste assunto"** (`errosDoAssunto`, `abrirErrosDaRevisao`, `abrirErrosAgora`): lista
+  fechada pelo filtro de id (`estado.ids`, congelada), na hora do toque: última resposta errada (as mais erradas primeiro);
+  sem nenhuma, as ainda não respondidas; sem nenhuma, as erradas alguma vez e depois acertadas; sem nenhuma, mensagem
+  própria. `estado.rev` (critério, contagem) no chip do banco, com o limite do registro (10 últimas respostas por questão;
+  caderno e QConcursos fora); vai na foto da navegação (`fotoQuestoes`/`restaurarQuestoes`) e sai com `sairDaBuscaPorId`.
+  Simuladão em andamento (`simuladoEmCurso`) → diálogo `dlgRevSim` (Cancelar / "Encerrar e abrir os erros"); a troca vem do
+  clique do botão, não do evento `close`.
+- **Textos:** P5 a P8 reescritos nos mesmos 30 minutos (passos somam 30), cada um com o texto antigo inteiro em
+  "Como era até a semana 12" (`details.op-antes`, fechado; no P7 antigo, "cinco semanas" corrigido para "quatro", como os
+  cartões sempre usaram); P7 sem divisão (até 5 min 30 s por entrada, "não colou" e passa), sem as 3 questões em 2 min,
+  caderno vazio → perguntas do cartão; P8 só até quinta e sem reler a lista inteira; P6 com o botão e o limite do registro.
+  Seção 5 (introdução, tabela, distâncias, rotação, enunciados desde a semana 13), seção 3 (as quatro linhas da grade de
+  10 a 16 e o R30 da grade antiga) e seção 6 (introdução). Aviso de 19/11/2026 no 03.1; o da v48 é o primeiro dos 38
+  anteriores.
+
+**Verificação (19/11)**
+- `v49/aplicar_v49.js`: QUESTOES, CRONOGRAMA, JURIS, NUCLEO, SIM_REAL, QC_TOPICO, COTA_SIMULADO, a página do material
+  inteira e os 78 quadros iguais; nenhuma linha antiga some fora das trocas. `bash v49/montar.sh`: pipeline da lei seca
+  igual; 4 scripts sem erro de sintaxe.
+- `v49/conferir_cartoes.js`: 39 cartões, 146 alvos, 475 itens antigos achados na lista com todos os links; semanas 1 a 12
+  iguais tirando id, `data-rot` e as 2 notas; `--estragar 1..8`, todos acusados.
+- `v49/conferir_aviso.js`: 46/46 (sobre a v48: 18 falhas).
+- `bash v49/conferir_tudo.sh`: **30 conferidores, todos com saída 0**, com as saídas iguais às da v48 (fora o aviso e os
+  cartões, novos).
+- `v49/teste_v49.js` (Edge, datas 19, 20, 23, 24 e 26/11/2026): **36 de 36** — atualização v48 → v49 com as chaves `trt4:`
+  idênticas; revisão de hoje no 03.1 e na página 03; alvo dentro de tópico fechado; "Voltar à revisão"; os alvos das 39
+  sessões existem; quinta sem revisão; R14 com os quatro critérios e lista congelada; diálogo do simuladão (cancelar
+  mantém, confirmar troca); semana 12; P5 a P8 e o balão; Enter no alvo; 375 e 820 px medidos na tela; nenhuma chave nova;
+  console limpo (37 conferências com a linha do quadro do dia de 20/11, que não chama o cartão antigo de "lista
+  fechada"). `bash v49/neg_todos.sh`: os sete estragos (alvo sem abrir o tópico, ordem dos critérios trocada, simuladão
+  não visto, botão sem "Voltar à revisão", sem revisão de hoje, botão de 900 px, enunciados acrescentados por fora)
+  acusados, cada um sozinho, sobre a versão final; nenhum perfil temporário sobrou.
+- Regressões (versão final): `v40/teste_rolagem.js` 17/17; `busca_2110/teste_busca.js` (v48 × v49) TUDO CERTO;
+  `juris_1210/teste_marca_1210.js` (caminho absoluto) 284.763 palavras, 0 erradas com posição (iguais à v48);
+  `juris_1210/teste_atualiza_1210.js` (caminhos absolutos) sem erros.
+
+**Lições**
+- `sed` com `v48/conf` também casa `v48/conferir_reeq.js`: ao derivar o `conferir_tudo.sh`, conferir as linhas trocadas.
+- Uma frase de aviso ("cada alvo é uma seção do material") estava errada para os alvos pessoais e os trechos sem seção: o
+  conferidor do aviso classifica cada alvo; o texto passou a "trecho do material … ou os seus erros de um bloco".
+- `trecho(t, 'CHAVES')` (busca do próximo `\n};`) pega um pedaço enorme quando o objeto é de uma linha só: usar regex.
+- A P15-F é de segunda a quinta (`P15F_FASE1`, `P15F_RECESSO`), não "todo dia": conferir a grade antes de escrever a
+  frequência de um procedimento.
+- Texto que vale para os cartões novos (semana 13 em diante) não pode aparecer nos antigos: a linha do quadro do dia
+  olha se o cartão de hoje é `.op-sessao`.
+
+**Pendências que continuam:** reequilíbrio das outras disciplinas, só se o usuário quiser (Adendo 43). Da proposta, ficou
+para depois, de propósito: troca manual de alvos e fila persistente com resultado por revisão (exigiria chave nova no
+aparelho, com cópia de segurança, restauração e "Zerar progresso"); URL copiável que abra uma revisão depois de recarregar.
+
+---
+
+# Retomada — estado em 2026-11-19, v48 e v49 prontas, juntas (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira, o **Adendo 42** (v47, incisos grudados: varredura dos quadros e das caixas, `lei_seca_texto.js`
+1. Ler esta seção inteira, o **Adendo 44** (v49, revisões espaçadas com lista fechada de alvos, a partir da proposta do
+   Codex de 19/11: `v49/alvos.js` + `gerar_cartoes.js`, `conferir_cartoes.js` — modelo para mexer nos cartões de revisão), o
+   **Adendo 43** (v48, reequilíbrio das alternativas de Processo Civil e Constitucional:
+   acréscimo provado e reescrita com erro provado, `conferir_reeq.js` — modelo para mexer em questões antigas), o
+   **Adendo 42** (v47, incisos grudados: varredura dos quadros e das caixas, `lei_seca_texto.js`
    com `cp1252` e `quebraIncisos`, caixas do CPC, marca-texto que acha o grifo velho — modelo para correção de forma em
    texto de lei), o **Adendo 41** (v46, casos das semanas 21 e 22; montagem só de casos, direto sobre a versão
    publicada — o modelo mais novo de lote só de casos), o **Adendo 40** (v45, EC 140 e 141/2026: atualização da base da CF,
@@ -5176,38 +5348,37 @@ ano antes de cada versão.
    arquivos (aconteceu de novo entre 11 e 12/11; o app também troca o caminho do
    scratchpad entre sessões; e de novo entre 16 e 17/11, a 5ª vez), restaurar antes (`robocopy
    <ferramentas-scratchpad> <scratchpad> /E /XO`) e provar com `bash
-   v47/montar.sh` + `cmp v47/ensaio.html <worktree>/index.html`. O plano
+   v49/montar.sh` + `cmp v49/ensaio.html <worktree>/index.html` (a v49 parte de `v48/ensaio.html`). O plano
    aprovado em 22/10 está em
    `C:\Users\thale\.claude\plans\woolly-finding-squid.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
    - `git status --short` e `git log --oneline -3` no worktree (em 16/11:
-     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v47 pronta,
-     esperando o commit do usuário; último commit `fd5eb3f`, Adendo 41 = v46, publicada pelo PR #43, `e9769d6`);
-   - `git fetch origin` e `git log --oneline -3 origin/main` (em 17/11 o
-     `main` estava no PR #43, `e9769d6`, e a pasta principal também). **O
+     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v49 pronta, que já contém a v48 — as duas esperam o mesmo
+     commit do usuário; último commit
+     `cd67ddd`, Adendo 42 = v47, publicada pelo PR #44, `b0a1958`);
+   - `git fetch origin` e `git log --oneline -3 origin/main` (em 18/11 o
+     `main` estava no PR #44, `b0a1958`, e a pasta principal também). **O
      `--ff-only` do usuário só anda depois de um `git fetch`:** os worktrees
      dividem as referências com a pasta principal, e sem o fetch o
      `origin/main` local ainda aponta para o PR anterior. Fazer o fetch antes
      (ou indicar `git -C <raiz> pull --ff-only origin main`);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (em 17/11: a v46 publicada pelo PR #43; a v47 não tem prazo, mas é correção
-     de texto de lei: publicar logo);
+     (em 19/11: `autos-do-estudo-v47`, publicada pelo PR #44; a v48 e a v49 esperam o commit);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo e no Adendo
    32). Não aplicar nenhuma delas sem a resposta.
-4. **Próximo passo: esperar o commit e o PR da v47 (Adendo 42, incisos grudados).**
-   A v47 está pronta no worktree (`index.html` = `v47/ensaio.html`, `sw.js` = `v47/ensaio_sw.js`, conferidos com
-   `cmp`). **Não mexer no `index.html` antes do commit.** Depois do commit e do PR: `git fetch` e `--ff-only` na pasta
-   principal, guardar `bak_2210/index_v47.html` (cópia do worktree, CRLF) e `sw_v47.js`, e guardar
-   `v47/manifesto_v47.json` (cópia de `lei_seca_manifesto.json`: a base da comparação da próxima versão que mexer em
-   quadro). O `lei_seca_texto.js` mudou na v47 (`v47/patch_texto_v47.md`): toda versão daqui em diante gera os quadros com
-   ele. Depois, sem prazo e em versão separada: o **reequilíbrio das alternativas antigas** (questões com a certa mais
-   longa; começar por Processo Civil e Constitucional, `auditoria_0711/vies.js`) — propor o escopo ao usuário antes. Antes
-   de cada versão, **abrir o quadro de emendas do Planalto** (`constituicao/emendas/emc/quadro_emc.htm`) e as listas de
-   leis ordinárias, medidas provisórias e leis complementares do ano no portal da legislação (feito em 17/11 para a v47:
-   EC 141, Lei 15.529, MP 1.400 e LC 238 continuam as últimas). Caso ou questão de jornada ou repouso segue a EC 141 (40
-   horas com transição; 2 dias de repouso desde 16/12/2026). Base nova de lei: procurar `[\u0080-\u009f]` (página
-   `windows-1252` lida como Latin-1; `v47/_mojibake.js`).
+4. **Próximo passo: esperar o commit e o PR da v48 e da v49, juntas** (Adendo 43, reequilíbrio das alternativas; Adendo
+   44, revisões espaçadas com lista fechada de alvos). A v49 está no worktree (`index.html` = `v49/ensaio.html`, `sw.js` =
+   `v49/ensaio_sw.js`, conferidos com `cmp`) e contém a v48; o aviso da v49 aponta para o da v48. Se o usuário quiser dois
+   commits, o `index.html` da v48 sozinho é `v48/ensaio.html` (e `v48/ensaio_sw.js`). **Não mexer no `index.html` antes do
+   commit.** Depois do commit e do PR: `git fetch` e `--ff-only` na pasta principal, guardar `bak_2210/index_v49.html`
+   (cópia do worktree, CRLF) e `sw_v49.js` (e `index_v48.html` = `v48/ensaio.html`). Não há promessa de conteúdo
+   pendente. Só se o usuário quiser e sem prioridade: o reequilíbrio das outras disciplinas (Adendo 43); da proposta do
+   Codex, a troca manual de alvos e a fila persistente (chave nova: backup, restauração e "Zerar progresso") e a URL que
+   abre uma revisão depois de recarregar (Adendo 44). Perguntar antes. Antes de cada versão, abrir o quadro de emendas do
+   Planalto e as listas de leis, MPs e LCs do ano (feito em 19/11). Caso ou questão de jornada ou repouso segue a EC 141.
+   **Cartões de revisão:** os das semanas 13 a 22 saem de `v49/gerar_cartoes.js` sobre o arquivo de entrada; mexer em
+   cartão de semana (tabela, links) muda a lista "Toda a semana": rodar de novo o gerador e `v49/conferir_cartoes.js`.
    **Todo lote usa a carga nova:**
    cada bloco de leitura com núcleo e sobra pela teoria do horário
    (`v38/nucleo_v38.js` como modelo: `BLOCOS`, `TEORIA`, `FIXAS` com as
@@ -5221,7 +5392,14 @@ ano antes de cada versão.
    `fontes.js` (`ec141`, `datas:`, `cfantes:`, `calc:mais:`), `conteudo.js` + `provas.js`, `questoes.js` +
    `conferir_questoes.js` (com aspas), `ajustes.js` (trocas declaradas em questões, cartões e Raio-X), `aplicar_v45.js`,
    `diff_quadros.js` (quadros que mudaram, com lista esperada), `montar.sh`, `conferir_tudo.sh`, teste e negativo; o
-   texto das emendas em `ec141/`; correção de forma em texto de lei: `scratchpad/v47/` (`PLANO.md`, `incisos_grudados.js`, `residuo_caixas.js`, `_c1.js`,
+   texto das emendas em `ec141/`; cartões de revisão em formato de sessão: `scratchpad/v49/` (`_dados.js`, `_cartoes.js`, `_inventario.js`,
+   `_candidatos.js`, `alvos.js`, `gerar_cartoes.js` → `cartoes.json` + `sessoes.json`, `textos.js`, `codigo.js`, `aviso.js` +
+   `conferir_aviso.js`, `conferir_cartoes.js` com `--estragar`, `aplicar_v49.js`, `montar.sh`, `conferir_tudo.sh`,
+   `_sintaxe.js`, `_gera_teste.js` + `_teste_corpo.js` → `teste_v49.js`, `neg_tela.js` + `neg_todos.sh`, `_handoff.js`,
+   `_memoria.js`); reequilíbrio de alternativas: `scratchpad/v48/` (`_levantamento.js`, `_extrair.js` → `alvos.json`, `_compacto.js`,
+   `reeq_dpc.js` + `reeq_co.js`, `conferir_reeq.js` com `--estragar` e `--json`, `fontes.js`, `_revisar.js`, `aviso.js` +
+   `conferir_aviso.js`, `aplicar_v48.js`, `montar.sh`, `conferir_tudo.sh`, `_gera_teste.js` + `_teste_corpo.js` →
+   `teste_v48.js`, `neg_tela.js`, `_handoff.js`, `_memoria.js`); correção de forma em texto de lei: `scratchpad/v47/` (`PLANO.md`, `incisos_grudados.js`, `residuo_caixas.js`, `_c1.js`,
    `_mojibake.js`, `patch_texto_v47.md`, `diff_artigos.js` com `--estragar`, `teste_quebra.js`, `caixas.js`, `aviso.js` +
    `conferir_aviso.js`, `aplicar_v47.js`, `montar.sh`, `conferir_tudo.sh`, `_gera_teste.js` + `_teste_corpo.js` →
    `teste_v47.js` (grifo com o mouse que atravessa linhas: `marcar2`), `neg_tela.js`, `_handoff.js`, `_memoria.js`); lote só
@@ -5265,7 +5443,7 @@ ano antes de cada versão.
      `patch_matriz_v3X.js`, DONO no `gerar_lei_seca.js` quando a linha ligar
      dois tópicos, `aplicar_v3X.js A|B`, `montar.sh`, `aviso.js` com
      `conferir_aviso.js`; o aviso aberto esperado passa a ser o de
-     "17/11/2026 — incisos que apareciam grudados na linha de cima", com "Avisos anteriores" em 36;
+     "19/11/2026 — revisões espaçadas com lista fechada de alvos, desde segunda, 23/11", com "Avisos anteriores" em 38;
    - **núcleo (regra da v38, Adendo 33):** refazer o levantamento sobre o
      ensaio (`node v36/gerar_aud_nucleo.js` e `node v36/aud_nucleo.js ENSAIO
      --json v3X/aud_nucleo.json`); em `nucleo_v3X.js` (cópia de
@@ -5293,7 +5471,8 @@ ano antes de cada versão.
    v42 (Civil da semana 17 e casos das semanas 17 e 18) publicada em 14/11 (PR #39); v43 (Civil da semana 18 e
    casos da semana 19) publicada em 16/11 (PR #40); v44 (casos da semana 20) publicada em 16/11 (PR #41); v45 (EC 140 e
    141/2026) publicada em 16/11 (PR #42); v46 (casos das semanas 21 e 22) publicada em 17/11 (PR #43); v47 (incisos grudados)
-   pronta em 17/11.
+   publicada em 18/11 (PR #44); v48 (reequilíbrio de Processo Civil e Constitucional) e v49 (revisões espaçadas com lista
+   fechada de alvos) prontas em 19/11, para o mesmo commit.
 
    **Ao terminar qualquer versão:** HANDOFF (adendo e Retomada), memória,
    `robocopy` da cópia dos scripts e, depois do PR, `--ff-only` na pasta
@@ -5301,7 +5480,31 @@ ano antes de cada versão.
 
 ## TRABALHO EM ANDAMENTO (atualizar ao fim de cada etapa)
 
-### v47 — incisos grudados (correção de forma em textos de lei) — PRONTA em 17/11/2026, esperando o commit (Adendo 42)
+### v49 — revisões espaçadas com lista fechada de alvos — PRONTA em 19/11/2026, esperando o commit junto com a v48 (Adendo 44)
+
+- **Estado:** `index.html` e `sw.js` do worktree = `v49/ensaio.html` e `v49/ensaio_sw.js` (`cmp`); cache
+  `autos-do-estudo-v49`. Entrada: `v48/ensaio.html` (copiada para `v49/entrada_v48.html`). O que mudou, a verificação e as
+  lições estão no **Adendo 44**; a proposta do Codex está na pasta principal (`PROPOSTA-REVISOES-CODEX-2026-11-19.md`, não
+  versionada).
+- **Ordem para remontar:** `bash v49/montar.sh`; `bash v49/conferir_tudo.sh`; `node v49/_gera_teste.js` e `node
+  v49/teste_v49.js v48/ensaio.html v49/ensaio.html`; `bash v49/neg_todos.sh` (os 7 estragos de tela); `node
+  v49/conferir_cartoes.js v49/entrada_v48.html v49/ensaio.html --estragar N` (N de 1 a 8).
+- **Depois do commit e do PR:** `git fetch` + `--ff-only` na raiz; guardar `bak_2210/index_v49.html` e `sw_v49.js` (e
+  `index_v48.html`/`sw_v48.js` a partir de `v48/ensaio.html`/`v48/ensaio_sw.js`).
+
+### v48 — reequilíbrio das alternativas de Processo Civil e Constitucional — PRONTA em 19/11/2026, vai no mesmo commit da v49 (Adendo 43)
+
+- **Estado:** `index.html` e `sw.js` do worktree = `v48/ensaio.html` e `v48/ensaio_sw.js` (`cmp`); cache
+  `autos-do-estudo-v48`. O que mudou, a verificação e as lições estão no **Adendo 43**.
+- **Estado do scratchpad:** `bak_2210/index_v47.html`, `sw_v47.js` e `v47/manifesto_v47.json` guardados (entrada da v48);
+  a base de leis e o `lei_seca_texto.js` não mudaram desde a v47. Cópia em `ferramentas-scratchpad` atualizada em 19/11.
+- **Ordem para remontar:** `bash v48/montar.sh` (conferidor → `questoes_novas.json`, aplicar, versão, pipeline que tem de
+  sair igual); `bash v48/conferir_tudo.sh`; `node v48/teste_v48.js bak_2210/index_v47.html v48/ensaio.html`; `node
+  v48/neg_tela.js N` (N de 1 a 6) e o teste de novo sobre `v48/neg_tela.html`; `node v48/conferir_reeq.js
+  bak_2210/index_v47.html --estragar N` (N de 1 a 7).
+- **Depois do commit e do PR:** `git fetch` + `--ff-only` na raiz; guardar `bak_2210/index_v48.html` e `sw_v48.js`.
+
+### v47 — incisos grudados (correção de forma em textos de lei) — PUBLICADA em 18/11/2026 pelo PR #44 (`b0a1958`) (Adendo 42)
 
 - **Estado:** `index.html` e `sw.js` do worktree = `v47/ensaio.html` e `v47/ensaio_sw.js` (`cmp`); cache
   `autos-do-estudo-v47`. O que mudou, a verificação e as lições estão no **Adendo 42**.
@@ -5313,8 +5516,8 @@ ano antes de cada versão.
   `diff_artigos` e `diff_quadros`); `bash v47/conferir_tudo.sh`; `node v47/teste_quebra.js`; `node v47/teste_v47.js
   bak_2210/index_v46.html v47/ensaio.html`; `node v47/neg_tela.js N` (N de 1 a 7) e o teste de novo sobre
   `v47/neg_tela.html`; `node v47/diff_artigos.js --estragar N` (N de 1 a 6).
-- **Depois do commit e do PR:** `git fetch` + `--ff-only` na raiz; guardar `bak_2210/index_v47.html`, `sw_v47.js` e
-  `v47/manifesto_v47.json`.
+- **Publicada:** commit `cd67ddd`; raiz em ff no PR #44; o site serve `autos-do-estudo-v47`; `bak_2210/index_v47.html`,
+  `sw_v47.js` e `v47/manifesto_v47.json` guardados.
 
 ### v46 — estudos de caso das semanas 21 e 22 — PUBLICADA em 17/11/2026 pelo PR #43 (`e9769d6`) (Adendo 41)
 
