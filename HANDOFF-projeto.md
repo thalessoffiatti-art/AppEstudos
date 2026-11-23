@@ -5378,11 +5378,106 @@ Ao revisar um tópico, procurar "continua", "continuam" e "ainda" junto de lei r
 
 ---
 
-# Retomada — estado em 2026-11-20, v50 pronta (ler primeiro depois de compactar a conversa)
+# Adendo 46 — 2026-11-23 (reequilíbrio das alternativas de Processo do Trabalho e Trabalho, v51)
+
+**Origem.** O usuário commitou e publicou a v50 (`b3d1463`, PR #46, `8055fd8`, em 20/11; o site serve
+`autos-do-estudo-v50`). Raiz em ff no PR #46; `bak_2210/index_v50.html` e `sw_v50.js` guardados. Em 23/11 perguntou "O
+que mais está nos planos?"; a resposta listou, sem prioridade, o reequilíbrio das outras disciplinas (recomendado:
+Processo do Trabalho e Trabalho, que pesam o dobro), o registro da nota dos estudos de caso e as sobras da proposta do
+Codex. Ele respondeu: "Pode fazer o reequilíbrio de Processo do Trabalho e Trabalho".
+
+**Normas, antes da versão (23/11, navegador embutido):** quadro de emendas (última: EC 141, de 16/10/2026); leis
+ordinárias de 2026 no portal da legislação (novas desde 19/11: 15.530 a 15.553, todas orçamentárias — créditos e
+alterações da LOA e da LDO de 2026); medidas provisórias (última: 1.400, de 06/11); leis complementares (última: 238).
+Nada a incorporar. O endereço antigo do portal (`www4.planalto.gov.br/legislacao/...`) redireciona para
+`portaldalegislacao.presidencia.gov.br`; a lista anual de leis fica em `pages/anos/leis-ordinarias-2026.html`, a de MPs
+no quadro `ccivil_03/mpv/quadro/_quadro2023-2026.htm` (a página `pages/anos/medidas-provisorias-2026.html` deu 502), a
+de LCs em `pages/leis-complementares.html`; o quadro de emendas em `ccivil_03/constituicao/Emendas/Emc/quadro_emc.htm`.
+
+**Levantamento** (`v48/_levantamento.js bak_2210/index_v50.html`): a certa era a única mais longa em 348 de 725 (48,0%);
+Processo do Trabalho 67 de 91 (74%), Trabalho 70 de 100 (70%); as outras: Legislação 28/38, Administrativo 76/116,
+Informática 10/18, DH 13/25, Português 31/88, Constitucional 13/45, Processo Civil 17/84, Raciocínio 7/36, Civil 16/84.
+
+**Método** — o da v48 (Adendo 43), com `v51/conferir_reeq.js` sobre os dados `v51/reeq_dpt.js` e `v51/reeq_dt.js`; a
+certa, a ordem, o gabarito, os ids, o enunciado e as outras alternativas não mudam; uma alternativa errada por questão:
+- **acréscimo** (`modo: 'ins'`, 52): as palavras da alternativa antiga ficam todas, na mesma ordem (o erro original
+  fica); cada palavra nova está dentro de um trecho literal (`ins: [chave, trecho]`, achado na fonte e na alternativa) ou
+  é um conectivo da lista. Fontes: CLT, CPC, CF e ADCT da base, Leis 7.783 e 12.506 (`v51/fontes.js`, chaves `L7783:N` e
+  `L12506:N`, que o leitor da v48 não conhecia) e, para súmula ou tese, o JURIS do próprio arquivo (`juris:ID`: Súmulas
+  331 e 342 do TST, SV 53, Tema 383 do STF). O conferidor da v48 chamava `fonte(k)` sem o INDEX — lá não fazia diferença,
+  porque nenhuma troca usava `juris:`, mas sem o INDEX o leitor da v37 lê o JURIS da v36; o da v51 passa o INDEX;
+- **reescrita** (`modo: 'nova'`, 38): `erro: [chave, trecho]` = o que a lei, a súmula ou a tese diz no ponto em que a
+  alternativa erra, achado na fonte; duas usam a chave `exp` (o trecho tem de estar na explicação da alternativa: os
+  Protocolos do TST e do CSJT, que não estão na base, e a conta dos anos do aviso prévio). Muitas são a frase da certa com
+  um detalhe trocado, como a FCC faz;
+- **regra nova (v51):** a alternativa nova tem de ser **estritamente** mais longa que a certa. Na v48 o conferidor só
+  exigia que a certa deixasse de ser a única mais longa, e um empate passava; agora o empate é falha (estrago 8);
+- **regra nova (v51): teto de 1,4.** A alternativa nova tem de ficar abaixo de 1,4 vez a certa (estrago 10): uma
+  distratora muito mais longa vira a pista ao contrário. Na primeira montagem, 12 passavam disso (até 1,70; na v48 eram
+  só 2, até 1,74); essas 12 foram refeitas (`v51/_encurtar.js`; os dados de antes em `v51/_reeq_*_antes_encurtar.js`),
+  quase sempre noutra alternativa da mesma questão, mais curta, com a frase da certa e um detalhe trocado. Resultado:
+  nova ÷ certa entre 1,02 e 1,39, mediana 1,13 (v48: 1,00 a 1,74, mediana 1,11);
+- **explicações** (6), todas da alternativa mudada, para acompanhar o texto novo: em quatro a alternativa passou a
+  acertar uma parte (PT_T93, DT65, DT70, DT34) e a explicação deixou de apontar erro nessa parte; em PT_T95 ela cita
+  também o art. 927, III; em DT28, todas as utilidades do caput do art. 458;
+- **revisão humana** das 90 (`v51/_revisar.js`): cada uma relida ao lado da certa e da explicação; PT_T07 e PT_T78
+  passaram de acréscimo a reescrita para não destoar da certa ("8 (oito) dias" contra "oito dias"/"8 dias"); duas
+  explicações acertadas na revisão (PT_T93, DT28). Ficaram de fora a questão de combinação (DT48, "I e II") e as listas
+  curtas em que o tamanho não é pista (PT_T77, DT01), e PT_T80 (a troca levaria a perder a nota "cobrada em 2011").
+- **EC 141:** nenhuma troca toca a duração do trabalho nem o repouso do art. 7º; as de intervalo (art. 71), 12×36
+  (art. 59-A), compensação (art. 59) e tempo à disposição (arts. 4º e 58) só copiam a CLT, que a EC não alterou.
+
+**Resultado:** 90 questões (44 de Processo do Trabalho, 46 de Trabalho); a certa passa a ser a única mais longa em
+**23 de 91** (25%) em Processo do Trabalho e **24 de 100** (24%) em Trabalho; única mais curta: 1 e 4, as mesmas da v50
+(nenhuma troca as criou). Banco inteiro: 48,0% → **35,6%** (`auditoria_0711/vies.js`). Aviso de 23/11 no 03.1, só com
+contagens (PISTA DE SIMULADO: nenhum id nem letra); o da v50 (convênios) é o primeiro dos 40 anteriores, e o novo aponta
+para ele e para o ajuste de 19/11. Vale na hora (é o banco; a grade não muda).
+
+**Verificação (23/11)**
+- `v51/conferir_reeq.js`: 90 trocas, 0 falhas; negativo `--estragar 1..9` (palavra antiga sumida, trecho fora da fonte,
+  acréscimo sem prova, erro sem prova, troca na certa, nova mais curta que a certa, meta de 30% não alcançada, empate com
+  a certa, erro `exp` fora da explicação), todos acusados. `v51/aplicar_v51.js` confere que o QUESTOES do arquivo novo é
+  exatamente o calculado pelo conferidor nas 90 e o da v50 nas outras 635; nada sumiu fora das trocas; cartões das
+  semanas 1 a 22 (com as 39 sessões de revisão da v49), o material inteiro e os 78 quadros iguais.
+- `v51/conferir_aviso.js`: 56/56 (sobre a v50, 9 falhas).
+- `bash v51/conferir_tudo.sh`: **31 conferidores, todos com saída 0**, com as saídas iguais às da v50 menos a versão e o
+  viés (`quadros_v51` sem nenhum quadro mudado; pipeline da lei seca igual). Sai o `convenios_v50` (o aviso dele deixou
+  de ser o aberto; a seção não muda), entram `aviso_v51` e `reeq_v51`.
+- `v51/teste_v51.js` (Edge, 23/11/2026): **17 de 17** — respostas dadas pelo clique na v50 (duas em alternativas que a
+  v51 muda, duas certas) continuam marcadas na v51, com as chaves `trt4:` idênticas; as 90 alternativas novas nas fichas;
+  a explicação acertada da DT70; responder alternativas reescritas (PT_T93, DT65) grava e abre a explicação nova;
+  simuladão com 60; aviso; 375 e 820 px sem rolagem lateral, com o banco filtrado em Trabalho (100 fichas) e 30
+  explicações abertas medidas na tela; console limpo. `v51/neg_tela.js` 1..6 (alternativa antiga de volta, explicação
+  antiga de volta, anteriores 39, versão v50, largura de 900 px, simuladão com 59): os seis acusados, cada um sozinho;
+  nenhum perfil temporário sobrou.
+- Regressões: `v40/teste_rolagem.js` 17/17; `busca_2110/teste_busca.js` (v50 × v51) TUDO CERTO;
+  `juris_1210/teste_marca_1210.js` (caminho absoluto) 284.779 palavras (as mesmas da v50), 0 erradas com posição;
+  `juris_1210/teste_atualiza_1210.js` sem erros; `v49/teste_v49.js` sobre a v51: 36 de 37, a única falha é a conferência
+  do número da versão (v49).
+- Uma primeira rodada de tela foi interrompida no meio para encurtar as 12 trocas (teto de 1,4); o script dela seguiu
+  rodando depois do `TaskStop` e deixou dois Edge sem interface com perfil temporário no scratchpad: os processos foram
+  fechados e os três perfis daquela rodada, apagados. **Lição:** parar a tarefa não para o `bash` filho; conferir os
+  processos (`Win32_Process` com `perfil-head` na linha de comando) antes de remontar.
+- `index.html` e `sw.js` do worktree = `v51/ensaio.html` e `v51/ensaio_sw.js` (`cmp`); cache `autos-do-estudo-v51`.
+
+**Lições**
+- `juris:` no leitor de fontes precisa do INDEX da versão; sem ele, o leitor da v37 lê, sem avisar, o JURIS da v36, que
+  não tem as súmulas e teses entradas depois. Conferidor novo passa sempre o INDEX.
+- Empate de tamanho com a certa ainda é pista ("as duas mais longas"); o conferidor exige a nova estritamente mais longa.
+- Quando a alternativa reescrita passa a acertar uma parte que antes errava, a explicação tem de deixar de apontar erro
+  nessa parte (PT_T93, DT65, DT70, DT34).
+
+**Pendências que continuam:** reequilíbrio de Administrativo, Legislação e das menores (Informática, DH, Português), só
+se o usuário quiser — sem prioridade; conferir o quadro de emendas e as leis do ano antes de cada versão.
+
+---
+
+# Retomada — estado em 2026-11-23, v51 pronta (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira, o **Adendo 45** (v50, convênios: a Lei 8.666/1993 está revogada — correção de forma num
+1. Ler esta seção inteira, o **Adendo 46** (v51, reequilíbrio das alternativas de Processo do Trabalho e Trabalho —
+   o método da v48 com `juris:` lido no INDEX e a nova estritamente mais longa que a certa), o **Adendo 45** (v50, convênios: a Lei 8.666/1993 está revogada — correção de forma num
    tópico, com o texto provado na base de leis), o **Adendo 44** (v49, revisões espaçadas com lista fechada de alvos, a partir da proposta do
    Codex de 19/11: `v49/alvos.js` + `gerar_cartoes.js`, `conferir_cartoes.js` — modelo para mexer nos cartões de revisão), o
    **Adendo 43** (v48, reequilíbrio das alternativas de Processo Civil e Constitucional:
@@ -5401,33 +5496,34 @@ Ao revisar um tópico, procurar "continua", "continuam" e "ainda" junto de lei r
    arquivos (aconteceu de novo entre 11 e 12/11; o app também troca o caminho do
    scratchpad entre sessões; e de novo entre 16 e 17/11, a 5ª vez), restaurar antes (`robocopy
    <ferramentas-scratchpad> <scratchpad> /E /XO`) e provar com `bash
-   v50/montar.sh` + `cmp v50/ensaio.html <worktree>/index.html` (a v50 parte de `bak_2210/index_v49.html`). O plano
+   v51/montar.sh` + `cmp v51/ensaio.html <worktree>/index.html` (a v51 parte de `bak_2210/index_v50.html`). O plano
    aprovado em 22/10 está em
    `C:\Users\thale\.claude\plans\woolly-finding-squid.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
    - `git status --short` e `git log --oneline -3` no worktree (em 16/11:
-     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v50 pronta, esperando o commit do usuário; último commit `48c42ef`
-     (a v48 e a v49 juntas, com a mensagem do Adendo 43), publicado pelo PR #45, `cd842c4`; antes,
+     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v51 pronta, esperando o commit do usuário; último commit `b3d1463` (Adendo 45 = v50), publicado
+     pelo PR #46, `8055fd8`; antes, `48c42ef` (a v48 e a v49 juntas), PR #45, `cd842c4`; antes,
      `cd67ddd`, Adendo 42 = v47, publicada pelo PR #44, `b0a1958`);
-   - `git fetch origin` e `git log --oneline -3 origin/main` (em 18/11 o
-     `main` estava no PR #44, `b0a1958`, e a pasta principal também). **O
+   - `git fetch origin` e `git log --oneline -3 origin/main` (em 23/11 o
+     `main` estava no PR #46, `8055fd8`, e a pasta principal também). **O
      `--ff-only` do usuário só anda depois de um `git fetch`:** os worktrees
      dividem as referências com a pasta principal, e sem o fetch o
      `origin/main` local ainda aponta para o PR anterior. Fazer o fetch antes
      (ou indicar `git -C <raiz> pull --ff-only origin main`);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (em 20/11: `autos-do-estudo-v49`, publicada pelo PR #45; a v50 espera o commit);
+     (em 23/11: `autos-do-estudo-v50`, publicada pelo PR #46; a v51 espera o commit);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo e no Adendo
    32). Não aplicar nenhuma delas sem a resposta.
-4. **Próximo passo: esperar o commit e o PR da v50** (Adendo 45, convênios: a Lei 8.666/1993 está revogada). A v50 está
-   no worktree (`index.html` = `v50/ensaio.html`, `sw.js` = `v50/ensaio_sw.js`, conferidos com `cmp`). **Não mexer no
-   `index.html` antes do commit.** Depois do commit e do PR: `git fetch` e `--ff-only` na pasta principal, guardar
-   `bak_2210/index_v50.html` (cópia do worktree, CRLF) e `sw_v50.js`. Não há promessa de conteúdo pendente. Só se o
-   usuário quiser e sem prioridade: o reequilíbrio das outras disciplinas (Adendo 43); da proposta do Codex, a troca manual
-   de alvos, a fila persistente e a URL que abre uma revisão (Adendo 44). Perguntar antes. Antes de cada versão, abrir o
-   quadro de emendas do Planalto e as listas de leis, MPs e LCs do ano (feito em 19/11). Caso ou questão de jornada ou
-   repouso segue a EC 141.
+4. **Próximo passo: esperar o commit e o PR da v51** (Adendo 46, reequilíbrio das alternativas de Processo do Trabalho e
+   Trabalho). A v51 está no worktree (`index.html` = `v51/ensaio.html`, `sw.js` = `v51/ensaio_sw.js`, conferidos com
+   `cmp`). **Não mexer no `index.html` antes do commit.** Depois do commit e do PR: `git fetch` e `--ff-only` na pasta
+   principal, guardar `bak_2210/index_v51.html` (cópia do worktree, CRLF) e `sw_v51.js`. Não há promessa de conteúdo
+   pendente. Só se o usuário quiser e sem prioridade: reequilíbrio de Administrativo, Legislação e das menores (Adendos 43
+   e 46); da proposta do Codex, a troca manual de alvos, a fila persistente e a URL que abre uma revisão (Adendo 44); o
+   registro da nota de cada estudo de caso. Perguntar antes. Antes de cada versão, abrir o quadro de emendas do Planalto e
+   as listas de leis, MPs e LCs do ano (feito em 23/11; endereços no Adendo 46). Caso ou questão de jornada ou repouso
+   segue a EC 141.
    **Cartões de revisão:** os das semanas 13 a 22 saem de `v49/gerar_cartoes.js` sobre o arquivo de entrada; mexer em
    cartão de semana (tabela, links) muda a lista "Toda a semana": rodar de novo o gerador e `v49/conferir_cartoes.js`.
    **Todo lote usa a carga nova:**
@@ -5494,7 +5590,7 @@ Ao revisar um tópico, procurar "continua", "continuam" e "ainda" junto de lei r
      `patch_matriz_v3X.js`, DONO no `gerar_lei_seca.js` quando a linha ligar
      dois tópicos, `aplicar_v3X.js A|B`, `montar.sh`, `aviso.js` com
      `conferir_aviso.js`; o aviso aberto esperado passa a ser o de
-     "20/11/2026 — convênios: a Lei 8.666/1993 está revogada", com "Avisos anteriores" em 39;
+     "23/11/2026 — alternativas das questões de Processo do Trabalho e de Trabalho", com "Avisos anteriores" em 40;
    - **núcleo (regra da v38, Adendo 33):** refazer o levantamento sobre o
      ensaio (`node v36/gerar_aud_nucleo.js` e `node v36/aud_nucleo.js ENSAIO
      --json v3X/aud_nucleo.json`); em `nucleo_v3X.js` (cópia de
@@ -5523,7 +5619,8 @@ Ao revisar um tópico, procurar "continua", "continuam" e "ainda" junto de lei r
    casos da semana 19) publicada em 16/11 (PR #40); v44 (casos da semana 20) publicada em 16/11 (PR #41); v45 (EC 140 e
    141/2026) publicada em 16/11 (PR #42); v46 (casos das semanas 21 e 22) publicada em 17/11 (PR #43); v47 (incisos grudados)
    publicada em 18/11 (PR #44); v48 (reequilíbrio de Processo Civil e Constitucional) e v49 (revisões espaçadas com lista
-   fechada de alvos) publicadas juntas em 20/11 (PR #45); v50 (convênios: Lei 8.666 revogada) pronta em 20/11.
+   fechada de alvos) publicadas juntas em 20/11 (PR #45); v50 (convênios: Lei 8.666 revogada) publicada em 20/11 (PR #46);
+   v51 (reequilíbrio de Processo do Trabalho e Trabalho) pronta em 23/11.
 
    **Ao terminar qualquer versão:** HANDOFF (adendo e Retomada), memória,
    `robocopy` da cópia dos scripts e, depois do PR, `--ff-only` na pasta
@@ -5531,13 +5628,23 @@ Ao revisar um tópico, procurar "continua", "continuam" e "ainda" junto de lei r
 
 ## TRABALHO EM ANDAMENTO (atualizar ao fim de cada etapa)
 
-### v50 — convênios: a Lei 8.666/1993 está revogada — PRONTA em 20/11/2026, esperando o commit (Adendo 45)
+### v51 — reequilíbrio das alternativas de Processo do Trabalho e Trabalho — PRONTA em 23/11/2026, esperando o commit (Adendo 46)
+
+- **Estado:** `index.html` e `sw.js` do worktree = `v51/ensaio.html` e `v51/ensaio_sw.js` (`cmp`); cache
+  `autos-do-estudo-v51`. Entrada: `bak_2210/index_v50.html` (a v50 publicada). O que mudou e a verificação: **Adendo 46**.
+- **Dados e ferramentas:** `v51/reeq_dpt.js` (44) e `v51/reeq_dt.js` (46); `v51/fontes.js`; `v51/conferir_reeq.js`
+  (`--estragar 1..9`); `v51/_revisar.js` (revisão humana); `v51/_curta.js` (única mais curta e mais longa por disciplina).
+- **Ordem para remontar:** `bash v51/montar.sh`; `bash v51/conferir_tudo.sh`; `node v51/_gera_teste.js` e `node
+  v51/teste_v51.js bak_2210/index_v50.html v51/ensaio.html`; `bash v51/final.sh` (6 estragos de tela e as regressões).
+- **Depois do commit e do PR:** `git fetch` + `--ff-only` na raiz; guardar `bak_2210/index_v51.html` e `sw_v51.js`.
+
+### v50 — convênios: a Lei 8.666/1993 está revogada — PUBLICADA em 20/11/2026 pelo PR #46 (`8055fd8`; commit `b3d1463`) (Adendo 45)
 
 - **Estado:** `index.html` e `sw.js` do worktree = `v50/ensaio.html` e `v50/ensaio_sw.js` (`cmp`); cache
   `autos-do-estudo-v50`. Entrada: `bak_2210/index_v49.html` (a v49 publicada). O que mudou e a verificação: **Adendo 45**.
 - **Ordem para remontar:** `bash v50/montar.sh`; `bash v50/conferir_tudo.sh`; `node v50/_gera_teste.js` e `node
   v50/teste_v50.js bak_2210/index_v49.html v50/ensaio.html`; `bash v50/final.sh` (3 estragos de tela e as regressões).
-- **Depois do commit e do PR:** `git fetch` + `--ff-only` na raiz; guardar `bak_2210/index_v50.html` e `sw_v50.js`.
+- **Depois do commit e do PR:** feito em 20/11 — raiz em ff no PR #46; `bak_2210/index_v50.html` e `sw_v50.js` guardados.
 
 ### v49 — revisões espaçadas com lista fechada de alvos — PUBLICADA em 20/11/2026 com a v48 pelo PR #45 (`cd842c4`) (Adendo 44)
 
