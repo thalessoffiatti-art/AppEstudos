@@ -5591,11 +5591,132 @@ reequilíbrio de Administrativo, Legislação e das menores, idem.
 
 ---
 
-# Retomada — estado em 2026-11-23, v51 publicada, v52 pronta (ler primeiro depois de compactar a conversa)
+# Adendo 48 — 2026-11-24 (correções no texto de Processo do Trabalho e Processo Civil, v53)
+
+**Origem.** O usuário commitou e publicou a v52 (`543e186`, PR #48, `b8e876f`, em 24/11; o site serve
+`autos-do-estudo-v52`) e pediu: "Pode fazer, iniciando pelas disciplinas do Bloco Crítico (Civil você já fez, então
+inicia pelas outras 2)" — a leitura item a item do texto explicativo, oferecida no fim da v52. O bloco crítico, desde a
+semana 10, é Direito Civil, Processo do Trabalho e Processo Civil (página 03). Entrada: `bak_2210/index_v52.html`.
+
+**Normas, antes da versão (24/11, navegador embutido):** leis ordinárias de 2026 (última: 15.553, a mesma de 23/11);
+quadro de emendas (última: EC 141); MPs (última: 1.400); leis complementares, pelo quadro do Planalto
+(`ccivil_03/leis/lcp/quadro_lcp.htm`; a página do portal da legislação para LCs mostrou só até a 233 e a de 2026 deu
+502): LC 239, de 24/11/2026, fiscal (altera a LC 200/2023, o arcabouço fiscal). Nada a incorporar.
+
+## O que foi lido e como
+- **Extrator novo**, `v53/_texto.js INDEX dpt dpc civ` → `v53/texto_PREFIXO.json`. O da v52 (`v52/_civil_texto.js`) só
+  pegava `p, li, tr, dt, dd, blockquote, h4` e pulava as caixas inteiras; deixava de fora o texto solto em `<div>` (os
+  quadros "Pegadinha", "Onde se erra", "Grade de prazos", "Ponto que mudou duas vezes") e as notas dentro das caixas de
+  lei e do quadro Lei seca (`.lei-nota`, `.lei-alt`, `.ls-stf`). O novo pega os dois e **prova a cobertura**: tira do
+  clone da `.conteudo` tudo o que virou item e o que se pula de propósito (texto de lei, atalhos, barra do marca-texto);
+  se sobrar texto, para. Negativo: `V53_ESTRAGAR=1` põe um texto solto direto na `.conteudo` e a cobertura acusa.
+  Resultado: DPT 8.256 palavras (12 tópicos), DPC 8.488 (13), Civil 27.120 (16). Em Civil, 12 quadros "Pegadinha"
+  (788 palavras) não tinham sido lidos na v52 (`v53/_faltou_civ.js`).
+- **Folhas** `v53/_folha.js INDEX dpt dpc` → `v53/folhas/TOPICO.txt`: cada item com o texto do que cita. A lei de cada
+  "art." vem do próprio item ("art. 651 da CLT", "CLT, art. 651") ou da última lei nomeada na mesma seção; sem nenhuma,
+  a lei padrão do tópico (CLT; CPC; 9.099 nos Juizados; 13.140 na mediação). Súmulas e OJs pelo `JURIS` do arquivo;
+  fora dele, lidas no portal do TST (`lote3/tst_portal.js`). Súmula do STJ: `v37/stj.js` (arquivo local). As folhas
+  são ajuda de leitura: a remissão automática erra às vezes, e a leitura confere no artigo certo.
+- **Leitura** item a item, com o artigo inteiro ao lado. Fontes que não estão na base, lidas no navegador e guardadas em
+  `v53/fontes_web.json`: Lei 8.177/1991, art. 39, § 1º (Planalto); EC 136/2025, art. 3º (Planalto); STF, Informativo
+  1138 (ADIs 6.792 e 7.055, tese); acórdão da SDI-1 do TST no Emb-RR-555-36.2021.5.09.0024 (PDF baixado pela ferramenta
+  de leitura da web, texto tirado com `pdftotext` em `v53/pdf_tst/`). Os trechos foram conferidos na página
+  (`v53/conf/web_paginas.txt`: 2/2, 4/4, 2/2 e 3/3). Lei 9.494/1997, art. 1º-B, e Lei 10.259/2001, arts. 3º e 17,
+  conferidas no Planalto: o material estava certo.
+- **Correções** em `v53/correcoes.js` (lotes `v53/lote_*.js` somados por `v53/_add.js`), cada uma com tópico, tema, art,
+  antes (HTML; uma vez só no tópico), depois, provas e, se for erro de conteúdo, a frase do erro (`erro`), que vai para o
+  aviso. Provas: `LEI:ART` (leis/*.json), `juris:SRC` (JURIS), `tst:` e `tst-situacao:` (portal do TST, lido na hora),
+  `stj:N`, `web:CHAVE`, `nao:LEI:ART` (o trecho não está no artigo) e `calc:incisos`. Toda citação entre aspas do texto
+  novo tem prova. `v53/conferir.js ENTRADA [--estragar 1..5] [--sem-portal]`: 67 correções, 0 falhas com o portal;
+  estragos 1 a 5 acusados.
+
+## Resultado: 67 trechos
+- **Processo do Trabalho, 37 em 9 tópicos** (competência, organização, partes, custas, recursos, dissídio, execução,
+  ações especiais, PJe/audiências). Erros de conteúdo (9): o MPT não tem de reembolsar despesas (o parágrafo único do
+  art. 790-A é das pessoas jurídicas do inciso I); o agravo de petição delimita os valores impugnados, e não os
+  incontroversos (art. 897, § 1º); o § 1º do art. 11 da CLT não trata de prescrição no RO, e a Súmula 153 do TST só exige
+  a arguição na instância ordinária; os juros de 1% ao mês são da Lei 8.177/1991, art. 39, § 1º, e não do art. 883 da
+  CLT; a Súmula 439 do TST foi cancelada (o texto dizia "superada") e, pela Lei 14.905/2024, somam-se a correção pelo IPCA
+  e os juros da diferença Selic − IPCA (o texto dizia "vedada a cumulação" e "não se somam mais dois índices"); o prazo
+  da rescisória que termina em férias ou feriado se prorroga (CPC, art. 975, § 1º; o texto dizia que não); acima de 40%
+  do teto, a declaração da parte instrui o pedido de gratuidade (Tese vinculante 21 do TST; a nota dizia que o § 4º
+  "exige prova"); para a SDI-1, os valores dos pedidos são estimativa sem condição de ressalva na inicial; o membro da
+  CIPA não precisa de inquérito (CLT, art. 165; a nota o punha na lista). Também: a Súmula 377 do TST está cancelada (a
+  nota dizia "superou"); a macete dos serviços auxiliares atribuía a penhora só ao oficial (a CLT a põe também na
+  secretaria, art. 711, "h").
+- **Processo Civil, 26 em 9 tópicos e 2 avisos do STF do quadro Lei seca.** Erros (4): a incompetência não extingue nem
+  impede o mérito (CPC, art. 64, § 3º; dois trechos de Teoria geral); a monitória contra a Fazenda é do art. 700, § 6º,
+  e da Súmula 339 do STJ (a nota citava a 531, que é de cheque prescrito); na liquidação por arbitramento o perito só vem
+  se o juiz não puder decidir com pareceres e documentos (art. 510; o quadro dizia "depende de prova técnica"); a
+  correção dos precatórios da União mudou com a EC 136/2025 (IPCA + 2% a.a., limitado à Selic; o aviso do STF do art.
+  100 dizia Selic desde a EC 113). Também: o aviso do STF do art. 53 do CPC (ADIs 6.792 e 7.055) dizia que as ações "são
+  reunidas"; a tese diz que a parte demandada "poderá requerer a reunião".
+- **Direito Civil, 4 trechos** nos quadros "Pegadinha" não lidos na v52: arts. 44, § 1º ("e necessários ao seu
+  funcionamento"), 50 (o MP "quando lhe couber intervir no processo"; "atividade econômica específica") e 156, parágrafo
+  único (pessoa fora da família: o juiz decide segundo as circunstâncias).
+- **Fora do edital de 2026** (Resolução CSJT 415/2025 e RA TRT4 05/2022, no fim de "Ações e procedimentos especiais"):
+  conferidos por amostra (arts. 3º, 4º, 13, 18, 20, 22, 25, 27, 29, 32, 34 a 37 da Res. 415): sem correção.
+- **Leitura a mais:** 1.646 palavras no total; o máximo num tópico, 180 (execução trabalhista), 3,3 min a 55 p/min.
+  `v43/nucleo_v43.js` deu a mesma saída da v52 (CAPACIDADE CONFERE): nenhum cartão muda.
+
+## Os avisos do STF do quadro Lei seca
+- Vêm de `notas_stf.js` (raiz do scratchpad), chaves `CF:100` e `CPC:53`, e cada um aparece em dois quadros (art. 100
+  da CF: `dpc-execucao` e `const-judiciario`; art. 53 do CPC: `dpc-normas` e `dpc-teoria`). As correções com `todas: 2`
+  trocam as duas ocorrências no HTML, e `v53/patch_notas_stf.js` troca o texto em `notas_stf.js` (cópia de antes em
+  `v53/notas_stf_v52.js` e `bak_2210/notas_stf_v52.js`), para o pipeline da lei seca gerar o mesmo texto: `montar.sh`
+  exige que o pipeline saia igual ao que o aplicar pôs. **Atenção:** remontar uma versão antiga (v52 ou antes) com o
+  `notas_stf.js` novo muda esses quatro quadros; para isso, voltar a cópia de antes.
+
+## Montagem e aviso
+- `bash v53/montar.sh`: conferidor (sem portal) → `v53/aplicar_v53.js` (65 correções nos tópicos + 2 avisos × 2; aviso;
+  QUESTOES, CRONOGRAMA, JURIS, NUCLEO, SIM_REAL, QC_TOPICO e COTA_SIMULADO iguais; cartões 1 a 22 e 39 sessões iguais;
+  78 quadros iguais salvo os quatro avisos; o material, desfeitas as correções, igual ao da v52; nada sumiu fora das
+  trocas) → `versao.js` 53 → `patch_notas_stf.js` → pipeline da lei seca (igual) → sintaxe.
+- **Aviso** (03.1, 24/11, `v53/aviso.js`, montado da lista): o que foi lido; Processo do Trabalho (37 trechos, os 9
+  erros em lista, as normas por tópico); Processo Civil (26, os 4 erros, as normas por tópico e os dois avisos do STF com
+  os tópicos onde aparecem); Direito Civil (os 4 trechos dos quadros que faltaram); como ler (tópicos já estudados na
+  próxima revisão; menos de 4 minutos a mais por tópico; grifo que mudou fica em "não achada"); o da v52 é o primeiro
+  dos 42 anteriores. `v53/conferir_aviso.js`: 80/80; estragos 1 a 3 acusados.
+
+**Verificação (24/11)**
+- `bash v53/conferir_tudo.sh`: 34 conferidores com saída 0; em relação à v52 mudam só a versão, `quadros_v53` (os
+  quatro quadros esperados), `aviso_v53` e `correcoes_v53` (67, 0 falhas, com o portal do TST).
+- `v53/conferir_aviso.js`: 80/80; `v53/conferir.js` com o portal: 67/0, e o estrago 5 (situação no portal) acusado.
+- `v53/teste_v53.js` (Edge): **17 de 17** — v52 → v53 com as chaves `trt4:` idênticas (dois grifos e uma anotação de onde
+  parei feitos na v52); as 65 correções dos tópicos no texto da tela e o texto antigo fora; os dois avisos do STF nos
+  quatro quadros; o grifo no trecho corrigido do art. 111-A vai para "não achada" (guardado) e o outro continua pintado;
+  só o aviso novo aberto, o da v52 primeiro dos 42 anteriores; 375 e 820 px medidos (aviso com 37 itens de lista, e
+  `dpt-recursos`, `dpc-execucao` e `dpt-pje` sem rolagem lateral); console limpo.
+- `v53/neg_tela.js` 1..5 (a correção do art. 790-A volta ao texto antigo; o aviso do art. 100 antigo num quadro; o aviso
+  da v52 aberto também; palavra de 120 letras no aviso; erro de script no carregamento): os cinco acusados, cada um
+  sozinho (1, 1, 1, 2 e 1 falhas); nenhum perfil temporário sobrou.
+- Regressões: `v40/teste_rolagem.js` 17/17; `busca_2110/teste_busca.js` (v52 × v53) TUDO CERTO;
+  `juris_1210/teste_marca_1210.js` 286.198 palavras (744 a mais que na v52), 0 erradas com posição;
+  `juris_1210/teste_atualiza_1210.js` sem erros; `v52/teste_v52.js` sobre a v53: 47 de 49, as duas falhas são a versão
+  (v52) e o aviso aberto (o da v52 passou a ser o primeiro dos anteriores).
+- `index.html` e `sw.js` do worktree = `v53/ensaio.html` e `v53/ensaio_sw.js` (`cmp`); cache `autos-do-estudo-v53`.
+
+**Lições**
+- Extrator de texto que só pega certas tags perde o texto solto em `<div>`: a v52 deixou 12 quadros de Civil sem ler. A
+  revisão tem de provar a cobertura (o que sobra fora dos itens) antes de começar, e tratar à parte as notas dentro das
+  caixas de lei, que também são texto explicativo.
+- Nota "superada" ou "superou" sobre súmula do TST: conferir a situação no portal (a 439 e a 377 estão canceladas).
+- Aviso do STF no quadro Lei seca vem de `notas_stf.js`; corrigir no HTML sem corrigir lá desfaz a correção na próxima
+  regeneração dos quadros.
+- Lei nova que reescreve artigo de emenda constitucional (a EC 136/2025 reescreveu o art. 3º da EC 113/2021) não aparece
+  no texto da CF da base: as notas que citam a emenda antiga precisam ser relidas.
+
+**Pendências que continuam:** a leitura item a item das outras disciplinas, só se o usuário pedir (perguntar quais);
+reequilíbrio de Administrativo, Legislação e das menores, idem.
+
+---
+
+# Retomada — estado em 2026-11-24, v52 publicada, v53 pronta (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira, o **Adendo 47** (v52, "Parei aqui" — `trt4:parei`, dia de retomar pela regra de parada a
+1. Ler esta seção inteira, o **Adendo 48** (v53, 67 correções no texto de Processo do Trabalho, Processo Civil e
+   quadros de Civil; extrator com prova de cobertura; avisos do STF em `notas_stf.js`), o **Adendo 47** (v52, "Parei aqui" — `trt4:parei`, dia de retomar pela regra de parada a
    partir das linhas dos cartões — e 64 correções no texto de Direito Civil com prova no CC), o **Adendo 46** (v51, reequilíbrio das alternativas de Processo do Trabalho e Trabalho —
    o método da v48 com `juris:` lido no INDEX e a nova estritamente mais longa que a certa), o **Adendo 45** (v50, convênios: a Lei 8.666/1993 está revogada — correção de forma num
    tópico, com o texto provado na base de leis), o **Adendo 44** (v49, revisões espaçadas com lista fechada de alvos, a partir da proposta do
@@ -5616,36 +5737,38 @@ reequilíbrio de Administrativo, Legislação e das menores, idem.
    arquivos (aconteceu de novo entre 11 e 12/11; o app também troca o caminho do
    scratchpad entre sessões; e de novo entre 16 e 17/11, a 5ª vez), restaurar antes (`robocopy
    <ferramentas-scratchpad> <scratchpad> /E /XO`) e provar com `bash
-   v52/montar.sh` + `cmp v52/ensaio.html <worktree>/index.html` (a v52 parte de `bak_2210/index_v51.html`). O plano
+   v53/montar.sh` + `cmp v53/ensaio.html <worktree>/index.html` (a v53 parte de `bak_2210/index_v52.html`; `notas_stf.js`
+   já tem os avisos da v53 — para remontar a v52, voltar `v53/notas_stf_v52.js`). O plano
    aprovado em 22/10 está em
    `C:\Users\thale\.claude\plans\woolly-finding-squid.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
    - `git status --short` e `git log --oneline -3` no worktree (em 16/11:
-     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v52 pronta, esperando o commit do usuário; último commit `ce0053c` (Adendo 46 = v51), publicado
-     pelo PR #47, `3726087`; antes, `b3d1463` (Adendo 45 = v50), PR #46, `8055fd8`; antes, `48c42ef` (a v48 e a v49 juntas), PR #45, `cd842c4`; antes,
+     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v53 pronta, esperando o commit do usuário; último commit `543e186` (Adendo 47 = v52), publicado
+     pelo PR #48, `b8e876f`; antes, `ce0053c` (Adendo 46 = v51), PR #47, `3726087`; antes, `b3d1463` (Adendo 45 = v50), PR #46, `8055fd8`; antes, `48c42ef` (a v48 e a v49 juntas), PR #45, `cd842c4`; antes,
      `cd67ddd`, Adendo 42 = v47, publicada pelo PR #44, `b0a1958`);
-   - `git fetch origin` e `git log --oneline -3 origin/main` (em 23/11 o
-     `main` estava no PR #47, `3726087`, e a pasta principal também). **O
+   - `git fetch origin` e `git log --oneline -3 origin/main` (em 24/11 o
+     `main` estava no PR #48, `b8e876f`, e a pasta principal também). **O
      `--ff-only` do usuário só anda depois de um `git fetch`:** os worktrees
      dividem as referências com a pasta principal, e sem o fetch o
      `origin/main` local ainda aponta para o PR anterior. Fazer o fetch antes
      (ou indicar `git -C <raiz> pull --ff-only origin main`);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (em 23/11: `autos-do-estudo-v51`, publicada pelo PR #47; a v52 espera o commit);
+     (em 24/11: `autos-do-estudo-v52`, publicada pelo PR #48);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo e no Adendo
    32). Não aplicar nenhuma delas sem a resposta.
-4. **Próximo passo: esperar o commit e o PR da v52** (Adendo 47, "Parei aqui" e correções no texto de Direito Civil).
-   A v52 está no worktree (`index.html` = `v52/ensaio.html`, `sw.js` = `v52/ensaio_sw.js`, conferidos com `cmp`).
-   **Não mexer no `index.html` antes do commit.** Depois do commit e do PR: `git fetch` e `--ff-only` na pasta principal,
-   guardar `bak_2210/index_v52.html` (cópia do worktree, CRLF) e `sw_v52.js`. Não há promessa de conteúdo pendente. Só se o
-   usuário quiser e sem prioridade: leitura item a item do texto explicativo das outras disciplinas (o método de Civil,
-   Adendo 47); reequilíbrio de Administrativo, Legislação e das menores (Adendos 43 e 46); da proposta do Codex, a troca
-   manual de alvos, a fila persistente e a URL que abre uma revisão (Adendo 44); o registro da nota de cada estudo de
-   caso. Perguntar antes. Antes de cada versão, abrir o quadro de emendas do Planalto e as listas de leis, MPs e LCs do ano
-   (feito em 23/11; endereços no Adendo 46). Caso ou questão de jornada ou repouso segue a EC 141. **Mexer em cartão de
-   semana muda o que o "Parei aqui" lê** (título da linha = título do bloco no CRONOGRAMA; horários "Seg 16h00–17h45";
-   "Tempo reservado … anotado no caderno de: … . Se não ficou"): rodar `v52/conferir_grade.js` depois.
+4. **Próximo passo: esperar o commit e o PR da v53** (Adendo 48, correções no texto de Processo do Trabalho e de
+   Processo Civil). A v53 está no worktree (`index.html` = `v53/ensaio.html`, `sw.js` = `v53/ensaio_sw.js`, conferidos
+   com `cmp`). **Não mexer no `index.html` antes do commit.** Depois do commit e do PR: `git fetch` e `--ff-only` na pasta
+   principal, guardar `bak_2210/index_v53.html` (cópia do worktree, CRLF) e `sw_v53.js`. Não há promessa de conteúdo
+   pendente. Só se o usuário quiser: a leitura item a item das outras disciplinas (perguntar quais; o método está no
+   Adendo 48: `v53/_texto.js` com prova de cobertura, `v53/_folha.js`, `v53/correcoes.js` + `v53/conferir.js`);
+   reequilíbrio de Administrativo, Legislação e das menores (Adendos 43 e 46); da proposta do Codex, a troca manual de
+   alvos, a fila persistente e a URL que abre uma revisão (Adendo 44); o registro da nota de cada estudo de caso. Antes de
+   cada versão, abrir o quadro de emendas do Planalto e as listas de leis, MPs e LCs do ano (feito em 24/11; LCs pelo
+   quadro `ccivil_03/leis/lcp/quadro_lcp.htm`). Caso ou questão de jornada ou repouso segue a EC 141. **Mexer em cartão de
+   semana muda o que o "Parei aqui" lê**: rodar `v52/conferir_grade.js` depois. **Aviso do STF do quadro Lei seca se
+   corrige em `notas_stf.js`** (e no HTML, com `todas: N`), senão a próxima regeneração dos quadros desfaz.
    **Cartões de revisão:** os das semanas 13 a 22 saem de `v49/gerar_cartoes.js` sobre o arquivo de entrada; mexer em
    cartão de semana (tabela, links) muda a lista "Toda a semana": rodar de novo o gerador e `v49/conferir_cartoes.js`.
    **Todo lote usa a carga nova:**
@@ -5712,7 +5835,7 @@ reequilíbrio de Administrativo, Legislação e das menores, idem.
      `patch_matriz_v3X.js`, DONO no `gerar_lei_seca.js` quando a linha ligar
      dois tópicos, `aplicar_v3X.js A|B`, `montar.sh`, `aviso.js` com
      `conferir_aviso.js`; o aviso aberto esperado passa a ser o de
-     "23/11/2026 — “Parei aqui”: o aplicativo guarda onde você parou e mostra no dia de retomar", com "Avisos anteriores" em 41;
+     "24/11/2026 — correções no texto do material de Processo do Trabalho e de Processo Civil", com "Avisos anteriores" em 42;
    - **núcleo (regra da v38, Adendo 33):** refazer o levantamento sobre o
      ensaio (`node v36/gerar_aud_nucleo.js` e `node v36/aud_nucleo.js ENSAIO
      --json v3X/aud_nucleo.json`); em `nucleo_v3X.js` (cópia de
@@ -5742,8 +5865,8 @@ reequilíbrio de Administrativo, Legislação e das menores, idem.
    141/2026) publicada em 16/11 (PR #42); v46 (casos das semanas 21 e 22) publicada em 17/11 (PR #43); v47 (incisos grudados)
    publicada em 18/11 (PR #44); v48 (reequilíbrio de Processo Civil e Constitucional) e v49 (revisões espaçadas com lista
    fechada de alvos) publicadas juntas em 20/11 (PR #45); v50 (convênios: Lei 8.666 revogada) publicada em 20/11 (PR #46);
-   v51 (reequilíbrio de Processo do Trabalho e Trabalho) publicada em 23/11 (PR #47); v52 ("Parei aqui" e Civil) pronta em
-   23/11.
+   v51 (reequilíbrio de Processo do Trabalho e Trabalho) publicada em 23/11 (PR #47); v52 ("Parei aqui" e Civil) publicada
+   em 24/11 (PR #48); v53 (revisão de Processo do Trabalho e Processo Civil) pronta em 24/11.
 
    **Ao terminar qualquer versão:** HANDOFF (adendo e Retomada), memória,
    `robocopy` da cópia dos scripts e, depois do PR, `--ff-only` na pasta
@@ -5751,7 +5874,19 @@ reequilíbrio de Administrativo, Legislação e das menores, idem.
 
 ## TRABALHO EM ANDAMENTO (atualizar ao fim de cada etapa)
 
-### v52 — "Parei aqui" (onde parei) e correções no texto de Direito Civil — PRONTA em 23/11/2026, esperando o commit (Adendo 47)
+### v53 — correções no texto de Processo do Trabalho, Processo Civil e quadros de Civil — PRONTA em 24/11/2026, esperando o commit (Adendo 48)
+
+- **Estado:** `index.html` e `sw.js` do worktree = `v53/ensaio.html` e `v53/ensaio_sw.js` (`cmp`); cache
+  `autos-do-estudo-v53`. Entrada: `bak_2210/index_v52.html` (a v52 publicada). O que mudou e a verificação: **Adendo 48**.
+- **Dados e ferramentas:** `v53/_texto.js` (extrator com prova de cobertura), `v53/_folha.js` → `folhas/`, `v53/_html.js`,
+  `v53/correcoes.js` (67; lotes `lote_*.js` + `_add.js`; frases de erro por `_erros.js`), `v53/conferir.js`
+  (`--estragar 1..5`, `--sem-portal`), `v53/fontes_web.json` + `conf/web_paginas.txt`, `v53/patch_notas_stf.js`,
+  `aviso.js` + `conferir_aviso.js`, `aplicar_v53.js`, `montar.sh`, `conferir_tudo.sh`, `_gera_teste.js` + `_teste_corpo.js`
+  → `teste_v53.js`, `neg_tela.js` (1..5), `final.sh`.
+- **Ordem para remontar:** `bash v53/montar.sh`; `bash v53/conferir_tudo.sh`; `node v53/_gera_teste.js`; `bash v53/final.sh`.
+- **Depois do commit e do PR:** `git fetch` + `--ff-only` na raiz; guardar `bak_2210/index_v53.html` e `sw_v53.js`.
+
+### v52 — "Parei aqui" (onde parei) e correções no texto de Direito Civil — PUBLICADA em 24/11/2026 pelo PR #48 (`b8e876f`; commit `543e186`) (Adendo 47)
 
 - **Estado:** `index.html` e `sw.js` do worktree = `v52/ensaio.html` e `v52/ensaio_sw.js` (`cmp`); cache
   `autos-do-estudo-v52`. Entrada: `bak_2210/index_v51.html` (a v51 publicada). O que mudou e a verificação: **Adendo 47**.
