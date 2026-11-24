@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="versao-app" content="autos-do-estudo-v51">
+<meta name="versao-app" content="autos-do-estudo-v52">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <!-- Web app da tela de início (iPadOS/iOS). A partir do iPadOS 26, qualquer
@@ -272,6 +272,34 @@ mark.mt:hover{background:#FFD43B}
 .mt-aviso{position:fixed; z-index:45; left:16px; bottom:76px; max-width:calc(100vw - 32px); display:flex; align-items:center; gap:12px; padding:10px 14px; background:var(--tinta); color:#fff; font-size:14px; box-shadow:0 10px 26px -12px rgba(23,36,46,.6)}
 .mt-aviso .btn{color:#fff; border-color:#fff}
 .mt-flutua[hidden], .mt-aviso[hidden]{display:none}
+/* v52 (23/11/2026): "Parei aqui" — o segundo botão junto do Marcar, o lugar logo abaixo da faixa Hoje, a linha no cartão da semana, a faixa no parágrafo e a janela */
+.mt-flutua{display:flex; flex-wrap:wrap; gap:8px}
+#pg-operacional .op-parei{margin:-6px 0 18px}
+#pg-operacional .pr-item{background:var(--superficie); border:1px solid var(--linha); border-left:5px solid var(--grifo); padding:12px 16px; margin:0 0 10px}
+#pg-operacional .pr-item p{margin:0 0 6px; font-size:15.5px; line-height:1.5; overflow-wrap:anywhere}
+#pg-operacional .pr-quando{display:block; font-family:var(--mono); font-size:11.5px; color:var(--tinta-2); margin-top:4px}
+#pg-operacional .pr-nota{font-size:14.5px; color:var(--tinta-2)}
+#pg-operacional .pr-acoes{display:flex; flex-wrap:wrap; gap:8px; margin-top:8px}
+#pg-operacional .pr-rodape{display:flex; flex-wrap:wrap; gap:8px 14px; align-items:center; margin:0 0 8px}
+#pg-operacional .pr-dica{flex:1 1 260px; font-size:13.5px; color:var(--tinta-2)}
+#pg-operacional .pr-lista{background:var(--superficie); border:1px solid var(--linha); padding:0 16px; margin:0 0 6px}
+#pg-operacional .pr-lista > summary{cursor:pointer; padding:10px 0; font-size:14.5px}
+#pg-operacional .pr-lista h5{font-family:var(--mono); font-size:10.5px; font-weight:500; letter-spacing:.14em; text-transform:uppercase; color:var(--tinta-3); margin:10px 0 6px}
+#pg-operacional .pr-lista ul{margin:0 0 12px; padding-left:18px}
+#pg-operacional .pr-lista li{margin:0 0 10px; font-size:14.5px; overflow-wrap:anywhere}
+#pg-operacional .pr-lista li .btn{margin:6px 6px 0 0}
+#pg-operacional .pr-quando-lista{font-family:var(--mono); font-size:11.5px; color:var(--tinta-2)}
+#pg-operacional .pr-linha{margin-top:8px; padding:6px 10px; border-left:4px solid var(--grifo); background:var(--grifo-suave); font-size:14px; overflow-wrap:anywhere}
+.pr-erro{color:var(--carmim); font-weight:600}
+#pg-material .pr-aqui{outline:2px solid var(--grifo); outline-offset:3px; scroll-margin-top:90px}
+#pg-material .pr-aqui::before{content:attr(data-pr-aqui); display:block; font-family:var(--mono); font-size:11px; line-height:1.4; color:var(--tinta); background:var(--grifo-suave); padding:2px 6px; margin:0 0 4px}
+.modal .pr-campo{display:block; margin:12px 0 4px; font-size:14px; font-weight:600; color:var(--tinta)}
+.modal .pr-entrada{display:block; width:100%; box-sizing:border-box; font:inherit; font-size:16px; padding:8px 10px; border:1px solid var(--linha-forte); border-radius:var(--raio); background:#fff; color:var(--tinta)}
+.modal textarea.pr-entrada{resize:vertical; min-height:64px}
+.modal .pr-check{display:flex; gap:8px; align-items:center; margin:10px 0 4px; font-size:14.5px; color:var(--tinta)}
+.modal .pr-check input{width:20px; height:20px; margin:0}
+.modal .pr-quando-dlg{border-left:3px solid var(--grifo); background:var(--grifo-suave); padding:10px 12px; margin:12px 0 4px}
+@media print{ .pr-aqui::before{display:none !important} }
 /* ---------- Faixa de versão nova do aplicativo (09/10/2026) ---------- */
 .faixa-versao{position:fixed; z-index:70; left:0; right:0; top:0; display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px;
   padding:12px 16px; padding-top:max(12px, env(safe-area-inset-top)); background:var(--tinta); color:#fff; font-size:14.5px; line-height:1.45;
@@ -876,7 +904,7 @@ html.modal-aberta{overflow:hidden}
   #pg-material .topico > summary .selo{white-space:normal; flex:0 1 auto; text-align:center}
 }
 @media print{
-  #pg-operacional .op-hoje, #pg-operacional .op-hoje-acoes, #pg-operacional .op-slot .btn{display:none}
+  #pg-operacional .op-hoje, #pg-operacional .op-hoje-acoes, #pg-operacional .op-slot .btn, #pg-operacional .op-parei{display:none}
   #pg-operacional .op-semana, #pg-operacional .op-p, #pg-operacional .op-dia{break-inside:avoid}
   #pg-operacional details.op-dia{display:block}
   #pg-operacional details.op-dia > *{display:block}
@@ -2246,6 +2274,8 @@ body{
 
   <div class="op-hoje" id="opHoje" aria-live="polite"></div>
 
+  <div class="op-parei" id="opParei"></div>
+
   <details class="op-pcd" id="opPcd" open>
     <summary>Inscrição como pessoa com deficiência — prazos do edital de 2026</summary>
     <p>O edital considera pessoa com deficiência, entre outras, quem se enquadra no art. 1º, § 1º, da Lei 12.764/2012 (Transtorno do Espectro Autista). Tudo abaixo é feito no site da Fundação Carlos Chagas, www.concursosfcc.com.br, pelo link de inscrição do concurso.</p>
@@ -2263,6 +2293,40 @@ body{
   </details>
 
   <div class="op-aviso op-nota op-mudanca">
+    <b class="op-rot">Atualização de 23/11/2026 — “Parei aqui”: o aplicativo guarda onde você parou e mostra no dia de retomar</b>
+    A anotação do ponto em que você parou, que até agora ia para o caderno, pode ser feita no próprio aplicativo. No dia de retomar, ela aparece logo abaixo da faixa Hoje, no alto desta página.
+    <ul>
+      <li><b>No material</b>: selecione uma palavra do ponto em que parou de ler. Junto do botão <b>Marcar</b> aparece <b>Parei aqui</b>. A janela mostra o dia de retomar, calculado pela regra de parada do P2: nos blocos com núcleo, o bloco com “Tempo reservado” que recebe o que ficou; nos outros, o próximo bloco da mesma disciplina, em outro dia. Para mudar o dia, marque <b>Escolher outra data</b>. O parágrafo fica com a faixa “Você parou aqui”.</li>
+      <li><b>Fora do material</b> (lei no Planalto, questões): toque em <b>Anotar onde parei</b>, logo abaixo da faixa Hoje, e escreva onde parou.</li>
+      <li><b>No dia de retomar</b>: a anotação aparece logo abaixo da faixa Hoje e na linha do bloco, no cartão da semana (seção 6). O botão <b>Ir para o ponto exato</b> abre o tópico já no parágrafo. Quando terminar, toque em <b>Retomei</b>. Se o dia passar, a anotação continua lá, como pendente. As de outros dias e as já retomadas ficam na lista <b>Suas anotações de onde parei</b>.</li>
+      <li><b>Quando passa a valer</b>: desde segunda-feira, 30/11 (semana 14), o P2 e o P3 mandam anotar no aplicativo. Até lá, use se quiser; o caderno continua valendo. Onde um cartão disser “anote no caderno”, vale também a anotação do aplicativo.</li>
+      <li><b>Direito Civil, correções no texto do material</b>: 64 trechos, em 14 dos 16 tópicos, conferidos com o texto oficial — o do Código Civil, o do CPC (em 1) e o dos enunciados do CJF (em 3). Quase todos tinham o defeito do “reaver” do art. 1.228, que você apontou: o resumo deixava de fora uma parte do artigo — um direito, uma exceção, um requisito ou o começo de um prazo. Agora o trecho traz essa parte, quase sempre com as palavras da lei entre aspas. Quatro eram erro de conteúdo, e não só falta: as averbações do art. 10 que o texto lista são todas as do artigo, e não “entre outras”; a isenção do bem de família dura enquanto viver um dos cônjuges e, “na falta destes”, até a maioridade dos filhos (art. 1.716), e não uma coisa ou outra; a multa por comportamento antissocial reiterado é “correspondente ao décuplo” da contribuição (art. 1.337, parágrafo único), e não “até o décuplo”; o penhor legal do art. 1.467 tem só dois casos (hospedeiros e dono do prédio), e não “entre outros”. Nos tópicos de semanas já estudadas, leia os trechos corrigidos na próxima revisão do tópico; nos das próximas semanas, eles já entram na leitura, com menos de 5 minutos a mais por tópico. Por tópico:
+        <ul>
+          <li>Pessoa natural: arts. 10 e 39.</li>
+          <li>Pessoa jurídica: art. 61.</li>
+          <li>Negócio jurídico: arts. 105, 133, 158 e 184.</li>
+          <li>Prescrição e decadência: art. 206-A.</li>
+          <li>Posse: arts. 1.201, 1.207, 1.212, 1.214, 1.216 e 1.228 (caput e § 4º); Enunciado 303 do CJF; Enunciado 597 do CJF.</li>
+          <li>Propriedade: arts. 1.229, 1.230, 1.239, 1.240 e 1.240-A; Enunciado 49 do CJF.</li>
+          <li>Direitos reais II: arts. 1.288, 1.301, 1.322, 1.333, 1.336, 1.337, 1.341, 1.351, 1.365, 1.420 e 1.467.</li>
+          <li>Família: arts. 1.555, 1.560, 1.561, 1.647, 1.659, 1.668, 1.711 e 1.716.</li>
+          <li>Sucessões: arts. 1.809, 1.818, 1.975 e 2.013; CPC, art. 669.</li>
+          <li>Obrigações: arts. 237, 275, 280, 286, 290, 295, 299, 308 e 333.</li>
+          <li>Contratos em geral: arts. 429, 439 e 464.</li>
+          <li>Contratos em espécie: arts. 496, 557, 581, 736 e 849.</li>
+          <li>Responsabilidade civil: arts. 188, 928 e 940.</li>
+          <li>Empresa: arts. 990, 1.023 e 1.146.</li>
+        </ul>
+        Se você tinha grifado um trecho que mudou, o grifo continua guardado e aparece na barra do tópico, em “marcação não foi achada no texto atual”.</li>
+    </ul>
+    O aviso anterior, sobre as alternativas das questões de Processo do Trabalho e de Trabalho, continua valendo: ele é o primeiro de “Avisos anteriores”, logo abaixo.
+    O que não muda: os horários, os cartões das semanas e das revisões, os estudos de caso, as questões, suas respostas, o histórico, o placar e os outros grifos. As anotações de onde parei ficam só neste navegador, como as marcações: o <b>Zerar progresso</b> não as apaga, e o backup as leva.
+  </div>
+
+  <details class="op-avisos-ant">
+    <summary>Avisos anteriores (41), do mais novo para o mais antigo</summary>
+
+  <div class="op-aviso op-nota op-mudanca">
     <b class="op-rot">Atualização de 23/11/2026 — alternativas das questões de Processo do Trabalho e de Trabalho</b>
     No banco de questões, a alternativa certa costumava ser a mais longa: em Processo do Trabalho, em 67 das 91 questões; em Trabalho, em 70 das 100. É o mesmo ajuste feito em 19/11 nas questões de Processo Civil e de Constitucional.
     <ul>
@@ -2273,9 +2337,6 @@ body{
     O aviso anterior, sobre a Lei 8.666/1993 no tópico de convênios, continua valendo: ele é o primeiro de “Avisos anteriores”, logo abaixo.
     O que também não muda: os horários, os cartões das semanas e das revisões, os estudos de caso, o material, os quadros da Lei seca, os cartões da página 04.2 e tudo o que você já grifou.
   </div>
-
-  <details class="op-avisos-ant">
-    <summary>Avisos anteriores (40), do mais novo para o mais antigo</summary>
 
   <div class="op-aviso op-nota op-mudanca">
     <b class="op-rot">Atualização de 20/11/2026 — convênios: a Lei 8.666/1993 está revogada</b>
@@ -3338,7 +3399,7 @@ body{
       <ol>
         <li>(1 min) Coloque na mesa exatamente três coisas: o computador com o aplicativo aberto, o caderno de erros e uma caneta. Tudo o mais sai da mesa.</li>
         <li>(1 min) Celular em outro cômodo, ou em modo avião dentro de uma gaveta.</li>
-        <li>(1 min) Abra a página 03.1 do aplicativo. A faixa “Hoje”, no topo, leva ao dia de hoje (seção 3) e à semana corrente (seção 6).</li>
+        <li>(1 min) Abra a página 03.1 do aplicativo. A faixa “Hoje”, no topo, leva ao dia de hoje (seção 3) e à semana corrente (seção 6). Logo abaixo dela aparece o que você anotou para retomar hoje (P2, regra de parada).</li>
         <li>(1 min) Escreva no caderno a data e o dia da semana.</li>
         <li>(1 min) Ligue o timer com a duração do primeiro bloco. Comece.</li>
       </ol>
@@ -3360,6 +3421,7 @@ body{
         <b>Regra de parada</b>
         Se o timer tocar antes do passo 5, pare mesmo assim. Nos blocos com núcleo (desde 02/11), anote no caderno, no alto da página, os artigos do núcleo que faltaram: eles abrem o bloco de revisão que o cartão indica, antes do procedimento desse bloco. Desde 16/11, o timer é o dos minutos de teoria do horário, e o bloco que o cartão indica traz a linha <b>Tempo reservado</b>. Nos outros blocos, o que faltou entra no próximo bloco da mesma disciplina. Nunca no mesmo dia.
       </div>
+      <p style="font-size:14.5px;color:var(--tinta-2);margin-top:10px"><b>Desde a semana 14 (30/11), o ponto em que parou é anotado no aplicativo, e não no caderno.</b> No material, selecione uma palavra do ponto em que parou e toque em <b>Parei aqui</b>; fora do material, toque em <b>Anotar onde parei</b>, logo abaixo da faixa Hoje desta página. A janela mostra o dia de retomar, pela regra acima, e nesse dia a anotação aparece logo abaixo da faixa Hoje. Onde um cartão disser “anote no caderno” ou “o que ficou anotado no caderno”, vale a anotação do aplicativo. Se o aplicativo não estiver à mão, anote no caderno, como antes.</p>
     </div>
 
     <div class="op-p">
@@ -3376,6 +3438,7 @@ body{
         <b>Regra de parada</b>
         Se a faixa de artigos for grande demais para o tempo, pare no artigo em que estiver e anote o número no alto da página. Você retoma exatamente dali no próximo bloco da mesma disciplina. Não pule para o fim da faixa.
       </div>
+      <p style="font-size:14.5px;color:var(--tinta-2);margin-top:10px"><b>Desde a semana 14 (30/11), o número do artigo vai para o aplicativo, e não para o alto da página.</b> Toque em <b>Anotar onde parei</b>, logo abaixo da faixa Hoje desta página, e escreva a lei e o artigo (por exemplo, “CLT, art. 789”). A janela mostra o próximo bloco da mesma disciplina, e nesse dia a anotação aparece logo abaixo da faixa Hoje.</p>
     </div>
 
     <div class="op-p">
@@ -6806,7 +6869,7 @@ body{
       <thead><tr><th>Item</th><th>Para que serve</th><th>Onde fica</th></tr></thead>
       <tbody>
         <tr><td><b>O aplicativo de estudos</b></td><td>Material, banco de questões, simulado, painel de desempenho e jurisprudência (página 04.2)</td><td>Aba fixa do navegador</td></tr>
-        <tr><td><b>Esta página (03.1)</b></td><td>A faixa “Hoje”, no topo, leva ao dia de hoje (seção 3) e à semana corrente (seção 6)</td><td>Dentro do aplicativo, sem aba extra</td></tr>
+        <tr><td><b>Esta página (03.1)</b></td><td>A faixa “Hoje”, no topo, leva ao dia de hoje (seção 3) e à semana corrente (seção 6); logo abaixo dela ficam as anotações de onde parei</td><td>Dentro do aplicativo, sem aba extra</td></tr>
         <tr><td><b>Caderno de erros</b></td><td>O único material que você produz</td><td>Físico, ao lado do teclado</td></tr>
         <tr><td><b>Timer</b></td><td>Marca o fim de cada bloco</td><td>Aparelho separado, ou o do micro-ondas — não o celular</td></tr>
       </tbody>
@@ -6896,6 +6959,10 @@ body{
 
   <div class="nota mt-nota">
     <b>Marca-texto (desde 08/10/2026).</b> Em qualquer tópico — texto, caixas e quadro <b>Lei seca</b> —, selecione um trecho com o mouse ou com o dedo e toque em <b>Marcar</b>: ele fica assim, <mark class="mt-amostra">em amarelo</mark>. Para tirar, toque na marcação e depois em <b>Tirar marcação</b>; por alguns segundos aparece <b>Desfazer</b>. Para treinar de memória, use <b>Esconder marcações</b>, na barra amarela do alto de cada tópico: cada trecho marcado vira uma tarja escura; diga o que está embaixo e toque na tarja para conferir. As marcações ficam guardadas só neste navegador (o computador ou o celular em que você marcou). O botão <b>Zerar progresso</b> não as apaga; elas só saem pelo botão <b>Apagar as marcações deste tópico</b>, que pede confirmação.
+  </div>
+
+  <div class="nota mt-nota">
+    <b>Parei aqui (desde 23/11/2026).</b> Junto do <b>Marcar</b> aparece <b>Parei aqui</b>: selecione uma palavra do ponto em que você parou de ler e toque nele. A janela mostra o dia de retomar, calculado pela regra de parada do P2 (página 03.1), e deixa escolher outro. O parágrafo fica com a faixa “Você parou aqui”. No dia, o ponto aparece logo abaixo da faixa <b>Hoje</b>, no alto da página 03.1, com o botão <b>Ir para o ponto exato</b>, até você tocar em <b>Retomei</b>. Como as marcações, as anotações ficam só neste navegador, e o <b>Zerar progresso</b> não as apaga.
   </div>
 
   <!-- ---------- PORTUGUÊS ---------- -->
@@ -11786,7 +11853,7 @@ body{
             <tr><td><b>Comoriência</b></td><td>se dois ou mais indivíduos morrem na mesma ocasião e não se pode averiguar se algum precedeu os outros, presumem-se simultaneamente mortos</td><td>art. 8º</td></tr>
           </tbody>
         </table></div>
-        <p>São <b>registrados</b> em registro público os nascimentos, casamentos e óbitos, a emancipação por outorga dos pais ou por sentença do juiz, a interdição e a sentença declaratória de ausência e de morte presumida (art. 9º). São <b>averbadas</b>, entre outras, as sentenças de nulidade ou anulação do casamento, de divórcio, de separação judicial e de restabelecimento da sociedade conjugal, e os atos que declararem ou reconhecerem a filiação (art. 10).</p>
+        <p>São <b>registrados</b> em registro público os nascimentos, casamentos e óbitos, a emancipação por outorga dos pais ou por sentença do juiz, a interdição e a sentença declaratória de ausência e de morte presumida (art. 9º). Pelo art. 10, são <b>averbadas</b> as sentenças de nulidade ou anulação do casamento, de divórcio, de separação judicial e de restabelecimento da sociedade conjugal, e os atos que declararem ou reconhecerem a filiação (art. 10).</p>
         <h5>Capacidade e incapacidades</h5>
         <p>Ter direitos é uma coisa; exercê-los pessoalmente é outra. O Código separa quem precisa de alguém para agir:</p>
         <div class="tabela-rolagem"><table class="tabela" style="margin:12px 0">
@@ -11835,7 +11902,7 @@ body{
           <tbody>
             <tr><td><b>1. Curadoria dos bens do ausente</b></td><td>o ausente não deixou representante ou procurador para administrar os bens: o juiz, a requerimento de qualquer interessado ou do Ministério Público, declara a ausência e nomeia curador (art. 22). Também quando o mandatário não quer ou não pode exercer o mandato, ou tem poderes insuficientes (art. 23)</td><td>o cônjuge do ausente, se não estiver separado judicialmente, ou de fato por mais de 2 anos antes da declaração da ausência, é o curador legítimo; na falta dele, os pais ou os descendentes, nessa ordem (art. 25 e § 1º)</td></tr>
             <tr><td><b>2. Sucessão provisória</b></td><td>1 ano depois da arrecadação dos bens, ou 3 anos, se o ausente deixou representante ou procurador (art. 26)</td><td>a sentença só produz efeito 180 dias depois de publicada pela imprensa (art. 28); para entrar na posse dos bens, os herdeiros dão garantias, menos os ascendentes, os descendentes e o cônjuge (art. 30 e § 2º); o descendente, o ascendente ou o cônjuge sucessor provisório faz seus todos os frutos e rendimentos, e os demais sucessores capitalizam metade (art. 33)</td></tr>
-            <tr><td><b>3. Sucessão definitiva</b></td><td>10 anos depois de passada em julgado a sentença que concedeu a sucessão provisória (art. 37), ou provando-se que o ausente tem 80 anos de idade e que de 5 datam as últimas notícias dele (art. 38)</td><td>se o ausente regressar nos 10 anos seguintes, recebe só os bens existentes no estado em que se acharem, os sub-rogados em seu lugar ou o preço que os herdeiros receberam pelos bens alienados (art. 39); se não regressar nesses 10 anos e nenhum interessado promover a sucessão definitiva, os bens arrecadados passam ao domínio do Município ou do Distrito Federal, se localizados nas respectivas circunscrições, ou da União, quando situados em território federal (art. 39, parágrafo único)</td></tr>
+            <tr><td><b>3. Sucessão definitiva</b></td><td>10 anos depois de passada em julgado a sentença que concedeu a sucessão provisória (art. 37), ou provando-se que o ausente tem 80 anos de idade e que de 5 datam as últimas notícias dele (art. 38)</td><td>se o ausente, “ou algum de seus descendentes ou ascendentes”, regressar nos 10 anos seguintes à abertura da sucessão definitiva, recebe só os bens existentes no estado em que se acharem, os sub-rogados em seu lugar ou o preço que os herdeiros receberam pelos bens alienados (art. 39); se não regressar nesses 10 anos e nenhum interessado promover a sucessão definitiva, os bens arrecadados passam ao domínio do Município ou do Distrito Federal, se localizados nas respectivas circunscrições, ou da União, quando situados em território federal (art. 39, parágrafo único)</td></tr>
           </tbody>
         </table></div>
         <div class="lei-seca" id="ls-civ-pessoas">
@@ -11892,7 +11959,7 @@ body{
           <li>Os associados devem ter iguais direitos, mas o estatuto poderá instituir categorias com vantagens especiais (art. 55). A qualidade de associado é intransmissível, se o estatuto não dispuser o contrário (art. 56).</li>
           <li>A exclusão do associado só é admissível havendo <b>justa causa</b>, reconhecida em procedimento que assegure direito de defesa e de recurso, nos termos do estatuto (art. 57).</li>
           <li>Compete privativamente à assembleia geral destituir os administradores e alterar o estatuto, em assembleia especialmente convocada para esse fim (art. 59). A convocação dos órgãos deliberativos se faz na forma do estatuto, garantido a <b>1/5</b> dos associados o direito de promovê-la (art. 60).</li>
-          <li>Dissolvida a associação, o remanescente do patrimônio líquido vai para a entidade de fins não econômicos designada no estatuto ou, omisso este, por deliberação dos associados, à instituição municipal, estadual ou federal de fins idênticos ou semelhantes (art. 61). Se não houver essa instituição, o que remanescer se devolve à Fazenda do Estado, do Distrito Federal ou da União (art. 61, § 2º).</li>
+          <li>Dissolvida a associação, o remanescente do patrimônio líquido vai para a entidade de fins não econômicos designada no estatuto ou, omisso este, por deliberação dos associados, à instituição municipal, estadual ou federal de fins idênticos ou semelhantes (art. 61). Antes disso, por cláusula do estatuto ou, no silêncio dele, por deliberação dos associados, estes podem “receber em restituição, atualizado o respectivo valor, as contribuições que tiverem prestado ao patrimônio da associação” (§ 1º). Se não houver essa instituição, o que remanescer se devolve à Fazenda do Estado, do Distrito Federal ou da União (art. 61, § 2º).</li>
         </ul>
         <h5>Fundações (arts. 62 a 69)</h5>
         <p>Para criar uma fundação, o instituidor faz, por <b>escritura pública ou testamento</b>, dotação especial de bens livres, especificando o fim a que se destina (art. 62). A fundação somente pode constituir-se para os fins listados no parágrafo único do art. 62, entre eles assistência social, cultura, educação, saúde, meio ambiente, pesquisa científica, promoção dos direitos humanos e atividades religiosas.</p>
@@ -11987,7 +12054,7 @@ body{
         <h5>Validade e forma (arts. 104 a 109)</h5>
         <p>“A validade do negócio jurídico requer: I - agente capaz; II - objeto lícito, possível, determinado ou determinável; III - forma prescrita ou não defesa em lei” (art. 104).</p>
         <ul>
-          <li>A incapacidade relativa de uma das partes não pode ser invocada pela outra em benefício próprio (art. 105).</li>
+          <li>A incapacidade relativa de uma das partes não pode ser invocada pela outra em benefício próprio, “nem aproveita aos co-interessados capazes, salvo se, neste caso, for indivisível o objeto do direito ou da obrigação comum” (art. 105).</li>
           <li>A impossibilidade inicial do objeto não invalida o negócio se for <b>relativa</b>, ou se cessar antes de realizada a condição a que ele estiver subordinado (art. 106).</li>
           <li>“A validade da declaração de vontade não dependerá de forma especial, senão quando a lei expressamente a exigir” (art. 107): a forma é livre, em regra.</li>
           <li>Não dispondo a lei em contrário, a <b>escritura pública</b> é essencial à validade dos negócios que visem à constituição, transferência, modificação ou renúncia de direitos reais sobre imóveis de valor superior a <b>trinta vezes o maior salário mínimo</b> vigente no País (art. 108).</li>
@@ -12038,7 +12105,7 @@ body{
             <tr><td><b>Encargo</b></td><td>não suspende a aquisição nem o exercício do direito, salvo quando expressamente imposto como condição suspensiva; o encargo ilícito ou impossível considera-se não escrito, salvo se for o motivo determinante da liberalidade, caso em que se invalida o negócio</td><td>arts. 136 e 137</td></tr>
           </tbody>
         </table></div>
-        <p><b>Contagem dos prazos</b> (art. 132): salvo disposição legal ou convencional em contrário, exclui-se o dia do começo e inclui-se o do vencimento. Se o vencimento cair em feriado, o prazo se prorroga até o dia útil seguinte; “meado” é o décimo quinto dia de qualquer mês; os prazos de meses e anos expiram no dia de igual número do de início, ou no imediato, se faltar exata correspondência; os prazos fixados por hora contam-se de minuto a minuto. Nos testamentos, presume-se o prazo em favor do herdeiro, e, nos contratos, em proveito do devedor (art. 133). Os negócios entre vivos sem prazo são exequíveis desde logo, salvo se a execução tiver de ser feita em lugar diverso ou depender de tempo (art. 134).</p>
+        <p><b>Contagem dos prazos</b> (art. 132): salvo disposição legal ou convencional em contrário, exclui-se o dia do começo e inclui-se o do vencimento. Se o vencimento cair em feriado, o prazo se prorroga até o dia útil seguinte; “meado” é o décimo quinto dia de qualquer mês; os prazos de meses e anos expiram no dia de igual número do de início, ou no imediato, se faltar exata correspondência; os prazos fixados por hora contam-se de minuto a minuto. Nos testamentos, presume-se o prazo em favor do herdeiro, e, nos contratos, em proveito do devedor, “salvo, quanto a esses, se do teor do instrumento, ou das circunstâncias, resultar que se estabeleceu a benefício do credor, ou de ambos os contratantes” (art. 133). Os negócios entre vivos sem prazo são exequíveis desde logo, salvo se a execução tiver de ser feita em lugar diverso ou depender de tempo (art. 134).</p>
         <div class="pegadinha">
           <b>Impossível e suspensiva × impossível e resolutiva</b>
           A condição física ou juridicamente impossível <b>invalida</b> o negócio quando é suspensiva (art. 123, I). Quando é resolutiva, ela se tem por <b>inexistente</b>, e o negócio vale sem ela (art. 124). E o termo inicial não impede a aquisição do direito: só o exercício (art. 131); a condição suspensiva impede a aquisição (art. 125).
@@ -12060,7 +12127,7 @@ body{
           <li><b>Dolo:</b> nos negócios bilaterais, o silêncio intencional de uma das partes sobre fato ou qualidade que a outra haja ignorado constitui omissão dolosa, provando-se que sem ela o negócio não se teria celebrado (art. 147). O dolo de terceiro anula o negócio se a parte a quem aproveite dele tivesse ou devesse ter conhecimento; senão, o negócio subsiste e o terceiro responde por todas as perdas e danos (art. 148). O dolo do representante legal só obriga o representado a responder civilmente até a importância do proveito que teve; o do representante convencional faz o representado responder solidariamente com ele por perdas e danos (art. 149). Se ambas as partes procederem com dolo, nenhuma pode alegá-lo para anular o negócio, ou reclamar indenização (art. 150).</li>
           <li><b>Coação:</b> na apreciação, levam-se em conta o sexo, a idade, a condição, a saúde, o temperamento do paciente e as demais circunstâncias (art. 152). “Não se considera coação a ameaça do exercício normal de um direito, nem o simples temor reverencial” (art. 153). A coação exercida por terceiro vicia o negócio se dela tivesse ou devesse ter conhecimento a parte a que aproveite, e esta responde solidariamente com aquele por perdas e danos (art. 154); sem esse conhecimento, o negócio subsiste, e o autor da coação responde por todas as perdas e danos (art. 155).</li>
           <li><b>Lesão:</b> não se decreta a anulação se for oferecido suplemento suficiente, ou se a parte favorecida concordar com a redução do proveito (art. 157, § 2º).</li>
-          <li><b>Fraude contra credores:</b> só os credores que já o eram ao tempo daqueles atos podem pleitear a anulação (art. 158, § 2º). A ação pode ser intentada contra o devedor insolvente, contra quem com ele celebrou a estipulação fraudulenta ou contra terceiros adquirentes de má-fé (art. 161). Presumem-se fraudatórias as garantias de dívidas que o devedor insolvente tiver dado a algum credor (art. 163); presumem-se de boa-fé e valem os negócios ordinários indispensáveis à manutenção do estabelecimento ou à subsistência do devedor e de sua família (art. 164).</li>
+          <li><b>Fraude contra credores:</b> a anulação cabe aos “credores quirografários” e também “aos credores cuja garantia se tornar insuficiente” (art. 158 e § 1º), mas só aos que já o eram ao tempo daqueles atos (§ 2º). A ação pode ser intentada contra o devedor insolvente, contra quem com ele celebrou a estipulação fraudulenta ou contra terceiros adquirentes de má-fé (art. 161). Presumem-se fraudatórias as garantias de dívidas que o devedor insolvente tiver dado a algum credor (art. 163); presumem-se de boa-fé e valem os negócios ordinários indispensáveis à manutenção do estabelecimento ou à subsistência do devedor e de sua família (art. 164).</li>
         </ul>
         <div class="pegadinha">
           <b>Estado de perigo × lesão</b>
@@ -12082,7 +12149,7 @@ body{
           <li><b>Contagem dos quatro anos</b> (art. 178): no caso de coação, do dia em que ela cessar; no de erro, dolo, fraude contra credores, estado de perigo ou lesão, do dia em que se realizou o negócio jurídico; no de atos de incapazes, do dia em que cessar a incapacidade.</li>
           <li>O menor, entre dezesseis e dezoito anos, não pode invocar a sua idade para eximir-se de uma obrigação se dolosamente a ocultou quando inquirido pela outra parte, ou se, no ato de obrigar-se, declarou-se maior (art. 180).</li>
           <li>Anulado o negócio, as partes são restituídas ao estado em que antes dele se achavam; não sendo possível, são indenizadas com o equivalente (art. 182). A invalidade do instrumento não induz a do negócio sempre que este puder provar-se por outro meio (art. 183).</li>
-          <li>A invalidade parcial não prejudica a parte válida, se esta for separável; a invalidade da obrigação principal implica a das obrigações acessórias, mas a destas não induz a da obrigação principal (art. 184).</li>
+          <li>“Respeitada a intenção das partes”, a invalidade parcial não prejudica a parte válida, se esta for separável; a invalidade da obrigação principal implica a das obrigações acessórias, mas a destas não induz a da obrigação principal (art. 184).</li>
         </ul>
         <div class="pegadinha">
           <b>Três prazos de anulação que a banca mistura</b>
@@ -12136,7 +12203,7 @@ body{
             <tr><td><b>5 anos</b></td><td>cobrança de dívidas líquidas constantes de instrumento público ou particular; honorários dos profissionais liberais em geral, procuradores judiciais, curadores e professores, contado o prazo da conclusão dos serviços, da cessação dos contratos ou do mandato; a do vencedor para haver do vencido o que despendeu em juízo</td><td>art. 206, § 5º</td></tr>
           </tbody>
         </table></div>
-        <p>A prescrição intercorrente observa o mesmo prazo de prescrição da pretensão (art. 206-A).</p>
+        <p>A prescrição intercorrente observa o mesmo prazo de prescrição da pretensão, “observadas as causas de impedimento, de suspensão e de interrupção da prescrição previstas neste Código” e o art. 921 do CPC (art. 206-A).</p>
         <div class="pegadinha">
           <b>Reparação civil: três anos — o crédito trabalhista tem regra própria</b>
           A pretensão de reparação civil prescreve em três anos (art. 206, § 3º, V). Para os créditos resultantes das relações de trabalho, a regra é a da Constituição: prazo prescricional de cinco anos para os trabalhadores urbanos e rurais, até o limite de dois anos após a extinção do contrato de trabalho (CF, art. 7º, XXIX).
@@ -12174,7 +12241,7 @@ body{
       <div class="conteudo">
         <p>No Código Civil, a posse vem nos arts. 1.196 a 1.224, antes dos direitos reais, que começam no art. 1.225. Nas 16 provas da FCC para este cargo, de 2022 a 2025, o assunto “Direito das Coisas / Direitos Reais” teve 12 questões, em 10 provas; sobre posse, 1 questão, sobre a posse justa. O quadro Lei seca, no fim do tópico, traz os arts. 1.196 a 1.224.</p>
         <h5>O que é posse — e as duas teorias</h5>
-        <p>O Código não define a posse; define o <b>possuidor</b>: “Considera-se possuidor todo aquele que tem de fato o exercício, pleno ou não, de algum dos poderes inerentes à propriedade” (art. 1.196). Os poderes inerentes à propriedade são usar, gozar e dispor da coisa (art. 1.228).</p>
+        <p>O Código não define a posse; define o <b>possuidor</b>: “Considera-se possuidor todo aquele que tem de fato o exercício, pleno ou não, de algum dos poderes inerentes à propriedade” (art. 1.196). Os poderes inerentes à propriedade estão no art. 1.228: o proprietário “tem a faculdade de usar, gozar e dispor da coisa, e o direito de reavê-la do poder de quem quer que injustamente a possua ou detenha”.</p>
         <div class="tabela-rolagem"><table class="tabela" style="margin:12px 0">
           <thead><tr><th>Teoria</th><th>O que diz</th></tr></thead>
           <tbody>
@@ -12197,14 +12264,14 @@ body{
             <tr><td><b>Direta e indireta</b></td><td>a posse direta, de quem tem a coisa temporariamente em virtude de direito pessoal ou real (como o locatário e o usufrutuário), não anula a indireta, de quem aquela foi havida; o possuidor direto pode defender a sua posse contra o indireto (art. 1.197), e este, contra aquele (Enunciado 76).</td></tr>
             <tr><td><b>Composse</b></td><td>duas ou mais pessoas possuem coisa indivisa; cada uma exerce atos possessórios, contanto que não excluam os dos outros compossuidores (art. 1.199).</td></tr>
             <tr><td><b>Justa e injusta</b></td><td>“É justa a posse que não for violenta, clandestina ou precária” (art. 1.200). Precária é a de quem viola o dever de restituir: o devedor fiduciante tem posse direta e justa enquanto o contrato vale; ela se torna precária quando, resolvido ou extinto o contrato por inadimplemento, ele não devolve a coisa.</td></tr>
-            <tr><td><b>De boa-fé e de má-fé</b></td><td>é de boa-fé a posse “se o possuidor ignora o vício, ou o obstáculo que impede a aquisição da coisa” (art. 1.201). Quem tem justo título presume-se de boa-fé, salvo prova em contrário (parágrafo único). A boa-fé se perde desde o momento em que as circunstâncias façam presumir que o possuidor não ignora que possui indevidamente (art. 1.202).</td></tr>
+            <tr><td><b>De boa-fé e de má-fé</b></td><td>é de boa-fé a posse “se o possuidor ignora o vício, ou o obstáculo que impede a aquisição da coisa” (art. 1.201). Quem tem justo título presume-se de boa-fé, “salvo prova em contrário, ou quando a lei expressamente não admite esta presunção” (parágrafo único). A boa-fé se perde desde o momento em que as circunstâncias façam presumir que o possuidor não ignora que possui indevidamente (art. 1.202).</td></tr>
             <tr><td><b>O caráter se mantém</b></td><td>“Salvo prova em contrário, entende-se manter a posse o mesmo caráter com que foi adquirida” (art. 1.203). Mas cabe a <i>interversio possessionis</i>: o possuidor direto que demonstra ato exterior e inequívoco de oposição ao possuidor indireto passa a ter <i>animus domini</i> (Enunciado 237).</td></tr>
           </tbody>
         </table></div>
         <h5>Aquisição e transmissão</h5>
         <ul>
           <li>“Adquire-se a posse desde o momento em que se torna possível o exercício, em nome próprio, de qualquer dos poderes inerentes à propriedade” (art. 1.204), pela própria pessoa ou por seu representante, ou por terceiro sem mandato, dependendo de ratificação (art. 1.205). Ela pode ser transmitida também pelo constituto possessório (Enunciado 77).</li>
-          <li>A posse transmite-se aos herdeiros ou legatários “com os mesmos caracteres” (art. 1.206). O sucessor universal continua de direito a posse do antecessor; o sucessor singular pode unir a sua posse à do antecessor (art. 1.207). Se a posse era viciada, o vício passa ao sucessor.</li>
+          <li>A posse transmite-se aos herdeiros ou legatários “com os mesmos caracteres” (art. 1.206). O sucessor universal continua de direito a posse do antecessor; o sucessor singular pode unir a sua posse à do antecessor (art. 1.207). Se a posse era viciada, o vício passa aos herdeiros e ao sucessor universal; o sucessor singular só o recebe se unir a sua posse à do antecessor, o que é escolha dele (“é facultado unir sua posse à do antecessor”).</li>
           <li>A posse do imóvel faz presumir, até prova contrária, a das coisas móveis que nele estiverem (art. 1.209).</li>
         </ul>
         <h5>Proteção da posse (arts. 1.210 a 1.213)</h5>
@@ -12220,14 +12287,14 @@ body{
           <li><b>Defesa direta (desforço).</b> O possuidor turbado ou esbulhado “poderá manter-se ou restituir-se por sua própria força, contanto que o faça logo”; os atos de defesa “não podem ir além do indispensável” (art. 1.210, § 1º).</li>
           <li>“Não obsta à manutenção ou reintegração na posse a alegação de propriedade, ou de outro direito sobre a coisa” (art. 1.210, § 2º). Para o CJF, a <i>exceptio proprietatis</i> foi abolida, com absoluta separação entre os juízos possessório e petitório (Enunciado 79).</li>
           <li>Já o ente público, se intervier numa possessória entre particulares, pode alegar o domínio: “O ente público detém legitimidade e interesse para intervir, incidentalmente, na ação possessória entre particulares, podendo deduzir qualquer matéria defensiva, inclusive, se for o caso, o domínio” (Súmula 637 do STJ).</li>
-          <li>Se mais de uma pessoa se disser possuidora, mantém-se provisoriamente a que tiver a coisa, se não estiver manifesto que a obteve de modo vicioso (art. 1.211). A ação de esbulho cabe contra o terceiro que recebeu a coisa sabendo que era esbulhada (art. 1.212).</li>
+          <li>Se mais de uma pessoa se disser possuidora, mantém-se provisoriamente a que tiver a coisa, se não estiver manifesto que a obteve de modo vicioso (art. 1.211). Contra o terceiro que recebeu a coisa sabendo que era esbulhada, o possuidor pode intentar “a ação de esbulho, ou a de indenização” (art. 1.212).</li>
         </ul>
         <p><b>Exemplo.</b> João volta de viagem e encontra o vizinho levantando um muro dentro do seu terreno. Se reagir na hora, sem excesso, ele se defende por conta própria (§ 1º). Se o vizinho alegar que é o dono, isso não impede a reintegração na posse (§ 2º): a discussão sobre propriedade fica para outra ação.</p>
         <h5>Efeitos: boa-fé × má-fé</h5>
         <div class="tabela-rolagem"><table class="tabela" style="margin:12px 0">
           <thead><tr><th></th><th>Possuidor de boa-fé</th><th>Possuidor de má-fé</th></tr></thead>
           <tbody>
-            <tr><td>Frutos</td><td>tem direito, enquanto ela durar, aos frutos percebidos; restitui os pendentes quando ela cessar, deduzidas as despesas (art. 1.214)</td><td>responde por todos os frutos colhidos e percebidos e pelos que, por culpa sua, deixou de perceber; tem direito às despesas da produção e custeio (art. 1.216)</td></tr>
+            <tr><td>Frutos</td><td>tem direito, enquanto ela durar, aos frutos percebidos; restitui os pendentes quando ela cessar, deduzidas as despesas da produção e custeio, e também “os frutos colhidos com antecipação” (art. 1.214)</td><td>responde por todos os frutos colhidos e percebidos e pelos que, por culpa sua, deixou de perceber, “desde o momento em que se constituiu de má-fé”; tem direito às despesas da produção e custeio (art. 1.216)</td></tr>
             <tr><td>Perda ou deterioração</td><td>não responde pela que não der causa (art. 1.217)</td><td>responde, ainda que acidentais, salvo se provar que de igual modo se teriam dado na posse do reivindicante (art. 1.218)</td></tr>
             <tr><td>Benfeitorias</td><td>indenização das <b>necessárias e úteis</b>, com <b>direito de retenção</b>; as voluptuárias, se não forem pagas, pode levantá-las sem detrimento da coisa (art. 1.219)</td><td>só as <b>necessárias</b> são ressarcidas, sem retenção e sem levantar as voluptuárias (art. 1.220)</td></tr>
             <tr><td>Valor da indenização</td><td>pelo valor atual (art. 1.222)</td><td>o reivindicante escolhe entre o valor atual e o custo (art. 1.222)</td></tr>
@@ -12238,9 +12305,9 @@ body{
         <h5>Função social e socioambiental da posse</h5>
         <p><b>Teorias da função social da posse.</b> Ao lado da teoria subjetiva (Savigny) e da objetiva (Ihering), há uma terceira: “a da posse social ou da função social da posse”. No início do século XX, as chamadas teorias sociológicas, de Silvio Perozzi, na Itália, Raymond Saleilles, na França, e Antônio Hernández Gil, na Espanha, “destacaram e valorizaram o aspecto econômico oriundo do exercício do corpus pelo possuidor (posse-trabalho)”. Por elas, a posse é o domínio fático somado à função social, que o Código Civil adotou implicitamente, “diante da valorização da posse-trabalho” (Enciclopédia Jurídica da PUC-SP, verbete “Constituto possessório”).</p>
         <ul>
-          <li>O CJF liga a posse ao uso do bem: ela “deve expressar o aproveitamento dos bens para o alcance de interesses existenciais, econômicos e sociais merecedores de tutela” (Enunciado 492). O justo título que presume a boa-fé deve ser lido “na perspectiva da função social da posse” (Enunciado 303).</li>
+          <li>O CJF liga a posse ao uso do bem: ela “deve expressar o aproveitamento dos bens para o alcance de interesses existenciais, econômicos e sociais merecedores de tutela” (Enunciado 492). Para o CJF, justo título, para a presunção relativa da boa-fé, é “o justo motivo que lhe autoriza a aquisição derivada da posse, esteja ou não materializado em instrumento público ou particular”, lido “na perspectiva da função social da posse” (Enunciado 303).</li>
           <li>Na mesma linha, possuidor “é quem conserva, defende, cuida, dá à coisa a destinação econômica e social que lhe é própria”; uma definição atual, “atenta ao princípio da função social”, vê o possuidor como quem tem “poder fático de ingerência socioeconômica” sobre um bem (curso da Escola Paulista da Magistratura).</li>
-          <li><b>O Código premia a posse que cumpre função social:</b> a usucapião extraordinária cai de quinze para dez anos se o possuidor fez do imóvel a sua moradia habitual ou nele realizou obras ou serviços de caráter produtivo (art. 1.238, parágrafo único); a ordinária cai de dez para cinco anos nos casos do art. 1.242, parágrafo único; e o proprietário pode perder a área ocupada por considerável número de pessoas que nela realizaram obras e serviços de interesse social e econômico relevante (art. 1.228, § 4º). A posse que impede a arrecadação do imóvel abandonado é “qualificada por sua função social” (Enunciado 597).</li>
+          <li><b>O Código premia a posse que cumpre função social:</b> a usucapião extraordinária cai de quinze para dez anos se o possuidor fez do imóvel a sua moradia habitual ou nele realizou obras ou serviços de caráter produtivo (art. 1.238, parágrafo único); a ordinária cai de dez para cinco anos nos casos do art. 1.242, parágrafo único; e o proprietário pode ser privado do imóvel que “consistir em extensa área, na posse ininterrupta e de boa-fé, por mais de cinco anos, de considerável número de pessoas”, que nela realizaram obras e serviços de interesse social e econômico relevante (art. 1.228, § 4º). A posse que impede a arrecadação do imóvel abandonado é “efetiva e qualificada por sua função social” (Enunciado 597).</li>
           <li><b>Socioambiental:</b> o Código manda exercer a propriedade preservando “a flora, a fauna, as belezas naturais, o equilíbrio ecológico e o patrimônio histórico e artístico” (art. 1.228, § 1º).</li>
         </ul>
         <div class="lei-seca" id="ls-civ-posse">
@@ -12276,14 +12343,14 @@ body{
         </table></div>
         <ul>
           <li>“A propriedade presume-se plena e exclusiva, até prova em contrário” (art. 1.231).</li>
-          <li>A propriedade do solo abrange o espaço aéreo e o subsolo “em altura e profundidade úteis ao seu exercício” (art. 1.229), mas não as jazidas, minas e demais recursos minerais, os potenciais de energia hidráulica e os monumentos arqueológicos (art. 1.230).</li>
+          <li>A propriedade do solo abrange o espaço aéreo e o subsolo “em altura e profundidade úteis ao seu exercício”, e o proprietário não pode se opor a atividades de terceiros a uma altura ou profundidade “que não tenha ele interesse legítimo em impedi-las” (art. 1.229). Não abrange as jazidas, minas e demais recursos minerais, os potenciais de energia hidráulica, os monumentos arqueológicos “e outros bens referidos por leis especiais”; mas o proprietário pode explorar “os recursos minerais de emprego imediato na construção civil, desde que não submetidos a transformação industrial” (art. 1.230 e parágrafo único).</li>
           <li><b>Propriedade resolúvel</b> (arts. 1.359 e 1.360): resolvida a propriedade pelo implemento da condição ou pelo advento do termo, ficam resolvidos também os direitos reais concedidos na sua pendência, e quem se beneficia da resolução pode reivindicar a coisa (art. 1.359). Se ela se resolver por outra causa superveniente, quem adquiriu por título anterior à resolução é considerado proprietário perfeito; o beneficiado age contra aquele cuja propriedade se resolveu, para haver a coisa ou o seu valor (art. 1.360).</li>
         </ul>
         <h5>Função social da propriedade</h5>
         <ul>
           <li>Constituição: “é garantido o direito de propriedade” e “a propriedade atenderá a sua função social” (art. 5º, XXII e XXIII). A urbana cumpre a função social quando atende às exigências fundamentais de ordenação da cidade expressas no <b>plano diretor</b> (art. 182, § 2º). A rural, quando atende, simultaneamente, a quatro requisitos: aproveitamento racional e adequado; utilização adequada dos recursos naturais disponíveis e preservação do meio ambiente; observância das disposições que regulam as relações de trabalho; exploração que favoreça o bem-estar dos proprietários e dos trabalhadores (art. 186).</li>
           <li>Código Civil: o direito de propriedade “deve ser exercido em consonância com as suas finalidades econômicas e sociais” e preservando a flora, a fauna, as belezas naturais, o equilíbrio ecológico e o patrimônio histórico e artístico, evitada a poluição do ar e das águas (art. 1.228, § 1º).</li>
-          <li><b>Atos emulativos:</b> “São defesos os atos que não trazem ao proprietário qualquer comodidade, ou utilidade, e sejam animados pela intenção de prejudicar outrem” (art. 1.228, § 2º). O CJF manda ler a regra em harmonia com a função social da propriedade e com o abuso de direito do art. 187 (Enunciado 49).</li>
+          <li><b>Atos emulativos:</b> “São defesos os atos que não trazem ao proprietário qualquer comodidade, ou utilidade, e sejam animados pela intenção de prejudicar outrem” (art. 1.228, § 2º). Para o CJF, ela se interpreta “restritivamente”, “em harmonia com o princípio da função social da propriedade e com o disposto no art. 187”, o do abuso de direito (Enunciado 49).</li>
           <li>O proprietário pode ser privado da coisa por <b>desapropriação</b> (necessidade ou utilidade pública ou interesse social) e por <b>requisição</b>, em caso de perigo público iminente (art. 1.228, § 3º).</li>
           <li><b>Desapropriação judicial</b> (art. 1.228, §§ 4º e 5º): o proprietário perde extensa área ocupada, na posse ininterrupta e de boa-fé, por mais de cinco anos, por considerável número de pessoas que nela realizaram obras e serviços de interesse social e econômico relevante; o juiz fixa a justa indenização, e, paga, a sentença vale como título para o registro. Para o CJF, a regra é constitucional (Enunciado 82) e leva à improcedência do pedido reivindicatório (Enunciado 306).</li>
         </ul>
@@ -12293,9 +12360,9 @@ body{
           <tbody>
             <tr><td>Extraordinária (art. 1.238)</td><td>15 anos (10, com moradia habitual ou obras ou serviços de caráter produtivo)</td><td>posse sem interrupção nem oposição, como seu; “independentemente de título e boa-fé”</td></tr>
             <tr><td>Ordinária (art. 1.242)</td><td>10 anos (5, se o imóvel foi adquirido onerosamente com base no registro depois cancelado, com moradia ou investimentos de interesse social e econômico)</td><td>posse contínua e incontestada, <b>com justo título e boa-fé</b></td></tr>
-            <tr><td>Especial rural (art. 1.239)</td><td>5 anos</td><td>área rural de até cinquenta hectares, tornada produtiva pelo trabalho do possuidor ou da sua família, com moradia nela; não ser proprietário de imóvel rural ou urbano</td></tr>
-            <tr><td>Especial urbana (art. 1.240)</td><td>5 anos</td><td>área urbana de até 250 m², para moradia própria ou da família; não ser proprietário de outro imóvel; não se reconhece duas vezes ao mesmo possuidor</td></tr>
-            <tr><td>Familiar (art. 1.240-A)</td><td><b>2 anos</b></td><td>posse direta, com exclusividade, de imóvel urbano de até 250 m² cuja propriedade divida com ex-cônjuge ou ex-companheiro que abandonou o lar, para moradia; não ser proprietário de outro imóvel</td></tr>
+            <tr><td>Especial rural (art. 1.239)</td><td>5 anos</td><td>posse como sua, “por cinco anos ininterruptos, sem oposição”, de área rural de até cinquenta hectares, tornada produtiva pelo trabalho do possuidor ou da sua família, com moradia nela; não ser proprietário de imóvel rural ou urbano</td></tr>
+            <tr><td>Especial urbana (art. 1.240)</td><td>5 anos</td><td>posse como sua, “por cinco anos ininterruptamente e sem oposição”, de área urbana de até 250 m², para moradia própria ou da família; não ser proprietário de outro imóvel; não se reconhece duas vezes ao mesmo possuidor</td></tr>
+            <tr><td>Familiar (art. 1.240-A)</td><td><b>2 anos</b></td><td>posse direta, com exclusividade, “ininterruptamente e sem oposição”, de imóvel urbano de até 250 m² cuja propriedade divida com ex-cônjuge ou ex-companheiro que abandonou o lar, para moradia; não ser proprietário de outro imóvel</td></tr>
           </tbody>
         </table></div>
         <ul>
@@ -12339,8 +12406,8 @@ body{
           <li><b>Uso anormal.</b> “O proprietário ou o possuidor de um prédio tem o direito de fazer cessar as interferências prejudiciais à segurança, ao sossego e à saúde dos que o habitam” (art. 1.277). Se a interferência for justificada por interesse público, não cessa, mas quem a causa paga “indenização cabal” (art. 1.278).</li>
           <li><b>Árvores (arts. 1.283 e 1.284).</b> Raízes e ramos que passam a divisa “poderão ser cortados, até o plano vertical divisório, pelo proprietário do terreno invadido”. Os frutos caídos “pertencem ao dono do solo onde caíram, se este for de propriedade particular”.</li>
           <li><b>Passagem forçada (art. 1.285).</b> O dono do prédio sem acesso a via pública, nascente ou porto pode obrigar o vizinho a lhe dar passagem, “mediante pagamento de indenização cabal”. Passagem de cabos e tubulações de serviço público: art. 1.286, também com indenização.</li>
-          <li><b>Águas (art. 1.288).</b> O prédio inferior é obrigado a receber as águas que correm naturalmente do superior.</li>
-          <li><b>Direito de construir.</b> Janela, eirado, terraço ou varanda: no mínimo a <b>metro e meio</b> do terreno vizinho; janela que não dá vista para a divisa, setenta e cinco centímetros (art. 1.301). O vizinho tem <b>ano e dia</b> depois da obra para exigir que se desfaça (art. 1.302). Na zona rural, edificação a no mínimo <b>três metros</b> (art. 1.303).</li>
+          <li><b>Águas (art. 1.288).</b> O prédio inferior é obrigado a receber as águas que correm naturalmente do superior, “não podendo realizar obras que embaracem o seu fluxo”; mas “a condição natural e anterior do prédio inferior não pode ser agravada por obras feitas pelo dono ou possuidor do prédio superior”.</li>
+          <li><b>Direito de construir.</b> Janela, eirado, terraço ou varanda: no mínimo a <b>metro e meio</b> do terreno vizinho; as janelas “cuja visão não incida sobre a linha divisória, bem como as perpendiculares”, setenta e cinco centímetros (art. 1.301, § 1º). O vizinho tem <b>ano e dia</b> depois da obra para exigir que se desfaça (art. 1.302). Na zona rural, edificação a no mínimo <b>três metros</b> (art. 1.303).</li>
         </ul>
         <h5>Condomínio geral (arts. 1.314 a 1.330)</h5>
         <div class="tabela-rolagem"><table class="tabela" style="margin:12px 0">
@@ -12351,16 +12418,16 @@ body{
             <tr><td>“Pode o condômino eximir-se do pagamento das despesas e dívidas, renunciando à parte ideal.”</td><td>1.316</td></tr>
             <tr><td>Dívida contraída por um condômino em proveito da comunhão obriga quem contratou, “mas terá este ação regressiva contra os demais” (não há solidariedade).</td><td>1.318</td></tr>
             <tr><td>A divisão pode ser exigida “a todo tempo”; os condôminos podem combinar a indivisão “por prazo não maior de cinco anos, suscetível de prorrogação ulterior”.</td><td>1.320</td></tr>
-            <tr><td>Coisa indivisível: vende-se e reparte-se o dinheiro, com preferência do condômino sobre o estranho.</td><td>1.322</td></tr>
+            <tr><td>Coisa indivisível: se os condôminos não quiserem “adjudicá-la a um só, indenizando os outros”, vende-se e reparte-se o apurado; na venda, em condições iguais, o condômino prefere ao estranho, e, entre os condôminos, “aquele que tiver na coisa benfeitorias mais valiosas, e, não as havendo, o de quinhão maior”.</td><td>1.322</td></tr>
             <tr><td>“O condômino que administrar sem oposição dos outros presume-se representante comum.” A maioria se conta pelo valor dos quinhões.</td><td>1.324 e 1.325</td></tr>
           </tbody>
         </table></div>
         <h5>Condomínio edilício (arts. 1.331 a 1.358-A)</h5>
         <ul>
           <li>Partes de <b>propriedade exclusiva</b> (apartamentos, salas, lojas, com a fração ideal) e partes <b>comuns</b> (solo, estrutura, telhado, redes). Vagas de garagem não podem ser alienadas ou alugadas a estranhos ao condomínio, “salvo autorização expressa na convenção de condomínio” (art. 1.331).</li>
-          <li><b>Convenção:</b> assinada por titulares de, no mínimo, <b>dois terços</b> das frações ideais; vale desde logo entre os condôminos, e para valer contra terceiros precisa de registro (art. 1.333). Para o STJ, “a convenção de condomínio aprovada, ainda que sem registro, é eficaz para regular as relações entre os condôminos” (Súmula 260).</li>
-          <li><b>Deveres e multas:</b> contribuir na proporção das frações; não comprometer a segurança; não alterar a fachada; não prejudicar o sossego (art. 1.336). Atraso: multa de até <b>2%</b> (§ 1º). Quem descumpre reiteradamente os deveres: multa de até o <b>quíntuplo</b> da contribuição, por deliberação de três quartos dos condôminos restantes; comportamento antissocial reiterado: até o <b>décuplo</b> (art. 1.337).</li>
-          <li><b>Quóruns:</b> obras voluptuárias, dois terços; úteis, maioria; necessárias, o síndico (ou qualquer condômino) faz sem autorização (art. 1.341). Alterar a convenção ou mudar a destinação do edifício: <b>2/3 dos votos</b> (art. 1.351).</li>
+          <li><b>Convenção:</b> assinada por titulares de, no mínimo, <b>dois terços</b> das frações ideais; torna-se obrigatória desde logo “para os titulares de direito sobre as unidades, ou para quantos sobre elas tenham posse ou detenção”, e para valer contra terceiros precisa de registro (art. 1.333). Para o STJ, “a convenção de condomínio aprovada, ainda que sem registro, é eficaz para regular as relações entre os condôminos” (Súmula 260).</li>
+          <li><b>Deveres e multas:</b> contribuir para as despesas na proporção das frações, “salvo disposição em contrário na convenção”; não fazer obras que comprometam a segurança; não alterar a forma e a cor da fachada, das partes e esquadrias externas; dar à unidade a mesma destinação da edificação e não a usar de maneira prejudicial ao sossego, salubridade e segurança dos possuidores, ou aos bons costumes (art. 1.336). Atraso: multa de até <b>2%</b> (§ 1º). Quem descumpre reiteradamente os deveres: multa de até o <b>quíntuplo</b> da contribuição, por deliberação de três quartos dos condôminos restantes (art. 1.337). Comportamento antissocial reiterado: “multa correspondente ao <b>décuplo</b> do valor atribuído à contribuição para as despesas condominiais, até ulterior deliberação da assembléia” (parágrafo único).</li>
+          <li><b>Quóruns:</b> obras voluptuárias, dois terços; úteis, maioria; necessárias, o síndico (ou, “em caso de omissão ou impedimento deste, por qualquer condômino”) faz sem autorização; mas as necessárias que não forem urgentes e importarem em despesas excessivas dependem de autorização da assembleia (art. 1.341, §§ 1º e 3º). Alterar a convenção ou mudar “a destinação do edifício ou da unidade imobiliária”: <b>2/3 dos votos</b> (art. 1.351).</li>
           <li><b>Síndico:</b> pode não ser condômino; mandato de até <b>dois anos</b>, renovável (art. 1.347). Se não convocar a assembleia anual, <b>um quarto</b> dos condôminos pode fazê-lo (art. 1.350, § 1º).</li>
           <li>“O adquirente de unidade responde pelos débitos do alienante, em relação ao condomínio, inclusive multas e juros moratórios” (art. 1.345). Na execução, o crédito de cotas condominiais “tem preferência sobre o hipotecário” (Súmula 478 do STJ).</li>
           <li><b>Condomínio de lotes</b> (art. 1.358-A): lotes de propriedade exclusiva e partes comuns, com as regras do edilício no que couber.</li>
@@ -12368,7 +12435,7 @@ body{
         <h5>Propriedade resolúvel e fiduciária (arts. 1.359 a 1.368-B)</h5>
         <ul>
           <li><b>Resolúvel.</b> “Resolvida a propriedade pelo implemento da condição ou pelo advento do termo, entendem-se também resolvidos os direitos reais concedidos na sua pendência” (art. 1.359). Se a causa da resolução for superveniente, quem adquiriu antes fica como “proprietário perfeito” (art. 1.360).</li>
-          <li><b>Fiduciária.</b> “Considera-se fiduciária a propriedade resolúvel de coisa móvel infungível que o devedor, com escopo de garantia, transfere ao credor” (art. 1.361). Constitui-se com o registro do contrato (no Registro de Títulos e Documentos; veículo, na repartição de licenciamento) e o devedor fica com a posse direta. Não paga a dívida, o credor tem de vender a coisa e devolver o saldo (art. 1.364); “é nula a cláusula que autoriza o proprietário fiduciário a ficar com a coisa alienada em garantia” (art. 1.365). Se o preço não bastar, o devedor continua obrigado pelo resto (art. 1.366). A alienação fiduciária dá ao fiduciante “direito real de aquisição” (art. 1.368-B).</li>
+          <li><b>Fiduciária.</b> “Considera-se fiduciária a propriedade resolúvel de coisa móvel infungível que o devedor, com escopo de garantia, transfere ao credor” (art. 1.361). Constitui-se com o registro do contrato (no Registro de Títulos e Documentos; veículo, na repartição de licenciamento) e o devedor fica com a posse direta. Não paga a dívida, o credor tem de vender a coisa e devolver o saldo (art. 1.364); “é nula a cláusula que autoriza o proprietário fiduciário a ficar com a coisa alienada em garantia, se a dívida não for paga no vencimento” (art. 1.365); depois do vencimento, o devedor pode, “com a anuência do credor, dar seu direito eventual à coisa em pagamento da dívida” (parágrafo único). Se o preço não bastar, o devedor continua obrigado pelo resto (art. 1.366). A alienação fiduciária dá ao fiduciante “direito real de aquisição” (art. 1.368-B).</li>
         </ul>
         <h5>Os direitos reais sobre coisa alheia — o mapa</h5>
         <div class="tabela-rolagem"><table class="tabela" style="margin:12px 0">
@@ -12404,7 +12471,7 @@ body{
         <p>Promessa de compra e venda sem cláusula de arrependimento, por instrumento público ou particular, “e registrada no Cartório de Registro de Imóveis”: o promitente comprador adquire “direito real à aquisição do imóvel” (art. 1.417). Ele pode exigir a escritura definitiva e, se houver recusa, “requerer ao juiz a adjudicação do imóvel” (art. 1.418). O STJ dispensa o registro para isso: “O direito à adjudicação compulsória não se condiciona ao registro do compromisso de compra e venda no cartório de imóveis” (Súmula 239). E o compromissário sem registro pode defender a posse: cabem embargos de terceiro fundados na posse “advinda do compromisso de compra e venda de imóvel, ainda que desprovido do registro” (Súmula 84).</p>
         <h5>Garantias reais — regras comuns (arts. 1.419 a 1.430)</h5>
         <ul>
-          <li>Só quem pode alienar pode empenhar, hipotecar ou dar em anticrese (art. 1.420).</li>
+          <li>Só quem pode alienar pode empenhar, hipotecar ou dar em anticrese, e “só os bens que se podem alienar poderão ser dados em penhor, anticrese ou hipoteca” (art. 1.420).</li>
           <li><b>Indivisibilidade:</b> “O pagamento de uma ou mais prestações da dívida não importa exoneração correspondente da garantia, ainda que esta compreenda vários bens, salvo disposição expressa no título ou na quitação” (art. 1.421).</li>
           <li><b>Pacto comissório proibido:</b> “É nula a cláusula que autoriza o credor pignoratício, anticrético ou hipotecário a ficar com o objeto da garantia, se a dívida não for paga no vencimento” (art. 1.428). Depois do vencimento, o devedor pode dar a coisa em pagamento (parágrafo único).</li>
           <li>Se o produto da excussão não bastar, “continuará o devedor obrigado pessoalmente pelo restante” (art. 1.430).</li>
@@ -12413,7 +12480,7 @@ body{
         <div class="tabela-rolagem"><table class="tabela" style="margin:12px 0">
           <thead><tr><th></th><th>Regra</th></tr></thead>
           <tbody>
-            <tr><td>Penhor</td><td>Coisa móvel; constitui-se “pela transferência efetiva da posse” ao credor (art. 1.431). No penhor rural, industrial, mercantil e de veículos, a coisa fica com o devedor. Penhor legal, sem convenção: hospedeiros sobre as bagagens dos hóspedes e o dono do prédio sobre os bens do inquilino, entre outros (art. 1.467).</td></tr>
+            <tr><td>Penhor</td><td>Coisa móvel; constitui-se “pela transferência efetiva da posse” ao credor (art. 1.431). No penhor rural, industrial, mercantil e de veículos, a coisa fica com o devedor. Penhor legal, sem convenção, só nestes dois casos (art. 1.467): os hospedeiros, ou fornecedores de pousada ou alimento, sobre as bagagens, móveis, joias ou dinheiro dos fregueses, pelas despesas ou consumo; e o dono do prédio rústico ou urbano, sobre os bens móveis que o rendeiro ou inquilino tiver guarnecendo o prédio, pelos aluguéis ou rendas.</td></tr>
             <tr><td>Hipoteca</td><td>Imóveis e acessórios, navios, aeronaves, o direito de uso especial para fins de moradia, a propriedade superficiária, entre outros (art. 1.473). “É nula a cláusula que proíbe ao proprietário alienar imóvel hipotecado”, mas pode-se combinar o vencimento se o imóvel for alienado (art. 1.475). Cabe segunda hipoteca (art. 1.476), cujo credor não executa antes de vencida a primeira, salvo insolvência (art. 1.477). Prorrogação por averbação até <b>30 anos</b> do contrato (art. 1.485). A prioridade no registro determina a preferência (art. 1.493).</td></tr>
             <tr><td>Anticrese</td><td>O devedor entrega o imóvel para o credor perceber os frutos e rendimentos em compensação da dívida (art. 1.506).</td></tr>
           </tbody>
@@ -12456,8 +12523,8 @@ body{
         <ul>
           <li><b>Nulo</b> só por infringência de impedimento (art. 1.548, II; o inciso I foi revogado pela Lei 13.146/2015). A nulidade pode ser promovida “por qualquer interessado, ou pelo Ministério Público” (art. 1.549).</li>
           <li><b>Anulável</b> (art. 1.550): de quem não completou a idade mínima; do menor em idade núbil sem autorização do representante legal; por vício da vontade (erro essencial quanto à pessoa do outro ou coação); do incapaz de consentir ou manifestar, de modo inequívoco, o consentimento; pelo mandatário, com mandato revogado sem que ele ou o outro contraente soubessem, e sem coabitação; por incompetência da autoridade celebrante.</li>
-          <li><b>Prazos</b>, a contar da celebração (art. 1.560): <b>180 dias</b> (incapaz de consentir); <b>dois anos</b> (autoridade incompetente); <b>três anos</b> (erro essencial); <b>quatro anos</b> (coação).</li>
-          <li><b>Putativo:</b> “Embora anulável ou mesmo nulo, se contraído de boa-fé por ambos os cônjuges, o casamento, em relação a estes como aos filhos, produz todos os efeitos até o dia da sentença anulatória” (art. 1.561). Se só um estava de boa-fé, os efeitos civis aproveitam a ele e aos filhos.</li>
+          <li><b>Prazos</b>, a contar da celebração (art. 1.560): <b>180 dias</b> (incapaz de consentir); <b>dois anos</b> (autoridade incompetente); <b>três anos</b> (erro essencial); <b>quatro anos</b> (coação). Os outros casos têm prazo e começo próprios: casamento de menor de dezesseis anos, <b>180 dias</b>, contados, para o menor, “do dia em que perfez essa idade; e da data do casamento, para seus representantes legais ou ascendentes” (art. 1.560, § 1º); feito pelo mandatário com mandato revogado, <b>180 dias</b> “a partir da data em que o mandante tiver conhecimento da celebração” (§ 2º); do menor em idade núbil sem autorização do representante, <b>180 dias</b>, por iniciativa dele ao deixar de ser incapaz, dos representantes legais ou dos herdeiros necessários (art. 1.555).</li>
+          <li><b>Putativo:</b> “Embora anulável ou mesmo nulo, se contraído de boa-fé por ambos os cônjuges, o casamento, em relação a estes como aos filhos, produz todos os efeitos até o dia da sentença anulatória” (art. 1.561). Se só um estava de boa-fé, os efeitos civis aproveitam a ele e aos filhos (§ 1º); se os dois estavam de má-fé, “os seus efeitos civis só aos filhos aproveitarão” (§ 2º).</li>
         </ul>
         <h5>Eficácia: direitos e deveres</h5>
         <p>Pelo casamento, os dois assumem “a condição de consortes, companheiros e responsáveis pelos encargos da família”; qualquer um pode acrescer ao seu o sobrenome do outro; “o planejamento familiar é de livre decisão do casal” (art. 1.565). Deveres de ambos (art. 1.566): fidelidade recíproca; vida em comum, no domicílio conjugal; mútua assistência; sustento, guarda e educação dos filhos; respeito e consideração mútuos. A direção da sociedade conjugal é exercida “em colaboração, pelo marido e pela mulher”; havendo divergência, qualquer um recorre ao juiz (art. 1.567). Na união estável (art. 1.724), em vez da fidelidade, o dever é de <b>lealdade</b>.</p>
@@ -12487,13 +12554,13 @@ body{
           <li><b>Mudança:</b> “É admissível alteração do regime de bens, mediante autorização judicial em pedido motivado de ambos os cônjuges, apurada a procedência das razões invocadas e ressalvados os direitos de terceiros” (§ 2º). O artigo não fixa prazo e exige o juiz: não basta escritura.</li>
           <li><b>Sem pacto</b>, ou com pacto nulo ou ineficaz: comunhão parcial (art. 1.640). Na habilitação, os nubentes podem optar por qualquer regime: “reduzir-se-á a termo a opção pela comunhão parcial, fazendo-se o pacto antenupcial por escritura pública, nas demais escolhas” (parágrafo único).</li>
           <li><b>Separação obrigatória</b> (art. 1.641): de quem casa com inobservância das causas suspensivas; da pessoa maior de 70 anos; de todos os que dependerem de suprimento judicial para casar. O STF abriu uma saída: “Nos casamentos e uniões estáveis envolvendo pessoa maior de 70 anos, o regime de separação de bens previsto no art. 1.641, II, do Código Civil, pode ser afastado por expressa manifestação de vontade das partes, mediante escritura pública” (Tema 1.236, 2024).</li>
-          <li><b>Autorização do outro cônjuge</b> (art. 1.647), “exceto no regime da separação absoluta”: para alienar ou gravar de ônus real os imóveis, litigar sobre eles, prestar fiança ou aval e doar bens comuns. A fiança prestada sem essa autorização “implica a ineficácia total da garantia” (Súmula 332 do STJ).</li>
+          <li><b>Autorização do outro cônjuge</b> (art. 1.647), “exceto no regime da separação absoluta”: para alienar ou gravar de ônus real os imóveis, litigar sobre eles, prestar fiança ou aval e “fazer doação, não sendo remuneratória, de bens comuns, ou dos que possam integrar futura meação”. A fiança prestada sem essa autorização “implica a ineficácia total da garantia” (Súmula 332 do STJ).</li>
         </ul>
         <div class="tabela-rolagem"><table class="tabela" style="margin:12px 0">
           <thead><tr><th>Regime</th><th>O que se comunica</th><th>O que a prova explora</th></tr></thead>
           <tbody>
-            <tr><td>Comunhão parcial (arts. 1.658 a 1.666)</td><td>“os bens que sobrevierem ao casal, na constância do casamento” (art. 1.658): os adquiridos a título oneroso, ainda que em nome de um só; os havidos por fato eventual; os doados ou herdados em favor de ambos; as benfeitorias em bens particulares; os frutos (art. 1.660)</td><td>ficam de fora os bens que cada um tinha ao casar e os que receber por doação ou sucessão, os proventos do trabalho pessoal de cada cônjuge, os bens de uso pessoal e os instrumentos de profissão, as pensões (art. 1.659)</td></tr>
-            <tr><td>Comunhão universal (arts. 1.667 a 1.671)</td><td>“todos os bens presentes e futuros dos cônjuges e suas dívidas passivas” (art. 1.667)</td><td>exceções do art. 1.668: bens doados ou herdados com cláusula de incomunicabilidade, dívidas anteriores ao casamento (salvo aprestos ou proveito comum), e os bens dos incisos V a VII do art. 1.659</td></tr>
+            <tr><td>Comunhão parcial (arts. 1.658 a 1.666)</td><td>“os bens que sobrevierem ao casal, na constância do casamento” (art. 1.658): os adquiridos a título oneroso, ainda que em nome de um só; os havidos por fato eventual; os doados ou herdados em favor de ambos; as benfeitorias em bens particulares; os frutos (art. 1.660)</td><td>ficam de fora (art. 1.659): os bens que cada um tinha ao casar e os que receber por doação ou sucessão, “e os sub-rogados em seu lugar”; os adquiridos com valores exclusivamente de um dos cônjuges em sub-rogação dos bens particulares; as obrigações anteriores ao casamento; as obrigações provenientes de atos ilícitos, “salvo reversão em proveito do casal”; os bens de uso pessoal, os livros e instrumentos de profissão; os proventos do trabalho pessoal de cada cônjuge; “as pensões, meios-soldos, montepios e outras rendas semelhantes”</td></tr>
+            <tr><td>Comunhão universal (arts. 1.667 a 1.671)</td><td>“todos os bens presentes e futuros dos cônjuges e suas dívidas passivas” (art. 1.667)</td><td>exceções do art. 1.668: bens doados ou herdados com cláusula de incomunicabilidade e os sub-rogados em seu lugar; “os bens gravados de fideicomisso e o direito do herdeiro fideicomissário, antes de realizada a condição suspensiva”; dívidas anteriores ao casamento (salvo aprestos ou proveito comum); “as doações antenupciais feitas por um dos cônjuges ao outro com a cláusula de incomunicabilidade”; e os bens dos incisos V a VII do art. 1.659</td></tr>
             <tr><td>Participação final nos aquestos (arts. 1.672 a 1.686)</td><td>durante o casamento, cada um tem patrimônio próprio; na dissolução, cada um tem “direito à metade dos bens adquiridos pelo casal, a título oneroso, na constância do casamento” (art. 1.672)</td><td>“No pacto antenupcial, que adotar o regime de participação final nos aqüestos, poder-se-á convencionar a livre disposição dos bens imóveis, desde que particulares” (art. 1.656): decidiu três das 7 questões</td></tr>
             <tr><td>Separação convencional (arts. 1.687 e 1.688)</td><td>nada: cada um administra os seus bens e “os poderá livremente alienar ou gravar de ônus real” (art. 1.687)</td><td>as despesas do casal se dividem “na proporção dos rendimentos de seu trabalho e de seus bens, salvo estipulação em contrário no pacto antenupcial” (art. 1.688)</td></tr>
           </tbody>
@@ -12508,7 +12575,7 @@ body{
         <div class="tabela-rolagem"><table class="tabela" style="margin:12px 0">
           <thead><tr><th>Voluntário (CC, arts. 1.711 a 1.722)</th><th>Legal (Lei 8.009/1990)</th></tr></thead>
           <tbody>
-            <tr><td>Instituído pelos cônjuges ou pela entidade familiar, “mediante escritura pública ou testamento”, até “um terço do patrimônio líquido existente ao tempo da instituição” (art. 1.711). Prédio residencial com pertenças e acessórios, podendo abranger valores mobiliários (art. 1.712). “O bem de família é isento de execução por dívidas posteriores à sua instituição, salvo as que provierem de tributos relativos ao prédio, ou de despesas de condomínio” (art. 1.715). A isenção dura enquanto viver um dos cônjuges ou até a maioridade dos filhos (art. 1.716).</td><td>Vem da própria lei: “O imóvel residencial próprio do casal, ou da entidade familiar, é impenhorável” (art. 1º; ver o tópico de execução no processo do trabalho). Vale também para o imóvel de pessoas solteiras, separadas e viúvas (Súmula 364 do STJ). Fiador de locação perde a proteção: “É constitucional a penhora de bem de família pertencente a fiador de contrato de locação, seja residencial, seja comercial” (STF, Tema 1.127; Súmula 549 do STJ).</td></tr>
+            <tr><td>Instituído pelos cônjuges ou pela entidade familiar, “mediante escritura pública ou testamento”, até “um terço do patrimônio líquido existente ao tempo da instituição” (art. 1.711); também por terceiro, “por testamento ou doação, dependendo a eficácia do ato da aceitação expressa de ambos os cônjuges beneficiados ou da entidade familiar beneficiada” (parágrafo único). Prédio residencial com pertenças e acessórios, podendo abranger valores mobiliários (art. 1.712). “O bem de família é isento de execução por dívidas posteriores à sua instituição, salvo as que provierem de tributos relativos ao prédio, ou de despesas de condomínio” (art. 1.715). A isenção dura “enquanto viver um dos cônjuges, ou, na falta destes, até que os filhos completem a maioridade” (art. 1.716).</td><td>Vem da própria lei: “O imóvel residencial próprio do casal, ou da entidade familiar, é impenhorável” (art. 1º; ver o tópico de execução no processo do trabalho). Vale também para o imóvel de pessoas solteiras, separadas e viúvas (Súmula 364 do STJ). Fiador de locação perde a proteção: “É constitucional a penhora de bem de família pertencente a fiador de contrato de locação, seja residencial, seja comercial” (STF, Tema 1.127; Súmula 549 do STJ).</td></tr>
           </tbody>
         </table></div>
         <h5>União estável e concubinato</h5>
@@ -12570,7 +12637,7 @@ body{
           <li>“São irrevogáveis os atos de aceitação ou de renúncia da herança” (art. 1.812).</li>
           <li>“Ninguém pode suceder, representando herdeiro renunciante” (art. 1.811). Se ele era o único da classe, ou se todos os da classe renunciaram, os filhos dele herdam “por direito próprio, e por cabeça”.</li>
           <li>Se a renúncia prejudica os credores do herdeiro, eles podem, com autorização do juiz, aceitar a herança em nome do renunciante (art. 1.813), habilitando-se em trinta dias do conhecimento do fato (§ 1º); pagas as dívidas, o que sobrar volta aos demais herdeiros (§ 2º).</li>
-          <li>Se o herdeiro morre antes de declarar se aceita, “o poder de aceitar passa-lhe aos herdeiros” (art. 1.809).</li>
+          <li>Se o herdeiro morre antes de declarar se aceita, “o poder de aceitar passa-lhe aos herdeiros, a menos que se trate de vocação adstrita a uma condição suspensiva, ainda não verificada” (art. 1.809).</li>
         </ul>
         <h5>Excluídos da sucessão: indignidade e deserdação</h5>
         <div class="tabela-rolagem"><table class="tabela" style="margin:12px 0">
@@ -12583,7 +12650,7 @@ body{
         </table></div>
         <ul>
           <li>“São pessoais os efeitos da exclusão; os descendentes do herdeiro excluído sucedem, como se ele morto fosse antes da abertura da sucessão” (art. 1.816). O excluído não tem usufruto nem administração dos bens que couberem aos filhos (parágrafo único). <b>Compare:</b> os filhos do excluído herdam por representação; os do renunciante, não (art. 1.811).</li>
-          <li><b>Reabilitação:</b> o indigno volta a suceder se o ofendido o tiver “expressamente reabilitado em testamento, ou em outro ato autêntico” (art. 1.818).</li>
+          <li><b>Reabilitação:</b> o indigno volta a suceder se o ofendido o tiver “expressamente reabilitado em testamento, ou em outro ato autêntico” (art. 1.818). Sem reabilitação expressa, o indigno contemplado em testamento do ofendido, quando este já conhecia a causa da indignidade, “pode suceder no limite da disposição testamentária” (parágrafo único).</li>
         </ul>
         <h5>Herança jacente e vacante</h5>
         <ul>
@@ -12653,7 +12720,7 @@ body{
           <li><b>Substituição vulgar:</b> o testador nomeia substituto para o caso de o herdeiro ou legatário “não querer ou não poder aceitar” (art. 1.947). <b>Fideicomissária:</b> “somente se permite em favor dos não concebidos ao tempo da morte do testador” (art. 1.952); “São nulos os fideicomissos além do segundo grau” (art. 1.959).</li>
           <li><b>Redução:</b> as disposições que excederem a parte disponível “reduzir-se-ão aos limites dela” (art. 1.967): primeiro as quotas dos herdeiros instituídos e, não bastando, os legados (§ 1º).</li>
           <li><b>Revogação:</b> “O testamento pode ser revogado pelo mesmo modo e forma como pode ser feito” (art. 1.969), total ou parcialmente (art. 1.970).</li>
-          <li><b>Rompimento:</b> sobrevindo descendente sucessível que o testador não tinha ou não conhecia quando testou, “rompe-se o testamento em todas as suas disposições, se esse descendente sobreviver ao testador” (art. 1.973). Não se rompe se o testador dispôs só da sua metade (art. 1.975).</li>
+          <li><b>Rompimento:</b> sobrevindo descendente sucessível que o testador não tinha ou não conhecia quando testou, “rompe-se o testamento em todas as suas disposições, se esse descendente sobreviver ao testador” (art. 1.973). Não se rompe “se o testador dispuser da sua metade, não contemplando os herdeiros necessários de cuja existência saiba, ou quando os exclua dessa parte” (art. 1.975).</li>
           <li><b>Testamenteiro:</b> cumpre o testamento e presta contas em cento e oitenta dias, se o testador não der prazo maior (art. 1.983); o que não for herdeiro nem legatário tem prêmio “de um a cinco por cento” sobre a herança líquida, se o testador não o fixar (art. 1.987).</li>
         </ul>
         <h5>Inventário</h5>
@@ -12676,11 +12743,11 @@ body{
         <p>A expedição de alvará judicial segue o procedimento de jurisdição voluntária (CPC, art. 725, VII). Para o processo do trabalho, isso importa: o que o empregador devia ao empregado que morreu vai primeiro aos dependentes habilitados perante a Previdência Social e, só na falta deles, aos sucessores da lei civil (Lei 6.858, art. 1º).</p>
         <h5>Partilha</h5>
         <ul>
-          <li>“O herdeiro pode sempre requerer a partilha, ainda que o testador o proíba” (CC, art. 2.013).</li>
+          <li>“O herdeiro pode sempre requerer a partilha, ainda que o testador o proíba, cabendo igual faculdade aos seus cessionários e credores” (CC, art. 2.013).</li>
           <li><b>Amigável:</b> “Se os herdeiros forem capazes, poderão fazer partilha amigável, por escritura pública, termo nos autos do inventário, ou escrito particular, homologado pelo juiz” (art. 2.015). <b>Judicial:</b> “Será sempre judicial a partilha, se os herdeiros divergirem, assim como se algum deles for incapaz” (art. 2.016).</li>
           <li>Busca-se “a maior igualdade possível” quanto ao valor, à natureza e à qualidade dos bens (art. 2.017; CPC, art. 648). Bem insuscetível de divisão cômoda que não caiba na meação do cônjuge nem no quinhão de um só herdeiro é vendido judicialmente, salvo acordo para adjudicá-lo a todos (art. 2.019), ou adjudicado a quem o requerer, repondo aos outros a diferença em dinheiro (§ 1º).</li>
           <li><b>No processo:</b> o partidor organiza o esboço pagando nesta ordem: dívidas atendidas, meação do cônjuge, meação disponível e quinhões hereditários, “a começar pelo coerdeiro mais velho” (CPC, art. 651). Pago o imposto de transmissão, o juiz julga a partilha por sentença (art. 654), e cada herdeiro recebe o formal de partilha (art. 655).</li>
-          <li><b>Sobrepartilha:</b> dos bens sonegados e dos descobertos depois da partilha (CC, art. 2.022; CPC, art. 669), nos autos do inventário (CPC, art. 670, parágrafo único).</li>
+          <li><b>Sobrepartilha:</b> dos bens sonegados e dos descobertos depois da partilha (CC, art. 2.022; CPC, art. 669, I e II) e, pelo CPC, também dos bens “litigiosos, assim como os de liquidação difícil ou morosa” e dos “situados em lugar remoto da sede do juízo onde se processa o inventário” (art. 669, III e IV), nos autos do inventário (CPC, art. 670, parágrafo único).</li>
           <li><b>Depois da partilha:</b> o direito de cada herdeiro fica “circunscrito aos bens do seu quinhão” (CC, art. 2.023), e os co-herdeiros se indenizam reciprocamente em caso de evicção (art. 2.024).</li>
           <li><b>Anulação e rescisão:</b> “A partilha é anulável pelos vícios e defeitos que invalidam, em geral, os negócios jurídicos” (CC, art. 2.027), e o direito de anular “Extingue-se em um ano” (parágrafo único). No CPC, a partilha amigável pode ser anulada por dolo, coação, erro essencial ou intervenção de incapaz, em um ano contado da cessação da coação, da data do ato (erro ou dolo) ou do fim da incapacidade (art. 657); a partilha julgada por sentença é rescindível, entre outros casos, “se preteriu herdeiro ou incluiu quem não o seja” (art. 658, III).</li>
         </ul>
@@ -12701,7 +12768,7 @@ body{
         <div class="tabela-rolagem"><table class="tabela" style="margin:12px 0">
           <thead><tr><th>Dar coisa certa (arts. 233 a 242)</th><th>Dar coisa incerta (arts. 243 a 246)</th><th>Fazer e não fazer (arts. 247 a 251)</th></tr></thead>
           <tbody>
-            <tr><td>Abrange “os acessórios dela embora não mencionados”, salvo se o contrário resultar do título ou das circunstâncias (art. 233). Perdida a coisa sem culpa do devedor antes da tradição, “fica resolvida a obrigação para ambas as partes”; com culpa, ele responde “pelo equivalente e mais perdas e danos” (art. 234). “Até a tradição pertence ao devedor a coisa, com os seus melhoramentos e acrescidos” (art. 237).</td><td>A coisa incerta “será indicada, ao menos, pelo gênero e pela quantidade” (art. 243). A escolha pertence ao devedor, se o título não disser o contrário, mas ele “não poderá dar a coisa pior, nem será obrigado a prestar a melhor” (art. 244). “Antes da escolha, não poderá o devedor alegar perda ou deterioração da coisa, ainda que por força maior ou caso fortuito” (art. 246).</td><td>Quem recusa prestação que só ele pode cumprir indeniza perdas e danos (art. 247). Se o fato puder ser executado por terceiro, o credor pode mandá-lo executar à custa do devedor (art. 249); “Em caso de urgência”, até sem autorização judicial (parágrafo único). Praticado o ato de que devia se abster, o credor pode exigir que o devedor o desfaça (art. 251).</td></tr>
+            <tr><td>Abrange “os acessórios dela embora não mencionados”, salvo se o contrário resultar do título ou das circunstâncias (art. 233). Perdida a coisa sem culpa do devedor antes da tradição, “fica resolvida a obrigação para ambas as partes”; com culpa, ele responde “pelo equivalente e mais perdas e danos” (art. 234). “Até a tradição pertence ao devedor a coisa, com os seus melhoramentos e acrescidos, pelos quais poderá exigir aumento no preço; se o credor não anuir, poderá o devedor resolver a obrigação” (art. 237); “Os frutos percebidos são do devedor, cabendo ao credor os pendentes” (parágrafo único).</td><td>A coisa incerta “será indicada, ao menos, pelo gênero e pela quantidade” (art. 243). A escolha pertence ao devedor, se o título não disser o contrário, mas ele “não poderá dar a coisa pior, nem será obrigado a prestar a melhor” (art. 244). “Antes da escolha, não poderá o devedor alegar perda ou deterioração da coisa, ainda que por força maior ou caso fortuito” (art. 246).</td><td>Quem recusa prestação que só ele pode cumprir indeniza perdas e danos (art. 247). Se o fato puder ser executado por terceiro, o credor pode mandá-lo executar à custa do devedor (art. 249); “Em caso de urgência”, até sem autorização judicial (parágrafo único). Praticado o ato de que devia se abster, o credor pode exigir que o devedor o desfaça (art. 251).</td></tr>
           </tbody>
         </table></div>
         <h5>Alternativas, divisíveis e indivisíveis</h5>
@@ -12713,25 +12780,25 @@ body{
         <h5>Solidariedade</h5>
         <ul>
           <li>Há solidariedade quando cada credor tem direito, ou cada devedor é obrigado, “à dívida toda” (art. 264). “A solidariedade não se presume; resulta da lei ou da vontade das partes” (art. 265). Ela “pode ser pura e simples para um dos co-credores ou co-devedores, e condicional, ou a prazo, ou pagável em lugar diferente, para o outro” (art. 266).</li>
-          <li><b>Passiva:</b> o credor pode exigir de um ou de alguns dos devedores, “parcial ou totalmente, a dívida comum” (art. 275), e “Não importará renúncia da solidariedade a propositura de ação pelo credor contra um ou alguns dos devedores” (parágrafo único). Se a prestação se impossibilita por culpa de um, todos pagam o equivalente, “mas pelas perdas e danos só responde o culpado” (art. 279); “Todos os devedores respondem pelos juros da mora” (art. 280).</li>
+          <li><b>Passiva:</b> o credor pode exigir de um ou de alguns dos devedores, “parcial ou totalmente, a dívida comum”; “se o pagamento tiver sido parcial, todos os demais devedores continuam obrigados solidariamente pelo resto” (art. 275), e “Não importará renúncia da solidariedade a propositura de ação pelo credor contra um ou alguns dos devedores” (parágrafo único). Se a prestação se impossibilita por culpa de um, todos pagam o equivalente, “mas pelas perdas e danos só responde o culpado” (art. 279); “Todos os devedores respondem pelos juros da mora, ainda que a ação tenha sido proposta somente contra um; mas o culpado responde aos outros pela obrigação acrescida” (art. 280).</li>
           <li><b>Regresso:</b> quem paga a dívida inteira pode exigir de cada co-devedor a sua quota, dividindo-se por todos a do insolvente e presumindo-se iguais as partes (art. 283).</li>
           <li><b>Compare:</b> convertida em perdas e danos, a indivisível deixa de sê-lo (art. 263); na solidária, “subsiste, para todos os efeitos, a solidariedade” (art. 271).</li>
         </ul>
         <h5>Transmissão: cessão de crédito e assunção de dívida</h5>
         <ul>
-          <li><b>Cessão de crédito:</b> o credor pode ceder o crédito, se a isso não se opuser a natureza da obrigação, a lei ou a convenção (art. 286). A cessão “não tem eficácia em relação ao devedor, senão quando a este notificada” (art. 290); o devedor que paga ao credor primitivo antes de saber da cessão fica desobrigado (art. 292). Na cessão onerosa, o cedente responde pela existência do crédito (art. 295), mas, salvo estipulação em contrário, “não responde pela solvência do devedor” (art. 296).</li>
-          <li><b>Assunção de dívida:</b> terceiro pode assumir a obrigação “com o consentimento expresso do credor” (art. 299); se o credor, com prazo marcado, silenciar, o silêncio vale “como recusa” (parágrafo único).</li>
+          <li><b>Cessão de crédito:</b> o credor pode ceder o crédito, se a isso não se opuser a natureza da obrigação, a lei ou a convenção com o devedor; mas “a cláusula proibitiva da cessão não poderá ser oposta ao cessionário de boa-fé, se não constar do instrumento da obrigação” (art. 286). A cessão “não tem eficácia em relação ao devedor, senão quando a este notificada; mas por notificado se tem o devedor que, em escrito público ou particular, se declarou ciente da cessão feita” (art. 290); o devedor que paga ao credor primitivo antes de saber da cessão fica desobrigado (art. 292). Na cessão onerosa, o cedente responde pela existência do crédito ao tempo em que o cedeu, e, na gratuita, também, “se tiver procedido de má-fé” (art. 295), mas, salvo estipulação em contrário, “não responde pela solvência do devedor” (art. 296).</li>
+          <li><b>Assunção de dívida:</b> terceiro pode assumir a obrigação “com o consentimento expresso do credor, ficando exonerado o devedor primitivo, salvo se aquele, ao tempo da assunção, era insolvente e o credor o ignorava” (art. 299); se o credor, com prazo marcado, silenciar, o silêncio vale “como recusa” (parágrafo único).</li>
         </ul>
         <h5>Pagamento</h5>
         <div class="tabela-rolagem"><table class="tabela" style="margin:12px 0">
           <thead><tr><th>Ponto</th><th>Regra</th></tr></thead>
           <tbody>
             <tr><td>Quem paga</td><td>“Qualquer interessado na extinção da dívida pode pagá-la” (art. 304). O terceiro não interessado que paga em nome próprio “tem direito a reembolsar-se do que pagar; mas não se sub-roga nos direitos do credor” (art. 305).</td></tr>
-            <tr><td>A quem</td><td>Ao credor ou a quem o represente (art. 308). “O pagamento feito de boa-fé ao credor putativo é válido, ainda provado depois que não era credor” (art. 309).</td></tr>
+            <tr><td>A quem</td><td>Ao credor ou a quem de direito o represente, “sob pena de só valer depois de por ele ratificado, ou tanto quanto reverter em seu proveito” (art. 308). “O pagamento feito de boa-fé ao credor putativo é válido, ainda provado depois que não era credor” (art. 309).</td></tr>
             <tr><td>O quê</td><td>“O credor não é obrigado a receber prestação diversa da que lhe é devida, ainda que mais valiosa” (art. 313), nem a receber por partes, se assim não se ajustou (art. 314). Dívidas em dinheiro: “em moeda corrente e pelo valor nominal” (art. 315).</td></tr>
             <tr><td>Prova</td><td>Quem paga tem direito à quitação e pode reter o pagamento enquanto não a recebe (art. 319). A quitação da última quota periódica faz presumir pagas as anteriores, até prova em contrário (art. 322).</td></tr>
             <tr><td>Onde</td><td>“no domicílio do devedor, salvo se as partes convencionarem diversamente” ou se o contrário resultar da lei, da natureza da obrigação ou das circunstâncias (art. 327). “O pagamento reiteradamente feito em outro local faz presumir renúncia do credor relativamente ao previsto no contrato” (art. 330).</td></tr>
-            <tr><td>Quando</td><td>Sem época ajustada, “pode o credor exigi-lo imediatamente” (art. 331). Vencimento antecipado na falência do devedor, na penhora dos bens dados em garantia e na falta de reforço da garantia (art. 333).</td></tr>
+            <tr><td>Quando</td><td>Sem época ajustada, “pode o credor exigi-lo imediatamente” (art. 331). Vencimento antecipado na falência do devedor ou no concurso de credores, na penhora dos bens dados em garantia e na falta de reforço da garantia (art. 333); havendo solidariedade passiva, o débito “não se reputará vencido quanto aos outros devedores solventes” (parágrafo único).</td></tr>
           </tbody>
         </table></div>
         <h5>Outras formas de extinção</h5>
@@ -12780,14 +12847,14 @@ body{
         <h5>Formação: proposta e aceitação</h5>
         <ul>
           <li>“A proposta de contrato obriga o proponente, se o contrário não resultar dos termos dela, da natureza do negócio, ou das circunstâncias do caso” (art. 427). Deixa de ser obrigatória (art. 428): feita sem prazo a pessoa presente, se não foi imediatamente aceita (considera-se presente quem contrata “por telefone ou por meio de comunicação semelhante”); feita sem prazo a pessoa ausente, se passou tempo suficiente para a resposta chegar; feita a ausente com prazo, se a resposta não foi expedida no prazo; se antes dela, ou junto, chegar a retratação do proponente.</li>
-          <li>“A oferta ao público equivale a proposta quando encerra os requisitos essenciais ao contrato” (art. 429).</li>
+          <li>“A oferta ao público equivale a proposta quando encerra os requisitos essenciais ao contrato, salvo se o contrário resultar das circunstâncias ou dos usos” (art. 429). “Pode revogar-se a oferta pela mesma via de sua divulgação, desde que ressalvada esta faculdade na oferta realizada” (parágrafo único).</li>
           <li>“A aceitação fora do prazo, com adições, restrições, ou modificações, importará nova proposta” (art. 431).</li>
           <li><b>Entre ausentes</b>, o contrato se forma “desde que a aceitação é expedida”, salvo retratação que chegue antes ou com a aceitação, compromisso do proponente de esperar a resposta ou resposta fora do prazo convencionado (art. 434). “Reputar-se-á celebrado o contrato no lugar em que foi proposto” (art. 435).</li>
         </ul>
         <h5>Estipulação em favor de terceiro e promessa de fato de terceiro</h5>
         <ul>
           <li>“O que estipula em favor de terceiro pode exigir o cumprimento da obrigação” (art. 436), e o terceiro beneficiado também pode exigi-la (parágrafo único). O estipulante pode reservar-se o direito de substituir o terceiro, “independentemente da sua anuência e da do outro contratante” (art. 438).</li>
-          <li>“Aquele que tiver prometido fato de terceiro responderá por perdas e danos, quando este o não executar” (art. 439).</li>
+          <li>“Aquele que tiver prometido fato de terceiro responderá por perdas e danos, quando este o não executar” (art. 439). “Tal responsabilidade não existirá se o terceiro for o cônjuge do promitente, dependendo da sua anuência o ato a ser praticado, e desde que, pelo regime do casamento, a indenização, de algum modo, venha a recair sobre os seus bens” (parágrafo único).</li>
         </ul>
         <h5>Vícios redibitórios e evicção</h5>
         <div class="tabela-rolagem"><table class="tabela" style="margin:12px 0">
@@ -12799,7 +12866,7 @@ body{
         <h5>Contratos aleatórios, contrato preliminar e pessoa a declarar</h5>
         <ul>
           <li><b>Aleatório:</b> quem assume o risco de a coisa futura não vir a existir deve o preço inteiro ao outro, se este não agiu com dolo ou culpa, “ainda que nada do avençado venha a existir” (art. 458).</li>
-          <li><b>Preliminar:</b> “exceto quanto à forma, deve conter todos os requisitos essenciais ao contrato a ser celebrado” (art. 462). Sem cláusula de arrependimento, qualquer parte pode exigir a celebração do definitivo (art. 463); esgotado o prazo, o juiz pode suprir a vontade do inadimplente (art. 464).</li>
+          <li><b>Preliminar:</b> “exceto quanto à forma, deve conter todos os requisitos essenciais ao contrato a ser celebrado” (art. 462). Sem cláusula de arrependimento, qualquer parte pode exigir a celebração do definitivo (art. 463); esgotado o prazo, o juiz pode suprir a vontade do inadimplente, “salvo se a isto se opuser a natureza da obrigação” (art. 464).</li>
           <li><b>Pessoa a declarar:</b> uma das partes pode reservar-se a indicação de quem assumirá o contrato (art. 467), comunicando-a “no prazo de cinco dias da conclusão do contrato, se outro não tiver sido estipulado” (art. 468).</li>
         </ul>
         <h5>Extinção</h5>
@@ -12829,7 +12896,7 @@ body{
         <ul>
           <li>“Pelo contrato de compra e venda, um dos contratantes se obriga a transferir o domínio de certa coisa, e o outro, a pagar-lhe certo preço em dinheiro” (art. 481). “Nulo é o contrato de compra e venda, quando se deixa ao arbítrio exclusivo de uma das partes a fixação do preço” (art. 489), mas a fixação pode ficar a terceiro (art. 485).</li>
           <li>“Até o momento da tradição, os riscos da coisa correm por conta do vendedor, e os do preço por conta do comprador” (art. 492). Salvo cláusula em contrário, escritura e registro são do comprador, e a tradição, do vendedor (art. 490).</li>
-          <li>A venda de ascendente a descendente é anulável, “salvo se os outros descendentes e o cônjuge do alienante expressamente houverem consentido” (art. 496). Entre cônjuges, é lícita “com relação a bens excluídos da comunhão” (art. 499).</li>
+          <li>A venda de ascendente a descendente é anulável, “salvo se os outros descendentes e o cônjuge do alienante expressamente houverem consentido” (art. 496); “dispensa-se o consentimento do cônjuge se o regime de bens for o da separação obrigatória” (parágrafo único). Entre cônjuges, é lícita “com relação a bens excluídos da comunhão” (art. 499).</li>
         </ul>
         <div class="tabela-rolagem"><table class="tabela" style="margin:12px 0">
           <thead><tr><th>Cláusula especial</th><th>Regra</th></tr></thead>
@@ -12844,7 +12911,7 @@ body{
         <ul>
           <li>“Considera-se doação o contrato em que uma pessoa, por liberalidade, transfere do seu patrimônio bens ou vantagens para o de outra” (art. 538). Faz-se por escritura pública ou instrumento particular; a verbal vale se, “versando sobre bens móveis e de pequeno valor, se lhe seguir incontinenti a tradição” (art. 541). Para o absolutamente incapaz, dispensa-se a aceitação na doação pura (art. 543).</li>
           <li>A doação de ascendentes a descendentes, ou de um cônjuge a outro, “importa adiantamento do que lhes cabe por herança” (art. 544). O doador pode estipular a volta dos bens se sobreviver ao donatário, mas “Não prevalece cláusula de reversão em favor de terceiro” (art. 547). É nula a doação de todos os bens “sem reserva de parte, ou renda suficiente para a subsistência do doador” (art. 548) e a que exceder a parte disponível em testamento (art. 549).</li>
-          <li><b>Revogação</b> por ingratidão ou por inexecução do encargo (art. 555), em um ano a contar de quando o doador souber do fato e do autor (art. 559). Ingratidão: atentar contra a vida do doador, ofendê-lo fisicamente, injuriá-lo gravemente ou caluniá-lo, recusar-lhe alimentos (art. 557). Não se revogam por ingratidão as puramente remuneratórias, as com encargo já cumprido, as de obrigação natural e as feitas para determinado casamento (art. 564).</li>
+          <li><b>Revogação</b> por ingratidão ou por inexecução do encargo (art. 555), em um ano a contar de quando o doador souber do fato e do autor (art. 559). Ingratidão: atentar contra a vida do doador, ofendê-lo fisicamente, injuriá-lo gravemente ou caluniá-lo, recusar-lhe, “podendo ministrá-los”, os alimentos de que necessitava (art. 557). Não se revogam por ingratidão as puramente remuneratórias, as com encargo já cumprido, as de obrigação natural e as feitas para determinado casamento (art. 564).</li>
           <li>Na troca, aplicam-se as regras da compra e venda, mas “é anulável a troca de valores desiguais entre ascendentes e descendentes, sem consentimento dos outros descendentes e do cônjuge do alienante” (art. 533). No estimatório, o consignatário vende os bens móveis recebidos e paga o preço ajustado, ou os restitui no prazo (art. 534).</li>
         </ul>
         <h5>Locação de coisas</h5>
@@ -12856,7 +12923,7 @@ body{
         <div class="tabela-rolagem"><table class="tabela" style="margin:12px 0">
           <thead><tr><th>Comodato (arts. 579 a 585)</th><th>Mútuo (arts. 586 a 592)</th></tr></thead>
           <tbody>
-            <tr><td>“O comodato é o empréstimo gratuito de coisas não fungíveis. Perfaz-se com a tradição do objeto” (art. 579). Sem prazo, presume-se o necessário para o uso concedido (art. 581). O comodatário em mora, além de por ela responder, paga, até restituir a coisa, o aluguel que o comodante arbitrar (art. 582), e não recobra as despesas feitas com o uso e gozo da coisa (art. 584). Comodatários simultâneos respondem solidariamente (art. 585).</td><td>“O mútuo é o empréstimo de coisas fungíveis” (art. 586) e transfere o domínio ao mutuário (art. 587). O feito a menor sem autorização de quem o tem sob guarda “não pode ser reavido nem do mutuário, nem de seus fiadores” (art. 588), salvo os casos do art. 589. Destinado a fins econômicos, presumem-se devidos juros (art. 591).</td></tr>
+            <tr><td>“O comodato é o empréstimo gratuito de coisas não fungíveis. Perfaz-se com a tradição do objeto” (art. 579). Sem prazo, presume-se o necessário para o uso concedido, e o comodante não pode, “salvo necessidade imprevista e urgente, reconhecida pelo juiz”, suspender o uso e gozo da coisa antes de findo esse prazo (art. 581). O comodatário em mora, além de por ela responder, paga, até restituir a coisa, o aluguel que o comodante arbitrar (art. 582), e não recobra as despesas feitas com o uso e gozo da coisa (art. 584). Comodatários simultâneos respondem solidariamente (art. 585).</td><td>“O mútuo é o empréstimo de coisas fungíveis” (art. 586) e transfere o domínio ao mutuário (art. 587). O feito a menor sem autorização de quem o tem sob guarda “não pode ser reavido nem do mutuário, nem de seus fiadores” (art. 588), salvo os casos do art. 589. Destinado a fins econômicos, presumem-se devidos juros (art. 591).</td></tr>
           </tbody>
         </table></div>
         <h5>Prestação de serviço e empreitada</h5>
@@ -12876,7 +12943,7 @@ body{
         <ul>
           <li>O comissário contrata “em seu próprio nome, à conta do comitente” (art. 693). O agente promove negócios de outra pessoa “em caráter não eventual e sem vínculos de dependência”, em zona determinada; há distribuição “quando o agente tiver à sua disposição a coisa a ser negociada” (art. 710).</li>
           <li>A remuneração do corretor é devida “uma vez que tenha conseguido o resultado previsto no contrato de mediação, ou ainda que este não se efetive em virtude de arrependimento das partes” (art. 725).</li>
-          <li>O transportador “responde pelos danos causados às pessoas transportadas e suas bagagens, salvo motivo de força maior, sendo nula qualquer cláusula excludente da responsabilidade” (art. 734), e a culpa de terceiro não elide essa responsabilidade, cabendo-lhe ação regressiva (art. 735). O transporte feito “gratuitamente, por amizade ou cortesia” não segue essas normas (art. 736).</li>
+          <li>O transportador “responde pelos danos causados às pessoas transportadas e suas bagagens, salvo motivo de força maior, sendo nula qualquer cláusula excludente da responsabilidade” (art. 734), e a culpa de terceiro não elide essa responsabilidade, cabendo-lhe ação regressiva (art. 735). O transporte feito “gratuitamente, por amizade ou cortesia” não segue essas normas (art. 736), mas “Não se considera gratuito o transporte quando, embora feito sem remuneração, o transportador auferir vantagens indiretas” (parágrafo único).</li>
         </ul>
         <h5>Jogo e fiança</h5>
         <ul>
@@ -12887,7 +12954,7 @@ body{
         </ul>
         <h5>Transação e agente de garantia</h5>
         <ul>
-          <li>“É lícito aos interessados prevenirem ou terminarem o litígio mediante concessões mútuas” (art. 840), mas “Só quanto a direitos patrimoniais de caráter privado se permite a transação” (art. 841). “A transação só se anula por dolo, coação, ou erro essencial quanto à pessoa ou coisa controversa” (art. 849).</li>
+          <li>“É lícito aos interessados prevenirem ou terminarem o litígio mediante concessões mútuas” (art. 840), mas “Só quanto a direitos patrimoniais de caráter privado se permite a transação” (art. 841). “A transação só se anula por dolo, coação, ou erro essencial quanto à pessoa ou coisa controversa” (art. 849), e “não se anula por erro de direito a respeito das questões que foram objeto de controvérsia entre as partes” (parágrafo único).</li>
           <li>Desde a Lei 14.711/2023, “Qualquer garantia poderá ser constituída, levada a registro, gerida e ter a sua execução pleiteada por agente de garantia”, designado pelos credores, que atua em nome próprio e em benefício deles (art. 853-A).</li>
         </ul>
         <h5>Atos unilaterais</h5>
@@ -12912,9 +12979,9 @@ body{
         <p>Nas 16 provas da FCC para este cargo, de 2022 a 2025, a responsabilidade civil teve 3 questões, em 3 provas: o regresso de quem paga o dano causado por outrem, a responsabilidade por fato de outrem e a dos coautores do ilícito.</p>
         <h5>Ato ilícito, culpa e risco</h5>
         <ul>
-          <li>Comete ato ilícito quem, “por ação ou omissão voluntária, negligência ou imprudência, violar direito e causar dano a outrem, ainda que exclusivamente moral” (art. 186), e o titular de um direito que, ao exercê-lo, “excede manifestamente os limites impostos pelo seu fim econômico ou social, pela boa-fé ou pelos bons costumes” (art. 187). Não são ilícitos os atos em legítima defesa, no exercício regular de um direito ou para remover perigo iminente (art. 188); neste último caso, o lesado sem culpa pelo perigo tem direito à indenização (art. 929).</li>
+          <li>Comete ato ilícito quem, “por ação ou omissão voluntária, negligência ou imprudência, violar direito e causar dano a outrem, ainda que exclusivamente moral” (art. 186), e o titular de um direito que, ao exercê-lo, “excede manifestamente os limites impostos pelo seu fim econômico ou social, pela boa-fé ou pelos bons costumes” (art. 187). Não são ilícitos os atos em legítima defesa, no exercício regular de um direito ou para remover perigo iminente (art. 188); neste último caso, o ato só é legítimo “quando as circunstâncias o tornarem absolutamente necessário, não excedendo os limites do indispensável para a remoção do perigo” (parágrafo único), e o lesado sem culpa pelo perigo tem direito à indenização (art. 929).</li>
           <li>“Haverá obrigação de reparar o dano, independentemente de culpa, nos casos especificados em lei, ou quando a atividade normalmente desenvolvida pelo autor do dano implicar, por sua natureza, risco para os direitos de outrem” (art. 927, parágrafo único). Empresários individuais e empresas respondem sem culpa pelos danos dos produtos postos em circulação (art. 931).</li>
-          <li>O incapaz responde pelos prejuízos que causar, “se as pessoas por ele responsáveis não tiverem obrigação de fazê-lo ou não dispuserem de meios suficientes”, com indenização equitativa (art. 928).</li>
+          <li>O incapaz responde pelos prejuízos que causar, “se as pessoas por ele responsáveis não tiverem obrigação de fazê-lo ou não dispuserem de meios suficientes”, com indenização equitativa, que “não terá lugar se privar do necessário o incapaz ou as pessoas que dele dependem” (art. 928, parágrafo único).</li>
         </ul>
         <h5>Responsabilidade por fato de outrem</h5>
         <div class="tabela-rolagem"><table class="tabela" style="margin:12px 0">
@@ -12934,7 +13001,7 @@ body{
         <h5>Coisas, animais, solidariedade</h5>
         <ul>
           <li>O dono ou detentor do animal ressarce o dano, “se não provar culpa da vítima ou força maior” (art. 936). Quem habita o prédio responde pelo dano das coisas que dele caírem ou forem lançadas em lugar indevido (art. 938).</li>
-          <li>Quem demanda por dívida já paga, sem ressalvar o recebido, paga ao devedor o dobro do que cobrou (art. 940).</li>
+          <li>Quem demanda por dívida já paga, no todo ou em parte, sem ressalvar o recebido, paga ao devedor o dobro do que cobrou; quem pede mais do que é devido paga “o equivalente do que dele exigir, salvo se houver prescrição” (art. 940).</li>
           <li>Se a ofensa tiver mais de um autor, “todos responderão solidariamente pela reparação” (art. 942). A responsabilidade civil é independente da criminal, mas não se discute mais a existência do fato ou a autoria decididas no juízo criminal (art. 935). “O direito de exigir reparação e a obrigação de prestá-la transmitem-se com a herança” (art. 943).</li>
         </ul>
         <h5>Indenização</h5>
@@ -12967,12 +13034,12 @@ body{
         <h5>Sociedades</h5>
         <ul>
           <li>É empresária a sociedade que exerce atividade própria de empresário sujeito a registro, e simples, as demais; “Independentemente de seu objeto, considera-se empresária a sociedade por ações; e, simples, a cooperativa” (art. 982, parágrafo único). “A sociedade adquire personalidade jurídica com a inscrição, no registro próprio e na forma da lei, dos seus atos constitutivos” (art. 985).</li>
-          <li>Na <b>sociedade em comum</b> (sem inscrição), “Todos os sócios respondem solidária e ilimitadamente pelas obrigações sociais” (art. 990). Na <b>conta de participação</b>, a atividade é exercida “unicamente pelo sócio ostensivo, em seu nome individual e sob sua própria e exclusiva responsabilidade” (art. 991).</li>
+          <li>Na <b>sociedade em comum</b> (sem inscrição), “Todos os sócios respondem solidária e ilimitadamente pelas obrigações sociais, excluído do benefício de ordem, previsto no art. 1.024, aquele que contratou pela sociedade” (art. 990). Na <b>conta de participação</b>, a atividade é exercida “unicamente pelo sócio ostensivo, em seu nome individual e sob sua própria e exclusiva responsabilidade” (art. 991).</li>
         </ul>
         <div class="tabela-rolagem"><table class="tabela" style="margin:12px 0">
           <thead><tr><th>Tipo</th><th>Responsabilidade dos sócios</th></tr></thead>
           <tbody>
-            <tr><td>Simples</td><td>Pelo saldo que os bens sociais não cobrirem, na proporção das perdas (art. 1.023), e só “depois de executados os bens sociais” (art. 1.024).</td></tr>
+            <tr><td>Simples</td><td>Pelo saldo que os bens sociais não cobrirem, na proporção das perdas, “salvo cláusula de responsabilidade solidária” (art. 1.023), e só “depois de executados os bens sociais” (art. 1.024).</td></tr>
             <tr><td>Nome coletivo</td><td>“Somente pessoas físicas podem tomar parte”, e todos respondem solidária e ilimitadamente (art. 1.039).</td></tr>
             <tr><td>Comandita simples</td><td>Comanditados, solidária e ilimitadamente; comanditários, “obrigados somente pelo valor de sua quota” (art. 1.045).</td></tr>
             <tr><td>Limitada</td><td>Cada sócio até o valor das suas quotas, “mas todos respondem solidariamente pela integralização do capital social” (art. 1.052).</td></tr>
@@ -12986,7 +13053,7 @@ body{
         </ul>
         <h5>Estabelecimento e registro</h5>
         <ul>
-          <li>“Considera-se estabelecimento todo complexo de bens organizado, para exercício da empresa, por empresário, ou por sociedade empresária” (art. 1.142). A alienação só produz efeitos quanto a terceiros depois de averbada e publicada (art. 1.144). O adquirente responde pelos débitos anteriores “desde que regularmente contabilizados”, e o alienante fica solidário por um ano (art. 1.146). Sem autorização expressa, o alienante não faz concorrência ao adquirente “nos cinco anos subseqüentes à transferência” (art. 1.147).</li>
+          <li>“Considera-se estabelecimento todo complexo de bens organizado, para exercício da empresa, por empresário, ou por sociedade empresária” (art. 1.142). A alienação só produz efeitos quanto a terceiros depois de averbada e publicada (art. 1.144). O adquirente responde pelos débitos anteriores “desde que regularmente contabilizados”, e o alienante fica solidário por um ano, contado, “quanto aos créditos vencidos, da publicação, e, quanto aos outros, da data do vencimento” (art. 1.146). Sem autorização expressa, o alienante não faz concorrência ao adquirente “nos cinco anos subseqüentes à transferência” (art. 1.147).</li>
           <li>O empresário e a sociedade empresária registram-se nas Juntas Comerciais, e a sociedade simples no Registro Civil das Pessoas Jurídicas (art. 1.150). O ato sujeito a registro não pode ser oposto a terceiro antes das formalidades, “salvo prova de que este o conhecia” (art. 1.154).</li>
         </ul>
         <h5>Nome empresarial</h5>
@@ -14027,9 +14094,9 @@ body{
   </div>
 
   <h3 style="font-size:20px;margin:34px 0 12px">Progresso gravado neste navegador</h3>
-  <p>As respostas do banco de questões — as marcações da rodada em curso, o histórico de cada questão (quantas vezes foi respondida e as dez últimas respostas, com data e resultado) e o placar de acertos e erros de cada semana —, os blocos marcados no cronograma o histórico dos simuladões, as marcações do marca-texto no material e a escolha do modo do recesso ficam gravados no armazenamento local <b>deste navegador</b>, sob o prefixo <code>trt4:</code>. Nada é enviado para servidor algum — não há requisição de rede em nenhuma funcionalidade desta aplicação. Trocar de navegador, de dispositivo ou limpar os dados do site apaga o progresso. A <b>cópia de segurança</b>, logo abaixo, guarda tudo isso num arquivo.</p>
+  <p>As respostas do banco de questões — as marcações da rodada em curso, o histórico de cada questão (quantas vezes foi respondida e as dez últimas respostas, com data e resultado) e o placar de acertos e erros de cada semana —, os blocos marcados no cronograma, o histórico dos simuladões, as marcações do marca-texto no material, a escolha do modo do recesso e as anotações de onde parei ficam gravados no armazenamento local <b>deste navegador</b>, sob o prefixo <code>trt4:</code>. Nada é enviado para servidor algum — não há requisição de rede em nenhuma funcionalidade desta aplicação. Trocar de navegador, de dispositivo ou limpar os dados do site apaga o progresso. A <b>cópia de segurança</b>, logo abaixo, guarda tudo isso num arquivo.</p>
   <div class="zerar-caixa" id="backup">
-    <p><b>Cópia de segurança (backup).</b> <b>Salvar backup</b> gera um arquivo (.json) com tudo o que está gravado neste navegador: as respostas e o histórico de cada questão, o placar, os blocos marcados no cronograma, os simulados, as marcações do marca-texto e o modo do recesso. No iPad, abre a janela do sistema: escolha <b>Salvar em Arquivos</b>. No computador, o arquivo vai para a pasta de downloads. <b>Restaurar backup</b> lê um desses arquivos, de qualquer aparelho, mostra o que há no arquivo e o que há neste navegador e só troca depois da sua confirmação. O que o arquivo traz substitui o que está aqui; o que ele não traz fica como está. Antes de trocar, o aplicativo guarda o estado atual, e o botão <b>Desfazer a última restauração</b> volta a ele.</p>
+    <p><b>Cópia de segurança (backup).</b> <b>Salvar backup</b> gera um arquivo (.json) com tudo o que está gravado neste navegador: as respostas e o histórico de cada questão, o placar, os blocos marcados no cronograma, os simulados, as marcações do marca-texto, o modo do recesso e as anotações de onde parei. No iPad, abre a janela do sistema: escolha <b>Salvar em Arquivos</b>. No computador, o arquivo vai para a pasta de downloads. <b>Restaurar backup</b> lê um desses arquivos, de qualquer aparelho, mostra o que há no arquivo e o que há neste navegador e só troca depois da sua confirmação. O que o arquivo traz substitui o que está aqui; o que ele não traz fica como está. Antes de trocar, o aplicativo guarda o estado atual, e o botão <b>Desfazer a última restauração</b> volta a ele.</p>
     <div class="backup-acoes">
       <button type="button" class="btn sec" id="btnBackupSalvar">Salvar backup</button>
       <button type="button" class="btn sec" id="btnBackupRestaurar" aria-haspopup="dialog">Restaurar backup</button>
@@ -14129,7 +14196,7 @@ body{
         <li class="modal-alerta">Não há como desfazer. A única cópia desses dados é um backup que você tenha salvo antes (botão <b>Salvar backup</b>, nesta página).</li>
       </ul>
       <h4>O que não muda</h4>
-      <p>O material de estudo, as questões, a jurisprudência e as tabelas continuam iguais. Dados de outros sites neste navegador não são tocados. As marcações do marca-texto também ficam: elas só saem pelo botão de cada tópico do material. O modo do recesso, de 6 ou 8 horas, também fica.</p>
+      <p>O material de estudo, as questões, a jurisprudência e as tabelas continuam iguais. Dados de outros sites neste navegador não são tocados. As marcações do marca-texto também ficam: elas só saem pelo botão de cada tópico do material. O modo do recesso, de 6 ou 8 horas, também fica. As anotações de onde parei (página 03.1) também ficam.</p>
       <p class="modal-dica">Se você só quer refazer questões, clique em <b>Cancelar</b> e use <b>Zerar respostas</b>, no banco de questões. Ele mantém o placar e o histórico de cada questão.</p>
     </div>
     <div class="modal-acoes">
@@ -14189,6 +14256,54 @@ body{
     <div class="modal-acoes">
       <button type="submit" class="btn sec" value="cancelar" autofocus>Cancelar</button>
       <button type="submit" class="btn perigo" value="confirmar" id="btnMarcasConfirma">Apagar</button>
+    </div>
+  </form>
+</dialog>
+<dialog id="dlgParei" class="modal" aria-labelledby="dlgPareiTitulo" aria-describedby="dlgPareiAviso">
+  <form method="dialog" class="modal-corpo">
+    <div class="modal-texto">
+      <p class="rotulo">03.1 — Manual operacional · onde parei</p>
+      <h3 id="dlgPareiTitulo">Anotar onde parei</h3>
+      <p id="dlgPareiAviso"></p>
+      <div id="pareiCampoTexto">
+        <label class="pr-campo" for="pareiTexto">Onde parei</label>
+        <textarea class="pr-entrada" id="pareiTexto" rows="2" maxlength="300" placeholder="Exemplo: CLT, art. 789, no Planalto"></textarea>
+      </div>
+      <div id="pareiCampoBloco">
+        <label class="pr-campo" for="pareiBloco">Bloco de hoje em que parei</label>
+        <select class="pr-entrada" id="pareiBloco"></select>
+      </div>
+      <p class="pr-quando-dlg" id="pareiQuando"></p>
+      <label class="pr-check"><input type="checkbox" id="pareiTrocar"> Escolher outra data</label>
+      <div id="pareiCampoData" hidden>
+        <label class="pr-campo" for="pareiData">Dia em que a anotação aparece logo abaixo da faixa Hoje</label>
+        <input class="pr-entrada" type="date" id="pareiData">
+      </div>
+      <label class="pr-campo" for="pareiNota">Nota (opcional)</label>
+      <input class="pr-entrada" type="text" id="pareiNota" maxlength="200" placeholder="Exemplo: faltou o passo 4, esconder marcações">
+      <p class="pr-erro" id="pareiErro" role="alert" hidden></p>
+    </div>
+    <div class="modal-acoes">
+      <button type="submit" class="btn sec" value="cancelar">Cancelar</button>
+      <button type="button" class="btn dest" id="btnPareiGuardar">Guardar</button>
+    </div>
+  </form>
+</dialog>
+<dialog id="dlgPareiApagar" class="modal" aria-labelledby="dlgPareiApagarTitulo" aria-describedby="dlgPareiApagarQual">
+  <form method="dialog" class="modal-corpo">
+    <div class="modal-texto">
+      <p class="rotulo">03.1 — Manual operacional · onde parei</p>
+      <h3 id="dlgPareiApagarTitulo">Apagar esta anotação?</h3>
+      <p id="dlgPareiApagarQual"></p>
+      <ul>
+        <li class="modal-alerta">Não há como desfazer.</li>
+        <li>As outras anotações de onde parei, as marcações do marca-texto, as respostas e o cronograma não são tocados.</li>
+      </ul>
+      <p class="modal-dica">Para só tirar a anotação de baixo da faixa Hoje, clique em <b>Cancelar</b> e use <b>Retomei</b>: ela passa para “Já retomadas”, sem se perder.</p>
+    </div>
+    <div class="modal-acoes">
+      <button type="submit" class="btn sec" value="cancelar" autofocus>Cancelar</button>
+      <button type="submit" class="btn perigo" value="confirmar" id="btnPareiApagaConfirma">Apagar</button>
     </div>
   </form>
 </dialog>
@@ -26228,6 +26343,9 @@ const CHAVE_MARCAS = 'marcas';
 /* 22/10/2026: modo do recesso, 6 ou 8 horas por dia (trt4:recesso). Também fica fora de CHAVES: "Zerar progresso"
    não a apaga; a escolha só muda pelos botões da página 03. */
 const CHAVE_RECESSO = 'recesso';
+/* v52 (23/11/2026): anotações de onde parei (trt4:parei). Também fica fora de CHAVES: "Zerar progresso" não a apaga;
+   cada anotação só sai pelo botão Apagar dela, que pede confirmação. */
+const CHAVE_PAREI = 'parei';
 let persistenciaAtiva = false;
 
 function avisarPersistencia(){
@@ -26297,16 +26415,17 @@ const LS = (function(){
       try{ if(base) base.removeItem(NS + chave); }catch(e){}
     },
     /* Remove exclusivamente as chaves do namespace trt4:, menos a do marca-texto (trt4:marcas, desde
-       08/10/2026) e a do modo do recesso (trt4:recesso, desde 22/10/2026). Qualquer outro dado gravado
+       08/10/2026), a do modo do recesso (trt4:recesso, desde 22/10/2026) e a das anotações de onde parei (trt4:parei,
+       desde 23/11/2026). Qualquer outro dado gravado
        por outra página da mesma origem permanece intocado. */
     limparTudo: function(){
-      for(const k in memoria) if(k !== CHAVE_MARCAS && k !== CHAVE_RECESSO) delete memoria[k];
+      for(const k in memoria) if(k !== CHAVE_MARCAS && k !== CHAVE_RECESSO && k !== CHAVE_PAREI) delete memoria[k];
       try{
         if(base){
           const alvos = [];
           for(let i = 0; i < base.length; i++){
             const k = base.key(i);
-            if(k && k.indexOf(NS) === 0 && k !== NS + CHAVE_MARCAS && k !== NS + CHAVE_RECESSO) alvos.push(k);
+            if(k && k.indexOf(NS) === 0 && k !== NS + CHAVE_MARCAS && k !== NS + CHAVE_RECESSO && k !== NS + CHAVE_PAREI) alvos.push(k);
           }
           alvos.forEach(function(k){ base.removeItem(k); });
         }
@@ -28068,7 +28187,7 @@ function zerarProgresso(){
   if(typeof window.atualizarBackupUI === 'function') window.atualizarBackupUI();
   atualizarResumoZerar();
   $('#zerarResumo').innerHTML = '<span class="confirma">Progresso zerado.</span> ' +
-    'As chaves <b>trt4:</b> do progresso foram removidas deste navegador; as marcações do marca-texto e o modo do recesso continuam. ' + esc($('#zerarResumo').textContent);
+    'As chaves <b>trt4:</b> do progresso foram removidas deste navegador; as marcações do marca-texto, o modo do recesso e as anotações de onde parei continuam. ' + esc($('#zerarResumo').textContent);
 }
 
 const dlgZerar = document.getElementById('dlgZerar');
@@ -28099,12 +28218,12 @@ function abrirModalZerar(){
     'Apaga deste navegador: ' + plural(c.rodada, 'questão marcada', 'questões marcadas') + ' na rodada, o histórico de ' +
     plural(c.questoes, 'questão', 'questões') + ', ' + plural(c.placar, 'resposta', 'respostas') + ' do placar, ' +
     plural(c.crono, 'bloco', 'blocos') + ' do cronograma e ' + plural(c.simulados, 'simulado', 'simulados') + '.\n\n' +
-    'Não há como desfazer. As marcações do marca-texto e o modo do recesso continuam. Para só refazer questões, cancele e use "Zerar respostas".');
+    'Não há como desfazer. As marcações do marca-texto, o modo do recesso e as anotações de onde parei continuam. Para só refazer questões, cancele e use "Zerar respostas".');
   if(ok) zerarProgresso();
 }
 
 /* ---------- Cópia de segurança (backup) do progresso (20/10/2026) ----------
-   Salvar: junta as 7 chaves do progresso (as de CHAVES, trt4:marcas e, desde 22/10/2026, trt4:recesso), com o texto exato que está gravado, num
+   Salvar: junta as 8 chaves do progresso (as de CHAVES, trt4:marcas e, desde 22/10/2026, trt4:recesso; desde 23/11/2026, trt4:parei), com o texto exato que está gravado, num
    arquivo .json. Em tela de toque (iPad), abre o compartilhamento do sistema ("Salvar em Arquivos"); no
    computador, baixa o arquivo.
    Restaurar: lê um arquivo desses, confere cada parte com a mesma forma que os carregadores aceitam, mostra numa
@@ -28116,7 +28235,7 @@ function abrirModalZerar(){
   const msg = document.getElementById('backupMsg');
   if(!msg) return;
   const APP = 'autos-do-estudo', FORMATO = 1, CHAVE_ANTES = 'antesDaRestauracao';
-  const PARTES = [CHAVES.cronograma, CHAVES.placar, CHAVES.tentativas, CHAVES.historico, CHAVE_MARCAS, CHAVES.respostas, CHAVE_RECESSO];
+  const PARTES = [CHAVES.cronograma, CHAVES.placar, CHAVES.tentativas, CHAVES.historico, CHAVE_MARCAS, CHAVES.respostas, CHAVE_RECESSO, CHAVE_PAREI];
   const ROTULO = {};
   ROTULO[CHAVES.cronograma] = 'Blocos marcados no cronograma';
   ROTULO[CHAVES.placar] = 'Respostas no placar (semanas e geral)';
@@ -28125,6 +28244,7 @@ function abrirModalZerar(){
   ROTULO[CHAVE_MARCAS] = 'Trechos marcados com o marca-texto';
   ROTULO[CHAVES.respostas] = 'Questões marcadas na rodada em curso';
   ROTULO[CHAVE_RECESSO] = 'Escolhas do modo do recesso (6 ou 8 horas)';
+  ROTULO[CHAVE_PAREI] = 'Anotações de onde parei';
   const objeto = v => !!v && typeof v === 'object' && !Array.isArray(v);
   const VALIDA = {};
   VALIDA[CHAVES.respostas] = v => objeto(v) && Object.keys(v).every(k => Number.isInteger(v[k]) && v[k] >= 0 && v[k] <= 4);
@@ -28134,6 +28254,7 @@ function abrirModalZerar(){
   VALIDA[CHAVES.tentativas] = v => objeto(v);
   VALIDA[CHAVE_MARCAS] = v => objeto(v) && objeto(v.itens);
   VALIDA[CHAVE_RECESSO] = v => objeto(v) && Array.isArray(v.hist);
+  VALIDA[CHAVE_PAREI] = v => objeto(v) && Array.isArray(v.itens);
 
   const versaoApp = () => { const m = document.querySelector('meta[name="versao-app"]'); return m ? m.content : ''; };
   const p2 = n => String(n).padStart(2, '0');
@@ -28155,6 +28276,7 @@ function abrirModalZerar(){
     n[CHAVE_MARCAS] = objeto(mk) ? mt : null;
     const rs = le(CHAVES.respostas); n[CHAVES.respostas] = objeto(rs) ? Object.keys(rs).length : null;
     const rc = le(CHAVE_RECESSO); n[CHAVE_RECESSO] = objeto(rc) && Array.isArray(rc.hist) ? rc.hist.length : null;
+    const pr = le(CHAVE_PAREI); n[CHAVE_PAREI] = objeto(pr) && Array.isArray(pr.itens) ? pr.itens.length : null;
     return n;
   }
 
@@ -29362,6 +29484,8 @@ function atualizarHojeOperacional(){
     }
   }
   box.innerHTML = '<div class="op-hoje-txt">' + txt + '</div><div class="op-hoje-acoes">' + acoes + '</div>';
+  /* v52: as anotações de onde parei, logo abaixo da faixa */
+  if(window.PAREI) window.PAREI.desenhar();
 }
 
 /* Delegação única dos atalhos destas três partes. */
@@ -29544,7 +29668,7 @@ const NUCLEO = [
   const bruto = LS.get(CHAVE_MARCAS, null);
   /* um valor estranho na chave nunca é sobrescrito: o marca-texto fica desligado e o dado continua lá */
   const valido = bruto === null || (!!bruto && typeof bruto === 'object' && !!bruto.itens && typeof bruto.itens === 'object' && !Array.isArray(bruto.itens));
-  if(!valido) return;
+  /* v52: com um valor estranho, a volta fica mais abaixo, depois dos auxiliares de âncora, que o "Parei aqui" também usa */
   const dados = bruto || { v:1, itens:{} };
   function salvar(){ LS.set(CHAVE_MARCAS, dados); }
   const topicoDe = el => (el && el.closest) ? el.closest('#pg-material details.topico[id]') : null;
@@ -29640,6 +29764,10 @@ const NUCLEO = [
       p.normalize();
     });
   }
+  /* v52 (23/11/2026): o índice do texto, a posição da seleção e a busca do trecho servem também ao "Parei aqui", mesmo
+     com o marca-texto desligado por um valor estranho na chave (que continua sem ser sobrescrito). */
+  window.MT_ANCORA = { indice: indice, posicao: posicao, achar: achar, ehBloco: ehBloco };
+  if(!valido) return;
   function pintar(det){
     const raiz = conteudoDe(det);
     if(!raiz) return;
@@ -29765,7 +29893,8 @@ const NUCLEO = [
   function esconder(){ flut.hidden = true; acao = ''; tirarDet = null; tirarIds = null; }
   function mostrar(rect, rotulo, qual){
     acao = qual;
-    flut.innerHTML = '<button type="button" class="btn dest">' + rotulo + '</button>';
+    flut.innerHTML = '<button type="button" class="btn dest">' + rotulo + '</button>' +
+      (qual === 'marcar' && window.PAREI ? '<button type="button" class="btn sec" data-mt-parei="1">Parei aqui</button>' : '');
     flut.hidden = false;
     const W = window.innerWidth, H = window.innerHeight, m = 10;
     const larg = flut.offsetWidth, alt = flut.offsetHeight;
@@ -29808,15 +29937,20 @@ const NUCLEO = [
   /* desde 27/10/2026 o botão some no toque, e o trabalho vem logo depois de a tela mostrar isso: num tópico grande,
      num aparelho lento, ele ainda leva uma fração de segundo. A seleção sai antes de o texto mudar e some na mesma
      pintura em que a marcação aparece (tirada depois, ela obrigava o navegador a recalcular a página na hora). */
-  flut.addEventListener('click', function(){
+  flut.addEventListener('click', function(e){
     apertando = false;
+    /* v52: com a seleção, dois botões, "Marcar" e "Parei aqui"; um toque entre eles não faz nada */
+    const bt = e.target && e.target.closest ? e.target.closest('button') : null;
+    if(!bt) return;
+    const parei = bt.hasAttribute('data-mt-parei');
     const qual = acao, det = qual === 'marcar' ? selDet : tirarDet, r = selRange, ids = tirarIds;
     selDet = null; selRange = null;
     esconder();
     requestAnimationFrame(function(){ setTimeout(function(){
       const s = window.getSelection();
       if(s) s.removeAllRanges();
-      if(qual === 'marcar' && det && r) criar(det, r);
+      if(parei && qual === 'marcar' && det && r && window.PAREI) window.PAREI.doMaterial(det, r);
+      else if(qual === 'marcar' && det && r) criar(det, r);
       else if(qual === 'tirar' && det && ids) tirar(det, ids);
     }, 0); });
   });
@@ -29895,6 +30029,486 @@ const NUCLEO = [
     if(det.open || !(dados.itens[det.id] || []).length){ pintar(det); return; }
     det.addEventListener('toggle', function primeira(){ if(!det.open) return; det.removeEventListener('toggle', primeira); pintar(det); });
   });
+})();
+/* ---------- Onde parei (v52, 23/11/2026) ----------
+   Pedido do aluno: anotar onde parou e ver a anotação no dia de retomar, sem procurar. Duas formas de anotar:
+   - no material (página 04): com um trecho selecionado, o botão flutuante mostra "Marcar" e "Parei aqui". O ponto é
+     guardado como o marca-texto guarda um trecho (texto, 32 caracteres antes e depois, posição), com o começo do
+     parágrafo e a seção, e o parágrafo ganha a faixa "Você parou aqui" (desenho por CSS: não entra no texto);
+   - na página 03.1, logo abaixo da faixa Hoje: "Anotar onde parei", com texto livre (lei no Planalto, questões).
+   O dia de retomar sai das linhas dos cartões da seção 6 (horários e "Tempo reservado"), pela regra de parada do P2:
+   se uma linha "Tempo reservado" da mesma disciplina lista o dia de hoje (bloco com núcleo), é o primeiro horário
+   dela; senão, o próximo horário da mesma disciplina em outro dia. A janela mostra o dia antes de guardar, e "Escolher
+   outra data" troca. No dia, a anotação aparece logo abaixo da faixa Hoje (e na linha do bloco de destino, na seção
+   6) até o toque em "Retomei"; se o dia passar, continua lá, "pendente desde". "Retomei" não apaga: a anotação vai
+   para "Já retomadas". Apagar só com confirmação.
+   Dados em trt4:parei = {v:1, itens:[...]}, fora de CHAVES: "Zerar progresso" não apaga; o backup leva. Um valor
+   estranho na chave nunca é sobrescrito: o "Parei aqui" fica sem gravar e avisa. */
+(function pareiAqui(){
+  const A = window.MT_ANCORA;
+  const FIM = CRONOGRAMA[CRONOGRAMA.length - 1].fim;
+  const bruto = LS.get(CHAVE_PAREI, null);
+  const valido = bruto === null || (!!bruto && typeof bruto === 'object' && !Array.isArray(bruto) && Array.isArray(bruto.itens));
+  const dados = valido ? (bruto || { v: 1, itens: [] }) : null;
+  function salvar(){ if(dados) LS.set(CHAVE_PAREI, dados); }
+  const novoId = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  const p2 = n => String(n).padStart(2, '0');
+  const DOW = { Seg: 1, Ter: 2, Qua: 3, Qui: 4, Sex: 5, 'Sáb': 6 };
+  function isoMais(iso, d){ const x = new Date(iso + 'T12:00:00'); x.setDate(x.getDate() + d); return x.getFullYear() + '-' + p2(x.getMonth() + 1) + '-' + p2(x.getDate()); }
+  const dowDe = iso => new Date(iso + 'T12:00:00').getDay();
+  const dataLonga = iso => OP_DIAS[dowDe(iso)] + ', ' + diaMes(iso);
+  const naData = iso => (dowDe(iso) % 6 === 0 ? 'no ' : 'na ') + dataLonga(iso);
+  const minutos = h => { const m = /^(\d{1,2})h(\d{2})$/.exec(h || ''); return m ? +m[1] * 60 + +m[2] : 0; };
+  const itemValido = it => !!it && typeof it === 'object' && typeof it.id === 'string' && (it.tipo === 'ponto' || it.tipo === 'texto') &&
+    typeof it.retomar === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(it.retomar) && !!it.origem && typeof it.origem.data === 'string';
+  const itens = () => dados ? dados.itens.filter(itemValido) : [];
+  const pendentes = () => itens().filter(it => !it.feito);
+
+  /* ---- as linhas dos cartões da seção 6: bloco (pelo título; a k-ésima linha com o mesmo título é o k-ésimo bloco
+     da semana com ele), disciplina, horários com a data, datas de origem do "Tempo reservado" e tópicos ---- */
+  let grade = null;
+  function lerGrade(){
+    if(grade) return grade;
+    const linhas = [];
+    CRONOGRAMA.forEach(function(sem){
+      const art = document.getElementById('op-s' + sem.semana);
+      if(!art) return;
+      const usados = {};
+      art.querySelectorAll('table.op-tab-sem > tbody > tr').forEach(function(tr){
+        const td0 = tr.children[0], td1 = tr.children[1];
+        if(!td0 || !td1) return;
+        const bEl = td1.querySelector('b');
+        const tit = bEl ? bEl.textContent.trim() : '';
+        const k = usados[tit] || 0; usados[tit] = k + 1;
+        const bl = sem.blocos.filter(b => b.titulo === tit)[k] || null;
+        const sess = [];
+        const re = /(Seg|Ter|Qua|Qui|Sex|Sáb)\s+(\d{1,2}h\d{2})[–-](\d{1,2}h\d{2})/g;
+        let m;
+        while((m = re.exec(td0.textContent))) sess.push({ iso: isoMais(sem.inicio, DOW[m[1]] - 1), ini: m[2], fim: m[3] });
+        const t1 = td1.textContent.replace(/\s+/g, ' ');
+        const r = /Tempo reservado.*?anotado no caderno de: (.*?)\. Se não ficou/.exec(t1);
+        const reserva = [];
+        if(r){ const rd = /(\d{2})\/(\d{2})/g; let d; while((d = rd.exec(r[1]))) reserva.push((d[2] === '01' ? '2027' : '2026') + '-' + d[2] + '-' + d[1]); }
+        linhas.push({ semana: sem.semana, tr: tr, bloco: bl ? bl.id : null, mat: bl ? bl.mat : '', titulo: tit,
+          ext: tr.classList.contains('op-ext') || !!(bl && bl.ext), sess: sess, reserva: reserva,
+          ancs: [].slice.call(td1.querySelectorAll('[data-ir]')).map(a => a.dataset.ir).concat(bl ? [bl.anc, bl.anc2, bl.anc3].filter(Boolean) : []) });
+      });
+    });
+    grade = linhas;
+    return grade;
+  }
+  /* os horários que valem (os da extensão de 8 horas, só nas semanas desse modo), em ordem */
+  function horarios(){
+    const out = [];
+    lerGrade().forEach(function(l){
+      if(l.ext){ const sem = CRONOGRAMA.find(x => x.semana === l.semana); if(!sem || modoDaSemana(sem.inicio) !== '8') return; }
+      l.sess.forEach(s => out.push({ l: l, iso: s.iso, ini: s.ini, fim: s.fim }));
+    });
+    out.sort((a, b) => a.iso < b.iso ? -1 : a.iso > b.iso ? 1 : minutos(a.ini) - minutos(b.ini));
+    return out;
+  }
+  function destino(linha, iso){
+    if(!linha || !linha.mat) return null;
+    const H = horarios();
+    const res = lerGrade().filter(l => l !== linha && l.mat === linha.mat && l.reserva.indexOf(iso) >= 0);
+    for(const x of H) if(x.iso > iso && res.indexOf(x.l) >= 0) return { iso: x.iso, ini: x.ini, linha: x.l, motivo: 'reserva' };
+    for(const x of H) if(x.iso > iso && x.l.mat === linha.mat) return { iso: x.iso, ini: x.ini, linha: x.l, motivo: 'proximo' };
+    return null;
+  }
+  function destinoManual(mat, iso){
+    const x = horarios().find(h => h.iso === iso && mat && h.l.mat === mat);
+    return { bloco: x ? x.l.bloco : null, mat: mat || '', ini: x ? x.ini : '', motivo: 'manual' };
+  }
+  /* as linhas de hoje, uma por linha (a primeira hora de hoje) */
+  function deHoje(iso){
+    const vistos = new Set();
+    return horarios().filter(x => x.iso === iso && !vistos.has(x.l) && vistos.add(x.l));
+  }
+  function matDoTopico(id){
+    const l = lerGrade().find(x => x.mat && x.ancs.indexOf(id) >= 0);
+    return l ? l.mat : '';
+  }
+  function padrao(lista, topico){
+    if(!lista.length) return -1;
+    if(topico){
+      let k = lista.findIndex(x => x.l.ancs.indexOf(topico) >= 0);
+      if(k >= 0) return k;
+      const mat = matDoTopico(topico);
+      k = mat ? lista.findIndex(x => x.l.mat === mat) : -1;
+      if(k >= 0) return k;
+    }
+    const d = new Date(), agora = d.getHours() * 60 + d.getMinutes();
+    let k = 0;
+    lista.forEach((x, i) => { if(minutos(x.ini) <= agora) k = i; });
+    return k;
+  }
+
+  /* ---- o ponto no material ---- */
+  const conteudoDe = det => det.querySelector('.conteudo');
+  const nomeDe = det => { const s = det.querySelector('summary'); return s && s.firstChild ? s.firstChild.textContent.trim() : det.id; };
+  function blocoDe(no, raiz){
+    for(let el = no && (no.nodeType === 1 ? no : no.parentElement); el && el !== raiz; el = el.parentElement) if(A.ehBloco(el)) return el;
+    return no && no.parentElement;
+  }
+  function secaoDe(el, raiz){
+    if(el.closest && el.closest('.lei-seca')) return 'quadro Lei seca';
+    let s = '';
+    raiz.querySelectorAll('h4, h5').forEach(function(h){ if(h.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING) s = h.textContent.replace(/\s+/g, ' ').trim(); });
+    return s.length > 90 ? s.slice(0, 90) + '…' : s;
+  }
+  /* o trecho que identifica o ponto: do começo do parágrafo (ou da frase do ponto, se ele está longe do começo) até o
+     fim da frase do ponto; fim de frase = ponto ou dois-pontos antes de maiúscula, aspas ou parêntese (não o de
+     "art. 5"), ou ponto e vírgula. Passando de 160 caracteres, corta em 150, com reticências. */
+  function trechoDe(bloco, q){
+    const t = (bloco ? bloco.textContent : q).replace(/\s+/g, ' ').trim();
+    let k = t.indexOf(q.slice(0, 30)); if(k < 0) k = 0;
+    const FIM_FRASE = /(?:[.:](?=\s+[A-ZÀ-ÖØ-Þ“"(]|\s*$))|;(?=\s|$)/g;
+    let a = 0, meio = false;
+    if(k > 80){
+      let c = -1, m; FIM_FRASE.lastIndex = 0;
+      while((m = FIM_FRASE.exec(t)) && m.index < k) c = m.index;
+      if(c >= 0 && k - c < 120) a = c + 2; else { a = t.lastIndexOf(' ', k - 40) + 1; meio = true; }
+    }
+    FIM_FRASE.lastIndex = Math.min(t.length, k + Math.min(q.length, 30));
+    const f = FIM_FRASE.exec(t);
+    let b = f ? f.index + 1 : t.length, corte = false;
+    if(b - a > 160){ b = t.lastIndexOf(' ', a + 150); if(b <= a) b = a + 150; corte = true; }
+    return (meio ? '…' : '') + t.slice(a, b).trim() + (corte ? '…' : '');
+  }
+  function doMaterial(det, r){
+    if(!dados){ avisar('As anotações de onde parei gravadas neste navegador estão num formato que esta versão não reconhece. Nada foi gravado.'); return; }
+    if(!A) return;
+    const raiz = conteudoDe(det);
+    const ix = A.indice(raiz);
+    let a = A.posicao(ix, r.startContainer, r.startOffset, false), b = A.posicao(ix, r.endContainer, r.endOffset, true);
+    while(a < b && ix.txt[a] === ' ') a++;
+    while(b > a && ix.txt[b - 1] === ' ') b--;
+    const letra = c => !!c && /[0-9A-Za-zÀ-ÖØ-öø-ÿºª°]/.test(c);
+    while(a > 0 && letra(ix.txt[a - 1]) && letra(ix.txt[a])) a--;
+    while(b < ix.txt.length && letra(ix.txt[b]) && letra(ix.txt[b - 1])) b++;
+    if(b <= a) return;
+    if(b - a > 80) b = a + 80;
+    const q = ix.txt.slice(a, b);
+    const bl = blocoDe(ix.nos[a], raiz);
+    abrirNovo('ponto', { topico: det.id, nome: nomeDe(det), q: q, p: ix.txt.slice(Math.max(0, a - 32), a), s: ix.txt.slice(b, b + 32), i: a,
+      trecho: trechoDe(bl, q), secao: secaoDe(bl || raiz, raiz) });
+  }
+  function localizar(it){
+    const det = document.getElementById(it.topico);
+    const raiz = det && conteudoDe(det);
+    if(!raiz || !A) return null;
+    const ix = A.indice(raiz);
+    const r = A.achar(ix.txt, it);
+    return r ? blocoDe(ix.nos[r[0]], raiz) : null;
+  }
+  /* a faixa "Você parou aqui" nos parágrafos dos pontos ainda não retomados de um tópico */
+  function marcarTopico(det){
+    const raiz = det && conteudoDe(det);
+    if(!raiz) return;
+    raiz.querySelectorAll('.pr-aqui').forEach(function(e){ e.classList.remove('pr-aqui'); e.removeAttribute('data-pr-aqui'); });
+    const lista = pendentes().filter(it => it.tipo === 'ponto' && it.topico === det.id);
+    if(!lista.length || !A) return;
+    const ix = A.indice(raiz);
+    lista.forEach(function(it){
+      const r = A.achar(ix.txt, it);
+      if(!r) return;
+      const bl = blocoDe(ix.nos[r[0]], raiz);
+      if(!bl) return;
+      bl.classList.add('pr-aqui');
+      bl.setAttribute('data-pr-aqui', 'Você parou aqui ' + naData(it.origem.data) + ' · retomar ' + naData(it.retomar));
+    });
+  }
+  const pag = document.getElementById('pg-material');
+  if(pag){
+    pag.addEventListener('toggle', function(e){ const det = e.target; if(det && det.matches && det.matches('details.topico[id]') && det.open) marcarTopico(det); }, true);
+    new Set(pendentes().filter(it => it.tipo === 'ponto').map(it => it.topico)).forEach(function(id){
+      const det = document.getElementById(id);
+      if(det && det.open) marcarTopico(det);
+    });
+  }
+  function irPara(it){
+    navegar(function(){
+      mostrarPagina('material');
+      const det = document.getElementById(it.topico);
+      if(det){ abrirAncestrais(det); navAnc = it.topico; }
+    });
+    requestAnimationFrame(function(){ setTimeout(function(){
+      const det = document.getElementById(it.topico);
+      if(!det) return;
+      marcarTopico(det);
+      const bl = localizar(it);
+      const raizDoc = document.documentElement;
+      raizDoc.style.scrollBehavior = 'auto';
+      (bl || det).scrollIntoView({ block: bl ? 'center' : 'start', behavior: 'instant' });
+      setTimeout(function(){ raizDoc.style.scrollBehavior = ''; }, 50);
+      if(!bl) avisar('O ponto não foi achado no texto atual do tópico (ele mudou numa atualização). O tópico abriu no começo; a anotação continua guardada.');
+    }, 60); });
+  }
+
+  /* ---- aviso curto, no pé da tela, com "Desfazer" quando cabe ---- */
+  const aviso = document.createElement('div');
+  aviso.className = 'mt-aviso pr-aviso';
+  aviso.hidden = true;
+  aviso.setAttribute('role', 'status');
+  document.body.appendChild(aviso);
+  let tAviso = 0;
+  function avisar(msg, desfazer){
+    aviso.innerHTML = '<span>' + esc(msg) + '</span>' + (desfazer ? '<button type="button" class="btn sec mini">Desfazer</button>' : '');
+    aviso.hidden = false;
+    clearTimeout(tAviso);
+    const b = aviso.querySelector('button');
+    if(b) b.addEventListener('click', function(){ desfazer(); aviso.hidden = true; });
+    tAviso = setTimeout(function(){ aviso.hidden = true; }, 8000);
+  }
+
+  /* ---- a janela de anotar e de trocar a data ---- */
+  const dlg = document.getElementById('dlgParei');
+  const el = id => document.getElementById(id);
+  let ctx = null, opcoes = [];
+  function falha(t){ const e = el('pareiErro'); e.textContent = t; e.hidden = false; }
+  function calcular(){
+    if(!ctx || ctx.modo !== 'novo') return null;
+    const v = el('pareiBloco').value;
+    const x = v !== '' && v !== 'outro' ? opcoes[+v] : null;
+    return x ? destino(x.l, hojeISO()) : null;
+  }
+  function atualizarQuando(){
+    const trocar = el('pareiTrocar'), data = el('pareiData');
+    let h;
+    if(ctx.modo === 'editar'){
+      h = trocar.checked ? (data.value ? 'Passa a aparecer logo abaixo da faixa Hoje ' + naData(data.value) + '.' : 'Escolha a data nova.')
+        : 'Aparece logo abaixo da faixa Hoje <b>' + naData(ctx.item.retomar) + '</b>.';
+    } else {
+      const d = calcular();
+      if(!d) trocar.checked = true;
+      if(trocar.checked){
+        h = (d ? 'Pela regra de parada, seria ' + naData(d.iso) + '. ' : el('pareiBloco').value === 'outro' ? '' : 'Não há outro bloco desta disciplina até o fim do plano. ') +
+          (data.value ? 'Vai aparecer logo abaixo da faixa Hoje <b>' + naData(data.value) + '</b>.' : 'Escolha a data em que a anotação vai aparecer logo abaixo da faixa Hoje.');
+      } else {
+        h = 'Aparece logo abaixo da faixa Hoje <b>' + naData(d.iso) + '</b>, no bloco de ' + esc(d.linha.mat) + ' das ' + d.ini + ' — ' +
+          (d.motivo === 'reserva' ? 'o bloco com “Tempo reservado” que recebe o que ficou do núcleo (P2, regra de parada).' : 'o próximo bloco da mesma disciplina, em outro dia (P2, regra de parada).');
+      }
+    }
+    el('pareiCampoData').hidden = !trocar.checked;
+    el('pareiQuando').innerHTML = h;
+  }
+  function abrir(){
+    el('pareiErro').hidden = true;
+    el('pareiData').min = isoMais(hojeISO(), 1);
+    el('pareiData').max = FIM;
+    atualizarQuando();
+    if(dlg && typeof dlg.showModal === 'function'){ dlg.returnValue = ''; dlg.showModal(); }
+  }
+  function textoDoPonto(it){
+    return '“' + esc(it.trecho) + '” — tópico <b>' + esc(it.nome) + '</b>' + (it.secao ? ', ' + esc(it.secao) : '');
+  }
+  function abrirNovo(tipo, ponto){
+    if(!dados){ avisar('As anotações de onde parei gravadas neste navegador estão num formato que esta versão não reconhece. Nada foi gravado.'); return; }
+    ctx = { modo: 'novo', tipo: tipo, ponto: ponto || null };
+    el('dlgPareiTitulo').textContent = tipo === 'ponto' ? 'Parei aqui' : 'Anotar onde parei';
+    el('dlgPareiAviso').innerHTML = tipo === 'ponto' ? 'Ponto marcado: ' + textoDoPonto(ponto) + '.'
+      : 'Escreva onde parou: a lei e o artigo, a questão ou o passo do procedimento. Para marcar um ponto do material, selecione uma palavra dele e toque em <b>Parei aqui</b>.';
+    el('pareiCampoTexto').hidden = tipo !== 'texto';
+    el('pareiTexto').value = '';
+    const hoje = hojeISO();
+    opcoes = deHoje(hoje);
+    const sel = el('pareiBloco');
+    sel.disabled = false;
+    sel.innerHTML = opcoes.map((x, i) => '<option value="' + i + '">' + x.ini + '–' + x.fim + ' · ' + esc(x.l.mat) + ': ' + esc(x.l.titulo.length > 60 ? x.l.titulo.slice(0, 60) + '…' : x.l.titulo) + '</option>').join('') +
+      '<option value="outro">' + (opcoes.length ? 'Nenhum destes — escolho a data' : 'Hoje não há bloco no plano — escolho a data') + '</option>';
+    const k = padrao(opcoes, ponto && ponto.topico);
+    sel.value = k >= 0 ? String(k) : 'outro';
+    el('pareiCampoBloco').hidden = false;
+    el('pareiTrocar').checked = false;
+    el('pareiData').value = '';
+    el('pareiNota').value = '';
+    abrir();
+  }
+  function abrirEditar(it){
+    ctx = { modo: 'editar', tipo: it.tipo, item: it };
+    el('dlgPareiTitulo').textContent = 'Trocar a data ou a nota';
+    el('dlgPareiAviso').innerHTML = (it.tipo === 'ponto' ? 'Ponto marcado: ' + textoDoPonto(it) + '. ' : '') + 'Anotado ' + naData(it.origem.data) + (it.origem.mat ? ', no bloco de ' + esc(it.origem.mat) : '') + '.';
+    el('pareiCampoTexto').hidden = it.tipo !== 'texto';
+    el('pareiTexto').value = it.texto || '';
+    el('pareiCampoBloco').hidden = true;
+    el('pareiTrocar').checked = false;
+    el('pareiData').value = '';
+    el('pareiNota').value = it.nota || '';
+    abrir();
+  }
+  function guardar(){
+    if(!ctx || !dados) return;
+    el('pareiErro').hidden = true;
+    const hoje = hojeISO(), trocar = el('pareiTrocar').checked, nota = el('pareiNota').value.trim().slice(0, 200);
+    const texto = el('pareiTexto').value.trim().slice(0, 300);
+    if(ctx.tipo === 'texto' && !texto){ falha('Escreva onde parou.'); return; }
+    let iso = '', dest = null;
+    if(trocar){
+      iso = el('pareiData').value;
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(iso)){ falha('Escolha a data.'); return; }
+      if(iso <= hoje){ falha('Escolha uma data depois de hoje.'); return; }
+      if(iso > FIM){ falha('Escolha uma data até ' + diaMes(FIM) + '/' + FIM.slice(0, 4) + ', o último dia do plano.'); return; }
+    }
+    let it;
+    if(ctx.modo === 'editar'){
+      it = ctx.item;
+      if(it.tipo === 'texto') it.texto = texto;
+      it.nota = nota;
+      if(trocar){ it.retomar = iso; it.destino = destinoManual(it.origem.mat, iso); }
+    } else {
+      const v = el('pareiBloco').value, x = v !== 'outro' ? opcoes[+v] : null;
+      if(!trocar){
+        const d = calcular();
+        if(!d){ falha('Escolha a data.'); return; }
+        iso = d.iso;
+        dest = { bloco: d.linha.bloco, mat: d.linha.mat, ini: d.ini, motivo: d.motivo };
+      } else dest = destinoManual(x ? x.l.mat : (ctx.ponto ? matDoTopico(ctx.ponto.topico) : ''), iso);
+      it = { id: novoId(), em: new Date().toISOString(), tipo: ctx.tipo, nota: nota,
+        origem: { data: hoje, bloco: x ? x.l.bloco : null, mat: x ? x.l.mat : '', ini: x ? x.ini : '' }, retomar: iso, destino: dest, feito: null };
+      if(ctx.tipo === 'ponto'){ const p = ctx.ponto; ['topico', 'nome', 'q', 'p', 's', 'i', 'trecho', 'secao'].forEach(c => { it[c] = p[c]; }); }
+      else it.texto = texto;
+      dados.itens.push(it);
+    }
+    salvar();
+    ctx = null;
+    if(dlg && dlg.open) dlg.close();
+    depoisDeMudar(it);
+    avisar('Anotação guardada. Ela aparece logo abaixo da faixa Hoje da página 03.1 ' + naData(it.retomar) + '.');
+  }
+  if(dlg){
+    el('btnPareiGuardar').addEventListener('click', guardar);
+    el('pareiBloco').addEventListener('change', atualizarQuando);
+    el('pareiTrocar').addEventListener('change', atualizarQuando);
+    el('pareiData').addEventListener('change', atualizarQuando);
+    el('pareiData').addEventListener('input', atualizarQuando);
+    /* Enter num campo de uma linha não fecha a janela (o botão padrão do formulário é o Cancelar): guarda */
+    dlg.addEventListener('keydown', function(e){ if(e.key === 'Enter' && e.target && e.target.matches && e.target.matches('input')){ e.preventDefault(); guardar(); } });
+    dlg.addEventListener('close', function(){ ctx = null; });
+  }
+
+  /* ---- apagar (só com confirmação) ---- */
+  const dlgA = document.getElementById('dlgPareiApagar');
+  let apagarId = null;
+  function abrirApagar(it){
+    apagarId = it.id;
+    const qual = it.tipo === 'ponto' ? textoDoPonto(it) : '“' + esc(it.texto) + '”';
+    if(dlgA && typeof dlgA.showModal === 'function'){
+      el('dlgPareiApagarQual').innerHTML = 'Anotação ' + naData(it.origem.data) + ': ' + qual + '.';
+      dlgA.returnValue = '';
+      dlgA.showModal();
+      return;
+    }
+    if(window.confirm('Apagar esta anotação de onde parei?\n\nNão há como desfazer. As outras anotações, as marcações e o progresso não são tocados.')) apagarAgora();
+  }
+  function apagarAgora(){
+    if(!dados || !apagarId) return;
+    const k = dados.itens.findIndex(x => x && x.id === apagarId);
+    apagarId = null;
+    if(k < 0) return;
+    const it = dados.itens.splice(k, 1)[0];
+    salvar();
+    depoisDeMudar(it);
+  }
+  if(dlgA){
+    el('btnPareiApagaConfirma').addEventListener('click', apagarAgora);
+    dlgA.addEventListener('close', function(){ if(dlgA.returnValue !== 'confirmar') apagarId = null; });
+  }
+
+  function depoisDeMudar(it){
+    desenhar();
+    if(it && it.tipo === 'ponto'){ const det = document.getElementById(it.topico); if(det) marcarTopico(det); }
+  }
+
+  /* ---- logo abaixo da faixa Hoje, e na linha do bloco de destino ---- */
+  let listaAberta = false;
+  function rotDestino(it){
+    const d = it.destino;
+    return d && d.mat ? ' — ' + esc(d.mat) + (d.ini ? ', às ' + d.ini : '') : '';
+  }
+  function oQue(it){
+    return it.tipo === 'ponto' ? 'você parou em ' + textoDoPonto(it) + '.' : 'você anotou: “' + esc(it.texto) + '”.';
+  }
+  function cartao(it, hoje){
+    const cab = it.retomar === hoje ? 'Retomar hoje' : 'Retomar — pendente desde ' + dataLonga(it.retomar);
+    return '<div class="pr-item" data-pr-id="' + it.id + '"><p><b>' + cab + '</b>' + rotDestino(it) + ': ' + oQue(it) +
+      '<span class="pr-quando">Anotado ' + naData(it.origem.data) + (it.origem.mat ? ', no bloco de ' + esc(it.origem.mat) : '') + '.</span></p>' +
+      (it.nota ? '<p class="pr-nota">Nota: ' + esc(it.nota) + '</p>' : '') +
+      '<div class="pr-acoes">' + (it.tipo === 'ponto' ? '<button type="button" class="btn dest mini" data-pr="ir" data-pr-id="' + it.id + '">Ir para o ponto exato</button>' : '') +
+      '<button type="button" class="btn sec mini" data-pr="feito" data-pr-id="' + it.id + '">Retomei</button>' +
+      '<button type="button" class="btn sec mini" data-pr="editar" data-pr-id="' + it.id + '">Trocar a data</button></div></div>';
+  }
+  function linhaLista(it, feita){
+    const quando = feita ? 'Retomada em ' + diaMes(String(it.feito).slice(0, 10)) : '<b>' + dataLonga(it.retomar) + '</b>' + rotDestino(it);
+    return '<li data-pr-id="' + it.id + '">' + quando + ': ' + (it.tipo === 'ponto' ? '“' + esc(it.trecho) + '” — tópico ' + esc(it.nome) : '“' + esc(it.texto) + '”') +
+      ' <span class="pr-quando-lista">(anotado em ' + diaMes(it.origem.data) + ')</span><br>' +
+      (feita ? '' : (it.tipo === 'ponto' ? '<button type="button" class="btn sec mini" data-pr="ir" data-pr-id="' + it.id + '">Ir para o ponto exato</button>' : '') +
+        '<button type="button" class="btn sec mini" data-pr="editar" data-pr-id="' + it.id + '">Trocar a data</button>') +
+      '<button type="button" class="btn sec mini" data-pr="apagar" data-pr-id="' + it.id + '">Apagar</button></li>';
+  }
+  function desenhar(){
+    const box = document.getElementById('opParei');
+    if(!box) return;
+    if(!dados){
+      box.innerHTML = '<p class="pr-erro">As anotações de onde parei gravadas neste navegador estão num formato que esta versão do aplicativo não reconhece. Elas continuam guardadas, sem mudança, mas não podem ser mostradas nem trocadas.</p>';
+      return;
+    }
+    const hoje = hojeISO(), todos = itens();
+    const porData = (a, b) => a.retomar < b.retomar ? -1 : a.retomar > b.retomar ? 1 : (a.em < b.em ? -1 : 1);
+    const agora = todos.filter(it => !it.feito && it.retomar <= hoje).sort(porData);
+    const depois = todos.filter(it => !it.feito && it.retomar > hoje).sort(porData);
+    const feitas = todos.filter(it => it.feito).sort((a, b) => a.feito < b.feito ? 1 : -1);
+    let h = agora.map(it => cartao(it, hoje)).join('');
+    h += '<div class="pr-rodape"><button type="button" class="btn sec mini" data-pr="novo">Anotar onde parei</button><span class="pr-dica">' +
+      (agora.length ? '' : 'Nada para retomar hoje. ') + 'No material, selecione uma palavra do ponto em que parou e toque em <b>Parei aqui</b>: no dia de retomar, o ponto aparece aqui.' +
+      (LS.ativo() ? '' : ' <span class="pr-erro">Este navegador não está gravando: as anotações somem ao fechar a aba.</span>') + '</span></div>';
+    if(depois.length || feitas.length){
+      h += '<details class="pr-lista"' + (listaAberta ? ' open' : '') + '><summary>Suas anotações de onde parei (' + (depois.length + feitas.length) + ')</summary>' +
+        (depois.length ? '<h5>Para outro dia (' + depois.length + ')</h5><ul>' + depois.map(it => linhaLista(it, false)).join('') + '</ul>' : '') +
+        (feitas.length ? '<h5>Já retomadas (' + feitas.length + ')</h5><ul>' + feitas.map(it => linhaLista(it, true)).join('') + '</ul>' : '') + '</details>';
+    }
+    box.innerHTML = h;
+    const det = box.querySelector('.pr-lista');
+    if(det) det.addEventListener('toggle', function(){ listaAberta = det.open; });
+    nasLinhas(todos.filter(it => !it.feito));
+  }
+  function nasLinhas(lista){
+    document.querySelectorAll('#pg-operacional .pr-linha').forEach(e => e.remove());
+    lista.forEach(function(it){
+      if(!it.destino || !it.destino.bloco) return;
+      const l = lerGrade().find(x => x.bloco === it.destino.bloco && x.sess.some(s => s.iso === it.retomar));
+      if(!l) return;
+      const d = document.createElement('div');
+      d.className = 'pr-linha';
+      d.innerHTML = '<b>Retomar aqui</b> (' + dataLonga(it.retomar) + '): ' + oQue(it) + ' Anotado em ' + diaMes(it.origem.data) + '.' +
+        (it.tipo === 'ponto' ? ' <a href="#" data-pr="ir" data-pr-id="' + it.id + '">Ir para o ponto exato</a>' : '');
+      l.tr.children[1].appendChild(d);
+    });
+  }
+  document.addEventListener('click', function(e){
+    const t = e.target && e.target.closest ? e.target.closest('[data-pr]') : null;
+    if(!t || !dados) return;
+    const acao = t.dataset.pr;
+    if(acao === 'novo'){ abrirNovo('texto', null); return; }
+    const it = dados.itens.find(x => x && x.id === t.dataset.prId);
+    if(!it) return;
+    e.preventDefault();
+    if(acao === 'ir') irPara(it);
+    else if(acao === 'editar') abrirEditar(it);
+    else if(acao === 'apagar') abrirApagar(it);
+    else if(acao === 'feito'){
+      it.feito = new Date().toISOString();
+      salvar();
+      depoisDeMudar(it);
+      avisar('Anotação marcada como retomada. Ela fica em “Já retomadas”.', function(){ it.feito = null; salvar(); depoisDeMudar(it); });
+    }
+  });
+
+  window.PAREI = { doMaterial: doMaterial, desenhar: desenhar, calcular: function(bloco, iso){
+    const l = lerGrade().find(x => x.bloco === bloco);
+    const d = l ? destino(l, iso) : null;
+    return d ? { iso: d.iso, ini: d.ini, bloco: d.linha.bloco, motivo: d.motivo } : null;
+  }, grade: lerGrade };
+  if(document.getElementById('pg-operacional') && document.getElementById('pg-operacional').classList.contains('ativa')) desenhar();
 })();
 
 /* ---------- Busca no material (21/10/2026) ----------
