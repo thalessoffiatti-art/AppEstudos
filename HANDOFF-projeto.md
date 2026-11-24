@@ -5472,11 +5472,131 @@ se o usuário quiser — sem prioridade; conferir o quadro de emendas e as leis 
 
 ---
 
-# Retomada — estado em 2026-11-23, v51 pronta (ler primeiro depois de compactar a conversa)
+# Adendo 47 — 2026-11-23 ("Parei aqui" e correções no texto de Direito Civil, v52)
+
+**Origem.** O usuário commitou e publicou a v51 (`ce0053c`, PR #47, `3726087`, em 23/11; o site serve
+`autos-do-estudo-v51`); raiz em ff no PR #47; `bak_2210/index_v51.html` e `sw_v51.js` guardados. No mesmo dia pediu:
+"Adicione um campo para adicionar onde parei no manual operacional. Assim, quando chegar na data em que será retomado,
+será exibida tal informação [...]. Caso tenha uma sugestão melhor para isso, informe-a para que eu analise e façamos um
+planejamento de implantação". A resposta, com um desenho (caso real da semana 14: segunda 30/11 → sexta 04/12, 15h45),
+propôs o marcador "Parei aqui" no ponto exato do material mais o campo de texto, com a data pela regra de parada, e
+quatro decisões com recomendação. Ele respondeu: "v51 está comitada. Pode prosseguir. Concluída a alteração, verifique o
+material escrito. Especialmente a parte de Direito Civil", apontando o art. 1.228 sem o "reaver" no tópico de posse. As
+quatro recomendações foram aplicadas: marcador + campo; data pela regra, com "Escolher outra data"; "Zerar progresso"
+não apaga; o P2 e o P3 mandam anotar no aplicativo desde a segunda seguinte (30/11), caderno como alternativa.
+
+**Normas:** conferidas no mesmo dia, para a v51 (Adendo 46): nada a incorporar.
+
+## Parte A — "Parei aqui"
+- **Dados:** chave nova `trt4:parei` = `{v:1, itens:[...]}` (só por acréscimo; nenhuma chave antiga muda), fora de CHAVES
+  (`LS.limparTudo` a pula, como `trt4:marcas` e `trt4:recesso`), no backup (8ª parte: rótulo, validação, contagem; uma
+  cópia "antes da restauração" feita por versão anterior não traz a parte, e o Desfazer a deixa como está). Um valor
+  estranho na chave nunca é sobrescrito: a 03.1 avisa e o "Parei aqui" diz "Nada foi gravado.". Item: id, em, tipo
+  (`ponto`/`texto`), ponto (topico, nome, q, p, s, i — como o marca-texto —, trecho, secao) ou texto, nota, origem
+  {data, bloco, mat, ini}, retomar (AAAA-MM-DD), destino {bloco, mat, ini, motivo: reserva|proximo|manual}, feito.
+- **Material:** o marca-texto passou a expor `window.MT_ANCORA` (índice, posição da seleção, achar o trecho), antes da
+  volta por valor estranho; com uma seleção, o botão flutuante mostra "Marcar" e "Parei aqui" (um toque entre os dois não
+  faz nada). O parágrafo do ponto ganha a faixa "Você parou aqui …" por `::before` (`data-pr-aqui`): não entra no texto do
+  índice do marca-texto (provado no teste). O trecho mostrado vai do começo do parágrafo (ou da frase do ponto, se ele
+  está longe do começo) ao fim da frase do ponto (fim de frase = ponto ou dois-pontos antes de maiúscula, não o de "art. 5").
+- **Dia de retomar** (`lerGrade`/`destino` no módulo, a partir das 320 linhas dos cartões da seção 6): bloco pelo título
+  (k-ésima linha com o mesmo título = k-ésimo bloco da semana com ele; resolve a semana 22), horários do `td.op-disc`,
+  datas de origem das linhas "Tempo reservado". Regra: se uma linha "Tempo reservado" da mesma disciplina lista o dia, o
+  primeiro horário dela (motivo `reserva`); senão, o próximo horário da mesma disciplina em outro dia (`proximo`); as
+  linhas da extensão de 8 horas só valem nas semanas desse modo. `v52/conferir_grade.js`: 25 dias de núcleo das semanas
+  12 a 18 (18 blocos) vão para a reserva da semana que o cartão diz; 126 próximos conferidos (outro dia, mesma
+  disciplina, dia de plano); 6 casos à mão; exceções declaradas: a reserva de `s16-da2` recebe a LGPD de 05/11 (outra
+  disciplina, dia passado) e `s21-leg` (21/01) não tem bloco seguinte da disciplina — a janela pede a data.
+- **03.1:** `#opParei` logo abaixo da faixa Hoje (desenhado por `atualizarHojeOperacional`): "Retomar hoje" ou
+  "Retomar — pendente desde …", com Ir para o ponto exato (navega, abre o tópico, rola ao parágrafo; o botão diz "Voltar
+  para Manual operacional"), Retomei (não apaga; Desfazer por 8 s) e Trocar a data; "Anotar onde parei" (texto); lista
+  fechada "Suas anotações de onde parei" (Para outro dia, Já retomadas; Apagar com a janela `dlgPareiApagar`). A linha
+  do bloco de destino, no cartão da semana, ganha "Retomar aqui" (em tempo de execução: o HTML dos cartões não muda).
+  Janela `dlgParei`: bloco de hoje (o do tópico, senão a disciplina do tópico, senão a hora), o dia calculado com o
+  motivo, "Escolher outra data" (de amanhã a 30/01/2027), nota; Enter num campo guarda (o botão padrão do formulário é
+  o Cancelar).
+- **Textos:** P1 (o que aparece abaixo da faixa), P2 e P3 ("Desde a semana 14 (30/11)…", o caderno continua servindo;
+  onde um cartão diz "anote no caderno", vale o aplicativo — os cartões não foram reescritos), seção 7, nota no alto da
+  página 04, janela e resumo do Zerar progresso, página 07 (progresso gravado e backup; de passagem, a vírgula que faltava
+  em "no cronograma, o histórico").
+
+## Parte B — Direito Civil
+- **Método:** `v52/_civil_texto.js` (16 tópicos, 617 itens, 24.930 palavras de texto explicativo, sem quadros e caixas);
+  `v52/_folha_civil.js` → `v52/folhas/TOPICO.txt` (cada item com o texto dos artigos que cita); leitura item a item.
+  Cada correção em `v52/civil_correcoes.js` (tópico, tema, art, antes, depois, provas, e `erro` quando é erro de
+  conteúdo); `v52/conferir_civil.js` exige o antigo uma vez no tópico, cada prova no artigo da base (primeira letra sem
+  caixa; `calc:incisos:LEI:ART` para "só N casos"; `web:CHAVE` para os enunciados do CJF lidos em 05/11, de
+  `v37/fontes_web.json`) e toda citação nova provada; negativos 1..3 acusados. O conferidor pegou uma citação minha não
+  literal ("não se reputará vencida"; a lei diz "vencido").
+- **Resultado:** 64 trechos em 14 tópicos (LINDB e domicílio e bens sem correção). Quase todos, o defeito do 1.228: o
+  resumo cortava uma parte do artigo (direito, exceção, requisito, começo de prazo), e a conferência por substring das
+  versões anteriores não pega omissão. Quatro eram erro de conteúdo: art. 10 ("entre outras", mas a lista era a do
+  artigo inteiro); art. 1.716 ("ou até a maioridade", e não "na falta destes"); art. 1.337, parágrafo único ("até o
+  décuplo"; a lei diz "correspondente ao décuplo"); art. 1.467 ("entre outros"; são só dois casos). Enunciados 49, 303 e
+  597 do CJF completados ("restritivamente", o conceito de justo título, "efetiva e"). Texto acrescentado: ~1.400
+  palavras; o máximo num tópico, 4,8 min a 55 p/min (direitos reais II). Os cartões não mudam: a leitura estimada do
+  núcleo de `s18-civ` (38 e 34 min no cartão) passa a 39 e 36 pela conta de `v43/nucleo_v43.js`, ainda dentro da teoria
+  (50 e 45) — declarado aqui, não no cartão.
+- **Fora de Civil:** `v52/_aspas_todos.js` — 89 citações com artigo logo depois: 59 literais na base de leis; as 30
+  restantes (tratados de DH, resoluções do CNJ e do CSJT, EC 141) têm prova em `vNN/provas.js` (`v39/provas.js` e
+  `v40/provas.js` rodados de novo: 0 falhas). Nenhuma correção fora de Civil. A leitura item a item, como a de Civil, não
+  foi feita nas outras disciplinas.
+- **Aviso** (03.1, 23/11): cinco itens (material, fora do material, no dia, quando vale, Civil por tópico com os quatro
+  erros de conteúdo e como ler as correções: tópicos já estudados na próxima revisão; os próximos já com o texto novo);
+  o da v51 é o primeiro dos 41 anteriores.
+
+**Verificação (23/11)**
+- `bash v52/montar.sh` (entrada v51; pipeline da lei seca igual); `aplicar_v52.js`: QUESTOES, CRONOGRAMA, JURIS, NUCLEO,
+  SIM_REAL, QC_TOPICO e COTA_SIMULADO iguais; cartões 1 a 22 (39 sessões) e 78 quadros iguais; o material, tirada a nota
+  e desfeitas as 64 correções, igual ao da v51; nada sumiu fora das trocas.
+- `bash v52/conferir_tudo.sh`: 33 conferidores com saída 0; diferenças em relação à v51 só na versão e no
+  `nucleo_capacidade` (as duas linhas de `s18-civ`, acima).
+- `v52/conferir_aviso.js`: 193/193 (sobre a v51: 85 falhas).
+- `v52/teste_v52.js` (Edge): **49 de 49** — v51 → v52 com as chaves idênticas; grifos da v51 (um no trecho do 1.228 que
+  muda: vai para "não achada", guardado; um que não muda: pintado); Parei aqui pelo toque, janela, dia pela regra, Enter
+  guarda; faixa no parágrafo medida e fora do índice; 03.1 em 30/11 e em 04/12 (Retomar hoje, linha do bloco, Ir para o
+  ponto exato medido na tela, Voltar); Retomei/Desfazer; Anotar onde parei (erros, outra data); pendente; Trocar a data;
+  Apagar com confirmação; Zerar progresso; backup salvo (arquivo capturado, sem download) e restaurado; valor estranho;
+  marca-texto com dois botões; aviso, P2, 1.228, 1.337 e 1.467 no tópico; 375 e 820 px medidos; console limpo.
+- `v52/neg_tela.js` 1..8 (sem o botão "Parei aqui"; dia de retomar no mesmo dia; Zerar progresso apagando `trt4:parei`;
+  backup sem a parte; Retomei que apaga; o 1.337 de volta a "até o décuplo"; anteriores 40; largura de 900 px): os oito
+  acusados, cada um sozinho (1, 8, 4, 3, 6, 1, 1 e 2 falhas); nenhum perfil temporário sobrou.
+- Regressões: `v40/teste_rolagem.js` 17/17; `busca_2110/teste_busca.js` (v51 × v52) TUDO CERTO;
+  `juris_1210/teste_marca_1210.js` 285.454 palavras (675 a mais que na v51, das correções de Civil), 0 erradas com
+  posição; `juris_1210/teste_atualiza_1210.js` sem erros; `v51/teste_v51.js` sobre a v52: 15 de 17, as duas falhas são a
+  versão (v51) e o aviso aberto (o da v51 passou a ser o primeiro dos anteriores).
+- Na primeira montagem, a linha `window.MT_ANCORA = …; if(!valido) return;` ficava logo depois de `ehFora`, dentro do
+  trecho que `juris_1210/teste_marca_1210.js` recorta do marca-texto para a varredura, e a varredura deu `ReferenceError:
+  posicao is not defined`. A linha foi para logo antes de `function pintar` (entre os dois pontos só há declarações de
+  função: o comportamento é o mesmo) e o recorte voltou a ser igual ao da v51.
+- **Scratchpad limpo de novo em 23/11** (sobraram 1.467 de 2.822 arquivos; a v52 estava inteira, por ser do dia):
+  restaurado com `robocopy … /E /XO` (2.825) e provado (`bak_2210/index_v51.html` = `index.html` commitado; conferidor
+  de Civil 64/0; provas da v39 e da v40 sem falha). 6ª vez.
+- `index.html` e `sw.js` do worktree = `v52/ensaio.html` e `v52/ensaio_sw.js` (`cmp`); cache `autos-do-estudo-v52`.
+
+**Lições**
+- Resumo de artigo que corta a segunda metade (a exceção, o "salvo", o segundo caso) passa em toda conferência por
+  substring. Para texto explicativo, a revisão compara item a item com o artigo inteiro, olhando listas apresentadas
+  como fechadas ("são", "entre outros"), exceções, requisitos e o começo dos prazos.
+- Teste de tela que seleciona texto tem de usar o primeiro e o último retângulo do trecho (`getClientRects`): com só o
+  primeiro, um trecho que quebra de linha é selecionado pela metade (aconteceu duas vezes neste teste).
+- Heredoc com barras invertidas quebrou um script de correção (a memória já avisava): escrever com a ferramenta de
+  escrita.
+- Código novo dentro do marca-texto pode quebrar o recorte que `teste_marca_1210.js` faz por marcadores de texto
+  (`const FORA =` … `const bruto =`, `function testador` … `/* texto do tópico`, `function indice` … `/* ponto`,
+  `function achar` … `function desembrulhar(`): não inserir nada nesses trechos.
+
+**Pendências que continuam:** leitura item a item do texto explicativo das outras disciplinas, só se o usuário pedir;
+reequilíbrio de Administrativo, Legislação e das menores, idem.
+
+---
+
+# Retomada — estado em 2026-11-23, v51 publicada, v52 pronta (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira, o **Adendo 46** (v51, reequilíbrio das alternativas de Processo do Trabalho e Trabalho —
+1. Ler esta seção inteira, o **Adendo 47** (v52, "Parei aqui" — `trt4:parei`, dia de retomar pela regra de parada a
+   partir das linhas dos cartões — e 64 correções no texto de Direito Civil com prova no CC), o **Adendo 46** (v51, reequilíbrio das alternativas de Processo do Trabalho e Trabalho —
    o método da v48 com `juris:` lido no INDEX e a nova estritamente mais longa que a certa), o **Adendo 45** (v50, convênios: a Lei 8.666/1993 está revogada — correção de forma num
    tópico, com o texto provado na base de leis), o **Adendo 44** (v49, revisões espaçadas com lista fechada de alvos, a partir da proposta do
    Codex de 19/11: `v49/alvos.js` + `gerar_cartoes.js`, `conferir_cartoes.js` — modelo para mexer nos cartões de revisão), o
@@ -5496,34 +5616,36 @@ se o usuário quiser — sem prioridade; conferir o quadro de emendas e as leis 
    arquivos (aconteceu de novo entre 11 e 12/11; o app também troca o caminho do
    scratchpad entre sessões; e de novo entre 16 e 17/11, a 5ª vez), restaurar antes (`robocopy
    <ferramentas-scratchpad> <scratchpad> /E /XO`) e provar com `bash
-   v51/montar.sh` + `cmp v51/ensaio.html <worktree>/index.html` (a v51 parte de `bak_2210/index_v50.html`). O plano
+   v52/montar.sh` + `cmp v52/ensaio.html <worktree>/index.html` (a v52 parte de `bak_2210/index_v51.html`). O plano
    aprovado em 22/10 está em
    `C:\Users\thale\.claude\plans\woolly-finding-squid.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
    - `git status --short` e `git log --oneline -3` no worktree (em 16/11:
-     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v51 pronta, esperando o commit do usuário; último commit `b3d1463` (Adendo 45 = v50), publicado
-     pelo PR #46, `8055fd8`; antes, `48c42ef` (a v48 e a v49 juntas), PR #45, `cd842c4`; antes,
+     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v52 pronta, esperando o commit do usuário; último commit `ce0053c` (Adendo 46 = v51), publicado
+     pelo PR #47, `3726087`; antes, `b3d1463` (Adendo 45 = v50), PR #46, `8055fd8`; antes, `48c42ef` (a v48 e a v49 juntas), PR #45, `cd842c4`; antes,
      `cd67ddd`, Adendo 42 = v47, publicada pelo PR #44, `b0a1958`);
    - `git fetch origin` e `git log --oneline -3 origin/main` (em 23/11 o
-     `main` estava no PR #46, `8055fd8`, e a pasta principal também). **O
+     `main` estava no PR #47, `3726087`, e a pasta principal também). **O
      `--ff-only` do usuário só anda depois de um `git fetch`:** os worktrees
      dividem as referências com a pasta principal, e sem o fetch o
      `origin/main` local ainda aponta para o PR anterior. Fazer o fetch antes
      (ou indicar `git -C <raiz> pull --ff-only origin main`);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (em 23/11: `autos-do-estudo-v50`, publicada pelo PR #46; a v51 espera o commit);
+     (em 23/11: `autos-do-estudo-v51`, publicada pelo PR #47; a v52 espera o commit);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo e no Adendo
    32). Não aplicar nenhuma delas sem a resposta.
-4. **Próximo passo: esperar o commit e o PR da v51** (Adendo 46, reequilíbrio das alternativas de Processo do Trabalho e
-   Trabalho). A v51 está no worktree (`index.html` = `v51/ensaio.html`, `sw.js` = `v51/ensaio_sw.js`, conferidos com
-   `cmp`). **Não mexer no `index.html` antes do commit.** Depois do commit e do PR: `git fetch` e `--ff-only` na pasta
-   principal, guardar `bak_2210/index_v51.html` (cópia do worktree, CRLF) e `sw_v51.js`. Não há promessa de conteúdo
-   pendente. Só se o usuário quiser e sem prioridade: reequilíbrio de Administrativo, Legislação e das menores (Adendos 43
-   e 46); da proposta do Codex, a troca manual de alvos, a fila persistente e a URL que abre uma revisão (Adendo 44); o
-   registro da nota de cada estudo de caso. Perguntar antes. Antes de cada versão, abrir o quadro de emendas do Planalto e
-   as listas de leis, MPs e LCs do ano (feito em 23/11; endereços no Adendo 46). Caso ou questão de jornada ou repouso
-   segue a EC 141.
+4. **Próximo passo: esperar o commit e o PR da v52** (Adendo 47, "Parei aqui" e correções no texto de Direito Civil).
+   A v52 está no worktree (`index.html` = `v52/ensaio.html`, `sw.js` = `v52/ensaio_sw.js`, conferidos com `cmp`).
+   **Não mexer no `index.html` antes do commit.** Depois do commit e do PR: `git fetch` e `--ff-only` na pasta principal,
+   guardar `bak_2210/index_v52.html` (cópia do worktree, CRLF) e `sw_v52.js`. Não há promessa de conteúdo pendente. Só se o
+   usuário quiser e sem prioridade: leitura item a item do texto explicativo das outras disciplinas (o método de Civil,
+   Adendo 47); reequilíbrio de Administrativo, Legislação e das menores (Adendos 43 e 46); da proposta do Codex, a troca
+   manual de alvos, a fila persistente e a URL que abre uma revisão (Adendo 44); o registro da nota de cada estudo de
+   caso. Perguntar antes. Antes de cada versão, abrir o quadro de emendas do Planalto e as listas de leis, MPs e LCs do ano
+   (feito em 23/11; endereços no Adendo 46). Caso ou questão de jornada ou repouso segue a EC 141. **Mexer em cartão de
+   semana muda o que o "Parei aqui" lê** (título da linha = título do bloco no CRONOGRAMA; horários "Seg 16h00–17h45";
+   "Tempo reservado … anotado no caderno de: … . Se não ficou"): rodar `v52/conferir_grade.js` depois.
    **Cartões de revisão:** os das semanas 13 a 22 saem de `v49/gerar_cartoes.js` sobre o arquivo de entrada; mexer em
    cartão de semana (tabela, links) muda a lista "Toda a semana": rodar de novo o gerador e `v49/conferir_cartoes.js`.
    **Todo lote usa a carga nova:**
@@ -5590,7 +5712,7 @@ se o usuário quiser — sem prioridade; conferir o quadro de emendas e as leis 
      `patch_matriz_v3X.js`, DONO no `gerar_lei_seca.js` quando a linha ligar
      dois tópicos, `aplicar_v3X.js A|B`, `montar.sh`, `aviso.js` com
      `conferir_aviso.js`; o aviso aberto esperado passa a ser o de
-     "23/11/2026 — alternativas das questões de Processo do Trabalho e de Trabalho", com "Avisos anteriores" em 40;
+     "23/11/2026 — “Parei aqui”: o aplicativo guarda onde você parou e mostra no dia de retomar", com "Avisos anteriores" em 41;
    - **núcleo (regra da v38, Adendo 33):** refazer o levantamento sobre o
      ensaio (`node v36/gerar_aud_nucleo.js` e `node v36/aud_nucleo.js ENSAIO
      --json v3X/aud_nucleo.json`); em `nucleo_v3X.js` (cópia de
@@ -5620,7 +5742,8 @@ se o usuário quiser — sem prioridade; conferir o quadro de emendas e as leis 
    141/2026) publicada em 16/11 (PR #42); v46 (casos das semanas 21 e 22) publicada em 17/11 (PR #43); v47 (incisos grudados)
    publicada em 18/11 (PR #44); v48 (reequilíbrio de Processo Civil e Constitucional) e v49 (revisões espaçadas com lista
    fechada de alvos) publicadas juntas em 20/11 (PR #45); v50 (convênios: Lei 8.666 revogada) publicada em 20/11 (PR #46);
-   v51 (reequilíbrio de Processo do Trabalho e Trabalho) pronta em 23/11.
+   v51 (reequilíbrio de Processo do Trabalho e Trabalho) publicada em 23/11 (PR #47); v52 ("Parei aqui" e Civil) pronta em
+   23/11.
 
    **Ao terminar qualquer versão:** HANDOFF (adendo e Retomada), memória,
    `robocopy` da cópia dos scripts e, depois do PR, `--ff-only` na pasta
@@ -5628,7 +5751,18 @@ se o usuário quiser — sem prioridade; conferir o quadro de emendas e as leis 
 
 ## TRABALHO EM ANDAMENTO (atualizar ao fim de cada etapa)
 
-### v51 — reequilíbrio das alternativas de Processo do Trabalho e Trabalho — PRONTA em 23/11/2026, esperando o commit (Adendo 46)
+### v52 — "Parei aqui" (onde parei) e correções no texto de Direito Civil — PRONTA em 23/11/2026, esperando o commit (Adendo 47)
+
+- **Estado:** `index.html` e `sw.js` do worktree = `v52/ensaio.html` e `v52/ensaio_sw.js` (`cmp`); cache
+  `autos-do-estudo-v52`. Entrada: `bak_2210/index_v51.html` (a v51 publicada). O que mudou e a verificação: **Adendo 47**.
+- **Dados e ferramentas:** `v52/parei_modulo.js`, `parei.css`, `parei_janelas.html`, `textos.js`, `aviso.js`;
+  `v52/civil_correcoes.js` (64) + `conferir_civil.js` (`--estragar 1..3`); `_folha_civil.js` → `folhas/`; `_html.js`;
+  `conferir_grade.js` (dia de retomar); `_aspas_todos.js` + `_aspas_provas.js` (citações fora de Civil).
+- **Ordem para remontar:** `bash v52/montar.sh`; `bash v52/conferir_tudo.sh`; `node v52/_gera_teste.js` e `node
+  v52/teste_v52.js bak_2210/index_v51.html v52/ensaio.html`; `bash v52/final.sh` (8 estragos de tela e as regressões).
+- **Depois do commit e do PR:** `git fetch` + `--ff-only` na raiz; guardar `bak_2210/index_v52.html` e `sw_v52.js`.
+
+### v51 — reequilíbrio das alternativas de Processo do Trabalho e Trabalho — PUBLICADA em 23/11/2026 pelo PR #47 (`3726087`; commit `ce0053c`) (Adendo 46)
 
 - **Estado:** `index.html` e `sw.js` do worktree = `v51/ensaio.html` e `v51/ensaio_sw.js` (`cmp`); cache
   `autos-do-estudo-v51`. Entrada: `bak_2210/index_v50.html` (a v50 publicada). O que mudou e a verificação: **Adendo 46**.
@@ -5636,7 +5770,8 @@ se o usuário quiser — sem prioridade; conferir o quadro de emendas e as leis 
   (`--estragar 1..9`); `v51/_revisar.js` (revisão humana); `v51/_curta.js` (única mais curta e mais longa por disciplina).
 - **Ordem para remontar:** `bash v51/montar.sh`; `bash v51/conferir_tudo.sh`; `node v51/_gera_teste.js` e `node
   v51/teste_v51.js bak_2210/index_v50.html v51/ensaio.html`; `bash v51/final.sh` (6 estragos de tela e as regressões).
-- **Depois do commit e do PR:** `git fetch` + `--ff-only` na raiz; guardar `bak_2210/index_v51.html` e `sw_v51.js`.
+- **Depois do commit e do PR:** feito em 23/11 — raiz em ff no PR #47; o site serve `autos-do-estudo-v51`;
+  `bak_2210/index_v51.html` e `sw_v51.js` guardados.
 
 ### v50 — convênios: a Lei 8.666/1993 está revogada — PUBLICADA em 20/11/2026 pelo PR #46 (`8055fd8`; commit `b3d1463`) (Adendo 45)
 
