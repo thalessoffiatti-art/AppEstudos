@@ -5780,11 +5780,73 @@ Administrativo, Legislação e das menores, idem.
 
 ---
 
-# Retomada — estado em 2026-11-24, v53 publicada, v54 pronta (ler primeiro depois de compactar a conversa)
+# Adendo 50 — 2026-11-25 (botões "Desfazer" e "Parei aqui" visíveis, v55)
+
+**Origem.** O usuário commitou e publicou a v54 (`0a5eb66`, PR #50, `9c91db0`; o site serve `autos-do-estudo-v54`) e
+pediu: "Guarde onde parou para voltarmos mais tarde. Agora tenho uma missão específica" — dois botões com visibilidade
+prejudicada: (1) o "Desfazer" ao tirar uma marcação, "só um quadrado preto"; (2) o "Parei aqui", de fundo transparente,
+que se mistura com o texto de trás: "Adicione um blur e alguma opacidade (uns 30% devem bastar, mas verifique)", no estilo
+do Liquid Glass da Apple. Entrada: `bak_2210/index_v54.html`. **Onde paramos antes da v55:** nada pendente de conteúdo;
+as opções em aberto são as do item 4 da Retomada (leitura item a item das outras disciplinas, reequilíbrio das
+alternativas de Administrativo, Legislação e das menores, sobras da proposta do Codex, registro da nota dos casos), todas
+só se o usuário pedir.
+
+**Scratchpad limpo de novo em 25/11** (sobraram 25 entradas de 436; 7ª vez): restaurado com `robocopy … /E /XO` e provado
+(`bak_2210/index_v54.html` = `v54/ensaio.html` = `index.html` commitado).
+
+## Diagnóstico (medido na v54, Edge sem interface, `v55/_foto_antes.js`)
+- **Desfazer:** o aviso escuro (`.mt-aviso`, fundo `--tinta` #17242E) tinha `.mt-aviso .btn{color:#fff; border-color:#fff}`,
+  mas o botão é `btn sec mini`, e `.btn.sec{background:transparent; color:var(--tinta)}` tem o mesmo peso (0,2,0) e vem
+  depois no arquivo: o nome saía em `rgb(23, 36, 46)` sobre o fundo `rgb(23, 36, 46)`. Sobrava só a borda branca — o
+  "quadrado". O mesmo aviso aparece depois de "Retomei", no "Parei aqui" (`mt-aviso pr-aviso`).
+- **Parei aqui:** `btn sec` no botão flutuante, fundo `rgba(0, 0, 0, 0)`; nas fotos, o nome cruzava as letras do parágrafo.
+
+## O que entrou (`v55/estilo.js`)
+- `.mt-aviso .btn, .mt-aviso .btn.sec{background:#fff; color:var(--tinta); border-color:#fff}` no lugar da regra antiga
+  (o seletor com `.btn.sec` pesa 0,3,0 e vence): botão branco com o nome escuro, 15,8:1.
+- `.mt-flutua .btn.sec{background:rgba(255,255,255,.3); backdrop-filter:blur(10px) saturate(1.4)}` (com o prefixo
+  `-webkit-` para o Safari do iPad), um brilho interno de 1 px e a sombra que o botão já tinha; sem suporte a desfoque,
+  fundo branco a 92%.
+- **Os 30% foram medidos**, não só olhados (`v55/_contraste.py`, PyMuPDF): foto do botão sem o nome, contraste do nome
+  (#17242E) contra o pixel mais escuro do fundo. Sobre texto comum: v54 1,0:1 (o próprio texto atrás); 30% 12,1:1; 45%
+  12,9:1. Pior caso — seleção mais alta que a tela, botão no pé, por cima do texto selecionado em azul
+  (`v55/_foto_selecao.js`): 30% de 6,0 a 6,7:1; 45% 8,1:1. Os 30% passam com folga do mínimo de 4,5:1 para texto; ficou
+  30%, como o usuário sugeriu.
+- Aviso no 03.1 (25/11); o da v54 é o primeiro dos 44 anteriores.
+
+**Verificação (25/11)**
+- `bash v55/montar.sh` (entrada `bak_2210/index_v54.html`; pipeline da lei seca igual); `aplicar_v55.js`: tirados o estilo
+  e o aviso, o arquivo é idêntico ao da v54.
+- `bash v55/conferir_tudo.sh`: 34 conferidores com saída 0; em relação à v54 mudam só a versão, `quadros_v55` (nenhum
+  quadro mudou) e `aviso_v55` (9/9).
+- `v55/teste_v55.js` (Edge): **11 de 11** — v54 → v55 com as chaves `trt4:` idênticas; "Parei aqui" com fundo
+  `rgba(255, 255, 255, 0.3)` e `blur(10px)` (estilo calculado); contraste medido nos pixels: 12,1:1 sobre texto comum e
+  6,0:1 por cima de texto selecionado (mínimos do teste: 7 e 4,5); "Desfazer" branco com o nome escuro, 15,8:1, e o
+  toque volta a marcação; o mesmo estilo no aviso do "Parei aqui" (`pr-aviso`); 375 px medidos; aviso aberto e 44
+  anteriores; console limpo.
+- `v55/neg_tela.js` 1..4 (estilo antigo do Desfazer: 1,3:1; Parei aqui sem vidro; vidro sem desfoque; anteriores 43):
+  os quatro acusados, cada um sozinho (2, 3, 2 e 1 falhas).
+- Regressões: `v40/teste_rolagem.js` 17/17; `busca_2110/teste_busca.js` (v54 × v55) TUDO CERTO;
+  `juris_1210/teste_marca_1210.js` 286.198 palavras, 0 erradas com posição; `juris_1210/teste_atualiza_1210.js` sem erros;
+  `v52/teste_v52.js` (todo o "Parei aqui": janela, faixa, Retomei/Desfazer, backup) sobre a v55: 47 de 49, as falhas são
+  a versão e o aviso aberto; `v54/teste_v54.js` sobre a v55: 16 de 18, idem. Um perfil temporário do Edge sobrou e foi
+  apagado (nenhum Edge de teste aberto).
+- `index.html` e `sw.js` do worktree = `v55/ensaio.html` e `v55/ensaio_sw.js` (`cmp`); cache `autos-do-estudo-v55`.
+
+**Lições**
+- Botão dentro de caixa escura que herda `.btn.sec`: a regra de contexto precisa ter mais peso que `.btn.sec`
+  (`.contexto .btn.sec`), senão a ordem no arquivo decide.
+- Contraste de vidro fosco se mede nos pixels: foto sem o rótulo e o pixel mais escuro do fundo; a foto do Edge sai com
+  escala = densidade da tela × escala do recorte (aqui, 4).
+
+---
+
+# Retomada — estado em 2026-11-25, v54 publicada, v55 pronta (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira, o **Adendo 49** (v54, R14 com o botão "Refazer meus erros no QConcursos" desde 01/12:
+1. Ler esta seção inteira, o **Adendo 50** (v55, botões "Desfazer" e "Parei aqui" visíveis: estilo e contraste medido
+   nos pixels), o **Adendo 49** (v54, R14 com o botão "Refazer meus erros no QConcursos" desde 01/12:
    filtro `my_questions=wrong`, código `injetarQcNaR14`, "Como" pelo gerador v49), o **Adendo 48** (v53, 67 correções no texto de Processo do Trabalho, Processo Civil e
    quadros de Civil; extrator com prova de cobertura; avisos do STF em `notas_stf.js`), o **Adendo 47** (v52, "Parei aqui" — `trt4:parei`, dia de retomar pela regra de parada a
    partir das linhas dos cartões — e 64 correções no texto de Direito Civil com prova no CC), o **Adendo 46** (v51, reequilíbrio das alternativas de Processo do Trabalho e Trabalho —
@@ -5807,39 +5869,43 @@ Administrativo, Legislação e das menores, idem.
    arquivos (aconteceu de novo entre 11 e 12/11; o app também troca o caminho do
    scratchpad entre sessões; e de novo entre 16 e 17/11, a 5ª vez), restaurar antes (`robocopy
    <ferramentas-scratchpad> <scratchpad> /E /XO`) e provar com `bash
-   v54/montar.sh` + `cmp v54/ensaio.html <worktree>/index.html` (a v54 parte de `bak_2210/index_v53.html`; `notas_stf.js`
+   v55/montar.sh` + `cmp v55/ensaio.html <worktree>/index.html` (a v55 parte de `bak_2210/index_v54.html`; `notas_stf.js`
    já tem os avisos da v53 — para remontar a v52, voltar `v53/notas_stf_v52.js`; `v49/gerar_cartoes.js` já tem o "Como"
    da v54 — o de antes está em `v54/bak_v49/`). O plano
    aprovado em 22/10 está em
    `C:\Users\thale\.claude\plans\woolly-finding-squid.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
    - `git status --short` e `git log --oneline -3` no worktree (em 16/11:
-     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v54 pronta, esperando o commit do usuário; último commit `2834d33` (Adendo 48 = v53), publicado
-     pelo PR #49, `e92580a`; antes, `543e186` (Adendo 47 = v52), PR #48, `b8e876f`; antes, `ce0053c` (Adendo 46 = v51), PR #47, `3726087`; antes, `b3d1463` (Adendo 45 = v50), PR #46, `8055fd8`; antes, `48c42ef` (a v48 e a v49 juntas), PR #45, `cd842c4`; antes,
+     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v55 pronta, esperando o commit do usuário; último commit `0a5eb66` (Adendo 49 = v54), publicado
+     pelo PR #50, `9c91db0`; antes, `2834d33` (Adendo 48 = v53), PR #49, `e92580a`; antes, `543e186` (Adendo 47 = v52), PR #48, `b8e876f`; antes, `ce0053c` (Adendo 46 = v51), PR #47, `3726087`; antes, `b3d1463` (Adendo 45 = v50), PR #46, `8055fd8`; antes, `48c42ef` (a v48 e a v49 juntas), PR #45, `cd842c4`; antes,
      `cd67ddd`, Adendo 42 = v47, publicada pelo PR #44, `b0a1958`);
    - `git fetch origin` e `git log --oneline -3 origin/main` (em 24/11 o
-     `main` estava no PR #49, `e92580a`, e a pasta principal também). **O
+     `main` estava no PR #50, `9c91db0`, e a pasta principal também; conferido em 25/11). **O
      `--ff-only` do usuário só anda depois de um `git fetch`:** os worktrees
      dividem as referências com a pasta principal, e sem o fetch o
      `origin/main` local ainda aponta para o PR anterior. Fazer o fetch antes
      (ou indicar `git -C <raiz> pull --ff-only origin main`);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (em 24/11: `autos-do-estudo-v53`, publicada pelo PR #49);
+     (em 25/11: `autos-do-estudo-v54`, publicada pelo PR #50);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo e no Adendo
    32). Não aplicar nenhuma delas sem a resposta.
-4. **Próximo passo: esperar o commit e o PR da v54** (Adendo 49, R14 com o botão do QConcursos). A v54 está no
-   worktree (`index.html` = `v54/ensaio.html`, `sw.js` = `v54/ensaio_sw.js`, conferidos com `cmp`). **Não mexer no
+4. **Próximo passo: esperar o commit e o PR da v55** (Adendo 50, botões "Desfazer" e "Parei aqui" visíveis). A v55 está
+   no worktree (`index.html` = `v55/ensaio.html`, `sw.js` = `v55/ensaio_sw.js`, conferidos com `cmp`). **Não mexer no
    `index.html` antes do commit.** Depois do commit e do PR: `git fetch` e `--ff-only` na pasta principal, guardar
-   `bak_2210/index_v54.html` (cópia do worktree, CRLF) e `sw_v54.js`. Não há promessa de conteúdo pendente. Só se o
-   usuário quiser: a leitura item a item das outras disciplinas (perguntar quais; método no Adendo 48); reequilíbrio de
-   Administrativo, Legislação e das menores (Adendos 43 e 46); da proposta do Codex, a troca manual de alvos, a fila
-   persistente e a URL que abre uma revisão (Adendo 44); o registro da nota de cada estudo de caso. Antes de cada versão,
-   abrir o quadro de emendas do Planalto e as listas de leis, MPs e LCs do ano (feito em 24/11). Caso ou questão de jornada
-   ou repouso segue a EC 141. **Mexer em cartão de semana muda o que o "Parei aqui" lê**: rodar `v52/conferir_grade.js`
-   depois. **Aviso do STF do quadro Lei seca se corrige em `notas_stf.js`**. **QConcursos:** o filtro de erros é
-   `my_questions=wrong` (só com login); o site tem proteção de robô (429 e Cloudflare depois de ~11 páginas seguidas):
-   abrir poucas páginas, devagar, e parar se aparecer a verificação.
+   `bak_2210/index_v55.html` (cópia do worktree, CRLF) e `sw_v55.js`.
+   **Onde paramos (pedido do usuário em 25/11: "Guarde onde parou para voltarmos mais tarde"):** antes da v55, a v54 tinha
+   sido publicada e não havia promessa de conteúdo pendente. Para voltar, perguntar ao usuário qual destas quer, sem
+   prioridade: a leitura item a item das outras disciplinas (Civil, Processo do Trabalho e Processo Civil já foram — o
+   método está no Adendo 48: `v53/_texto.js` com prova de cobertura, `v53/_folha.js`, `correcoes.js` + `conferir.js`);
+   reequilíbrio das alternativas de Administrativo, Legislação e das menores (Adendos 43 e 46); da proposta do Codex, a
+   troca manual de alvos, a fila persistente e a URL que abre uma revisão (Adendo 44); o registro da nota de cada estudo de
+   caso. Antes de cada versão, abrir o quadro de emendas do Planalto e as listas de leis, MPs e LCs do ano (feito em
+   24/11; LCs pelo quadro `ccivil_03/leis/lcp/quadro_lcp.htm`). Caso ou questão de jornada ou repouso segue a EC 141.
+   **Mexer em cartão de semana muda o que o "Parei aqui" lê**: rodar `v52/conferir_grade.js` depois. **Aviso do STF do
+   quadro Lei seca se corrige em `notas_stf.js`**. **QConcursos:** filtro de erros `my_questions=wrong` (com login);
+   ~11 páginas seguidas disparam a verificação de robô — poucas, devagar, e parar se aparecer. **Botão em caixa escura**
+   que herda `.btn.sec`: a regra do contexto precisa pesar mais (`.contexto .btn.sec`).
    **Cartões de revisão:** os das semanas 13 a 22 saem de `v49/gerar_cartoes.js` sobre o arquivo de entrada; mexer em
    cartão de semana (tabela, links) muda a lista "Toda a semana": rodar de novo o gerador e `v49/conferir_cartoes.js`.
    **Todo lote usa a carga nova:**
@@ -5906,7 +5972,7 @@ Administrativo, Legislação e das menores, idem.
      `patch_matriz_v3X.js`, DONO no `gerar_lei_seca.js` quando a linha ligar
      dois tópicos, `aplicar_v3X.js A|B`, `montar.sh`, `aviso.js` com
      `conferir_aviso.js`; o aviso aberto esperado passa a ser o de
-     "24/11/2026 — R14: refazer os erros também no QConcursos", com "Avisos anteriores" em 43;
+     "25/11/2026 — os botões “Desfazer” e “Parei aqui” ficaram visíveis", com "Avisos anteriores" em 44;
    - **núcleo (regra da v38, Adendo 33):** refazer o levantamento sobre o
      ensaio (`node v36/gerar_aud_nucleo.js` e `node v36/aud_nucleo.js ENSAIO
      --json v3X/aud_nucleo.json`); em `nucleo_v3X.js` (cópia de
@@ -5938,7 +6004,7 @@ Administrativo, Legislação e das menores, idem.
    fechada de alvos) publicadas juntas em 20/11 (PR #45); v50 (convênios: Lei 8.666 revogada) publicada em 20/11 (PR #46);
    v51 (reequilíbrio de Processo do Trabalho e Trabalho) publicada em 23/11 (PR #47); v52 ("Parei aqui" e Civil) publicada
    em 24/11 (PR #48); v53 (revisão de Processo do Trabalho e Processo Civil) publicada em 24/11 (PR #49); v54 (R14 com o
-   botão do QConcursos) pronta em 24/11.
+   botão do QConcursos) publicada em 24/11 (PR #50); v55 (botões "Desfazer" e "Parei aqui" visíveis) pronta em 25/11.
 
    **Ao terminar qualquer versão:** HANDOFF (adendo e Retomada), memória,
    `robocopy` da cópia dos scripts e, depois do PR, `--ff-only` na pasta
@@ -5946,7 +6012,17 @@ Administrativo, Legislação e das menores, idem.
 
 ## TRABALHO EM ANDAMENTO (atualizar ao fim de cada etapa)
 
-### v54 — R14: botão "Refazer meus erros no QConcursos" desde 01/12 — PRONTA em 24/11/2026, esperando o commit (Adendo 49)
+### v55 — botões "Desfazer" e "Parei aqui" visíveis — PRONTA em 25/11/2026, esperando o commit (Adendo 50)
+
+- **Estado:** `index.html` e `sw.js` do worktree = `v55/ensaio.html` e `v55/ensaio_sw.js` (`cmp`); cache
+  `autos-do-estudo-v55`. Entrada: `bak_2210/index_v54.html` (a v54 publicada). O que mudou e a verificação: **Adendo 50**.
+- **Ferramentas:** `v55/estilo.js`, `aviso.js` + `conferir_aviso.js`, `aplicar_v55.js`, `montar.sh`, `conferir_tudo.sh`,
+  `_foto_antes.js` e `_foto_selecao.js` (fotos), `_variantes.js` (30% × 45%), `_contraste.py` (contraste nos pixels, PyMuPDF),
+  `_gera_teste.js` + `_teste_corpo.js` → `teste_v55.js`, `neg_tela.js` (1..4), `final.sh`.
+- **Ordem para remontar:** `bash v55/montar.sh`; `bash v55/final.sh`.
+- **Depois do commit e do PR:** `git fetch` + `--ff-only` na raiz; guardar `bak_2210/index_v55.html` e `sw_v55.js`.
+
+### v54 — R14: botão "Refazer meus erros no QConcursos" desde 01/12 — PUBLICADA em 24/11/2026 pelo PR #50 (`9c91db0`; commit `0a5eb66`) (Adendo 49)
 
 - **Estado:** `index.html` e `sw.js` do worktree = `v54/ensaio.html` e `v54/ensaio_sw.js` (`cmp`); cache
   `autos-do-estudo-v54`. Entrada: `bak_2210/index_v53.html` (a v53 publicada). O que mudou e a verificação: **Adendo 49**.
