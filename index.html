@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="versao-app" content="autos-do-estudo-v54">
+<meta name="versao-app" content="autos-do-estudo-v55">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <!-- Web app da tela de início (iPadOS/iOS). A partir do iPadOS 26, qualquer
@@ -269,8 +269,17 @@ mark.mt:hover{background:#FFD43B}
 .mt-perdidas ul{margin:4px 0 0; padding-left:18px}
 .mt-flutua{position:fixed; z-index:45}
 .mt-flutua .btn{min-height:44px; box-shadow:0 10px 26px -12px rgba(23,36,46,.6)}
+/* v55 (25/11/2026): "Parei aqui" com fundo de vidro fosco — branco a 30% e o que está atrás desfocado. Medido nos pixels
+   da tela: o ponto mais escuro atrás do nome dá 12,1:1 sobre texto comum e cerca de 6:1 sobre texto selecionado (o pior caso,
+   quando a seleção é mais alta que a tela); sem o vidro, 1:1 (as letras se sobrepunham). Sem suporte a desfoque, fundo
+   quase branco. */
+.mt-flutua .btn.sec{background:rgba(255,255,255,.3); -webkit-backdrop-filter:blur(10px) saturate(1.4); backdrop-filter:blur(10px) saturate(1.4); box-shadow:inset 0 1px 0 rgba(255,255,255,.6), 0 10px 26px -12px rgba(23,36,46,.6)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){ .mt-flutua .btn.sec{background:rgba(255,255,255,.92)} }
 .mt-aviso{position:fixed; z-index:45; left:16px; bottom:76px; max-width:calc(100vw - 32px); display:flex; align-items:center; gap:12px; padding:10px 14px; background:var(--tinta); color:#fff; font-size:14px; box-shadow:0 10px 26px -12px rgba(23,36,46,.6)}
-.mt-aviso .btn{color:#fff; border-color:#fff}
+/* v55 (25/11/2026): o botão do aviso escuro ("Desfazer", ao tirar uma marcação e depois de "Retomei") é branco com o nome
+   em escuro. Antes, a regra geral .btn.sec, que vem depois no arquivo e tem o mesmo peso, deixava o nome na cor do fundo:
+   só aparecia a borda, um quadrado vazio. O seletor com .btn.sec pesa mais e vence. */
+.mt-aviso .btn, .mt-aviso .btn.sec{background:#fff; color:var(--tinta); border-color:#fff}
 .mt-flutua[hidden], .mt-aviso[hidden]{display:none}
 /* v52 (23/11/2026): "Parei aqui" — o segundo botão junto do Marcar, o lugar logo abaixo da faixa Hoje, a linha no cartão da semana, a faixa no parágrafo e a janela */
 .mt-flutua{display:flex; flex-wrap:wrap; gap:8px}
@@ -2301,6 +2310,20 @@ body{
   </details>
 
   <div class="op-aviso op-nota op-mudanca">
+    <b class="op-rot">Atualização de 25/11/2026 — os botões “Desfazer” e “Parei aqui” ficaram visíveis</b>
+    A seu pedido, dois botões que se viam mal foram corrigidos.
+    <ul>
+      <li><b>Desfazer</b>: ao tirar uma marcação, e depois de tocar em “Retomei”, no “Parei aqui”, aparece um aviso escuro no pé da tela com o botão <b>Desfazer</b>. Ele aparecia só como um quadrado escuro, porque o nome saía na mesma cor do fundo. Agora é um botão branco, com “Desfazer” escrito em escuro. O que ele faz não mudou: volta a marcação tirada, ou a anotação retomada.</li>
+      <li><b>Parei aqui</b>: o botão ao lado de <b>Marcar</b>, quando você seleciona um trecho, tinha fundo transparente, e o texto de trás se misturava com o nome. Agora tem fundo de vidro fosco: o que fica atrás aparece borrado, e o nome se lê com folga, mesmo por cima de um trecho selecionado.</li>
+    </ul>
+    O aviso anterior, sobre o botão do QConcursos na revisão R14, continua valendo: ele é o primeiro de “Avisos anteriores”, logo abaixo.
+    O que não muda: o lugar e o que fazem os botões, os horários, os cartões, as questões, suas respostas, o histórico, o placar, as anotações de onde parei e os grifos.
+  </div>
+
+  <details class="op-avisos-ant">
+    <summary>Avisos anteriores (44), do mais novo para o mais antigo</summary>
+
+  <div class="op-aviso op-nota op-mudanca">
     <b class="op-rot">Atualização de 24/11/2026 — R14: refazer os erros também no QConcursos</b>
     A seu pedido, a revisão R14 ganhou um botão para refazer as questões erradas no QConcursos, onde você faz a maioria delas.
     <ul>
@@ -2312,9 +2335,6 @@ body{
     O aviso anterior, sobre as correções no texto de Processo do Trabalho e de Processo Civil, continua valendo: ele é o primeiro de “Avisos anteriores”, logo abaixo.
     O que não muda: os horários, os assuntos de cada revisão, as outras revisões, as questões, suas respostas, o histórico, o placar, as anotações de onde parei e os grifos.
   </div>
-
-  <details class="op-avisos-ant">
-    <summary>Avisos anteriores (43), do mais novo para o mais antigo</summary>
 
   <div class="op-aviso op-nota op-mudanca">
     <b class="op-rot">Atualização de 24/11/2026 — correções no texto do material de Processo do Trabalho e de Processo Civil</b>
