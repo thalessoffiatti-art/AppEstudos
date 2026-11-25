@@ -5711,11 +5711,81 @@ reequilíbrio de Administrativo, Legislação e das menores, idem.
 
 ---
 
-# Retomada — estado em 2026-11-24, v52 publicada, v53 pronta (ler primeiro depois de compactar a conversa)
+# Adendo 49 — 2026-11-24 (R14: refazer os erros também no QConcursos, v54)
+
+**Origem.** O usuário commitou e publicou a v53 (`2834d33`, PR #49, `e92580a`, em 24/11; o site serve
+`autos-do-estudo-v53`) e pediu: "Na revisão R14, preciso que haja um botão para refazer as questões erradas no
+Qconcursos também, pois é onde faço a maioria delas". Decisões dele (perguntadas): descobrir o filtro com ele logado no
+navegador do aplicativo; **QConcursos primeiro**, banco do aplicativo depois; **só FCC**. Entrada:
+`bak_2210/index_v53.html`.
+
+## O filtro do QConcursos
+- Sem login, o formulário de busca do site não tem filtro de desempenho. Com o usuário logado (Google) no navegador
+  embutido, o formulário tem `my_questions` (rádio): `all`, `resolved`, `not_resolved`, `correct` (Acertei) e `wrong`
+  (Errei). Prova: `.../disciplinas/direito-direito-processual-do-trabalho/competencia-da-justica-do-trabalho/questoes?examining_board_ids%5B%5D=1&my_questions=wrong`
+  abriu com "Errei" marcado e 3 questões, todas "Resolvi errado!", todas FCC.
+- Tentei juntar vários assuntos num endereço só (`/questoes-de-concursos/questoes?subject_ids[]=…`, com os números
+  internos dos assuntos: DPT = 11, "Competência da Justiça do Trabalho" = 16531). Para isso seria preciso ler o número de
+  cada um dos ~55 assuntos; depois de ~11 páginas em sequência o site deu 429 e mostrou a verificação de robô da
+  Cloudflare ("Um momento…"). **Parei e não tentei passar por ela**; nenhuma outra página do QConcursos foi aberta. A
+  solução ficou nos endereços por assunto que o aplicativo já tem (`urlQcDe`), um link por assunto do site.
+
+## O que entrou
+- **Código** `injetarQcNaR14` (`v54/qc_r14.js`, logo antes de `/* ---------- 03.1 Manual operacional`): nas sessões
+  `op-sNN-rev-ter` com NN ≥ 14, antes de cada botão `data-rev-ancs`/`data-rev-mat`, o link (ou a lista de links) do
+  QConcursos com `&my_questions=wrong`. Assuntos: os mesmos do material no tópico (`QC_TOPICO`; sem ele, os dos blocos do
+  cronograma com a mesma âncora), sem os de disciplina inteira quando há de assunto; no assunto de matéria inteira
+  (`data-rev-mat`: Direito Civil, Processo do Trabalho, Direito do Trabalho), a disciplina inteira, como o botão do banco.
+  Um link vira botão ("Refazer meus erros no QConcursos ↗"); vários, lista ("abra um link de cada vez, na ordem"), com os
+  nomes dos blocos do cronograma, como no material. Depois, "Depois, se lá não houver erro ou se sobrar tempo:" e o botão
+  do banco. 27 assuntos nas 9 R14 de 01/12 a 26/01, 58 links; a R14 de 24/11 (semana 13) fica como estava.
+- **Textos** (`v54/textos.js`): P6, passo de 24 min ("Desde terça, 01/12, comece pelo botão…"), caixa nova "O botão do
+  QConcursos (desde 01/12)" (três filtros; precisa estar logado; conferir "Errei"); a linha da R14 no quadro das
+  revisões; a terça das semanas 10 a 16 em "Os seis dias". A mudança de procedimento vale a partir da segunda seguinte
+  (30/11): a primeira R14 com o botão é a de 01/12.
+- **"Como" dos cartões de terça das semanas 14 a 22**, pelo gerador: `v54/patch_gerador.js` muda `v49/gerar_cartoes.js`
+  (`COMO.ter(n, sem)`, novo a partir da semana 14; cópia de antes em `v54/bak_v49/`). Antes da mudança, o gerador sobre
+  `v49/entrada_v48.html` reproduzia os cartões da v53 sem diferença (`v54/_cmp_cartoes.js`); depois, só as 9 linhas do
+  "Como" diferem, e `aplicar_v54.js` exige que os cartões das semanas 14 a 22 saiam iguais aos do gerador.
+- **Aviso** (03.1, 24/11): o que muda, a ordem, precisa estar logado, a R14 de hoje como estava; o da v53 é o primeiro
+  dos 43 anteriores.
+
+**Verificação (24/11)**
+- `bash v54/montar.sh` (entrada `bak_2210/index_v53.html`; gerador com o "Como" novo; pipeline da lei seca igual);
+  `aplicar_v54.js`: QUESTOES, CRONOGRAMA, JURIS, NUCLEO, SIM_REAL, QC_TOPICO, QC_BLOCO e COTA_SIMULADO iguais; cartões 1 a
+  13 iguais; 14 a 22 iguais aos do gerador e, desfeito o "Como", aos da v53; 78 quadros e o material iguais; nada sumiu.
+- `bash v54/conferir_tudo.sh`: 34 conferidores com saída 0; em relação à v53 mudam só a versão, `quadros_v54` (nenhum
+  quadro mudou) e `aviso_v54` (19/19; estragos 1 e 2 acusados). `cartoes_v49`, `grade_v52` e `nucleo_capacidade` iguais.
+- `v54/teste_v54.js` (Edge): **18 de 18** — v53 → v54 com as chaves `trt4:` idênticas; a R14 de 24/11 sem links; nas R14
+  de 01/12 a 26/01, os 27 assuntos com os 58 links iguais aos calculados à parte por `v54/_esperado.js`; todo link do
+  QConcursos com FCC e `my_questions=wrong`, em outra aba, sem acionar o banco; QConcursos antes, "Depois, se lá não houver
+  erro…" e o botão do banco; um link = botão, vários = lista; o botão do banco ainda abre a página de questões; P6, caixa
+  nova, "Como" novo (01/12) e antigo (24/11); aviso aberto e 43 anteriores; 375 e 820 px medidos; console limpo.
+- `v54/neg_tela.js` 1..5 (sem o filtro "Errei"; links também na semana 13; matéria sem link; link depois do botão;
+  lista com 900 px): os cinco acusados, cada um sozinho (2, 1, 3, 1 e 6 falhas); nenhum perfil temporário sobrou.
+- Regressões: `v40/teste_rolagem.js` 17/17; `busca_2110/teste_busca.js` (v53 × v54) TUDO CERTO;
+  `juris_1210/teste_atualiza_1210.js` sem erros; `v53/teste_v53.js` sobre a v54: 13 de 17, as quatro falhas são a
+  versão, o aviso aberto e as duas medidas do aviso aberto (o teste da v53 espera mais de 30 itens; o da v54 tem 4, e
+  nada passa da largura); `v49/teste_v49.js` sobre a v54: 36 de 37, a falha é a versão.
+- `index.html` e `sw.js` do worktree = `v54/ensaio.html` e `v54/ensaio_sw.js` (`cmp`); cache `autos-do-estudo-v54`.
+
+**Lições**
+- Filtro de site que só aparece com login: pedir ao usuário que entre no navegador embutido e ler o nome do campo no
+  formulário (`my_questions=wrong`); não adivinhar parâmetro.
+- Site com proteção de robô: poucas páginas, devagar. Quando aparecer a verificação, parar e mudar de plano, sem tentar
+  passar por ela.
+
+**Pendências que continuam:** a leitura item a item das outras disciplinas, só se o usuário pedir; reequilíbrio de
+Administrativo, Legislação e das menores, idem.
+
+---
+
+# Retomada — estado em 2026-11-24, v53 publicada, v54 pronta (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira, o **Adendo 48** (v53, 67 correções no texto de Processo do Trabalho, Processo Civil e
+1. Ler esta seção inteira, o **Adendo 49** (v54, R14 com o botão "Refazer meus erros no QConcursos" desde 01/12:
+   filtro `my_questions=wrong`, código `injetarQcNaR14`, "Como" pelo gerador v49), o **Adendo 48** (v53, 67 correções no texto de Processo do Trabalho, Processo Civil e
    quadros de Civil; extrator com prova de cobertura; avisos do STF em `notas_stf.js`), o **Adendo 47** (v52, "Parei aqui" — `trt4:parei`, dia de retomar pela regra de parada a
    partir das linhas dos cartões — e 64 correções no texto de Direito Civil com prova no CC), o **Adendo 46** (v51, reequilíbrio das alternativas de Processo do Trabalho e Trabalho —
    o método da v48 com `juris:` lido no INDEX e a nova estritamente mais longa que a certa), o **Adendo 45** (v50, convênios: a Lei 8.666/1993 está revogada — correção de forma num
@@ -5737,38 +5807,39 @@ reequilíbrio de Administrativo, Legislação e das menores, idem.
    arquivos (aconteceu de novo entre 11 e 12/11; o app também troca o caminho do
    scratchpad entre sessões; e de novo entre 16 e 17/11, a 5ª vez), restaurar antes (`robocopy
    <ferramentas-scratchpad> <scratchpad> /E /XO`) e provar com `bash
-   v53/montar.sh` + `cmp v53/ensaio.html <worktree>/index.html` (a v53 parte de `bak_2210/index_v52.html`; `notas_stf.js`
-   já tem os avisos da v53 — para remontar a v52, voltar `v53/notas_stf_v52.js`). O plano
+   v54/montar.sh` + `cmp v54/ensaio.html <worktree>/index.html` (a v54 parte de `bak_2210/index_v53.html`; `notas_stf.js`
+   já tem os avisos da v53 — para remontar a v52, voltar `v53/notas_stf_v52.js`; `v49/gerar_cartoes.js` já tem o "Como"
+   da v54 — o de antes está em `v54/bak_v49/`). O plano
    aprovado em 22/10 está em
    `C:\Users\thale\.claude\plans\woolly-finding-squid.md`.
 2. Conferir o estado real antes de mexer em qualquer coisa:
    - `git status --short` e `git log --oneline -3` no worktree (em 16/11:
-     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v53 pronta, esperando o commit do usuário; último commit `543e186` (Adendo 47 = v52), publicado
-     pelo PR #48, `b8e876f`; antes, `ce0053c` (Adendo 46 = v51), PR #47, `3726087`; antes, `b3d1463` (Adendo 45 = v50), PR #46, `8055fd8`; antes, `48c42ef` (a v48 e a v49 juntas), PR #45, `cd842c4`; antes,
+     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v54 pronta, esperando o commit do usuário; último commit `2834d33` (Adendo 48 = v53), publicado
+     pelo PR #49, `e92580a`; antes, `543e186` (Adendo 47 = v52), PR #48, `b8e876f`; antes, `ce0053c` (Adendo 46 = v51), PR #47, `3726087`; antes, `b3d1463` (Adendo 45 = v50), PR #46, `8055fd8`; antes, `48c42ef` (a v48 e a v49 juntas), PR #45, `cd842c4`; antes,
      `cd67ddd`, Adendo 42 = v47, publicada pelo PR #44, `b0a1958`);
    - `git fetch origin` e `git log --oneline -3 origin/main` (em 24/11 o
-     `main` estava no PR #48, `b8e876f`, e a pasta principal também). **O
+     `main` estava no PR #49, `e92580a`, e a pasta principal também). **O
      `--ff-only` do usuário só anda depois de um `git fetch`:** os worktrees
      dividem as referências com a pasta principal, e sem o fetch o
      `origin/main` local ainda aponta para o PR anterior. Fazer o fetch antes
      (ou indicar `git -C <raiz> pull --ff-only origin main`);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (em 24/11: `autos-do-estudo-v52`, publicada pelo PR #48);
+     (em 24/11: `autos-do-estudo-v53`, publicada pelo PR #49);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo e no Adendo
    32). Não aplicar nenhuma delas sem a resposta.
-4. **Próximo passo: esperar o commit e o PR da v53** (Adendo 48, correções no texto de Processo do Trabalho e de
-   Processo Civil). A v53 está no worktree (`index.html` = `v53/ensaio.html`, `sw.js` = `v53/ensaio_sw.js`, conferidos
-   com `cmp`). **Não mexer no `index.html` antes do commit.** Depois do commit e do PR: `git fetch` e `--ff-only` na pasta
-   principal, guardar `bak_2210/index_v53.html` (cópia do worktree, CRLF) e `sw_v53.js`. Não há promessa de conteúdo
-   pendente. Só se o usuário quiser: a leitura item a item das outras disciplinas (perguntar quais; o método está no
-   Adendo 48: `v53/_texto.js` com prova de cobertura, `v53/_folha.js`, `v53/correcoes.js` + `v53/conferir.js`);
-   reequilíbrio de Administrativo, Legislação e das menores (Adendos 43 e 46); da proposta do Codex, a troca manual de
-   alvos, a fila persistente e a URL que abre uma revisão (Adendo 44); o registro da nota de cada estudo de caso. Antes de
-   cada versão, abrir o quadro de emendas do Planalto e as listas de leis, MPs e LCs do ano (feito em 24/11; LCs pelo
-   quadro `ccivil_03/leis/lcp/quadro_lcp.htm`). Caso ou questão de jornada ou repouso segue a EC 141. **Mexer em cartão de
-   semana muda o que o "Parei aqui" lê**: rodar `v52/conferir_grade.js` depois. **Aviso do STF do quadro Lei seca se
-   corrige em `notas_stf.js`** (e no HTML, com `todas: N`), senão a próxima regeneração dos quadros desfaz.
+4. **Próximo passo: esperar o commit e o PR da v54** (Adendo 49, R14 com o botão do QConcursos). A v54 está no
+   worktree (`index.html` = `v54/ensaio.html`, `sw.js` = `v54/ensaio_sw.js`, conferidos com `cmp`). **Não mexer no
+   `index.html` antes do commit.** Depois do commit e do PR: `git fetch` e `--ff-only` na pasta principal, guardar
+   `bak_2210/index_v54.html` (cópia do worktree, CRLF) e `sw_v54.js`. Não há promessa de conteúdo pendente. Só se o
+   usuário quiser: a leitura item a item das outras disciplinas (perguntar quais; método no Adendo 48); reequilíbrio de
+   Administrativo, Legislação e das menores (Adendos 43 e 46); da proposta do Codex, a troca manual de alvos, a fila
+   persistente e a URL que abre uma revisão (Adendo 44); o registro da nota de cada estudo de caso. Antes de cada versão,
+   abrir o quadro de emendas do Planalto e as listas de leis, MPs e LCs do ano (feito em 24/11). Caso ou questão de jornada
+   ou repouso segue a EC 141. **Mexer em cartão de semana muda o que o "Parei aqui" lê**: rodar `v52/conferir_grade.js`
+   depois. **Aviso do STF do quadro Lei seca se corrige em `notas_stf.js`**. **QConcursos:** o filtro de erros é
+   `my_questions=wrong` (só com login); o site tem proteção de robô (429 e Cloudflare depois de ~11 páginas seguidas):
+   abrir poucas páginas, devagar, e parar se aparecer a verificação.
    **Cartões de revisão:** os das semanas 13 a 22 saem de `v49/gerar_cartoes.js` sobre o arquivo de entrada; mexer em
    cartão de semana (tabela, links) muda a lista "Toda a semana": rodar de novo o gerador e `v49/conferir_cartoes.js`.
    **Todo lote usa a carga nova:**
@@ -5835,7 +5906,7 @@ reequilíbrio de Administrativo, Legislação e das menores, idem.
      `patch_matriz_v3X.js`, DONO no `gerar_lei_seca.js` quando a linha ligar
      dois tópicos, `aplicar_v3X.js A|B`, `montar.sh`, `aviso.js` com
      `conferir_aviso.js`; o aviso aberto esperado passa a ser o de
-     "24/11/2026 — correções no texto do material de Processo do Trabalho e de Processo Civil", com "Avisos anteriores" em 42;
+     "24/11/2026 — R14: refazer os erros também no QConcursos", com "Avisos anteriores" em 43;
    - **núcleo (regra da v38, Adendo 33):** refazer o levantamento sobre o
      ensaio (`node v36/gerar_aud_nucleo.js` e `node v36/aud_nucleo.js ENSAIO
      --json v3X/aud_nucleo.json`); em `nucleo_v3X.js` (cópia de
@@ -5866,7 +5937,8 @@ reequilíbrio de Administrativo, Legislação e das menores, idem.
    publicada em 18/11 (PR #44); v48 (reequilíbrio de Processo Civil e Constitucional) e v49 (revisões espaçadas com lista
    fechada de alvos) publicadas juntas em 20/11 (PR #45); v50 (convênios: Lei 8.666 revogada) publicada em 20/11 (PR #46);
    v51 (reequilíbrio de Processo do Trabalho e Trabalho) publicada em 23/11 (PR #47); v52 ("Parei aqui" e Civil) publicada
-   em 24/11 (PR #48); v53 (revisão de Processo do Trabalho e Processo Civil) pronta em 24/11.
+   em 24/11 (PR #48); v53 (revisão de Processo do Trabalho e Processo Civil) publicada em 24/11 (PR #49); v54 (R14 com o
+   botão do QConcursos) pronta em 24/11.
 
    **Ao terminar qualquer versão:** HANDOFF (adendo e Retomada), memória,
    `robocopy` da cópia dos scripts e, depois do PR, `--ff-only` na pasta
@@ -5874,7 +5946,17 @@ reequilíbrio de Administrativo, Legislação e das menores, idem.
 
 ## TRABALHO EM ANDAMENTO (atualizar ao fim de cada etapa)
 
-### v53 — correções no texto de Processo do Trabalho, Processo Civil e quadros de Civil — PRONTA em 24/11/2026, esperando o commit (Adendo 48)
+### v54 — R14: botão "Refazer meus erros no QConcursos" desde 01/12 — PRONTA em 24/11/2026, esperando o commit (Adendo 49)
+
+- **Estado:** `index.html` e `sw.js` do worktree = `v54/ensaio.html` e `v54/ensaio_sw.js` (`cmp`); cache
+  `autos-do-estudo-v54`. Entrada: `bak_2210/index_v53.html` (a v53 publicada). O que mudou e a verificação: **Adendo 49**.
+- **Ferramentas:** `v54/textos.js`, `qc_r14.js`, `patch_gerador.js` (+ `bak_v49/`), `_cmp_cartoes.js`, `_alvos_qc.js`,
+  `_esperado.js`, `aviso.js` + `conferir_aviso.js` (`--estragar 1..2`), `aplicar_v54.js`, `montar.sh`, `conferir_tudo.sh`,
+  `_gera_teste.js` + `_teste_corpo.js` → `teste_v54.js`, `neg_tela.js` (1..5), `final.sh`.
+- **Ordem para remontar:** `bash v54/montar.sh`; `bash v54/final.sh`.
+- **Depois do commit e do PR:** `git fetch` + `--ff-only` na raiz; guardar `bak_2210/index_v54.html` e `sw_v54.js`.
+
+### v53 — correções no texto de Processo do Trabalho, Processo Civil e quadros de Civil — PUBLICADA em 24/11/2026 pelo PR #49 (`e92580a`; commit `2834d33`) (Adendo 48)
 
 - **Estado:** `index.html` e `sw.js` do worktree = `v53/ensaio.html` e `v53/ensaio_sw.js` (`cmp`); cache
   `autos-do-estudo-v53`. Entrada: `bak_2210/index_v52.html` (a v52 publicada). O que mudou e a verificação: **Adendo 48**.

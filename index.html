@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="versao-app" content="autos-do-estudo-v53">
+<meta name="versao-app" content="autos-do-estudo-v54">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <!-- Web app da tela de início (iPadOS/iOS). A partir do iPadOS 26, qualquer
@@ -843,6 +843,14 @@ html.modal-aberta{overflow:hidden}
 #pg-operacional .op-rev li.op-alvo .op-alvo-jur{display:block; font-size:12.8px}
 #pg-operacional .op-rev li.op-alvo .op-alvo-jur a{color:var(--petroleo)}
 #pg-operacional .op-rev .op-alvo-ir{display:inline-block; margin-top:2px; white-space:normal; text-align:left; max-width:100%}
+/* v54: links do QConcursos na revisão R14 */
+#pg-operacional .op-rev a.op-alvo-qc{display:inline-block; margin-top:2px; white-space:normal; text-align:left; max-width:100%; text-decoration:none}
+#pg-operacional .op-rev div.op-alvo-qc{margin:4px 0 2px; font-size:12.8px}
+#pg-operacional .op-rev .op-alvo-qc-rot{display:block; color:var(--tinta-2)}
+#pg-operacional .op-rev ul.op-alvo-qc-lista{margin:2px 0 0; padding-left:18px}
+#pg-operacional .op-rev ul.op-alvo-qc-lista li{margin:3px 0}
+#pg-operacional .op-rev ul.op-alvo-qc-lista a{color:var(--petroleo); overflow-wrap:anywhere}
+#pg-operacional .op-rev .op-alvo-depois{display:block; font-size:12px; color:var(--tinta-3); margin:6px 0 2px}
 #pg-operacional .op-rev .op-rev-fim{font-size:12.5px; color:var(--tinta-3); margin:6px 0 8px}
 #pg-operacional .op-rev details.op-fila{border-top:1px dashed var(--linha); padding-top:6px}
 #pg-operacional .op-rev details.op-fila summary{cursor:pointer; font-size:12.8px; color:var(--tinta-2); padding:4px 0}
@@ -2293,6 +2301,22 @@ body{
   </details>
 
   <div class="op-aviso op-nota op-mudanca">
+    <b class="op-rot">Atualização de 24/11/2026 — R14: refazer os erros também no QConcursos</b>
+    A seu pedido, a revisão R14 ganhou um botão para refazer as questões erradas no QConcursos, onde você faz a maioria delas.
+    <ul>
+      <li><b>O que muda</b>: desde terça, 01/12, cada assunto do cartão da R14 (seção 6) tem o botão <b>Refazer meus erros no QConcursos</b>, antes do botão do banco do aplicativo. Ele abre o site em outra aba, só com as questões da FCC daquele assunto marcadas como “Errei” na sua conta. Quando o assunto do cartão corresponde a mais de um assunto do site, aparece um link para cada um. Vale nas nove R14 de 01/12 a 26/01.</li>
+      <li><b>A ordem</b>: primeiro o QConcursos; depois, se lá não houver erro ou se sobrar tempo dos oito minutos, o <b>Refazer meus erros deste assunto</b>, no banco do aplicativo. O P6 e a linha “Como” de cada cartão de terça já dizem isso.</li>
+      <li><b>Precisa estar logado</b> no QConcursos, no navegador em que o link abrir. Confira no alto da lista do site se “Errei” está marcado em “Minhas Questões”.</li>
+      <li><b>A R14 de hoje, 24/11</b>, continua como estava, só com o botão do banco.</li>
+    </ul>
+    O aviso anterior, sobre as correções no texto de Processo do Trabalho e de Processo Civil, continua valendo: ele é o primeiro de “Avisos anteriores”, logo abaixo.
+    O que não muda: os horários, os assuntos de cada revisão, as outras revisões, as questões, suas respostas, o histórico, o placar, as anotações de onde parei e os grifos.
+  </div>
+
+  <details class="op-avisos-ant">
+    <summary>Avisos anteriores (43), do mais novo para o mais antigo</summary>
+
+  <div class="op-aviso op-nota op-mudanca">
     <b class="op-rot">Atualização de 24/11/2026 — correções no texto do material de Processo do Trabalho e de Processo Civil</b>
     A seu pedido, li item a item o texto explicativo dos 12 tópicos de Processo do Trabalho e dos 13 de Processo Civil, ao lado da lei, das súmulas e das orientações jurisprudenciais — as duas disciplinas do bloco crítico que faltavam depois de Direito Civil. Desta vez entraram também as notas dentro das caixas de lei e os avisos do STF no quadro Lei seca. Quase todos os trechos corrigidos deixavam de fora uma parte da regra — uma exceção, um requisito ou o começo de um prazo — e agora a trazem, quase sempre com as palavras da lei, da súmula ou da decisão entre aspas.
     <ul>
@@ -2347,9 +2371,6 @@ body{
     O aviso anterior, sobre o “Parei aqui” e as correções de Direito Civil, continua valendo: ele é o primeiro de “Avisos anteriores”, logo abaixo.
     O que não muda: os horários, os cartões das semanas e das revisões, os estudos de caso, as questões, suas respostas, o histórico, o placar, as anotações de onde parei e os outros grifos.
   </div>
-
-  <details class="op-avisos-ant">
-    <summary>Avisos anteriores (42), do mais novo para o mais antigo</summary>
 
   <div class="op-aviso op-nota op-mudanca">
     <b class="op-rot">Atualização de 23/11/2026 — “Parei aqui”: o aplicativo guarda onde você parou e mostra no dia de retomar</b>
@@ -3127,7 +3148,7 @@ body{
       <summary><span class="op-nome">Terça</span><span class="op-janela">15h15 – 19h45</span><span class="op-foco">Administrativo, Constitucional e Direitos Humanos</span></summary>
       <div class="op-trilho">
         <div class="op-tr"><div class="op-hora">15h10–15h15<span class="op-tempo">5 min</span></div><div class="op-oque"><b>Abertura</b><span class="op-proc">P1</span></div></div>
-        <div class="op-tr"><div class="op-hora">15h15–15h45<span class="op-tempo">30 min</span></div><div class="op-oque"><b>Revisão espaçada R14 — catorze dias</b>Três assuntos de duas semanas atrás, pelos erros registrados no banco (botão do cartão, seção 6).<span class="op-proc">P6</span></div></div>
+        <div class="op-tr"><div class="op-hora">15h15–15h45<span class="op-tempo">30 min</span></div><div class="op-oque"><b>Revisão espaçada R14 — catorze dias</b>Três assuntos de duas semanas atrás, pelos erros registrados no banco (botão do cartão, seção 6) e, desde 01/12, primeiro pelos do QConcursos.<span class="op-proc">P6</span></div></div>
         <div class="op-tr"><div class="op-hora">15h45–16h35<span class="op-tempo">50 min</span></div><div class="op-oque"><b>Direito Administrativo — teoria</b>Tópico da semana.<span class="op-proc">P2</span></div></div>
         <div class="op-tr op-pausa"><div class="op-hora">16h35–16h40<span class="op-tempo">5 min</span></div><div class="op-oque"><b>Micropausa de pé</b></div></div>
         <div class="op-tr"><div class="op-hora">16h40–17h15<span class="op-tempo">35 min</span></div><div class="op-oque"><b>Direito Administrativo — questões</b><span class="op-proc">P4</span></div></div>
@@ -3548,7 +3569,7 @@ body{
       <p style="font-size:14.5px;color:var(--tinta-2);margin-top:10px"><b>O que revisar:</b> desde a semana 13, os três assuntos do cartão da revisão de terça, na seção 6. Os assuntos são de duas semanas atrás.</p>
       <ol>
         <li>(2 min) Abra o cartão da revisão de hoje e veja os três assuntos.</li>
-        <li>(24 min) Oito minutos por assunto. Toque em “Refazer meus erros deste assunto”: o banco abre só as questões daquele assunto que você errou na última vez em que respondeu, as que você mais errou primeiro. Responda e leia o comentário de cada uma. Não precisa terminar a lista: acabaram os oito minutos, volte à revisão e passe ao próximo assunto.</li>
+        <li>(24 min) Oito minutos por assunto. <b>Desde terça, 01/12</b>, comece pelo botão “Refazer meus erros no QConcursos”: ele abre no site as questões da FCC daquele assunto marcadas como “Errei” na sua conta. Quando o assunto do cartão corresponde a mais de um assunto do site, há um link para cada um: abra um de cada vez, na ordem. Se lá não houver erro, ou se sobrar tempo, toque em “Refazer meus erros deste assunto”: o banco do aplicativo abre só as questões daquele assunto que você errou na última vez em que respondeu, as que você mais errou primeiro. Responda e leia o comentário de cada uma. Não precisa terminar a lista: acabaram os oito minutos, volte à revisão e passe ao próximo assunto.</li>
         <li>(4 min) Para cada questão que você errar de novo, escreva no caderno, ao lado da entrada antiga, a palavra “dobrou” e a data. Entrada dobrada é prioridade máxima na revisão de trinta dias.</li>
       </ol>
       <div class="op-parada">
@@ -3558,6 +3579,10 @@ body{
       <div class="op-parada">
         <b>O que o banco sabe</b>
         A lista sai das respostas gravadas neste aparelho, que guarda as dez últimas de cada questão. Erros do caderno físico e do QConcursos não estão nela.
+      </div>
+      <div class="op-parada">
+        <b>O botão do QConcursos (desde 01/12)</b>
+        Ele abre o site em outra aba, com três filtros: o assunto, a banca FCC e “Errei”, em “Minhas Questões”. O site só sabe o que você errou se você estiver logado na sua conta, no navegador em que o link abrir. Confira no alto da lista do site se “Errei” está marcado; se não estiver, entre na sua conta e toque no link de novo.
       </div>
       <details class="op-antes"><summary>Como era até a semana 12</summary>
         <p style="font-size:14.5px;color:var(--tinta-2);margin-top:10px"><b>O que revisar:</b> os três assuntos de duas semanas atrás, listados no cartão amarelo da semana corrente.</p>
@@ -3837,7 +3862,7 @@ body{
           <td><b>R14</b><br><span class="op-path">14 dias</span></td>
           <td>Terça<br>15h15–15h45</td>
           <td>Três assuntos de duas semanas atrás</td>
-          <td>Refazer no banco só as questões erradas daqueles tópicos. Desde a semana 13, pelo botão “Refazer meus erros deste assunto”, oito minutos por assunto</td>
+          <td>Refazer só as questões erradas daqueles tópicos, oito minutos por assunto. Desde a semana 13, pelo botão “Refazer meus erros deste assunto”, no banco do aplicativo; desde 01/12, primeiro pelo botão “Refazer meus erros no QConcursos”</td>
           <td class="op-mono">P6</td>
         </tr>
         <tr>
@@ -5460,7 +5485,7 @@ body{
     <div class="op-rev op-rev-ter op-sessao" id="op-s14-rev-ter" data-rot="Terça, 01/12 · R14">
       <h4>Terça, 01/12, 15h15–15h45 · R14 — catorze dias<span class="op-tempo">30 min</span></h4>
       <p class="op-rev-origem">Origem: semana 12 (16/11 a 21/11).</p>
-      <p class="op-como">Como: procedimento P6. 2 min para preparar; 8 min por assunto, com o botão “Refazer meus erros deste assunto”; 4 min para escrever “dobrou” ao lado das entradas que você errou de novo.</p>
+      <p class="op-como">Como: procedimento P6. 2 min para preparar; 8 min por assunto: primeiro o botão “Refazer meus erros no QConcursos”; depois, se lá não houver erro ou se sobrar tempo, o “Refazer meus erros deste assunto”, no banco do aplicativo; 4 min para escrever “dobrou” ao lado das entradas que você errou de novo.</p>
       <p class="op-alvos-intro">Os 3 assuntos desta sessão (8 minutos cada), da semana 12:</p>
       <ol class="op-alvos"><li class="op-alvo"><b class="op-alvo-tit">Negócio jurídico: validade, interpretação, representação, condição, termo e encargo, defeitos e invalidade</b><a class="op-path" href="#" data-ir="civ-negocio">Material › Direito Civil › Negócio jurídico: validade, interpretação, representação, condição, termo e encargo, defeitos e invalidade</a><button type="button" class="btn sec mini op-alvo-ir" data-rev-ancs="civ-negocio" data-rev-rot="Negócio jurídico: validade, interpretação, representação, condição, termo e encargo, defeitos e invalidade">Refazer meus erros deste assunto →</button></li><li class="op-alvo"><b class="op-alvo-tit">Prescrição, decadência e prova</b><a class="op-path" href="#" data-ir="civ-prescricao">Material › Direito Civil › Prescrição, decadência e prova</a><button type="button" class="btn sec mini op-alvo-ir" data-rev-ancs="civ-prescricao" data-rev-rot="Prescrição, decadência e prova">Refazer meus erros deste assunto →</button></li><li class="op-alvo"><b class="op-alvo-tit">Princípios fundamentais, organização do Estado e dos Poderes</b><a class="op-path" href="#" data-ir="const-estado">Material › Direito Constitucional › Princípios fundamentais, organização do Estado e dos Poderes</a><button type="button" class="btn sec mini op-alvo-ir" data-rev-ancs="const-estado" data-rev-rot="Princípios fundamentais, organização do Estado e dos Poderes">Refazer meus erros deste assunto →</button></li></ol>
       <p class="op-rev-fim">Acabaram os 30 minutos, pare. Revisado quer dizer: tentou, conferiu e anotou o resultado. Alvo que você não chegou a tentar não vira tarefa extra — a semana 12 ainda tem a R30 de 16/12.</p>
@@ -5619,7 +5644,7 @@ body{
     <div class="op-rev op-rev-ter op-sessao" id="op-s15-rev-ter" data-rot="Terça, 08/12 · R14">
       <h4>Terça, 08/12, 15h15–15h45 · R14 — catorze dias<span class="op-tempo">30 min</span></h4>
       <p class="op-rev-origem">Origem: semana 13 (23/11 a 28/11).</p>
-      <p class="op-como">Como: procedimento P6. 2 min para preparar; 8 min por assunto, com o botão “Refazer meus erros deste assunto”; 4 min para escrever “dobrou” ao lado das entradas que você errou de novo.</p>
+      <p class="op-como">Como: procedimento P6. 2 min para preparar; 8 min por assunto: primeiro o botão “Refazer meus erros no QConcursos”; depois, se lá não houver erro ou se sobrar tempo, o “Refazer meus erros deste assunto”, no banco do aplicativo; 4 min para escrever “dobrou” ao lado das entradas que você errou de novo.</p>
       <p class="op-alvos-intro">Os 3 assuntos desta sessão (8 minutos cada), da semana 13:</p>
       <ol class="op-alvos"><li class="op-alvo"><b class="op-alvo-tit">Sistema recursal trabalhista</b><a class="op-path" href="#" data-ir="dpt-recursos">Material › Direito Processual do Trabalho › Sistema recursal trabalhista</a><button type="button" class="btn sec mini op-alvo-ir" data-rev-ancs="dpt-recursos" data-rev-rot="Sistema recursal trabalhista">Refazer meus erros deste assunto →</button></li><li class="op-alvo"><b class="op-alvo-tit">Direitos reais e propriedade: conceito, classificação, aquisição, proteção, perda e função social</b><a class="op-path" href="#" data-ir="civ-propriedade">Material › Direito Civil › Direitos reais e propriedade: conceito, classificação, aquisição, proteção, perda e função social</a><button type="button" class="btn sec mini op-alvo-ir" data-rev-ancs="civ-propriedade" data-rev-rot="Direitos reais e propriedade: conceito, classificação, aquisição, proteção, perda e função social">Refazer meus erros deste assunto →</button></li><li class="op-alvo"><b class="op-alvo-tit">Atos administrativos e poderes da Administração</b><a class="op-path" href="#" data-ir="adm-atos-poderes">Material › Direito Administrativo › Atos administrativos e poderes da Administração</a><button type="button" class="btn sec mini op-alvo-ir" data-rev-ancs="adm-atos-poderes" data-rev-rot="Atos administrativos e poderes da Administração">Refazer meus erros deste assunto →</button></li></ol>
       <p class="op-rev-fim">Acabaram os 30 minutos, pare. Revisado quer dizer: tentou, conferiu e anotou o resultado. Alvo que você não chegou a tentar não vira tarefa extra — a semana 13 ainda tem a R30 de 23/12.</p>
@@ -5781,7 +5806,7 @@ body{
     <div class="op-rev op-rev-ter op-sessao" id="op-s16-rev-ter" data-rot="Terça, 15/12 · R14">
       <h4>Terça, 15/12, 15h15–15h45 · R14 — catorze dias<span class="op-tempo">30 min</span></h4>
       <p class="op-rev-origem">Origem: semana 14 (30/11 a 05/12).</p>
-      <p class="op-como">Como: procedimento P6. 2 min para preparar; 8 min por assunto, com o botão “Refazer meus erros deste assunto”; 4 min para escrever “dobrou” ao lado das entradas que você errou de novo.</p>
+      <p class="op-como">Como: procedimento P6. 2 min para preparar; 8 min por assunto: primeiro o botão “Refazer meus erros no QConcursos”; depois, se lá não houver erro ou se sobrar tempo, o “Refazer meus erros deste assunto”, no banco do aplicativo; 4 min para escrever “dobrou” ao lado das entradas que você errou de novo.</p>
       <p class="op-alvos-intro">Os 3 assuntos desta sessão (8 minutos cada), da semana 14:</p>
       <ol class="op-alvos"><li class="op-alvo"><b class="op-alvo-tit">Execução trabalhista</b><a class="op-path" href="#" data-ir="dpt-execucao">Material › Direito Processual do Trabalho › Execução trabalhista</a><button type="button" class="btn sec mini op-alvo-ir" data-rev-ancs="dpt-execucao" data-rev-rot="Execução trabalhista">Refazer meus erros deste assunto →</button></li><li class="op-alvo"><b class="op-alvo-tit">Direitos reais II — vizinhança, condomínios, propriedade resolúvel e fiduciária, direitos sobre coisa alheia e garantias</b><a class="op-path" href="#" data-ir="civ-reais">Material › Direito Civil › Direitos reais II — vizinhança, condomínios, propriedade resolúvel e fiduciária, direitos sobre coisa alheia e garantias</a><button type="button" class="btn sec mini op-alvo-ir" data-rev-ancs="civ-reais" data-rev-rot="Direitos reais II — vizinhança, condomínios, propriedade resolúvel e fiduciária, direitos sobre coisa alheia e garantias">Refazer meus erros deste assunto →</button></li><li class="op-alvo"><b class="op-alvo-tit">Procedimentos especiais e ações constitucionais</b><a class="op-path" href="#" data-ir="dpc-especiais">Material › Direito Processual Civil › Procedimentos especiais e ações constitucionais</a><button type="button" class="btn sec mini op-alvo-ir" data-rev-ancs="dpc-especiais" data-rev-rot="Procedimentos especiais e ações constitucionais">Refazer meus erros deste assunto →</button></li></ol>
       <p class="op-rev-fim">Acabaram os 30 minutos, pare. Revisado quer dizer: tentou, conferiu e anotou o resultado. Alvo que você não chegou a tentar não vira tarefa extra — a semana 14 ainda tem a R30 de 30/12.</p>
@@ -5969,7 +5994,7 @@ body{
     <div class="op-rev op-rev-ter op-sessao" id="op-s17-rev-ter" data-rot="Terça, 22/12 · R14">
       <h4>Terça, 22/12, 13h00–13h30 · R14 — catorze dias<span class="op-tempo">30 min</span></h4>
       <p class="op-rev-origem">Origem: semana 15 (07/12 a 12/12).</p>
-      <p class="op-como">Como: procedimento P6. 2 min para preparar; 8 min por assunto, com o botão “Refazer meus erros deste assunto”; 4 min para escrever “dobrou” ao lado das entradas que você errou de novo.</p>
+      <p class="op-como">Como: procedimento P6. 2 min para preparar; 8 min por assunto: primeiro o botão “Refazer meus erros no QConcursos”; depois, se lá não houver erro ou se sobrar tempo, o “Refazer meus erros deste assunto”, no banco do aplicativo; 4 min para escrever “dobrou” ao lado das entradas que você errou de novo.</p>
       <p class="op-alvos-intro">Os 3 assuntos desta sessão (8 minutos cada), da semana 15:</p>
       <ol class="op-alvos"><li class="op-alvo"><b class="op-alvo-tit">Família — casamento, dissolução, filhos, parentesco, poder familiar, regimes de bens, bem de família e união estável</b><a class="op-path" href="#" data-ir="civ-familia">Material › Direito Civil › Família — casamento, dissolução, filhos, parentesco, poder familiar, regimes de bens, bem de família e união estável</a><button type="button" class="btn sec mini op-alvo-ir" data-rev-ancs="civ-familia" data-rev-rot="Família — casamento, dissolução, filhos, parentesco, poder familiar, regimes de bens, bem de família e união estável">Refazer meus erros deste assunto →</button></li><li class="op-alvo"><b class="op-alvo-tit">Intervenção de terceiros</b><a class="op-path" href="#" data-ir="dpc-terceiros">Material › Direito Processual Civil › Intervenção de terceiros</a><button type="button" class="btn sec mini op-alvo-ir" data-rev-ancs="dpc-terceiros" data-rev-rot="Intervenção de terceiros">Refazer meus erros deste assunto →</button></li><li class="op-alvo"><b class="op-alvo-tit">Arbitragem, Comissões de Conciliação Prévia, precedentes, instruções normativas do TST e teses de repercussão geral</b><a class="op-path" href="#" data-ir="dt-solucoes">Material › Direito do Trabalho › Arbitragem, Comissões de Conciliação Prévia, precedentes, instruções normativas do TST e teses de repercussão geral</a><button type="button" class="btn sec mini op-alvo-ir" data-rev-ancs="dt-solucoes" data-rev-rot="Arbitragem, Comissões de Conciliação Prévia, precedentes, instruções normativas do TST e teses de repercussão geral">Refazer meus erros deste assunto →</button></li></ol>
       <p class="op-rev-fim">Acabaram os 30 minutos, pare. Revisado quer dizer: tentou, conferiu e anotou o resultado. Alvo que você não chegou a tentar não vira tarefa extra — a semana 15 ainda tem a R30 de 06/01.</p>
@@ -6158,7 +6183,7 @@ body{
     <div class="op-rev op-rev-ter op-sessao" id="op-s18-rev-ter" data-rot="Terça, 29/12 · R14">
       <h4>Terça, 29/12, 13h00–13h30 · R14 — catorze dias<span class="op-tempo">30 min</span></h4>
       <p class="op-rev-origem">Origem: semana 16 (14/12 a 19/12).</p>
-      <p class="op-como">Como: procedimento P6. 2 min para preparar; 8 min por assunto, com o botão “Refazer meus erros deste assunto”; 4 min para escrever “dobrou” ao lado das entradas que você errou de novo.</p>
+      <p class="op-como">Como: procedimento P6. 2 min para preparar; 8 min por assunto: primeiro o botão “Refazer meus erros no QConcursos”; depois, se lá não houver erro ou se sobrar tempo, o “Refazer meus erros deste assunto”, no banco do aplicativo; 4 min para escrever “dobrou” ao lado das entradas que você errou de novo.</p>
       <p class="op-alvos-intro">Os 3 assuntos desta sessão (8 minutos cada), da semana 16:</p>
       <ol class="op-alvos"><li class="op-alvo"><b class="op-alvo-tit">Sucessões — abertura, herança, aceitação e renúncia, exclusão, jacência, vocação hereditária, testamento, inventário, partilha, arrolamentos e alvarás</b><a class="op-path" href="#" data-ir="civ-sucessoes">Material › Direito Civil › Sucessões — abertura, herança, aceitação e renúncia, exclusão, jacência, vocação hereditária, testamento, inventário, partilha, arrolamentos e alvarás</a><button type="button" class="btn sec mini op-alvo-ir" data-rev-ancs="civ-sucessoes" data-rev-rot="Sucessões — abertura, herança, aceitação e renúncia, exclusão, jacência, vocação hereditária, testamento, inventário, partilha, arrolamentos e alvarás">Refazer meus erros deste assunto →</button></li><li class="op-alvo"><b class="op-alvo-tit">Sistema recursal trabalhista — revisão por incidência, questões primeiro</b><a class="op-path" href="#" data-ir="dpt-recursos">Material › Direito Processual do Trabalho › Sistema recursal trabalhista</a><button type="button" class="btn sec mini op-alvo-ir" data-rev-ancs="dpt-recursos" data-rev-rot="Sistema recursal trabalhista — revisão por incidência, questões primeiro">Refazer meus erros deste assunto →</button></li><li class="op-alvo"><b class="op-alvo-tit">Direito do Trabalho — bloco “Cessação do contrato, aviso prévio, estabilidade e jornada — revisão por incidência”</b><button type="button" class="btn sec mini op-alvo-ir" data-rev-mat="Direito do Trabalho" data-rev-rot="Direito do Trabalho — bloco “Cessação do contrato, aviso prévio, estabilidade e jornada — revisão por incidência”">Refazer meus erros deste assunto →</button></li></ol>
       <p class="op-rev-fim">Acabaram os 30 minutos, pare. Revisado quer dizer: tentou, conferiu e anotou o resultado. Alvo que você não chegou a tentar não vira tarefa extra — a semana 16 ainda tem a R30 de 13/01.</p>
@@ -6344,7 +6369,7 @@ body{
     <div class="op-rev op-rev-ter op-sessao" id="op-s19-rev-ter" data-rot="Terça, 05/01 · R14">
       <h4>Terça, 05/01, 13h00–13h30 · R14 — catorze dias<span class="op-tempo">30 min</span></h4>
       <p class="op-rev-origem">Origem: semana 17 (21/12 a 26/12).</p>
-      <p class="op-como">Como: procedimento P6. 2 min para preparar; 8 min por assunto, com o botão “Refazer meus erros deste assunto”; 4 min para escrever “dobrou” ao lado das entradas que você errou de novo.</p>
+      <p class="op-como">Como: procedimento P6. 2 min para preparar; 8 min por assunto: primeiro o botão “Refazer meus erros no QConcursos”; depois, se lá não houver erro ou se sobrar tempo, o “Refazer meus erros deste assunto”, no banco do aplicativo; 4 min para escrever “dobrou” ao lado das entradas que você errou de novo.</p>
       <p class="op-alvos-intro">Os 3 assuntos desta sessão (8 minutos cada), da semana 17:</p>
       <ol class="op-alvos"><li class="op-alvo"><b class="op-alvo-tit">Obrigações — modalidades, transmissão, pagamento e outras formas de extinção, inadimplemento, mora, perdas e danos, juros, cláusula penal e arras</b><a class="op-path" href="#" data-ir="civ-obrigacoes">Material › Direito Civil › Obrigações — modalidades, transmissão, pagamento e outras formas de extinção, inadimplemento, mora, perdas e danos, juros, cláusula penal e arras</a><button type="button" class="btn sec mini op-alvo-ir" data-rev-ancs="civ-obrigacoes" data-rev-rot="Obrigações — modalidades, transmissão, pagamento e outras formas de extinção, inadimplemento, mora, perdas e danos, juros, cláusula penal e arras">Refazer meus erros deste assunto →</button></li><li class="op-alvo"><b class="op-alvo-tit">Direito Processual do Trabalho — bloco “Competência, organização da Justiça do Trabalho e partes — segunda passada, questões primeiro”</b><button type="button" class="btn sec mini op-alvo-ir" data-rev-mat="Direito Processual do Trabalho" data-rev-rot="Direito Processual do Trabalho — bloco “Competência, organização da Justiça do Trabalho e partes — segunda passada, questões primeiro”">Refazer meus erros deste assunto →</button></li><li class="op-alvo"><b class="op-alvo-tit">Contratos em geral — princípios, formação, estipulação em favor de terceiro, vícios redibitórios, evicção, contrato preliminar e extinção</b><a class="op-path" href="#" data-ir="civ-contratos">Material › Direito Civil › Contratos em geral — princípios, formação, estipulação em favor de terceiro, vícios redibitórios, evicção, contrato preliminar e extinção</a><button type="button" class="btn sec mini op-alvo-ir" data-rev-ancs="civ-contratos" data-rev-rot="Contratos em geral — princípios, formação, estipulação em favor de terceiro, vícios redibitórios, evicção, contrato preliminar e extinção">Refazer meus erros deste assunto →</button></li></ol>
       <p class="op-rev-fim">Acabaram os 30 minutos, pare. Revisado quer dizer: tentou, conferiu e anotou o resultado. Alvo que você não chegou a tentar não vira tarefa extra — a semana 17 ainda tem a R30 de 20/01.</p>
@@ -6533,7 +6558,7 @@ body{
     <div class="op-rev op-rev-ter op-sessao" id="op-s20-rev-ter" data-rot="Terça, 12/01 · R14">
       <h4>Terça, 12/01, 13h00–13h30 · R14 — catorze dias<span class="op-tempo">30 min</span></h4>
       <p class="op-rev-origem">Origem: semana 18 (28/12 a 02/01).</p>
-      <p class="op-como">Como: procedimento P6. 2 min para preparar; 8 min por assunto, com o botão “Refazer meus erros deste assunto”; 4 min para escrever “dobrou” ao lado das entradas que você errou de novo.</p>
+      <p class="op-como">Como: procedimento P6. 2 min para preparar; 8 min por assunto: primeiro o botão “Refazer meus erros no QConcursos”; depois, se lá não houver erro ou se sobrar tempo, o “Refazer meus erros deste assunto”, no banco do aplicativo; 4 min para escrever “dobrou” ao lado das entradas que você errou de novo.</p>
       <p class="op-alvos-intro">Os 3 assuntos desta sessão (8 minutos cada), da semana 18:</p>
       <ol class="op-alvos"><li class="op-alvo"><b class="op-alvo-tit">Responsabilidade civil — ato ilícito, culpa e risco, responsabilidade por fato de outrem, da coisa e do animal, solidariedade e indenização; preferências e privilégios creditórios</b><a class="op-path" href="#" data-ir="civ-responsabilidade">Material › Direito Civil › Responsabilidade civil — ato ilícito, culpa e risco, responsabilidade por fato de outrem, da coisa e do animal, solidariedade e indenização; preferências e privilégios creditórios</a><button type="button" class="btn sec mini op-alvo-ir" data-rev-ancs="civ-responsabilidade" data-rev-rot="Responsabilidade civil — ato ilícito, culpa e risco, responsabilidade por fato de outrem, da coisa e do animal, solidariedade e indenização; preferências e privilégios creditórios">Refazer meus erros deste assunto →</button></li><li class="op-alvo"><b class="op-alvo-tit">Direito Processual do Trabalho — bloco “Recursos e execução — segunda passada, questões primeiro”</b><button type="button" class="btn sec mini op-alvo-ir" data-rev-mat="Direito Processual do Trabalho" data-rev-rot="Direito Processual do Trabalho — bloco “Recursos e execução — segunda passada, questões primeiro”">Refazer meus erros deste assunto →</button></li><li class="op-alvo"><b class="op-alvo-tit">Contratos em espécie e atos unilaterais — compra e venda, doação, locação, empréstimo, empreitada, depósito, mandato, agência, corretagem, transporte, fiança, transação; pagamento indevido e enriquecimento sem causa</b><a class="op-path" href="#" data-ir="civ-contratos-especie">Material › Direito Civil › Contratos em espécie e atos unilaterais — compra e venda, doação, locação, empréstimo, empreitada, depósito, mandato, agência, corretagem, transporte, fiança, transação; pagamento indevido e enriquecimento sem causa</a><button type="button" class="btn sec mini op-alvo-ir" data-rev-ancs="civ-contratos-especie" data-rev-rot="Contratos em espécie e atos unilaterais — compra e venda, doação, locação, empréstimo, empreitada, depósito, mandato, agência, corretagem, transporte, fiança, transação; pagamento indevido e enriquecimento sem causa">Refazer meus erros deste assunto →</button></li></ol>
       <p class="op-rev-fim">Acabaram os 30 minutos, pare. Revisado quer dizer: tentou, conferiu e anotou o resultado. Alvo que você não chegou a tentar não vira tarefa extra — a semana 18 ainda tem a R30 de 27/01.</p>
@@ -6720,7 +6745,7 @@ body{
     <div class="op-rev op-rev-ter op-sessao" id="op-s21-rev-ter" data-rot="Terça, 19/01 · R14">
       <h4>Terça, 19/01, 13h00–13h30 · R14 — catorze dias<span class="op-tempo">30 min</span></h4>
       <p class="op-rev-origem">Origem: semana 19 (04/01 a 09/01).</p>
-      <p class="op-como">Como: procedimento P6. 2 min para preparar; 8 min por assunto, com o botão “Refazer meus erros deste assunto”; 4 min para escrever “dobrou” ao lado das entradas que você errou de novo.</p>
+      <p class="op-como">Como: procedimento P6. 2 min para preparar; 8 min por assunto: primeiro o botão “Refazer meus erros no QConcursos”; depois, se lá não houver erro ou se sobrar tempo, o “Refazer meus erros deste assunto”, no banco do aplicativo; 4 min para escrever “dobrou” ao lado das entradas que você errou de novo.</p>
       <p class="op-alvos-intro">Os 3 assuntos desta sessão (8 minutos cada), da semana 19:</p>
       <ol class="op-alvos"><li class="op-alvo"><b class="op-alvo-tit">Direito Processual do Trabalho — bloco “Dissídio individual, audiências, procedimentos, ações especiais e dissídio coletivo — segunda passada”</b><button type="button" class="btn sec mini op-alvo-ir" data-rev-mat="Direito Processual do Trabalho" data-rev-rot="Direito Processual do Trabalho — bloco “Dissídio individual, audiências, procedimentos, ações especiais e dissídio coletivo — segunda passada”">Refazer meus erros deste assunto →</button></li><li class="op-alvo"><b class="op-alvo-tit">Direito do Trabalho — bloco “Alteração e suspensão do contrato, direito coletivo, greve e segurança do trabalho — segunda passada”</b><button type="button" class="btn sec mini op-alvo-ir" data-rev-mat="Direito do Trabalho" data-rev-rot="Direito do Trabalho — bloco “Alteração e suspensão do contrato, direito coletivo, greve e segurança do trabalho — segunda passada”">Refazer meus erros deste assunto →</button></li><li class="op-alvo"><b class="op-alvo-tit">Direito Civil — bloco “Parte geral (pessoas, bens, negócio jurídico, prescrição) — segunda passada, questões primeiro”</b><button type="button" class="btn sec mini op-alvo-ir" data-rev-mat="Direito Civil" data-rev-rot="Direito Civil — bloco “Parte geral (pessoas, bens, negócio jurídico, prescrição) — segunda passada, questões primeiro”">Refazer meus erros deste assunto →</button></li></ol>
       <p class="op-rev-fim">Acabaram os 30 minutos, pare. Revisado quer dizer: tentou, conferiu e anotou o resultado. Alvo que você não chegou a tentar não vira tarefa extra.</p>
@@ -6891,7 +6916,7 @@ body{
     <div class="op-rev op-rev-ter op-sessao" id="op-s22-rev-ter" data-rot="Terça, 26/01 · R14">
       <h4>Terça, 26/01, 13h00–13h30 · R14 — catorze dias<span class="op-tempo">30 min</span></h4>
       <p class="op-rev-origem">Origem: semana 20 (11/01 a 16/01).</p>
-      <p class="op-como">Como: procedimento P6. 2 min para preparar; 8 min por assunto, com o botão “Refazer meus erros deste assunto”; 4 min para escrever “dobrou” ao lado das entradas que você errou de novo.</p>
+      <p class="op-como">Como: procedimento P6. 2 min para preparar; 8 min por assunto: primeiro o botão “Refazer meus erros no QConcursos”; depois, se lá não houver erro ou se sobrar tempo, o “Refazer meus erros deste assunto”, no banco do aplicativo; 4 min para escrever “dobrou” ao lado das entradas que você errou de novo.</p>
       <p class="op-alvos-intro">Os 3 assuntos desta sessão (8 minutos cada), da semana 20:</p>
       <ol class="op-alvos"><li class="op-alvo"><b class="op-alvo-tit">Direito Processual do Trabalho — bloco “PJe, princípios, precedentes, Protocolos, súmulas vinculantes e teses de repercussão geral — segunda passada”</b><button type="button" class="btn sec mini op-alvo-ir" data-rev-mat="Direito Processual do Trabalho" data-rev-rot="Direito Processual do Trabalho — bloco “PJe, princípios, precedentes, Protocolos, súmulas vinculantes e teses de repercussão geral — segunda passada”">Refazer meus erros deste assunto →</button></li><li class="op-alvo"><b class="op-alvo-tit">Direito do Trabalho — bloco “Dano, renúncia e transação, teletrabalho, intermitente, FGTS, prescrição e solução de conflitos — segunda passada”</b><button type="button" class="btn sec mini op-alvo-ir" data-rev-mat="Direito do Trabalho" data-rev-rot="Direito do Trabalho — bloco “Dano, renúncia e transação, teletrabalho, intermitente, FGTS, prescrição e solução de conflitos — segunda passada”">Refazer meus erros deste assunto →</button></li><li class="op-alvo"><b class="op-alvo-tit">Direito Civil — bloco “Direitos reais, família e sucessões — segunda passada, questões primeiro”</b><button type="button" class="btn sec mini op-alvo-ir" data-rev-mat="Direito Civil" data-rev-rot="Direito Civil — bloco “Direitos reais, família e sucessões — segunda passada, questões primeiro”">Refazer meus erros deste assunto →</button></li></ol>
       <p class="op-rev-fim">Acabaram os 30 minutos, pare. Revisado quer dizer: tentou, conferiu e anotou o resultado. Alvo que você não chegou a tentar não vira tarefa extra.</p>
@@ -29344,6 +29369,64 @@ function linkJurDoBloco(id){
         '<ul class="atalho-fcc-lista">' + discs.map(function(d){ return '<li><a href="' + urlDisc(d[0]) + '" target="_blank" rel="noopener">' + d[1] + ' ↗</a></li>'; }).join('') + '</ul>';
     const banco = cab.nextElementSibling && cab.nextElementSibling.classList.contains('materia') ? cab.nextElementSibling : cab;
     banco.insertAdjacentElement('afterend', bar);
+  });
+})();
+
+/* v54 (24/11/2026): na revisão R14, desde a semana 14 (terça, 01/12), os erros do QConcursos. Em cada assunto do cartão,
+   antes do botão do banco: o link para as questões da FCC daquele assunto marcadas como "Errei" na conta do QConcursos
+   (filtro my_questions=wrong). Os assuntos do QConcursos são os mesmos que o material usa no tópico (QC_TOPICO; sem ele,
+   os dos blocos do cronograma com a mesma âncora, sem os de disciplina inteira quando há de assunto); no assunto de
+   matéria inteira (data-rev-mat), a disciplina do QConcursos. A R14 de 24/11 (semana 13) fica como estava. */
+(function injetarQcNaR14(){
+  const ERREI = '&my_questions=wrong';
+  const DISC_DA_MAT = { 'Direito Civil':'civ', 'Direito Processual do Trabalho':'dpt', 'Direito do Trabalho':'dt' };
+  const porAnc = {};
+  CRONOGRAMA.forEach(function(sem){
+    sem.blocos.forEach(function(b){
+      const u = b.anc ? urlQcDoBloco(b.id) : '';
+      if(!u) return;
+      const l = porAnc[b.anc] = porAnc[b.anc] || [];
+      if(!l.some(function(x){ return x.u === u; })) l.push({ u:u, titulo:b.titulo });
+    });
+  });
+  const doTopico = function(anc){
+    const qt = QC_TOPICO[anc];
+    return Array.isArray(qt) ? qt.map(function(x){ return { u: urlQcDe(x[0]), titulo: x[1] }; }) : qt ? [{ u: urlQcDe(qt), titulo: '' }] : (porAnc[anc] || []);
+  };
+  const ehDisciplina = function(u){ return /\/disciplinas\/[^\/]+\/questoes\?/.test(u); };
+  document.querySelectorAll('#pg-operacional .op-rev-ter.op-sessao[id]').forEach(function(s){
+    const m = /^op-s(\d+)-rev-ter$/.exec(s.id);
+    if(!m || +m[1] < 14) return;
+    s.querySelectorAll('.op-alvo-ir[data-rev-ancs], .op-alvo-ir[data-rev-mat]').forEach(function(bt){
+      let links = [];
+      if(bt.dataset.revMat){
+        const k = DISC_DA_MAT[bt.dataset.revMat];
+        if(k && QC_DISCIPLINA[k]) links = [{ u: 'https://www.qconcursos.com/questoes-de-concursos/disciplinas/' + QC_DISCIPLINA[k] + '/questoes?examining_board_ids%5B%5D=1', titulo: '' }];
+      } else {
+        bt.dataset.revAncs.split(',').forEach(function(a){
+          doTopico(a).forEach(function(l){ if(l.u && !links.some(function(x){ return x.u === l.u; })) links.push(l); });
+        });
+      }
+      if(links.some(function(l){ return !ehDisciplina(l.u); })) links = links.filter(function(l){ return !ehDisciplina(l.u); });
+      if(!links.length) return;
+      let el;
+      if(links.length === 1){
+        el = document.createElement('a');
+        el.className = 'btn sec mini op-alvo-qc';
+        el.href = links[0].u + ERREI; el.target = '_blank'; el.rel = 'noopener';
+        el.textContent = 'Refazer meus erros no QConcursos ↗';
+      } else {
+        el = document.createElement('div');
+        el.className = 'op-alvo-qc';
+        el.innerHTML = '<span class="op-alvo-qc-rot">Refazer meus erros no QConcursos — abra um link de cada vez, na ordem:</span><ul class="op-alvo-qc-lista">' +
+          links.map(function(l){ return '<li><a href="' + esc(l.u + ERREI) + '" target="_blank" rel="noopener">' + esc(l.titulo) + ' ↗</a></li>'; }).join('') + '</ul>';
+      }
+      const dep = document.createElement('span');
+      dep.className = 'op-alvo-depois';
+      dep.textContent = 'Depois, se lá não houver erro ou se sobrar tempo:';
+      bt.parentNode.insertBefore(el, bt);
+      bt.parentNode.insertBefore(dep, bt);
+    });
   });
 })();
 
