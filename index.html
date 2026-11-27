@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="versao-app" content="autos-do-estudo-v55">
+<meta name="versao-app" content="autos-do-estudo-v56">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <!-- Web app da tela de início (iPadOS/iOS). A partir do iPadOS 26, qualquer
@@ -1111,6 +1111,19 @@ body{
 #pg-operacional .op-trilho-ext{border-top:2px dashed var(--linha-forte)}
 #pg-operacional .op-ext-rot{font-family:var(--mono); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--petroleo); margin:12px 0 0}
 #pg-operacional tr.op-ext td{background:#F4F8F9}
+/* v56 (27/11/2026): seção 6 — a caixa "Estudado" de cada bloco (a mesma marca do Cronograma, página 03) e os blocos de
+   hoje em laranja-claro, com o selo "hoje". Nas linhas de hoje, os textos cinza-claros e o link do QConcursos ficam mais
+   escuros, para continuarem legíveis sobre o laranja (4,5:1 ou mais, medido nos pixels da tela). */
+#pg-operacional label.op-feito{display:flex; width:max-content; max-width:100%; align-items:center; gap:7px; margin-top:8px; padding:5px 10px; min-height:34px; border:1px solid var(--linha-forte); border-radius:var(--raio); background:#fff; color:var(--tinta); font-family:var(--corpo); font-size:13px; font-weight:500; line-height:1.2; letter-spacing:0; cursor:pointer; white-space:nowrap}
+#pg-operacional label.op-feito input{width:18px; height:18px; margin:0; flex:0 0 auto; accent-color:var(--verde); cursor:pointer}
+#pg-operacional label.op-feito.marcado{background:var(--verde-suave); border-color:var(--verde); color:var(--verde); font-weight:600}
+#pg-operacional label.op-feito[hidden]{display:none}
+@media (pointer:coarse){ #pg-operacional label.op-feito{min-height:44px; padding:6px 12px} }
+#pg-operacional tr.op-hoje-bloco > td{background:#FFEBD6}
+#pg-operacional tr.op-hoje-bloco > td:first-child{box-shadow:inset 4px 0 0 #C2621A}
+#pg-operacional tr.op-hoje-bloco td .op-tempo, #pg-operacional tr.op-hoje-bloco td .op-mini, #pg-operacional tr.op-hoje-bloco td .op-edital, #pg-operacional tr.op-hoje-bloco td span.op-path{color:var(--tinta-2)}
+#pg-operacional tr.op-hoje-bloco td .op-qc{color:#7A6410; border-bottom-color:#7A6410}
+#pg-operacional td.op-disc .op-selo-hoje{display:block; width:max-content; margin:0 0 5px}
 #pg-operacional .op-fora{font-size:13.5px; color:var(--tinta-2); padding:10px 20px; margin:0; border-top:1px solid var(--linha)}
 #pg-operacional .op-sem-intro{font-size:14.5px; color:var(--tinta-2); padding:12px 20px 0; margin:0}
 #pg-operacional .op-aviso.op-hoje-dia{border-left:5px solid var(--grifo)}
@@ -2310,6 +2323,20 @@ body{
   </details>
 
   <div class="op-aviso op-nota op-mudanca">
+    <b class="op-rot">Atualização de 27/11/2026 — na seção 6, a caixa “Estudado” e os blocos de hoje em destaque</b>
+    A seu pedido, duas mudanças nos cartões das semanas, na seção 6.
+    <ul>
+      <li><b>Estudado</b>: cada bloco tem, logo abaixo do horário, a caixa <b>Estudado</b>. Marcar ou desmarcar essa caixa é o mesmo que marcar ou desmarcar o bloco no Cronograma, na página 03: o que você marca aqui aparece lá, e o que você marca lá aparece aqui. Nos blocos da manhã do recesso, a caixa só aparece nas semanas no modo de 8 horas, como no Cronograma.</li>
+      <li><b>Blocos de hoje</b>: na semana corrente, os blocos do dia de hoje ficam com fundo laranja-claro e o selo <b>hoje</b> acima do horário. O botão “Abrir a semana”, na faixa Hoje, leva até eles. No domingo, nenhum bloco fica em destaque, porque não há estudo.</li>
+    </ul>
+    O aviso anterior, sobre os botões “Desfazer” e “Parei aqui”, continua valendo: ele é o primeiro de “Avisos anteriores”, logo abaixo.
+    O que não muda: os horários, os cartões, o que cada bloco pede, as questões, suas respostas, o histórico, o placar, as anotações de onde parei e os grifos. Os blocos que você já marcou no Cronograma continuam marcados.
+  </div>
+
+  <details class="op-avisos-ant">
+    <summary>Avisos anteriores (45), do mais novo para o mais antigo</summary>
+
+  <div class="op-aviso op-nota op-mudanca">
     <b class="op-rot">Atualização de 25/11/2026 — os botões “Desfazer” e “Parei aqui” ficaram visíveis</b>
     A seu pedido, dois botões que se viam mal foram corrigidos.
     <ul>
@@ -2319,9 +2346,6 @@ body{
     O aviso anterior, sobre o botão do QConcursos na revisão R14, continua valendo: ele é o primeiro de “Avisos anteriores”, logo abaixo.
     O que não muda: o lugar e o que fazem os botões, os horários, os cartões, as questões, suas respostas, o histórico, o placar, as anotações de onde parei e os grifos.
   </div>
-
-  <details class="op-avisos-ant">
-    <summary>Avisos anteriores (44), do mais novo para o mais antigo</summary>
 
   <div class="op-aviso op-nota op-mudanca">
     <b class="op-rot">Atualização de 24/11/2026 — R14: refazer os erros também no QConcursos</b>
@@ -27943,6 +27967,8 @@ function renderCronograma(){
     : n === 99 ? 'Período do cronograma encerrado'
     : 'Hoje: semana ' + n + ' de ' + CRONOGRAMA.length;
   renderRecessoModo();
+  /* v56: as caixas "Estudado" da seção 6 do 03.1 seguem o Cronograma (depois que o 03.1 foi montado) */
+  if(window.OP_FEITO && opMontado) window.OP_FEITO.sincronizar();
 }
 /* Repinta preservando quais semanas estavam abertas. */
 function repintarCronograma(){
@@ -29645,6 +29671,8 @@ function atualizarHojeOperacional(){
   box.innerHTML = '<div class="op-hoje-txt">' + txt + '</div><div class="op-hoje-acoes">' + acoes + '</div>';
   /* v52: as anotações de onde parei, logo abaixo da faixa */
   if(window.PAREI) window.PAREI.desenhar();
+  /* v56: na seção 6, as caixas "Estudado" e os blocos de hoje em laranja-claro */
+  if(window.OP_FEITO) window.OP_FEITO.atualizar();
 }
 
 /* Delegação única dos atalhos destas três partes. */
@@ -30668,6 +30696,76 @@ const NUCLEO = [
     return d ? { iso: d.iso, ini: d.ini, bloco: d.linha.bloco, motivo: d.motivo } : null;
   }, grade: lerGrade };
   if(document.getElementById('pg-operacional') && document.getElementById('pg-operacional').classList.contains('ativa')) desenhar();
+})();
+/* ---------- Seção 6 do 03.1: caixa "Estudado" e blocos de hoje (v56, 27/11/2026) ----------
+   Cada linha dos cartões da seção 6 que é um bloco do Cronograma (página 03) ganha, na 1ª célula, a caixa "Estudado":
+   marcar ou desmarcar aqui é o mesmo que a caixa do bloco no Cronograma (trt4:cronograma, a mesma chave), nos dois
+   sentidos. As linhas do dia de hoje ganham fundo laranja-claro e o selo "hoje". O mapa linha → bloco e datas é o do
+   "Parei aqui" (PAREI.grade). As linhas "Estudo de caso" das semanas 1 a 9 têm título diferente do bloco: usam o único
+   bloco de estudo de caso da semana. Os blocos da manhã do recesso (ext) só valem nas semanas no modo de 8 horas: nas
+   de 6, a caixa fica oculta e a linha não recebe destaque, como no Cronograma. Nada novo é gravado: só trt4:cronograma. */
+(function secao6FeitoEHoje(){
+  if(!window.PAREI || typeof window.PAREI.grade !== 'function') return;
+  let mapa = null;
+  function linhas(){
+    if(mapa) return mapa;
+    mapa = window.PAREI.grade().map(function(l){
+      const sem = CRONOGRAMA.find(s => s.semana === l.semana) || null;
+      let b = l.bloco && sem ? sem.blocos.find(x => x.id === l.bloco) || null : null;
+      if(!b && sem && l.titulo === 'Estudo de caso'){
+        const casos = sem.blocos.filter(x => x.mat === 'Estudo de caso' && !x.fora);
+        if(casos.length === 1) b = casos[0];
+      }
+      return { l: l, sem: sem, b: b && !b.fora ? b : null };
+    });
+    return mapa;
+  }
+  /* a linha vale nesta semana: não é da manhã do recesso, ou a semana está no modo de 8 horas */
+  const vale = x => !x.l.ext || (!!x.sem && modoDaSemana(x.sem.inicio) === '8');
+  function caixa(x){
+    const td = x.l.tr.children[0];
+    let lab = td.querySelector('label.op-feito');
+    if(!lab){
+      lab = document.createElement('label');
+      lab.className = 'op-feito';
+      lab.innerHTML = '<input type="checkbox" data-op-bl="' + esc(x.b.id) + '" aria-label="' + esc('Estudado: ' + x.b.titulo + ' (a mesma marca do Cronograma, página 03)') + '"> Estudado';
+      td.appendChild(lab);
+    }
+    return lab;
+  }
+  function sincronizar(){
+    linhas().forEach(function(x){
+      if(!x.b) return;
+      const lab = caixa(x), cx = lab.querySelector('input');
+      const v = vale(x);
+      lab.hidden = !v;
+      cx.disabled = !v;
+      cx.checked = !!cronoEstado.feitos[x.b.id];
+      lab.classList.toggle('marcado', cx.checked);
+    });
+  }
+  function destacarHoje(){
+    const hoje = hojeISO();
+    document.querySelectorAll('#pg-operacional tr.op-hoje-bloco').forEach(tr => tr.classList.remove('op-hoje-bloco'));
+    document.querySelectorAll('#pg-operacional table.op-tab-sem .op-selo-hoje').forEach(s => s.remove());
+    linhas().forEach(function(x){
+      if(!vale(x) || !x.l.sess.some(s => s.iso === hoje)) return;
+      x.l.tr.classList.add('op-hoje-bloco');
+      x.l.tr.children[0].insertAdjacentHTML('afterbegin', '<span class="op-selo-hoje">hoje</span>');
+    });
+  }
+  document.addEventListener('change', function(ev){
+    const cx = ev.target;
+    if(!cx || !cx.dataset || !cx.dataset.opBl || !cx.closest || !cx.closest('#pg-operacional')) return;
+    if(cx.checked) cronoEstado.feitos[cx.dataset.opBl] = true;
+    else delete cronoEstado.feitos[cx.dataset.opBl];
+    salvarCronograma();
+    /* repinta a página 03; o fim de renderCronograma chama sincronizar(), que acerta as caixas daqui */
+    repintarCronograma();
+  });
+  window.OP_FEITO = { sincronizar: sincronizar, destacarHoje: destacarHoje, linhas: linhas,
+    atualizar: function(){ sincronizar(); destacarHoje(); } };
+  if(opMontado) window.OP_FEITO.atualizar();
 })();
 
 /* ---------- Busca no material (21/10/2026) ----------

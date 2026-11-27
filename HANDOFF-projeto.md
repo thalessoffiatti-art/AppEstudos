@@ -5841,11 +5841,92 @@ só se o usuário pedir.
 
 ---
 
-# Retomada — estado em 2026-11-25, v54 publicada, v55 pronta (ler primeiro depois de compactar a conversa)
+# Adendo 51 — 2026-11-27 (seção 6: caixa "Estudado" e blocos de hoje em destaque, v56)
+
+**Origem.** O usuário commitou e publicou a v55 (`60781ef`, PR #51, `d4828cf`) e pediu, em modo de plano, duas melhorias
+na seção 6 do 03.1 (os cartões das semanas): (1) "um botão (estilo checkbox ou que altere seu conteúdo…) a ser incluído
+em cada bloco de disciplina para que, ao ser pressionado, marque/desmarque o checkbox da disciplina correspondente no
+Cronograma (03)"; (2) "um fundo de destaque claro (um laranja…)" nos blocos do dia, "ao clicar no botão 'Abrir semana
+xx'"; o exemplo dele: na quinta da semana 13, só Resolução CSJT 360 e CNJ 351, Office 365, Figuras de linguagem e
+Ortografia. Plano aprovado (arquivo `~/.claude/plans/woolly-finding-squid.md`, reaproveitado pelo modo de planejamento).
+Entrada: `bak_2210/index_v55.html`.
+
+**Antes da v56 (27/11):** scratchpad limpo de novo (8ª vez: 26 de 438 entradas), restaurado com `robocopy … /E /XO`; a
+v55 fechada: pasta principal em ff no PR #51, `bak_2210/index_v55.html` = `index.html` commitado, `sw_v55.js` guardado;
+memória com a v55 publicada (`v56/_memoria_inicio.js`).
+
+## O que entrou
+- **Mapa reaproveitado.** `window.PAREI.grade()` (v52) já liga cada linha da seção 6 ao bloco do CRONOGRAMA (pelo título;
+  a k-ésima linha com o mesmo título é o k-ésimo bloco) e às datas reais dos horários escritos na 1ª célula (inclusive
+  os "e Sex…"). Conferido sobre a v55: 320 linhas; 311 casam um a um; as 9 linhas "Estudo de caso" das semanas 1 a 9
+  têm título diferente do bloco `sN-caso`; os simulados das semanas 1 a 9 (com o diagnóstico `s1-sim`) não têm linha.
+- **Módulo `secao6FeitoEHoje`** (`v56/secao6.js`, logo depois do `pareiAqui`; `window.OP_FEITO`):
+  - caixa `<label class="op-feito"><input type="checkbox" data-op-bl="ID"> Estudado</label>` no fim da 1ª célula de cada
+    linha com bloco; marcada, a etiqueta fica verde; o toque grava em `cronoEstado.feitos` → `salvarCronograma()` →
+    `repintarCronograma()` (a mesma chave `trt4:cronograma`, nada novo gravado);
+  - linhas "Estudo de caso" das semanas 1 a 9: o único bloco `mat:'Estudo de caso'` da semana (regra só no módulo; o
+    `lerGrade` não muda) → 320 caixas; sem caixa, só os 9 simulados das semanas 1 a 9;
+  - blocos da manhã do recesso (`ext`) em semana no modo de 6 horas: caixa oculta e desabilitada, sem destaque, como no
+    Cronograma (que não os mostra);
+  - destaque: as linhas com algum horário na data de hoje (`hojeISO()`) e que valem (não `ext`, ou semana no modo de 8)
+    ganham `tr.op-hoje-bloco` e o selo `op-selo-hoje` "hoje" (o mesmo da seção 3) no alto da 1ª célula. Aparece sempre
+    que o 03.1 abre (o botão "Abrir a semana N" leva até a semana já destacada). Meios períodos e o fim da semana 22 saem
+    certos porque já estão nos horários das linhas.
+- **Ganchos:** fim de `renderCronograma()` → `OP_FEITO.sincronizar()` (só depois de o 03.1 montado: marcar no Cronograma,
+  "Zerar progresso" e a própria caixa acertam a etiqueta); fim de `atualizarHojeOperacional()` → `OP_FEITO.atualizar()`.
+- **Estilo** (`v56/secao6.css`, depois de `tr.op-ext td`): fundo `#FFEBD6` e faixa de 4 px `#C2621A` à esquerda; nas linhas
+  de hoje, `tinta-3` (`.op-tempo`, `.op-mini`, `.op-edital`, `span.op-path`) passa a `tinta-2` e o link do QConcursos a
+  `#7A6410` (sobre o laranja, sem isso, 3,1:1 e 2,1:1); caixa com altura mínima de 44 px no toque.
+- Aviso no 03.1 (27/11); o da v55 é o primeiro dos 45 anteriores.
+
+**Verificação (27/11)**
+- `bash v56/montar.sh`: pipeline da lei seca igual; `aplicar_v56.js`: tirados os acréscimos e o aviso, o arquivo é idêntico
+  ao da v55.
+- `bash v56/conferir_tudo.sh`: 35 conferidores com saída 0 (os 34 de sempre, com `quadros_v56` — nenhum quadro mudou — e
+  `aviso_v56` 10/10, mais o novo `secao6_v56`).
+- `v56/conferir_secao6.js` (segundo leitor, Edge): 320 caixas, cada id uma vez, nenhum bloco `fora`, sem caixa só os 9
+  simulados das semanas 1 a 9; ocultas no modo de 6 horas = exatamente as dos blocos `ext`; 1.214 cliques (modos de 6 e de
+  8 horas), cada um conferido em `trt4:cronograma`, `cronoEstado` e a caixa `cb-ID` do Cronograma, e a volta pelo
+  Cronograma; para cada dia de 31/08/2026 a 30/01/2027, nos dois modos (306 dias), as linhas em destaque (dos horários da
+  1ª célula) = os blocos cujo campo `dia` do CRONOGRAMA cita o dia da semana; diferenças só os simulados sem linha (18).
+- `v56/teste_v56.js` (Edge, relógio em 26/11/2026 16h00): **20 de 20** — v55 → v56 com as chaves `trt4:` idênticas (com dois
+  blocos já marcados, que aparecem marcados); na semana 13, exatamente as 4 linhas do exemplo do usuário em destaque, com o
+  selo "hoje"; "Abrir a semana 13" leva ao cartão; fundo medido na foto `#FFEBD6` em todas as células; os 46 trechos de
+  texto das linhas com pelo menos 4,5:1 contra o próprio fundo (o pior, 4,9:1, é o selo verde "O material basta", com fundo
+  próprio); a caixa de `s13-leg` com o mouse grava e marca `cb-s13-leg` (2 de 15), e o segundo clique, na palavra
+  "Estudado", desfaz (1 de 15); marcar `s13-info` no Cronograma aparece aqui; "Zerar progresso" pela janela desmarca tudo;
+  domingo 29/11 sem destaque; 21/12 no modo de 6 horas só a tarde de segunda, a manhã sem caixa; no modo de 8, a manhã
+  também, e as 6 caixas da manhã da semana 17 aparecem; 375 px com toque: as 15 caixas cabem na 1ª célula e na tela, com
+  44 px; aviso aberto e 45 anteriores; console limpo.
+- `v56/neg_tela.js` 1..4 (sem o gancho A; destaque um dia adiantado; sem o escurecimento dos textos — o pior cai para
+  2,1:1, o link do QConcursos; 44 anteriores): os quatro acusados pelo teste de tela (1, 4, 1 e 1 falhas); os estragos 1 e
+  2 também pelo `conferir_secao6.js` (41 falhas cada).
+- Regressões: `v40/teste_rolagem.js` 17/17; `busca_2110/teste_busca.js` (v55 × v56) TUDO CERTO;
+  `juris_1210/teste_marca_1210.js` 286.198 palavras, 0 erradas com posição; `juris_1210/teste_atualiza_1210.js` sem erros;
+  `v54/teste_v54.js` 16 de 18 e `v55/teste_v55.js` 9 de 11 sobre a v56 (as falhas: a versão e o aviso aberto);
+  `v52/teste_v52.js` sobre a v56: 46 de 49 — além da versão e do aviso, o item 4 exige que a 1ª célula da linha de destino
+  comece com "Sex 15h45", e em 04/12 ela começa com o selo "hoje" (a linha é um bloco do dia); numa cópia sem o selo, 47 de
+  49, como na v55. Nenhum perfil temporário do Edge sobrou.
+- `index.html` e `sw.js` do worktree = `v56/ensaio.html` e `v56/ensaio_sw.js` (`cmp`); cache `autos-do-estudo-v56`.
+
+**Lições**
+- Quando já existe um mapa da grade (`PAREI.grade()`), a feição nova o usa: um só leitor das linhas da seção 6, e o
+  segundo leitor independente é o campo `dia` do CRONOGRAMA.
+- Fundo colorido rebaixa o contraste dos textos claros: medir todo nó de texto da linha contra o fundo real (pixel da
+  foto, ou o fundo próprio da caixa em que o texto está) e escurecer só o que cair abaixo de 4,5:1.
+- Elemento novo no começo de uma célula muda o `textContent` dela: teste antigo que ancora no começo (`^Sex 15h45`) acusa.
+  Provar que é só isso rodando o teste numa cópia sem o elemento.
+- `fitz` imprime aviso de obsolescência na saída: importar `pymupdf` e filtrar as linhas pelo formato; e contraste que dá
+  NaN tem de virar falha, não passar.
+
+---
+
+# Retomada — estado em 2026-11-27, v55 publicada, v56 pronta (ler primeiro depois de compactar a conversa)
 
 ## COMO RETOMAR (fazer nesta ordem)
 
-1. Ler esta seção inteira, o **Adendo 50** (v55, botões "Desfazer" e "Parei aqui" visíveis: estilo e contraste medido
+1. Ler esta seção inteira, o **Adendo 51** (v56, seção 6 do 03.1: caixa "Estudado" ligada ao Cronograma e blocos
+   de hoje em laranja-claro, pelo mapa `PAREI.grade()`), o **Adendo 50** (v55, botões "Desfazer" e "Parei aqui" visíveis: estilo e contraste medido
    nos pixels), o **Adendo 49** (v54, R14 com o botão "Refazer meus erros no QConcursos" desde 01/12:
    filtro `my_questions=wrong`, código `injetarQcNaR14`, "Como" pelo gerador v49), o **Adendo 48** (v53, 67 correções no texto de Processo do Trabalho, Processo Civil e
    quadros de Civil; extrator com prova de cobertura; avisos do STF em `notas_stf.js`), o **Adendo 47** (v52, "Parei aqui" — `trt4:parei`, dia de retomar pela regra de parada a
@@ -5867,33 +5948,35 @@ só se o usuário pedir.
    cabem), o **Adendo 30** (v35, marca-texto), o **Adendo 29** (v34, semana
    12) e o **Adendo 26** (edital de 2026). Se o scratchpad tiver perdido
    arquivos (aconteceu de novo entre 11 e 12/11; o app também troca o caminho do
-   scratchpad entre sessões; e de novo entre 16 e 17/11, a 5ª vez), restaurar antes (`robocopy
+   scratchpad entre sessões; e de novo entre 16 e 17/11, a 5ª vez; em 25/11 a 7ª e em 26–27/11 a 8ª), restaurar antes (`robocopy
    <ferramentas-scratchpad> <scratchpad> /E /XO`) e provar com `bash
-   v55/montar.sh` + `cmp v55/ensaio.html <worktree>/index.html` (a v55 parte de `bak_2210/index_v54.html`; `notas_stf.js`
+   v56/montar.sh` + `cmp v56/ensaio.html <worktree>/index.html` (a v56 parte de `bak_2210/index_v55.html`; `notas_stf.js`
    já tem os avisos da v53 — para remontar a v52, voltar `v53/notas_stf_v52.js`; `v49/gerar_cartoes.js` já tem o "Como"
    da v54 — o de antes está em `v54/bak_v49/`). O plano
-   aprovado em 22/10 está em
-   `C:\Users\thale\.claude\plans\woolly-finding-squid.md`.
+   aprovado em 22/10 estava em
+   `C:\Users\thale\.claude\plans\woolly-finding-squid.md`, mas o modo de planejamento reaproveita esse arquivo
+   (desde 26/11 ele guarda o plano da v56); o do edital está resumido no Adendo 26.
 2. Conferir o estado real antes de mexer em qualquer coisa:
    - `git status --short` e `git log --oneline -3` no worktree (em 16/11:
-     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v55 pronta, esperando o commit do usuário; último commit `0a5eb66` (Adendo 49 = v54), publicado
-     pelo PR #50, `9c91db0`; antes, `2834d33` (Adendo 48 = v53), PR #49, `e92580a`; antes, `543e186` (Adendo 47 = v52), PR #48, `b8e876f`; antes, `ce0053c` (Adendo 46 = v51), PR #47, `3726087`; antes, `b3d1463` (Adendo 45 = v50), PR #46, `8055fd8`; antes, `48c42ef` (a v48 e a v49 juntas), PR #45, `cd842c4`; antes,
+     `M HANDOFF-projeto.md`, `M index.html`, `M sw.js` = a v56 pronta, esperando o commit do usuário; último commit `60781ef` (Adendo 50 = v55), publicado
+     pelo PR #51, `d4828cf`; antes, `0a5eb66` (Adendo 49 = v54), PR #50, `9c91db0`; antes, `2834d33` (Adendo 48 = v53), PR #49, `e92580a`; antes, `543e186` (Adendo 47 = v52), PR #48, `b8e876f`; antes, `ce0053c` (Adendo 46 = v51), PR #47, `3726087`; antes, `b3d1463` (Adendo 45 = v50), PR #46, `8055fd8`; antes, `48c42ef` (a v48 e a v49 juntas), PR #45, `cd842c4`; antes,
      `cd67ddd`, Adendo 42 = v47, publicada pelo PR #44, `b0a1958`);
    - `git fetch origin` e `git log --oneline -3 origin/main` (em 24/11 o
-     `main` estava no PR #50, `9c91db0`, e a pasta principal também; conferido em 25/11). **O
+     `main` estava no PR #51, `d4828cf`, e a pasta principal também, em ff desde 27/11). **O
      `--ff-only` do usuário só anda depois de um `git fetch`:** os worktrees
      dividem as referências com a pasta principal, e sem o fetch o
      `origin/main` local ainda aponta para o PR anterior. Fazer o fetch antes
      (ou indicar `git -C <raiz> pull --ff-only origin main`);
    - site publicado: `curl -sS https://thalessoffiatti-art.github.io/AppEstudos/sw.js | grep "const CACHE"`
-     (em 25/11: `autos-do-estudo-v54`, publicada pelo PR #50);
+     (em 27/11: `autos-do-estudo-v55`, publicada pelo PR #51);
    - `node versao.js INDEX SW` no scratchpad (meta `versao-app` = `CACHE`).
 3. Ver se o usuário já respondeu às decisões pendentes (abaixo e no Adendo
    32). Não aplicar nenhuma delas sem a resposta.
-4. **Próximo passo: esperar o commit e o PR da v55** (Adendo 50, botões "Desfazer" e "Parei aqui" visíveis). A v55 está
-   no worktree (`index.html` = `v55/ensaio.html`, `sw.js` = `v55/ensaio_sw.js`, conferidos com `cmp`). **Não mexer no
-   `index.html` antes do commit.** Depois do commit e do PR: `git fetch` e `--ff-only` na pasta principal, guardar
-   `bak_2210/index_v55.html` (cópia do worktree, CRLF) e `sw_v55.js`.
+4. **Próximo passo: esperar o commit e o PR da v56** (Adendo 51, seção 6 do 03.1: caixa "Estudado" e blocos de hoje em
+   destaque). A v56 está no worktree (`index.html` = `v56/ensaio.html`, `sw.js` = `v56/ensaio_sw.js`, conferidos com
+   `cmp`). **Não mexer no `index.html` antes do commit.** Depois do commit e do PR: `git fetch` e `--ff-only` na pasta
+   principal, guardar `bak_2210/index_v56.html` (cópia do worktree, CRLF) e `sw_v56.js`. A v55 já foi fechada: publicada
+   pelo PR #51 (`d4828cf`), raiz em ff, `bak_2210/index_v55.html` e `sw_v55.js` guardados em 27/11.
    **Onde paramos (pedido do usuário em 25/11: "Guarde onde parou para voltarmos mais tarde"):** antes da v55, a v54 tinha
    sido publicada e não havia promessa de conteúdo pendente. Para voltar, perguntar ao usuário qual destas quer, sem
    prioridade: a leitura item a item das outras disciplinas (Civil, Processo do Trabalho e Processo Civil já foram — o
@@ -5905,7 +5988,9 @@ só se o usuário pedir.
    **Mexer em cartão de semana muda o que o "Parei aqui" lê**: rodar `v52/conferir_grade.js` depois. **Aviso do STF do
    quadro Lei seca se corrige em `notas_stf.js`**. **QConcursos:** filtro de erros `my_questions=wrong` (com login);
    ~11 páginas seguidas disparam a verificação de robô — poucas, devagar, e parar se aparecer. **Botão em caixa escura**
-   que herda `.btn.sec`: a regra do contexto precisa pesar mais (`.contexto .btn.sec`).
+   que herda `.btn.sec`: a regra do contexto precisa pesar mais (`.contexto .btn.sec`). **Seção 6 (v56):** as caixas
+   "Estudado" e o destaque de hoje saem de `PAREI.grade()`; mexer nos horários ou nos títulos de uma linha da seção 6, ou no
+   campo `dia` de um bloco, exige rodar `v56/conferir_secao6.js` (o segundo leitor compara os dois, dia a dia).
    **Cartões de revisão:** os das semanas 13 a 22 saem de `v49/gerar_cartoes.js` sobre o arquivo de entrada; mexer em
    cartão de semana (tabela, links) muda a lista "Toda a semana": rodar de novo o gerador e `v49/conferir_cartoes.js`.
    **Todo lote usa a carga nova:**
@@ -5972,7 +6057,7 @@ só se o usuário pedir.
      `patch_matriz_v3X.js`, DONO no `gerar_lei_seca.js` quando a linha ligar
      dois tópicos, `aplicar_v3X.js A|B`, `montar.sh`, `aviso.js` com
      `conferir_aviso.js`; o aviso aberto esperado passa a ser o de
-     "25/11/2026 — os botões “Desfazer” e “Parei aqui” ficaram visíveis", com "Avisos anteriores" em 44;
+     "27/11/2026 — na seção 6, a caixa “Estudado” e os blocos de hoje em destaque", com "Avisos anteriores" em 45;
    - **núcleo (regra da v38, Adendo 33):** refazer o levantamento sobre o
      ensaio (`node v36/gerar_aud_nucleo.js` e `node v36/aud_nucleo.js ENSAIO
      --json v3X/aud_nucleo.json`); em `nucleo_v3X.js` (cópia de
@@ -6004,7 +6089,8 @@ só se o usuário pedir.
    fechada de alvos) publicadas juntas em 20/11 (PR #45); v50 (convênios: Lei 8.666 revogada) publicada em 20/11 (PR #46);
    v51 (reequilíbrio de Processo do Trabalho e Trabalho) publicada em 23/11 (PR #47); v52 ("Parei aqui" e Civil) publicada
    em 24/11 (PR #48); v53 (revisão de Processo do Trabalho e Processo Civil) publicada em 24/11 (PR #49); v54 (R14 com o
-   botão do QConcursos) publicada em 24/11 (PR #50); v55 (botões "Desfazer" e "Parei aqui" visíveis) pronta em 25/11.
+   botão do QConcursos) publicada em 24/11 (PR #50); v55 (botões "Desfazer" e "Parei aqui" visíveis) publicada em 25/11
+   (PR #51); v56 (seção 6: caixa "Estudado" e blocos de hoje em destaque) pronta em 27/11.
 
    **Ao terminar qualquer versão:** HANDOFF (adendo e Retomada), memória,
    `robocopy` da cópia dos scripts e, depois do PR, `--ff-only` na pasta
@@ -6012,7 +6098,18 @@ só se o usuário pedir.
 
 ## TRABALHO EM ANDAMENTO (atualizar ao fim de cada etapa)
 
-### v55 — botões "Desfazer" e "Parei aqui" visíveis — PRONTA em 25/11/2026, esperando o commit (Adendo 50)
+### v56 — seção 6 do 03.1: caixa "Estudado" e blocos de hoje em destaque — PRONTA em 27/11/2026, esperando o commit (Adendo 51)
+
+- **Estado:** `index.html` e `sw.js` do worktree = `v56/ensaio.html` e `v56/ensaio_sw.js` (`cmp`); cache
+  `autos-do-estudo-v56`. Entrada: `bak_2210/index_v55.html` (a v55 publicada). O que mudou e a verificação: **Adendo 51**.
+- **Ferramentas:** `v56/secao6.js` e `secao6.css` (o que entra), `codigo.js` (âncoras e ganchos), `aviso.js` +
+  `conferir_aviso.js`, `aplicar_v56.js`, `montar.sh`, `conferir_tudo.sh`, `conferir_secao6.js` (segundo leitor),
+  `_sonda.js` (fotos), `_pixel.py` (pixels, PyMuPDF), `_gera_teste.js` + `_teste_corpo.js` → `teste_v56.js`,
+  `neg_tela.js` (1..4), `final.sh`.
+- **Ordem para remontar:** `bash v56/montar.sh`; `bash v56/final.sh`.
+- **Depois do commit e do PR:** `git fetch` + `--ff-only` na raiz; guardar `bak_2210/index_v56.html` e `sw_v56.js`.
+
+### v55 — botões "Desfazer" e "Parei aqui" visíveis — PUBLICADA em 25/11/2026 pelo PR #51 (`d4828cf`; commit `60781ef`) (Adendo 50)
 
 - **Estado:** `index.html` e `sw.js` do worktree = `v55/ensaio.html` e `v55/ensaio_sw.js` (`cmp`); cache
   `autos-do-estudo-v55`. Entrada: `bak_2210/index_v54.html` (a v54 publicada). O que mudou e a verificação: **Adendo 50**.
@@ -6020,7 +6117,7 @@ só se o usuário pedir.
   `_foto_antes.js` e `_foto_selecao.js` (fotos), `_variantes.js` (30% × 45%), `_contraste.py` (contraste nos pixels, PyMuPDF),
   `_gera_teste.js` + `_teste_corpo.js` → `teste_v55.js`, `neg_tela.js` (1..4), `final.sh`.
 - **Ordem para remontar:** `bash v55/montar.sh`; `bash v55/final.sh`.
-- **Depois do commit e do PR:** `git fetch` + `--ff-only` na raiz; guardar `bak_2210/index_v55.html` e `sw_v55.js`.
+- **Fechada em 27/11:** raiz em ff no PR #51; `bak_2210/index_v55.html` e `sw_v55.js` guardados.
 
 ### v54 — R14: botão "Refazer meus erros no QConcursos" desde 01/12 — PUBLICADA em 24/11/2026 pelo PR #50 (`9c91db0`; commit `0a5eb66`) (Adendo 49)
 
